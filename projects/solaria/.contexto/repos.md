@@ -7,7 +7,7 @@ Projeto estudantil ("Solaria" / plataforma de energia solar). Confirmar detalhes
 Nestes, reduzir ao máximo o número de alterações e **nunca implementar o que não foi pedido** (ver [padrao-de-codigo.md](padrao-de-codigo.md)):
 
 - `api-auth` — API de autenticação (Java/Spring). Gera/valida JWT (keystore `.p12` via `JWT_KEYSTORE_BASE64`).
-- `api-core` — API principal do domínio (Java/Spring). **Chamada só internamente** — nunca é exposto via Ingress/Kong (diferente de `api-auth`, `api-messenger`, `api-recommendation`, `ai-assistant`, `ai-validation`, que têm Ingress próprio).
+- `api-core` — API principal do domínio (Java/Spring). Assim como `api-auth`, `api-messenger`, `api-recommendation`, `ai-assistant`, `ai-validation`, **tem `ingress.yaml` próprio em `infra-gitops`** (corrigido em 2026-09-16 — a versão antiga desta doc dizia "nunca exposto via Ingress/Kong", mas o manifest real contradiz isso; só `mcp-database` é de fato internal-only). Ainda assim, todo endpoint `/api/**` exige JWT válido (só `/v3/api-docs`, `/swagger-ui/**` e `POST /dev/login` são públicos).
 - `web-app` — frontend (React + Vite + Tailwind). Ver [frontend-orientacoes.md](frontend-orientacoes.md) para o padrão de código. SPA estática — `VITE_*` são embutidas no bundle em build-time (CI), não há `kubernetes_secret` pra ele.
 - `infra-platform` — Terraform que sobe toda a infra GCP (ver [infra.md](infra.md)). Blast radius real (custo de nuvem) — qualquer mudança aqui deve ser cautelosa e nunca rodar `terraform apply`/`destroy` direto (usar `scripts/toggle-nodes.ps1`).
 - `ai-assistant` — serviço de agentes de IA (Python). Consome `mcp-database` via protocolo MCP para consultar dados de fornecedores/ofertas/técnicos.
@@ -21,7 +21,7 @@ Qualquer repo com prefixo **`elos-`** (ex.: `elos-backend`) é de outro projeto/
 | Repo | Stack / propósito | Branch de deploy QA | Observações |
 |---|---|---|---|
 | `api-auth` | Java/Spring — autenticação/JWT | `qa` | core |
-| `api-core` | Java/Spring — domínio principal | `qa` | core; nunca exposto via Kong |
+| `api-core` | Java/Spring — domínio principal | `qa` | core; exposto via Kong (ingress.yaml em infra-gitops), mas /api/** exige JWT |
 | `api-messenger` | Java/Spring — mensageria (Mongo) | `qa` | |
 | `api-recommendation` | Java/Spring — recomendação | `qa` | Swagger condicional a `DOCS_ENABLED`, desligado em prod |
 | `mcp-database` (ex-`api-mcp`) | Python — servidor MCP, consulta Postgres "Negócio" (fornecedores/ofertas/técnicos) para o `ai-assistant` | `qa` | não é dono do schema, só consulta; cópia de referência em `docs/schema_negocio.sql` |

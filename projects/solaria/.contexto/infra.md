@@ -18,9 +18,9 @@ Este é um projeto estudantil — não faz sentido (nem é viável financeiramen
 
 ## `infra-gitops`
 
-- Repo GitOps consumido pelo ArgoCD. Contém os manifests (`Ingress` etc.) dos serviços expostos via Kong: `api-auth`, `api-messenger`, `api-recommendation`, `ai-assistant`, `ai-validation` — todos com host `sslip.io` usando o IP do Kong.
+- Repo GitOps consumido pelo ArgoCD. Contém os manifests (`Ingress` etc.) dos serviços expostos via Kong: `api-auth`, `api-messenger`, `api-recommendation`, `ai-assistant`, `ai-validation`, **e também `api-core`** — todos com host `sslip.io` usando o IP do Kong.
 - `web-app` tem domínio próprio (`web.solaria.com`, Cloudflare, A record apontando pro IP do Kong) — **o IP do Kong muda toda vez que o cluster é recriado** (é um `google_compute_address` novo), então o A record da Cloudflare precisa ser reconferido/atualizado depois de cada recriação do cluster.
-- `api-core` fica **fora** do Ingress de propósito — só é chamado internamente por outros serviços do cluster.
+- `api-core` **tem** `ingress.yaml` em `infra-gitops/services/api-core/` (host `api-core.<ip>.sslip.io` → serviço `api-core:8080`) — corrigido em 2026-09-16: a doc antiga dizia que ficava fora do Ingress "de propósito", mas isso não bate com o manifest real. Só `mcp-database` (ex-`api-mcp`) é de fato internal-only (sem `ingress.yaml`, só `deployment.yaml`/`service.yaml`).
 
 ## `infra-gateway` / `infra-otel-collector`
 

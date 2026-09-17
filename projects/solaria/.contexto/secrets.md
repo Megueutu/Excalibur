@@ -1,6 +1,6 @@
 # Secrets — Infisical
 
-Vault único da org (Infisical), 3 ambientes (`dev`/`qa`/`prod`). É o único componente de infra que fica disponível 24/7 de graça — ver [infra.md](infra.md#filosofia-infra-efêmera-projeto-estudantil) sobre por que isso importa (GCP e Render custam/dormem, o vault não).
+Vault único da org (Infisical), 3 ambientes (`local`/`qa`/`prod` — corrigido em 2026-09-16, não `dev`). É o único componente de infra que fica disponível 24/7 de graça — ver [infra.md](infra.md#filosofia-infra-efêmera-projeto-estudantil) sobre por que isso importa (GCP e Render custam/dormem, o vault não).
 
 ## Organização: por categoria de tecnologia, não por serviço
 
@@ -24,7 +24,7 @@ Nomenclatura padronizada dentro de `/database`, por exemplo: `DB_POSTGRES_URI/HO
 3. **Caso especial `api-auth`:** recebe também um keystore JWT via `binary_data` (`JWT_KEYSTORE_BASE64`, decodificado como `.p12`).
 4. **Caso especial `web-app`:** não tem `kubernetes_secret` — é SPA estática (Vite+nginx), `VITE_*` são embutidas no bundle **em build-time no CI**, não injetadas em runtime no cluster.
 5. **GitHub Actions (cronjobs) usam GitHub Secrets, não leem o Infisical diretamente** — ex.: `databricks-sync` usa `secrets.DB_CORE_HOST` etc. do próprio GitHub (ver [cronjobs.md](cronjobs.md)). Isso significa que valores mudados no Infisical também precisam ser replicados manualmente nos GitHub Secrets desses workflows — não há sincronização automática entre os dois hoje (a confirmar se isso é intencional ou uma lacuna pendente).
-6. **Localmente (fora do cluster)**, sem acesso direto ao Infisical, cada dev replica as env vars manualmente num `.env` (ou usa um script de extração, ex.: `extract-env.ps1` visto em `infra-platform`).
+6. **Localmente (fora do cluster)**, cada dev usa `infra-platform/scripts/extract-env.ps1 -s <service> -e <local|qa|prod> [-o <path>]` (requer `infisical login` feito antes) — gera um `.env` combinando as pastas do Infisical mapeadas pra aquele serviço em `$ServiceFolderMap` (ex.: `web-app` → `/vite` + `/service-urls`). Corrigido em 2026-09-16: o script chegou a ser revertido (PR #45) e foi re-adicionado depois (PR #47) — confirmar que existe em `infra-platform/scripts/` antes de assumir que sumiu de novo.
 
 ## Docs de referência (em `docs-warehouse`)
 

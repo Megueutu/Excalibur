@@ -49,18 +49,18 @@ Nem toda feature precisa ter todos os tipos de arquivo — cada um só existe se
 
 ### 2.3 Estrutura de diretórios (`src/`)
 
+Corrigido em 2026-09-16 — a versão anterior desta seção descrevia uma estrutura `src/app/{components,pages,routes}` + `src/lib/{shared,utils}` com aliases `@app`/`@lib` que **não existe no repo real** (`src/app/` e `src/lib/` estão vazios, sobra de uma reorganização que não chegou a acontecer). A estrutura real, confirmada em `tsconfig.app.json`/`vite.config.ts`:
+
 ```
 src/
-├── app/               # componentes, páginas e rotas (o que é "aplicação")
-│   ├── components/
-│   ├── pages/
-│   └── routes/
+├── components/        # componentes de UI (categorias da seção 4.1)
+├── pages/             # páginas/telas
+├── routes/            # definição de rotas
 ├── assets/
-├── config/            # configuração de app (mocks, logging, i18n, erros, AppLayout...)
+├── config/            # configuração de app (mocks, logging, i18n, erros...)
 ├── features/          # Feature-Based Architecture (seção 2.1)
-├── lib/               # código transversal, não específico de feature
-│   ├── shared/        # tipos/estilos usados por mais de uma feature (seção 8)
-│   └── utils/         # funções utilitárias gerais
+├── shared/            # tipos/estilos usados por mais de uma feature (seção 8)
+├── utils/             # funções utilitárias gerais
 ├── test/
 ├── App.tsx
 ├── App.test.tsx
@@ -68,16 +68,14 @@ src/
 └── main.tsx
 ```
 
-Aliases de import (`tsconfig.app.json` + `vite.config.ts`):
+Aliases de import (`tsconfig.app.json` + `vite.config.ts`) — só existem estes dois:
 
 | Alias | Aponta para | Exemplo |
 |---|---|---|
-| `@` | `src/` | `@/config/...`, `@/features/...`, `@/assets/...` |
-| `@@` | `src/app/components/` | `@@/ui/icon/Icon` |
-| `@app` | `src/app/` | `@app/pages/...`, `@app/routes/...` |
-| `@lib` | `src/lib/` | `@lib/shared/...`, `@lib/utils/...` |
+| `@` | `src/` | `@/config/...`, `@/features/...`, `@/pages/...`, `@/shared/...` |
+| `@@` | `src/components/` | `@@/ui/icon/Icon` |
 
-> `config/` fica fora de `app/` porque é configuração transversal da aplicação (não tela/rota), na mesma linha de `features/` e `lib/`.
+> `config/` fica fora de `pages/`/`features/` porque é configuração transversal da aplicação (não tela/rota), na mesma linha de `features/` e `shared/`.
 
 ---
 
