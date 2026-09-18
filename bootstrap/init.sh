@@ -68,6 +68,8 @@ touch "$DEST/specs/.gitkeep"
 
 if [[ -n "$COPY_LIST" ]]; then
   while IFS=$'\t' read -r SRC DST || [[ -n "$SRC" ]]; do
+    SRC="${SRC%$'\r'}"
+    DST="${DST%$'\r'}"
     [[ -z "$SRC" ]] && continue
     mkdir -p "$(dirname "$DEST/$DST")"
     cp "$SCRIPT_DIR/$SRC" "$DEST/$DST"
