@@ -30,4 +30,4 @@ Nunca commitar ou dar push em arquivos relacionados ao desenvolvimento assistido
 - `docs/specs`
 - `specs`
 
-Garantir que esses caminhos estejam sempre no `.gitignore` do projeto. Specs/planos de tarefas deste próprio sistema de SDD vivem em `.contexto/specs/` (fora de qualquer repo, nunca versionados) — ver [pipeline/entrypoint.md](pipeline/entrypoint.md).
+Garantir que esses caminhos estejam sempre no `.gitignore` do projeto. Specs/planos de tarefas deste próprio sistema de SDD vivem em `.contexto/specs/` (fora de qualquer repo, nunca versionados) — ver [pipeline/entrypoint.md](../../../pipeline/entrypoint.md).

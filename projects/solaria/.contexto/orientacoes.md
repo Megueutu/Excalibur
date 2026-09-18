@@ -10,9 +10,9 @@
 - [observacoes.md](observacoes.md) — trabalho em múltiplas máquinas, sincronizar antes de começar.
 
 ## Ao implementar algo (não só ler/responder)
-- [pipeline/entrypoint.md](pipeline/entrypoint.md) — o que fazer ao receber um pedido de implementação (grillme, classificação, onde ficam spec/análise).
-- [pipeline/reflection.md](pipeline/reflection.md) — quando parar e perguntar em vez de decidir sozinho.
-- [pipeline/review-checklist.md](pipeline/review-checklist.md) — checklist final antes de considerar a tarefa concluída.
+- [pipeline/entrypoint.md](../../../pipeline/entrypoint.md) — o que fazer ao receber um pedido de implementação (grillme, classificação, onde ficam spec/análise). Compartilhado entre todos os projetos e harnesses.
+- [reflection/when-to-pause.md](../../../reflection/when-to-pause.md) — quando parar e perguntar em vez de decidir sozinho.
+- [pipeline/review-checklist.md](../../../pipeline/review-checklist.md) — checklist final antes de considerar a tarefa concluída.
 
 ## Condicional ao repo
 - [frontend-orientacoes.md](frontend-orientacoes.md) — só ao trabalhar em `web-app` (React/Vite/Tailwind).

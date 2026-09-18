@@ -2,7 +2,7 @@
 
 Pasta local (não versionada, não é um repositório git) com o contexto de trabalho da org `Solierrr`. Não tem relação com o "repositório pro Render" (esse é o `infra-keepalive`, ver [repos.md](repos.md)).
 
-O gatilho automático desse sistema é a skill `sdd` em [`../.claude/skills/sdd/SKILL.md`](../.claude/skills/sdd/SKILL.md) (escopo desse workspace, não do usuário) — dispara antes de qualquer implementação. Ler [orientacoes.md](orientacoes.md) primeiro; ele indexa o resto.
+O gatilho automático desse sistema é o adapter SDD do harness em uso, em [`harnesses/`](../../../harnesses/) (ex.: Claude usa [`harnesses/claude/skills/sdd/SKILL.md`](../../../harnesses/claude/skills/sdd/SKILL.md)) — dispara antes de qualquer implementação. Ler [orientacoes.md](orientacoes.md) primeiro; ele indexa o resto.
 
 ## Sempre lidos
 - [orientacoes.md](orientacoes.md) — índice do que ler antes de tocar em qualquer repo.
@@ -15,10 +15,10 @@ O gatilho automático desse sistema é a skill `sdd` em [`../.claude/skills/sdd/
 
 ## Pipeline de implementação (SDD)
 - [prompt-inicial.md](prompt-inicial.md) — prompt pra abrir uma sessão nova e acionar a pipeline.
-- [pipeline/entrypoint.md](pipeline/entrypoint.md) — grillme, classificação fix/feature/big feature, onde ficam spec e análise.
-- [pipeline/reflection.md](pipeline/reflection.md) — quando parar e perguntar em vez de decidir sozinho.
-- [pipeline/review-checklist.md](pipeline/review-checklist.md) — checklist final antes de considerar a tarefa concluída.
-- [pipeline/spec-template.md](pipeline/spec-template.md) — template usado em `specs/<repo>/<tarefa>/spec.md`.
+- [pipeline/entrypoint.md](../../../pipeline/entrypoint.md) — grillme, classificação fix/feature/big feature, onde ficam spec e análise. Compartilhado entre todos os projetos e harnesses.
+- [reflection/when-to-pause.md](../../../reflection/when-to-pause.md) — quando parar e perguntar em vez de decidir sozinho.
+- [pipeline/review-checklist.md](../../../pipeline/review-checklist.md) — checklist final antes de considerar a tarefa concluída.
+- [pipeline/spec-template.md](../../../pipeline/spec-template.md) — template usado em `specs/<repo>/<tarefa>/spec.md`.
 - [specs/](specs/) — specs de tarefas em andamento/concluídas, uma pasta por repo/tarefa. Nunca refletido no repositório sendo trabalhado.
 
 ## Contexto da org
