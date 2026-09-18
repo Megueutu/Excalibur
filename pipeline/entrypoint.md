@@ -24,7 +24,7 @@ Perguntar (ou inferir com alta confiança e confirmar em uma frase) qual das tr�
 | **Feature** | Funcionalidade nova ou mudança de comportamento com escopo claro, mas com decisões de design reais (onde entra, como se integra, o que fica de fora) | Spec leve em `projects/<project>/.contexto/specs/<repo>/<tarefa>/spec.md` (ver [spec-template.md](spec-template.md)) antes de codar. |
 | **Big feature** | Toca múltiplos módulos/repos, tem sequenciamento (fases), ou risco real de retrabalho se a abordagem errada for escolhida | Spec completa com roadmap faseado + checklist de análise por fase. Considerar quebrar em specs por fase se ficar grande demais pra um arquivo só. |
 
-Perguntar diretamente se não estiver claro qual classe — não adivinhar em caso de dúvida real (ver [reflection.md](reflection.md)).
+Perguntar diretamente se não estiver claro qual classe — não adivinhar em caso de dúvida real (ver [when-to-pause.md](../reflection/when-to-pause.md)).
 
 ## 3. Análise profunda — quando
 
