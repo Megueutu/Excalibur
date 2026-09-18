@@ -20,7 +20,7 @@ O que motivou isso, o que existe hoje, o que está sendo pedido — resumo do qu
 > Lista do que foi confirmado com o usuário e não precisa ser reaberto (saída da etapa "Decisão" da [[reasoning-chain]]).
 
 > [!warning] Em aberto
-> Perguntas/decisões que ainda não têm resposta — usar [when-to-pause.md](../reflection/when-to-pause.md) pra decidir se pausa ou segue.
+> Perguntas/decisões que ainda não têm resposta — usar [[when-to-pause]] pra decidir se pausa ou segue.
 
 ## Roadmap
 1. Passo 1 — o que, onde (arquivo/módulo), critério de "pronto".

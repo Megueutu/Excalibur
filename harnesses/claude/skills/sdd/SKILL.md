@@ -19,7 +19,7 @@ Sempre que o pedido for implementar, corrigir ou mudar algo em algum repo/projet
 2. Ler, nesta ordem:
    - [`pipeline/entrypoint.md`](../../../../pipeline/entrypoint.md) — processo completo (grillme, classificação, onde ficam spec/análise).
    - [`reflection/reasoning-chain.md`](../../../../reflection/reasoning-chain.md) — cadeia de raciocínio a seguir ao escrever a spec.
-   - `orientacoes.md` (ou equivalente) dentro do destino de SDD do projeto (`.sdd/` embutido ou `<repo>-sdd/` separado).
+   - `orientacoes.md` (ou equivalente, se existir) dentro do destino de SDD do projeto (`.sdd/` embutido ou `<repo>-sdd/` separado).
 3. Seguir o processo descrito em [`pipeline/entrypoint.md`](../../../../pipeline/entrypoint.md) estritamente, incluindo parar pra pedir `/grill-me` antes de qualquer exploração de código.
 
 ## Referências

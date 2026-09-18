@@ -23,6 +23,11 @@ if [[ "$MODE" == "separate" && -z "$PROJECT_NAME" ]]; then
   exit 1
 fi
 
+if [[ ! -d "$TARGET_PATH" ]]; then
+  echo "Error: target-path does not exist or is not a directory: $TARGET_PATH" >&2
+  exit 1
+fi
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 EXCALIBUR_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
@@ -39,7 +44,8 @@ fi
 
 mkdir -p "$DEST/specs" "$DEST/Templates" "$DEST/reflection"
 cp "$EXCALIBUR_ROOT/pipeline/spec-template.md" "$DEST/Templates/spec-template.md"
-cp "$EXCALIBUR_ROOT/reflection/reasoning-chain.md" "$DEST/reflection/reasoning-chain.md"
+cp "$EXCALIBUR_ROOT/reflection/when-to-pause.md" "$DEST/reflection/when-to-pause.md"
+touch "$DEST/specs/.gitkeep"
 
 echo "Created SDD destination at: $DEST"
 echo "Next: copy the chosen GitHub preset from bootstrap/presets/github/ to $DEST/git.md"
