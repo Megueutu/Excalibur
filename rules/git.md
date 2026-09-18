@@ -1,6 +1,6 @@
 # Git — Excalibur conventions
 
-Commit rules for the Excalibur repository itself (not to be confused with the git rules Excalibur *generates* for other projects via `bootstrap/presets/github/` — those are independent and specific to each project).
+Commit rules for the Excalibur repository itself (not to be confused with the git rules Excalibur *generates* for other projects via `bootstrap/onboarding/github/` — those are independent and specific to each project).
 
 ## Commit messages
 
