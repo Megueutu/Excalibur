@@ -29,7 +29,7 @@ Com as três respostas em mãos, chamar:
 bootstrap/init.sh <embedded|separate> <target-path> [project-name]
 ```
 
-Isso cria a estrutura de destino (specs/, Templates/, reflection/, o preset de GitHub escolhido copiado como `git.md`) — ver contrato completo do script no plano de implementação ou no cabeçalho de `init.sh`.
+Isso cria a estrutura de destino (specs/, Templates/, reflection/), copia spec-template.md e reasoning-chain.md nos lugares apropriados, e imprime uma mensagem pedindo para copiar manualmente o preset de GitHub escolhido como `git.md` — ver contrato completo do script no plano de implementação ou no cabeçalho de `init.sh`.
 
 ## 5. Depois de rodar
 
