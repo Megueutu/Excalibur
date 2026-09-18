@@ -11,7 +11,7 @@ Translates every `.md` file inside the given folder from English into the given 
 
 ## Input contract
 
-Invoked with a folder path and a target language name. Both must be given explicitly by the caller — never guess the target language from file content.
+Invoked with a folder path and a target language name. Both must be given explicitly by the caller — never guess the target language from file content. The caller invokes this subagent once per folder — e.g. once for `Templates/` and once for `reflection/` — never once for multiple folders at a time.
 
 ## What to do
 
