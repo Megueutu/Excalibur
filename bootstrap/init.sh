@@ -38,6 +38,11 @@ if [[ ! -d "$TARGET_PATH" ]]; then
   exit 1
 fi
 
+if [[ -n "$COPY_LIST" && ! -f "$COPY_LIST" ]]; then
+  echo "Error: copy-list file not found: $COPY_LIST" >&2
+  exit 3
+fi
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 EXCALIBUR_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
@@ -58,10 +63,6 @@ cp "$EXCALIBUR_ROOT/reflection/when-to-pause.md" "$DEST/reflection/when-to-pause
 touch "$DEST/specs/.gitkeep"
 
 if [[ -n "$COPY_LIST" ]]; then
-  if [[ ! -f "$COPY_LIST" ]]; then
-    echo "Error: copy-list file not found: $COPY_LIST" >&2
-    exit 3
-  fi
   while IFS=$'\t' read -r SRC DST || [[ -n "$SRC" ]]; do
     [[ -z "$SRC" ]] && continue
     mkdir -p "$(dirname "$DEST/$DST")"
