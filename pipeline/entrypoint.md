@@ -33,7 +33,7 @@ Perguntar explicitamente se o usuário quer uma análise profunda antes de imple
 ## 4. Onde os arquivos vivem
 
 - **Specs e análise da tarefa**: `projects/<project>/.contexto/specs/<repo>/<slug-da-tarefa>/` — nunca dentro do repositório sendo trabalhado (mesmo que o repo tenha seu próprio `.sdd/`). O objetivo é não deixar rastro de planejamento assistido por IA no histórico do repo sendo trabalhado.
-- **Definição do processo** (este pipeline): `core/pipeline/` — compartilhado entre todos os projetos e harnesses.
+- **Definição do processo** (este pipeline): `pipeline/` — compartilhado entre todos os projetos e harnesses. A cadeia de raciocínio usada ao produzir specs vive em `reflection/`, separada deste pipeline.
 - **Regras sempre-lidas**: apontadas pelo `orientacoes.md` do projeto em `projects/<project>/.contexto/orientacoes.md`.
 
 ## 5. Depois de concluir a implementação
