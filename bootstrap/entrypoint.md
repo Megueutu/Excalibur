@@ -36,6 +36,8 @@ In embedded mode there is no `project-name` slot: pass `""` as the 3rd argument 
 
 Invoke the `translator` subagent (see `harnesses/claude/agents/translator.md` for the Claude adapter) against the destination's `Templates/` and `reflection/` folders, with the language resolved in step 3. This runs exactly once, right after step 5 — never automatically again later.
 
+The root-level process/convention files the manifest-driven copies produce (`git.md`, `commit-convention.md`, `review-checklist-override.md`) intentionally stay in English and are not passed to the translator — they encode fixed keywords that other docs reference.
+
 ## 7. After running it
 
 Go straight to [`pipeline/entrypoint.md`](../pipeline/entrypoint.md) with the project's first real task — bootstrap only prepares the destination, it doesn't implement anything.
