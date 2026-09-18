@@ -5,9 +5,13 @@ Excalibur/
   rules/            rules about Excalibur itself (this file and its neighbors)
   pipeline/          implementation methodology, harness-agnostic and project-agnostic
   reflection/         reasoning chain and rules for when to pause/ask
-  bootstrap/          onboarding wizard: creates a new project's SDD destination
+  bootstrap/          onboarding wizard: manifest + question source files + init.sh
+    manifest.yaml       declares the onboarding questions and their file copies
+    onboarding/          source files copied verbatim per answer (github/, review-depth/, commit-convention/)
   harnesses/
     <harness>/         thin harness adapter — just "when to trigger" + pointer to the rest
+      skills/            <harness>'s skill-invocation adapters (e.g. sdd-init, sdd, for Claude)
+      agents/            <harness>'s subagent definitions (e.g. translator, for Claude)
   projects/
     solaria/.contexto/   Solaria's legacy context — do not use as a reference for a new project, see note below
 ```
