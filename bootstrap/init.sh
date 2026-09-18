@@ -2,8 +2,9 @@
 # bootstrap/init.sh — materializes the SDD destination for a project.
 # Usage: bootstrap/init.sh <embedded|separate> <target-path> [project-name] [copy-list-file]
 #   copy-list-file: optional path to a file with "<source>\t<dest>" lines —
-#     source relative to the Excalibur root, dest relative to the SDD
-#     destination. Each pair is copied after the base structure is created.
+#     source relative to bootstrap/ (this script's directory), dest relative
+#     to the SDD destination. Each pair is copied after the base structure
+#     is created.
 # Requires: bash (Git Bash on Windows, native on Mac/Linux). No PowerShell/cmd support.
 set -euo pipefail
 
@@ -64,7 +65,7 @@ if [[ -n "$COPY_LIST" ]]; then
   while IFS=$'\t' read -r SRC DST || [[ -n "$SRC" ]]; do
     [[ -z "$SRC" ]] && continue
     mkdir -p "$(dirname "$DEST/$DST")"
-    cp "$EXCALIBUR_ROOT/$SRC" "$DEST/$DST"
+    cp "$SCRIPT_DIR/$SRC" "$DEST/$DST"
   done < "$COPY_LIST"
 fi
 

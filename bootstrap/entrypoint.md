@@ -18,7 +18,7 @@ Read [`bootstrap/manifest.yaml`](manifest.yaml). For each entry in `questions`, 
 ## 4. Resolve answers into a copy-list file
 
 For each answered question, look at the chosen option in the manifest:
-- If it has a `copy` block, add one `source<TAB>dest` line (using `copy.source` and `copy.dest` verbatim) to a temporary copy-list file.
+- If it has a `copy` block, add one `source<TAB>dest` line (using `copy.source` and `copy.dest` verbatim) to a temporary copy-list file. `copy.source` is relative to `bootstrap/` (matching `init.sh`'s contract — see its header), not the Excalibur root.
 - If it has no `copy` block and no `translate` flag (e.g. `destination`, `review_depth: standard`, or `github_preset: custom`), it contributes no line — `destination` only decides the target path in step 5, and `custom` means the user's free text becomes `git.md` directly, without going through the copy list.
 - If it has `translate: true` (the `language: other` option), don't add a copy-list line — remember to run step 6 after step 5.
 
