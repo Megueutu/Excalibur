@@ -20,7 +20,7 @@ criada: YYYY-MM-DD
 
 ## Wikilinks
 
-Referências a outras notas do mesmo destino de SDD (outra spec, uma nota de decisão, uma nota de contexto do projeto) usam `[[nome-da-nota]]`, não link relativo de markdown (`[nome](../caminho.md)`). Isso é o que alimenta o graph view e os backlinks do Obsidian.
+Referências a outras notas do mesmo destino de SDD (outra spec, uma nota de decisão, uma nota de contexto do projeto) usam `[[nome-da-nota]]`, não link relativo de markdown (ex.: `[nome]\(../caminho.md\)`). Isso é o que alimenta o graph view e os backlinks do Obsidian.
 
 Links pra fora do vault (ex.: pra este repositório Excalibur, pra um arquivo de código) continuam como link markdown normal — wikilink é só entre notas do mesmo vault.
 

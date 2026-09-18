@@ -6,9 +6,9 @@ Hoje só [`harnesses/claude/`](../harnesses/claude/) existe e está funcional. C
 
 Um adapter de harness **nunca** contém metodologia — só:
 1. Quando disparar (o gatilho nativo daquele harness).
-2. Um ponteiro pra `core/pipeline/entrypoint.md` e pro `.contexto/orientacoes.md` do projeto em questão.
+2. Um ponteiro pra `pipeline/entrypoint.md`, `reflection/`, e (se o projeto ainda não tiver destino de SDD) pra `bootstrap/entrypoint.md`.
 
-Se o adapter começar a explicar o processo em vez de apontar pra ele, ele cresceu demais — mover o conteúdo de volta pra `core/pipeline/` se for genérico, ou pra `projects/<project>/.contexto/` se for específico.
+Se o adapter começar a explicar o processo em vez de apontar pra ele, ele cresceu demais — mover o conteúdo de volta pra `pipeline/`/`reflection/` se for genérico, ou pra `projects/<project>/.contexto/` se for específico.
 
 Usar [`harnesses/claude/skills/sdd/SKILL.md`](../harnesses/claude/skills/sdd/SKILL.md) como referência de tamanho/formato ao construir os próximos.
 

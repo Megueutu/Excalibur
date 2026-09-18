@@ -15,10 +15,10 @@ O gatilho automático desse sistema é o adapter SDD do harness em uso, em [`har
 
 ## Pipeline de implementação (SDD)
 - [prompt-inicial.md](prompt-inicial.md) — prompt pra abrir uma sessão nova e acionar a pipeline.
-- [core/pipeline/entrypoint.md](../../../core/pipeline/entrypoint.md) — grillme, classificação fix/feature/big feature, onde ficam spec e análise. Compartilhado entre todos os projetos e harnesses.
-- [core/pipeline/reflection.md](../../../core/pipeline/reflection.md) — quando parar e perguntar em vez de decidir sozinho.
-- [core/pipeline/review-checklist.md](../../../core/pipeline/review-checklist.md) — checklist final antes de considerar a tarefa concluída.
-- [core/pipeline/spec-template.md](../../../core/pipeline/spec-template.md) — template usado em `specs/<repo>/<tarefa>/spec.md`.
+- [pipeline/entrypoint.md](../../../pipeline/entrypoint.md) — grillme, classificação fix/feature/big feature, onde ficam spec e análise. Compartilhado entre todos os projetos e harnesses.
+- [reflection/when-to-pause.md](../../../reflection/when-to-pause.md) — quando parar e perguntar em vez de decidir sozinho.
+- [pipeline/review-checklist.md](../../../pipeline/review-checklist.md) — checklist final antes de considerar a tarefa concluída.
+- [pipeline/spec-template.md](../../../pipeline/spec-template.md) — template usado em `specs/<repo>/<tarefa>/spec.md`.
 - [specs/](specs/) — specs de tarefas em andamento/concluídas, uma pasta por repo/tarefa. Nunca refletido no repositório sendo trabalhado.
 
 ## Contexto da org
