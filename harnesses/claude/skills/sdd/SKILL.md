@@ -14,7 +14,7 @@ Whenever the request is to implement, fix, or change something in some repo/proj
 ## What to do
 
 1. Identify the project's repo being worked on. Check whether it already has an SDD destination (see "Detection" in [`bootstrap/entrypoint.md`](../../../../bootstrap/entrypoint.md#detection-for-harness-adapters)):
-   - No destination yet → follow [`bootstrap/entrypoint.md`](../../../../bootstrap/entrypoint.md) first. Don't skip to implementation before that.
+   - No destination yet → tell the user this project needs onboarding first, via the `sdd-init` skill. Don't skip to implementation before that.
    - Already has a destination → go straight to step 2.
 2. Read, in this order:
    - [`pipeline/entrypoint.md`](../../../../pipeline/entrypoint.md) — full process (grillme, classification, where spec/analysis live).
