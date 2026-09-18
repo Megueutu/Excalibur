@@ -1,17 +1,17 @@
-# Propósito do Excalibur
+# Purpose of Excalibur
 
-Excalibur é um repositório de apoio pra desenvolvimento com SDD (spec-driven development) — não é código de produto, é o lugar onde vive o *processo* de como implementar coisas em outros repos, mais o contexto específico de cada projeto trabalhado.
+Excalibur is a support repository for development with SDD (spec-driven development) — it's not product code, it's where the *process* of how to implement things in other repos lives, plus the project-specific context for each project worked on.
 
-Ele existe pra resolver dois problemas:
+It exists to solve two problems:
 
-1. **Manter o planejamento assistido por IA fora dos repos de produto.** Specs, entrevistas (grillme), análises e decisões de design não devem deixar rastro no histórico dos repos sendo trabalhados — ficam no destino de SDD que `bootstrap/` cria pra cada projeto (`.sdd/` embutido ou `<repo>-sdd/` separado), nunca aqui no Excalibur.
-2. **Não reamarrar o processo a um harness só.** A metodologia (grillme → classificar → spec → checklist) é a mesma independente de rodar em Claude, Codex, Cursor ou outro agente — só a forma de disparar ela muda por harness.
+1. **Keeping AI-assisted planning out of product repos.** Specs, interviews (grillme), analyses, and design decisions must not leave a trail in the history of the repos being worked on — they live in the SDD destination that `bootstrap/` creates for each project (embedded `.sdd/` or a separate `<repo>-sdd/`), never here in Excalibur.
+2. **Not tying the process to a single harness.** The methodology (grillme → classify → spec → checklist) is the same regardless of whether it runs on Claude, Codex, Cursor, or another agent — only the way it's triggered changes per harness.
 
-## O que NÃO é
+## What it is NOT
 
-- Não é onde o código dos projetos vive — cada projeto continua no seu próprio repositório.
-- Não é onde as specs em si vivem — isso fica no destino de SDD de cada projeto (ver `bootstrap/entrypoint.md`); aqui vive só o processo e o contexto compartilhado.
-- Não é markdown puro — além da documentação do processo, tem `bootstrap/init.sh`, um script bash pequeno que materializa o destino de SDD de um projeto.
-- Não é específico de uma organização — a estrutura precisa suportar qualquer projeto novo sem retrabalho. `projects/solaria/` é um resquício legado sendo descontinuado (ver "Legado" em [structure.md](structure.md)), não o caso normal.
+- It's not where project code lives — each project stays in its own repository.
+- It's not where the specs themselves live — that's in each project's SDD destination (see `bootstrap/entrypoint.md`); only the process and shared context live here.
+- It's not pure markdown — besides the process documentation, there's `bootstrap/init.sh`, a small bash script that materializes a project's SDD destination.
+- It's not specific to one organization — the structure needs to support any new project without rework. `projects/solaria/` is a legacy leftover being phased out (see "Legacy" in [structure.md](structure.md)), not the normal case.
 
-Ver [structure.md](structure.md) pra como isso se traduz em pastas.
+See [structure.md](structure.md) for how this translates into folders.

@@ -1,36 +1,36 @@
-# Template — spec de tarefa
+# Template — task spec
 
-Copiar essa estrutura ao criar a spec de uma tarefa **Feature** ou **Big feature** (ver critério em [entrypoint.md](entrypoint.md)). Segue as convenções de [rules/writing-specs-obsidian.md](../rules/writing-specs-obsidian.md) — frontmatter, wikilinks, callouts. Não preencher seções que não se aplicam — não é formulário obrigatório campo a campo, é estrutura de referência.
+Copy this structure when creating the spec for a **Feature** or **Big feature** task (see criteria in [entrypoint.md](entrypoint.md)). Follows the conventions in [rules/writing-specs-obsidian.md](../rules/writing-specs-obsidian.md) — frontmatter, wikilinks, callouts. Don't fill in sections that don't apply — it's not a mandatory field-by-field form, it's a reference structure.
 
 ```markdown
 ---
-status: em-andamento
-projeto: <nome-do-projeto>
-tarefa: <slug-da-tarefa>
-classe: feature
-criada: YYYY-MM-DD
+status: in-progress
+project: <project-name>
+task: <task-slug>
+class: feature
+created: YYYY-MM-DD
 ---
 
-# <nome curto da tarefa>
+# <short task name>
 
-## Contexto
-O que motivou isso, o que existe hoje, o que está sendo pedido — resumo do que saiu da entrevista (grillme) e da etapa "Contexto" da [[reasoning-chain]].
+## Context
+What motivated this, what exists today, what's being asked — summary of what came out of the interview (grillme) and the "Context" step of [[reasoning-chain]].
 
-> [!note] Decisão
-> Lista do que foi confirmado com o usuário e não precisa ser reaberto (saída da etapa "Decisão" da [[reasoning-chain]]).
+> [!note] Decision
+> List of what was confirmed with the user and doesn't need to be reopened (output of the "Decision" step of [[reasoning-chain]]).
 
-> [!warning] Em aberto
-> Perguntas/decisões que ainda não têm resposta — usar [[when-to-pause]] pra decidir se pausa ou segue.
+> [!warning] Open
+> Questions/decisions without an answer yet — use [[when-to-pause]] to decide whether to pause or continue.
 
 ## Roadmap
-1. Passo 1 — o que, onde (arquivo/módulo), critério de "pronto".
-2. Passo 2 — ...
+1. Step 1 — what, where (file/module), "done" criteria.
+2. Step 2 — ...
 
-(Big feature: agrupar passos em fases, cada fase com seu próprio checklist de "pronto".)
+(Big feature: group steps into phases, each phase with its own "done" checklist.)
 
-## Checklist de análise geral
-- [ ] Reuso checado antes de criar código novo
-- [ ] Escopo mínimo — nada implementado além do pedido
-- [ ] Regras de commit/PR aplicáveis identificadas
-- [ ] Nenhum comentário de código sem pedido explícito
+## General analysis checklist
+- [ ] Reuse checked before creating new code
+- [ ] Minimum scope — nothing implemented beyond what was asked
+- [ ] Applicable commit/PR rules identified
+- [ ] No code comments without an explicit request
 ```

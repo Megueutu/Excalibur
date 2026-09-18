@@ -1,43 +1,43 @@
-# Bootstrap — criando o SDD de um projeto novo
+# Bootstrap — creating the SDD for a new project
 
-Roda uma única vez por projeto, antes de qualquer tarefa de implementação (`pipeline/entrypoint.md`) poder começar. Disparado pelo adapter do harness (ver `harnesses/<harness>/`) quando ele não encontra um destino de SDD já configurado pro projeto (ver "Detecção" abaixo).
+Runs once per project, before any implementation task (`pipeline/entrypoint.md`) can start. Triggered by the harness adapter in use (see `harnesses/<harness>/`) when it doesn't find an SDD destination already configured for the project (see "Detection" below).
 
-## 1. Perguntar: adaptar projeto existente ou começar do zero?
+## 1. Ask: adapt an existing project or start from scratch?
 
-- **Adaptar existente**: o projeto já tem código, possivelmente já tem alguma documentação/processo — vamos ler o que existe (`README.md`, `CONTRIBUTING.md`, etc.) antes de propor a estrutura, em vez de simplesmente sobrescrever.
-- **Do zero**: projeto novo ou sem processo definido ainda — ir direto pra pergunta 2.
+- **Adapt existing**: the project already has code, possibly already has some documentation/process — read what exists (`README.md`, `CONTRIBUTING.md`, etc.) before proposing the structure, instead of just overwriting it.
+- **From scratch**: new project or one with no defined process yet — go straight to question 2.
 
-## 2. Perguntar: onde materializar o SDD?
+## 2. Ask: where should the SDD be materialized?
 
-| Opção | Onde fica | Quando faz sentido |
+| Option | Where it lives | When it makes sense |
 |---|---|---|
-| **Embutido** | `.sdd/` na raiz do próprio repo do projeto | Time já ok com rastro de planejamento assistido por IA versionado junto do código. |
-| **Separado** | Repo irmão `<nome-do-repo>-sdd`, fora do repo do projeto | Quer manter o histórico do repo de produto livre de artefatos de IA (ver o princípio em `padrao-de-codigo.md`, quando existir pro projeto). |
+| **Embedded** | `.sdd/` at the root of the project's own repo | Team already OK with AI-assisted planning being version-tracked alongside the code. |
+| **Separate** | Sibling repo `<repo-name>-sdd`, outside the project's repo | Wants to keep the product repo's history free of AI artifacts (see the principle in `code-standards.md`, when it exists for the project). |
 
-## 3. Preset de GitHub
+## 3. GitHub preset
 
-Perguntar como lidar com git/GitHub nesse projeto:
-- **Opção A** — [`presets/github/conservador.md`](presets/github/conservador.md): nunca mergear sozinho, sempre PR.
-- **Opção B** — [`presets/github/direto.md`](presets/github/direto.md): push direto na branch, PR só se pedido.
-- **Opção C — Especificar**: usuário descreve as regras em texto livre; o texto vira `git.md` no destino, no lugar de um preset.
+Ask how to handle git/GitHub on this project:
+- **Option A** — [`presets/github/conservative.md`](presets/github/conservative.md): never merge alone, always PR.
+- **Option B** — [`presets/github/direct.md`](presets/github/direct.md): push directly to the branch, PR only if asked.
+- **Option C — Specify**: user describes the rules in free text; that text becomes `git.md` in the destination, instead of a preset.
 
-## 4. Rodar o script
+## 4. Run the script
 
-Com as três respostas em mãos, chamar:
+With the three answers in hand, call:
 
 ```bash
 bootstrap/init.sh <embedded|separate> <target-path> [project-name]
 ```
 
-Isso cria a estrutura de destino (specs/, Templates/, reflection/), copia spec-template.md pra Templates/ e when-to-pause.md pra reflection/, e imprime uma mensagem pedindo para copiar manualmente o preset de GitHub escolhido como `git.md` — ver contrato completo do script no cabeçalho de `init.sh`.
+This creates the destination structure (specs/, Templates/, reflection/), copies spec-template.md into Templates/ and when-to-pause.md into reflection/, and prints a message asking you to manually copy the chosen GitHub preset as `git.md` — see the full script contract in `init.sh`'s header.
 
-## 5. Depois de rodar
+## 5. After running it
 
-Seguir direto pra [`pipeline/entrypoint.md`](../pipeline/entrypoint.md) com a primeira tarefa real do projeto — o bootstrap só prepara o destino, não implementa nada.
+Go straight to [`pipeline/entrypoint.md`](../pipeline/entrypoint.md) with the project's first real task — bootstrap only prepares the destination, it doesn't implement anything.
 
-## Detecção (pros harness adapters)
+## Detection (for harness adapters)
 
-Antes de disparar este wizard, checar se o projeto já tem destino de SDD:
-1. Existe `.sdd/` na raiz do repo do projeto? → já bootstrapado, modo embutido.
-2. Existe `../<nome-do-repo>-sdd/` (pasta irmã do repo)? → já bootstrapado, modo separado.
-3. Nenhum dos dois → disparar este wizard.
+Before triggering this wizard, check whether the project already has an SDD destination:
+1. Does `.sdd/` exist at the root of the project's repo? → already bootstrapped, embedded mode.
+2. Does `../<repo-name>-sdd/` exist (sibling folder of the repo)? → already bootstrapped, separate mode.
+3. Neither → trigger this wizard.

@@ -1,54 +1,54 @@
-# Escrevendo specs pro Obsidian
+# Writing specs for Obsidian
 
-Toda spec produzida pelo `pipeline/spec-template.md` segue estas convenções, pra ser lida confortavelmente num vault Obsidian (graph view, backlinks, properties, Templater).
+Every spec produced from `pipeline/spec-template.md` follows these conventions, so it can be read comfortably in an Obsidian vault (graph view, backlinks, properties, Templater).
 
 ## Frontmatter / Properties
 
-Todo `spec.md` começa com YAML frontmatter:
+Every `spec.md` starts with YAML frontmatter:
 
 ```yaml
 ---
-status: em-andamento   # em-andamento | concluida | pausada
-projeto: <nome-do-projeto>
-tarefa: <slug-da-tarefa>
-classe: feature         # fix | feature | big-feature
-criada: YYYY-MM-DD
+status: in-progress   # in-progress | done | paused
+project: <project-name>
+task: <task-slug>
+class: feature         # fix | feature | big-feature
+created: YYYY-MM-DD
 ---
 ```
 
-`status` e `classe` são os campos que mais valem a pena filtrar/consultar depois (ex. via Dataview, se o vault tiver o plugin) — manter atualizados, não só na criação.
+`status` and `class` are the fields most worth filtering/querying later (e.g. via Dataview, if the vault has the plugin) — keep them updated, not just at creation.
 
 ## Wikilinks
 
-Referências a outras notas do mesmo destino de SDD (outra spec, uma nota de decisão, uma nota de contexto do projeto) usam `[[nome-da-nota]]`, não link relativo de markdown (ex.: `[nome](../caminho.md)`). Isso é o que alimenta o graph view e os backlinks do Obsidian.
+References to other notes in the same SDD destination (another spec, a decision note, a project context note) use `[[note-name]]`, not a relative markdown link (e.g. `[name](../path.md)`). That's what feeds Obsidian's graph view and backlinks.
 
-Links pra fora do vault (ex.: pra este repositório Excalibur, pra um arquivo de código) continuam como link markdown normal — wikilink é só entre notas do mesmo vault.
+Links outside the vault (e.g. to this Excalibur repository, to a code file) stay as normal markdown links — wikilinks are only between notes in the same vault.
 
-## Estrutura de vault
+## Vault structure
 
-O destino do SDD de um projeto (ver [`bootstrap/entrypoint.md`](../bootstrap/entrypoint.md)) segue:
+A project's SDD destination (see [`bootstrap/entrypoint.md`](../bootstrap/entrypoint.md)) follows:
 
 ```
-<destino>/
+<destination>/
   specs/
-    <repo>/<tarefa>/spec.md
+    <repo>/<task>/spec.md
   Templates/
-    spec-template.md      cópia do pipeline/spec-template.md, usada por Templater/QuickAdd
+    spec-template.md      copy of pipeline/spec-template.md, used by Templater/QuickAdd
 ```
 
-A pasta `Templates/` existe pra permitir criar uma spec nova de dentro do próprio Obsidian (comando "Insert Template" ou QuickAdd), sem depender do agente de IA pra copiar o template manualmente.
+The `Templates/` folder exists to allow creating a new spec from inside Obsidian itself ("Insert Template" command or QuickAdd), without depending on the AI agent to copy the template manually.
 
 ## Callouts
 
-Seções que merecem destaque visual usam callout em vez de só um header:
+Sections that deserve visual emphasis use a callout instead of just a header:
 
-- Decisão fechada: `> [!note] Decisão`
-- Risco ou pendência bloqueante: `> [!warning] Em aberto`
-- Algo que já deu errado uma vez e não deve se repetir: `> [!danger] Cuidado`
+- Closed decision: `> [!note] Decision`
+- Blocking risk or open item: `> [!warning] Open`
+- Something that already went wrong once and shouldn't repeat: `> [!danger] Careful`
 
-Exemplo:
+Example:
 
 ```markdown
-> [!warning] Em aberto
-> Mecanismo de override da reasoning-chain ainda não testado neste projeto.
+> [!warning] Open
+> reasoning-chain override mechanism not yet tested on this project.
 ```

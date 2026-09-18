@@ -1,30 +1,30 @@
-# Estrutura do repositório
+# Repository structure
 
 ```
 Excalibur/
-  rules/            regras sobre o próprio Excalibur (este arquivo e os vizinhos dele)
-  pipeline/          metodologia de implementação, harness-agnóstica e projeto-agnóstica
-  reflection/         cadeia de raciocínio e regras de quando parar/perguntar
-  bootstrap/          wizard de onboarding: cria o destino de SDD de um projeto novo
+  rules/            rules about Excalibur itself (this file and its neighbors)
+  pipeline/          implementation methodology, harness-agnostic and project-agnostic
+  reflection/         reasoning chain and rules for when to pause/ask
+  bootstrap/          onboarding wizard: creates a new project's SDD destination
   harnesses/
-    <harness>/         adapter fino do harness — só "quando disparar" + ponteiro pro resto
+    <harness>/         thin harness adapter — just "when to trigger" + pointer to the rest
   projects/
-    solaria/.contexto/   contexto legado da Solaria — não usar como referência de projeto novo, ver nota abaixo
+    solaria/.contexto/   Solaria's legacy context — do not use as a reference for a new project, see note below
 ```
 
-## Camadas e onde cada coisa vive
+## Layers and where each thing lives
 
-| Camada | Onde | Regra pra decidir se algo entra aqui |
+| Layer | Where | Rule for deciding if something belongs here |
 |---|---|---|
-| `rules/` | raiz | Regras sobre como usar/manter o Excalibur em si, incluindo como escrever skills, specs (Obsidian) e scripts. |
-| `pipeline/` | raiz | Processo de implementação assumindo que o SDD do projeto já existe (grillme, classificação, spec, checklist). |
-| `reflection/` | raiz | Como pensar ao produzir uma spec — cadeia de raciocínio padrão e quando parar/perguntar. Não é "o que fazer", é "como decidir". |
-| `bootstrap/` | raiz | Onboarding de projeto novo — roda uma vez, decide onde o SDD do projeto vai morar. |
-| `harnesses/<harness>/` | raiz | Só o adapter (gatilho + ponteiro). Nunca duplicar conteúdo de `pipeline/`/`reflection/`/`bootstrap/`. |
-| `projects/` | raiz | **Legado.** Projetos não vivem mais dentro do Excalibur — `bootstrap/` materializa o SDD deles embutido no próprio repo ou num repo separado. `projects/solaria/` continua aqui até ser migrado (tarefa futura). |
+| `rules/` | root | Rules about how to use/maintain Excalibur itself, including how to write skills, specs (Obsidian), and scripts. |
+| `pipeline/` | root | Implementation process assuming the project's SDD already exists (grillme, classification, spec, checklist). |
+| `reflection/` | root | How to think when producing a spec — standard reasoning chain and when to pause/ask. Not "what to do", but "how to decide". |
+| `bootstrap/` | root | New-project onboarding — runs once, decides where the project's SDD will live. |
+| `harnesses/<harness>/` | root | Just the adapter (trigger + pointer). Never duplicate content from `pipeline/`/`reflection/`/`bootstrap/`. |
+| `projects/` | root | **Legacy.** Projects no longer live inside Excalibur — `bootstrap/` materializes their SDD embedded in the project's own repo or in a separate repo. `projects/solaria/` stays here until migrated (future task). |
 
-## Por que a metodologia foi dividida em `pipeline/` e `reflection/`
+## Why the methodology was split into `pipeline/` and `reflection/`
 
-`pipeline/` é sequência de processo ("primeiro grillme, depois classificar, depois spec"). `reflection/` é sobre como pensar em cada etapa dessa sequência ("qual cadeia de raciocínio seguir ao escrever a spec", "quando essa decisão é grande demais pra tomar sozinho") — são preocupações diferentes o suficiente pra não viverem no mesmo lugar.
+`pipeline/` is process sequence ("first grillme, then classify, then spec"). `reflection/` is about how to think at each step of that sequence ("which reasoning chain to follow when writing the spec", "when is this decision too big to make alone") — different enough concerns that they shouldn't live in the same place.
 
-Ver [adding-a-harness.md](adding-a-harness.md) pra como estender a camada de harnesses. Onboarding de projeto novo agora é [`bootstrap/entrypoint.md`](../bootstrap/entrypoint.md), não mais um arquivo em `rules/`.
+See [adding-a-harness.md](adding-a-harness.md) for how to extend the harness layer. New-project onboarding is now [`bootstrap/entrypoint.md`](../bootstrap/entrypoint.md), no longer a file in `rules/`.

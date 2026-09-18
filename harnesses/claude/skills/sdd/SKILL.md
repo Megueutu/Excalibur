@@ -5,26 +5,26 @@ description: Use before implementing, fixing, or changing anything in any projec
 
 # SDD (Claude adapter)
 
-Este arquivo é o adapter Claude do processo SDD deste Excalibur. Ele não contém a metodologia em si — só o suficiente pra disparar no momento certo e apontar pro conteúdo compartilhado.
+This file is the Claude adapter for this Excalibur's SDD process. It doesn't contain the methodology itself — just enough to trigger at the right time and point to the shared content.
 
-## Quando disparar
+## When to trigger
 
-Sempre que o pedido for implementar, corrigir ou mudar algo em algum repo/projeto — não para perguntas simples, leitura de código, ou dúvidas conceituais.
+Whenever the request is to implement, fix, or change something in some repo/project — not for simple questions, reading code, or conceptual doubts.
 
-## O que fazer
+## What to do
 
-1. Identificar o repo do projeto sendo trabalhado. Checar se ele já tem um destino de SDD (ver "Detecção" em [`bootstrap/entrypoint.md`](../../../../bootstrap/entrypoint.md#detecção-pros-harness-adapters)):
-   - Sem destino ainda → seguir [`bootstrap/entrypoint.md`](../../../../bootstrap/entrypoint.md) primeiro. Não pular pra implementação antes disso.
-   - Já tem destino → seguir direto pro passo 2.
-2. Ler, nesta ordem:
-   - [`pipeline/entrypoint.md`](../../../../pipeline/entrypoint.md) — processo completo (grillme, classificação, onde ficam spec/análise).
-   - [`reflection/reasoning-chain.md`](../../../../reflection/reasoning-chain.md) — cadeia de raciocínio a seguir ao escrever a spec.
-   - `orientacoes.md` (ou equivalente, se existir) dentro do destino de SDD do projeto (`.sdd/` embutido ou `<repo>-sdd/` separado).
-3. Seguir o processo descrito em [`pipeline/entrypoint.md`](../../../../pipeline/entrypoint.md) estritamente, incluindo parar pra pedir `/grill-me` antes de qualquer exploração de código.
+1. Identify the project's repo being worked on. Check whether it already has an SDD destination (see "Detection" in [`bootstrap/entrypoint.md`](../../../../bootstrap/entrypoint.md#detection-for-harness-adapters)):
+   - No destination yet → follow [`bootstrap/entrypoint.md`](../../../../bootstrap/entrypoint.md) first. Don't skip to implementation before that.
+   - Already has a destination → go straight to step 2.
+2. Read, in this order:
+   - [`pipeline/entrypoint.md`](../../../../pipeline/entrypoint.md) — full process (grillme, classification, where spec/analysis live).
+   - [`reflection/reasoning-chain.md`](../../../../reflection/reasoning-chain.md) — reasoning chain to follow when writing the spec.
+   - `guidelines.md` (or equivalent, if it exists) inside the project's SDD destination (embedded `.sdd/` or separate `<repo>-sdd/`).
+3. Follow the process described in [`pipeline/entrypoint.md`](../../../../pipeline/entrypoint.md) strictly, including stopping to ask for `/grill-me` before any code exploration.
 
-## Referências
+## References
 
-- Metodologia (compartilhada, não editar aqui): [`pipeline/`](../../../../pipeline/) e [`reflection/`](../../../../reflection/)
-- Onboarding de projeto novo: [`bootstrap/`](../../../../bootstrap/)
-- Regras do projeto atual: dentro do destino de SDD dele (`.sdd/` ou `<repo>-sdd/`)
-- Como este repo é organizado: [`rules/structure.md`](../../../../rules/structure.md)
+- Methodology (shared, don't edit here): [`pipeline/`](../../../../pipeline/) and [`reflection/`](../../../../reflection/)
+- New project onboarding: [`bootstrap/`](../../../../bootstrap/)
+- Current project's rules: inside its SDD destination (`.sdd/` or `<repo>-sdd/`)
+- How this repo is organized: [`rules/structure.md`](../../../../rules/structure.md)

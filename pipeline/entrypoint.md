@@ -1,41 +1,41 @@
-# Entrypoint — o que fazer ao receber um pedido de implementação
+# Entrypoint — what to do when receiving an implementation request
 
-Disparado pelo adapter SDD do harness em uso (ver `harnesses/<harness>/`) sempre que o pedido é implementar/corrigir/mudar algo em algum repo — não para perguntas simples, leitura de código, ou dúvidas conceituais.
+Triggered by the SDD adapter of the harness in use (see `harnesses/<harness>/`) whenever the request is to implement/fix/change something in some repo — not for simple questions, reading code, or conceptual doubts.
 
-## 1. Grillme (entrevista) — parar e pedir, não tentar chamar sozinho
+## 1. Grillme (interview) — stop and ask, don't try to call it yourself
 
-`grill-me` tem `disable-model-invocation: true` — **não pode ser chamado via Skill tool de jeito nenhum**, nem em tentativa alternativa. Não tentar `Skill({skill: "grill-me"})`, não tentar replicar a entrevista por conta própria fingindo que é o grill-me.
+`grill-me` has `disable-model-invocation: true` — **it cannot be called via the Skill tool under any circumstance**, not even as a fallback attempt. Don't try `Skill({skill: "grill-me"})`, don't try to replicate the interview yourself pretending to be grill-me.
 
-Passo obrigatório, antes de explorar o repo ou tocar em qualquer arquivo:
+Mandatory step, before exploring the repo or touching any file:
 
-1. Parar e pedir explicitamente pro usuário rodar `/grill-me` com a tarefa.
-2. Esperar a resposta — não seguir para exploração de código, leitura de repo, ou classificação (passo 2) enquanto isso não acontecer.
-3. Só depois que o usuário confirmar que a entrevista terminou (ou disser explicitamente pra pular essa etapa) é que a pipeline continua.
+1. Stop and explicitly ask the user to run `/grill-me` with the task.
+2. Wait for the response — don't move on to code exploration, repo reading, or classification (step 2) until that happens.
+3. Only after the user confirms the interview is done (or explicitly says to skip this step) does the pipeline continue.
 
-Isso vale mesmo que a tarefa pareça simples o suficiente pra "só seguir" — a decisão de pular a entrevista é do usuário, não uma inferência de que "não precisa".
+This holds even if the task seems simple enough to "just proceed" — the decision to skip the interview is the user's, not an inference that "it's not needed".
 
-## 2. Classificar a tarefa
+## 2. Classifying the task
 
-Perguntar (ou inferir com alta confiança e confirmar em uma frase) qual das três:
+Ask (or infer with high confidence and confirm in one sentence) which of the three it is:
 
-| Classe | Critério | O que muda no processo |
+| Class | Criterion | What changes in the process |
 |---|---|---|
-| **Fix** | Bug pontual, comportamento errado com correção óbvia, sem decisão de design em aberto | Sem spec formal. Só o checklist final (ver [review-checklist.md](review-checklist.md)) antes de considerar concluído. |
-| **Feature** | Funcionalidade nova ou mudança de comportamento com escopo claro, mas com decisões de design reais (onde entra, como se integra, o que fica de fora) | Spec leve no destino de SDD do projeto (`.sdd/` embutido ou `<repo>-sdd/` separado, ver [`bootstrap/entrypoint.md`](../bootstrap/entrypoint.md)), em `specs/<repo>/<tarefa>/spec.md` (ver [spec-template.md](spec-template.md)) antes de codar. |
-| **Big feature** | Toca múltiplos módulos/repos, tem sequenciamento (fases), ou risco real de retrabalho se a abordagem errada for escolhida | Spec completa com roadmap faseado + checklist de análise por fase. Considerar quebrar em specs por fase se ficar grande demais pra um arquivo só. |
+| **Fix** | A specific bug, wrong behavior with an obvious fix, no open design decision | No formal spec. Just the final checklist (see [review-checklist.md](review-checklist.md)) before considering it done. |
+| **Feature** | New functionality or behavior change with clear scope, but with real design decisions (where it fits in, how it integrates, what's out of scope) | Light spec in the project's SDD destination (embedded `.sdd/` or separate `<repo>-sdd/`, see [`bootstrap/entrypoint.md`](../bootstrap/entrypoint.md)), at `specs/<repo>/<task>/spec.md` (see [spec-template.md](spec-template.md)) before coding. |
+| **Big feature** | Touches multiple modules/repos, has sequencing (phases), or real risk of rework if the wrong approach is chosen | Full spec with phased roadmap + per-phase analysis checklist. Consider splitting into per-phase specs if a single file gets too large. |
 
-Perguntar diretamente se não estiver claro qual classe — não adivinhar em caso de dúvida real (ver [when-to-pause.md](../reflection/when-to-pause.md)).
+Ask directly if it's not clear which class applies — don't guess when genuinely in doubt (see [when-to-pause.md](../reflection/when-to-pause.md)).
 
-## 3. Análise profunda — quando
+## 3. Deep analysis — when
 
-Perguntar explicitamente se o usuário quer uma análise profunda antes de implementar (ex.: mapear todos os call sites, ler múltiplos repos relacionados, considerar efeitos colaterais em outros serviços) sempre que a tarefa for **Feature** ou **Big feature**. Em **Fix**, só fazer se o bug não tiver causa óbvia de cara.
+Explicitly ask whether the user wants a deep analysis before implementing (e.g.: mapping all call sites, reading multiple related repos, considering side effects on other services) whenever the task is **Feature** or **Big feature**. For **Fix**, only do this if the bug doesn't have an obvious cause up front.
 
-## 4. Onde os arquivos vivem
+## 4. Where files live
 
-- **Specs e análise da tarefa**: no destino de SDD do projeto (`.sdd/` embutido ou `<repo>-sdd/` separado, ver [`bootstrap/entrypoint.md`](../bootstrap/entrypoint.md)), em `specs/<repo>/<slug-da-tarefa>/`. O objetivo é não deixar rastro de planejamento assistido por IA no histórico do repo sendo trabalhado.
-- **Definição do processo** (este pipeline): `pipeline/` — compartilhado entre todos os projetos e harnesses. A cadeia de raciocínio usada ao produzir specs vive em `reflection/`, separada deste pipeline.
-- **Regras sempre-lidas**: apontadas pelo `orientacoes.md` (se existir) dentro do destino de SDD do projeto.
+- **Task specs and analysis**: in the project's SDD destination (embedded `.sdd/` or separate `<repo>-sdd/`, see [`bootstrap/entrypoint.md`](../bootstrap/entrypoint.md)), at `specs/<repo>/<task-slug>/`. The goal is to leave no trace of AI-assisted planning in the history of the repo being worked on.
+- **Process definition** (this pipeline): `pipeline/` — shared across all projects and harnesses. The reasoning chain used when producing specs lives in `reflection/`, separate from this pipeline.
+- **Always-read rules**: pointed to by `guidelines.md` (if it exists) inside the project's SDD destination.
 
-## 5. Depois de concluir a implementação
+## 5. After finishing the implementation
 
-Rodar o [review-checklist.md](review-checklist.md) antes de anunciar a tarefa como pronta — isso vale pras três classes, só muda a profundidade.
+Run the [review-checklist.md](review-checklist.md) before announcing the task as done — this applies to all three classes, only the depth changes.

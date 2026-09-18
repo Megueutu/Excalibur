@@ -1,29 +1,29 @@
-# Adicionando um harness novo
+# Adding a new harness
 
-Hoje só [`harnesses/claude/`](../harnesses/claude/) existe e está funcional. Codex e Cursor ainda não têm adapter — este arquivo documenta como construir um quando for a hora, sem ter sido testado ainda em nenhum dos dois.
+Today only [`harnesses/claude/`](../harnesses/claude/) exists and is functional. Codex and Cursor don't have an adapter yet — this file documents how to build one when the time comes, though untested on either so far.
 
-## Regra geral do adapter
+## General adapter rule
 
-Um adapter de harness **nunca** contém metodologia — só:
-1. Quando disparar (o gatilho nativo daquele harness).
-2. Um ponteiro pra `pipeline/entrypoint.md`, `reflection/`, e (se o projeto ainda não tiver destino de SDD) pra `bootstrap/entrypoint.md`.
+A harness adapter **never** contains methodology — only:
+1. When to trigger (that harness's native trigger).
+2. A pointer to `pipeline/entrypoint.md`, `reflection/`, and (if the project doesn't yet have an SDD destination) to `bootstrap/entrypoint.md`.
 
-Se o adapter começar a explicar o processo em vez de apontar pra ele, ele cresceu demais — mover o conteúdo de volta pra `pipeline/`/`reflection/` se for genérico, ou pro destino de SDD do projeto em questão (`.sdd/` embutido ou `<repo>-sdd/` separado, ver [`bootstrap/entrypoint.md`](../bootstrap/entrypoint.md)) se for específico.
+If the adapter starts explaining the process instead of pointing to it, it has grown too large — move the content back to `pipeline/`/`reflection/` if it's generic, or to that project's SDD destination (embedded `.sdd/` or separate `<repo>-sdd/`, see [`bootstrap/entrypoint.md`](../bootstrap/entrypoint.md)) if it's specific.
 
-Usar [`harnesses/claude/skills/sdd/SKILL.md`](../harnesses/claude/skills/sdd/SKILL.md) como referência de tamanho/formato ao construir os próximos.
+Use [`harnesses/claude/skills/sdd/SKILL.md`](../harnesses/claude/skills/sdd/SKILL.md) as the size/format reference when building the next ones.
 
 ## Codex
 
-- Formato nativo: `AGENTS.md` na raiz do repo sendo trabalhado (Codex lê hierarquicamente).
-- Como o Excalibur não é o repo sendo trabalhado, o `AGENTS.md` do adapter (`harnesses/codex/AGENTS.md`) serve de modelo a copiar/referenciar no repo do projeto real, ou a colar no `AGENTS.md` desse repo — decidir a mecânica exata (cópia manual vs. referência) quando for implementar, não assumir agora.
-- Conteúdo: mesmo gatilho e mesmos ponteiros do adapter Claude, adaptados pro formato de instrução direta que o Codex espera (sem frontmatter de skill).
+- Native format: `AGENTS.md` at the root of the repo being worked on (Codex reads it hierarchically).
+- Since Excalibur isn't the repo being worked on, the adapter's `AGENTS.md` (`harnesses/codex/AGENTS.md`) serves as a model to copy/reference into the real project's repo, or to paste into that repo's `AGENTS.md` — decide the exact mechanics (manual copy vs. reference) at implementation time, don't assume now.
+- Content: same trigger and same pointers as the Claude adapter, adapted to the direct-instruction format Codex expects (no skill frontmatter).
 
 ## Cursor
 
-- Formato nativo: `.cursor/rules/*.mdc` com frontmatter (`description`, `globs`, `alwaysApply`).
-- `harnesses/cursor/rules/sdd.mdc` — mesmo gatilho/ponteiros, frontmatter no formato `.mdc`.
-- Cursor Rules não tem um equivalente direto a "Skill tool" com invocação sob demanda — checar se `alwaysApply: true` ou um gatilho por glob é a melhor aproximação antes de finalizar.
+- Native format: `.cursor/rules/*.mdc` with frontmatter (`description`, `globs`, `alwaysApply`).
+- `harnesses/cursor/rules/sdd.mdc` — same trigger/pointers, frontmatter in `.mdc` format.
+- Cursor Rules has no direct equivalent to an on-demand "Skill tool" — check whether `alwaysApply: true` or a glob-based trigger is the best approximation before finalizing.
 
-## Ao terminar um adapter novo
+## When finishing a new adapter
 
-Atualizar este arquivo removendo a ressalva de "não testado" e apontando pro adapter como referência, do jeito que `harnesses/claude/` já é hoje.
+Update this file, removing the "untested" caveat and pointing to the adapter as a reference, the way `harnesses/claude/` already is today.

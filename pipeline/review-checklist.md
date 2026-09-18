@@ -1,28 +1,28 @@
-# Checklist final — antes de anunciar a tarefa como concluída
+# Final checklist — before announcing the task as done
 
-Isso não é leitura de referência — é uma etapa de execução obrigatória, com saída visível. "Já li o arquivo antes" não conta como tê-lo rodado.
+This is not reference reading — it's a mandatory execution step, with visible output. "I already read the file earlier" doesn't count as having run it.
 
-**Como executar, sem exceção:**
-1. Rodar `git diff` (ou equivalente) sobre tudo que foi mudado — olhar o diff de verdade, não confiar na memória do que foi escrito.
-2. Em **Feature**/**Big feature**: usar o Agent tool pra abrir um subagente de revisão dedicado, passando o diff e este arquivo, e pedir um veredito item a item — um agente fresco sem o viés de "eu já acho que terminei" pega mais coisa. Em **Fix**, fazer isso inline mesmo, mas ainda de forma explícita.
-3. Escrever a resposta final citando o resultado de cada item abaixo (não precisa ser um relatório longo, mas cada item precisa ter sido de fato checado, não presumido).
+**How to run it, no exceptions:**
+1. Run `git diff` (or equivalent) over everything that changed — look at the actual diff, don't rely on memory of what was written.
+2. On **Feature**/**Big feature**: use the Agent tool to open a dedicated review subagent, passing it the diff and this file, and ask for an item-by-item verdict — a fresh agent without the "I already think I'm done" bias catches more. On **Fix**, do this inline, but still explicitly.
+3. Write the final response citing the result of each item below (doesn't need to be a long report, but each item needs to have actually been checked, not assumed).
 
-Se algum item falhar, corrigir antes de considerar a tarefa concluída — não reportar como pronto com uma ressalva.
+If any item fails, fix it before considering the task done — don't report it as ready with a caveat.
 
-## Comentários em código
-- Nenhum comentário novo deve existir no diff, a menos que o usuário tenha pedido explicitamente naquela tarefa.
-- Se algum comentário foi adicionado "pra facilitar entendimento" sem pedido — remover antes de commitar.
+## Code comments
+- No new comment should exist in the diff, unless the user explicitly asked for it in that task.
+- If a comment was added "to make it easier to understand" without being asked — remove it before committing.
 
-## Rastro de IA
-- `git diff` (ou `grep -ri "claude\|anthropic\|co-authored-by\|generated with"`) sobre tudo que vai ser commitado — nada disso pode aparecer em código, commit, PR ou nome de arquivo. Ver as regras gerais de código do projeto (`padrao-de-codigo.md`, se existir no destino de SDD do projeto — `.sdd/` embutido ou `<repo>-sdd/` separado).
+## AI trail
+- `git diff` (or `grep -ri "claude\|anthropic\|co-authored-by\|generated with"`) over everything about to be committed — none of that can appear in code, commit, PR, or file name. See the project's general code rules (`code-standards.md`, if it exists in the project's SDD destination — embedded `.sdd/` or separate `<repo>-sdd/`).
 
-## Formato de commit/PR
-- Commits seguem as convenções do projeto (`commits.md`, se existir).
-- Se for abrir PR: título e corpo seguem as convenções do projeto (`pr.md`, se existir) — checar também se já existe uma PR aberta pra essa branch antes de abrir outra.
+## Commit/PR format
+- Commits follow the project's conventions (`commits.md`, if it exists).
+- If opening a PR: title and body follow the project's conventions (`pr.md`, if it exists) — also check whether a PR is already open for this branch before opening another one.
 
-## Escopo
-- Nada foi implementado além do que foi pedido (mínimo retrabalho) — se algo "a mais" foi feito por parecer relacionado, decidir se remove ou pergunta antes de manter.
-- Se o repo tocado exige cuidado extra (ver inventário de repos do projeto, se existir), reconferir que a mudança é mínima e cirúrgica.
+## Scope
+- Nothing was implemented beyond what was asked (minimum rework) — if something "extra" was done because it seemed related, decide whether to remove it or ask before keeping it.
+- If the repo touched requires extra care (see the project's repo inventory, if it exists), double-check that the change is minimal and surgical.
 
 ## Spec (Feature/Big feature)
-- O arquivo `spec.md` no destino de SDD do projeto (`.sdd/` embutido ou `<repo>-sdd/` separado, ver [`bootstrap/entrypoint.md`](../bootstrap/entrypoint.md)), em `specs/<repo>/<tarefa>/spec.md`, reflete o que foi de fato implementado (atualizar se o plano mudou no meio do caminho) — não deixar a spec desatualizada em relação ao código.
+- The `spec.md` file in the project's SDD destination (embedded `.sdd/` or separate `<repo>-sdd/`, see [`bootstrap/entrypoint.md`](../bootstrap/entrypoint.md)), at `specs/<repo>/<task>/spec.md`, reflects what was actually implemented (update it if the plan changed along the way) — don't leave the spec out of sync with the code.
