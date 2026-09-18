@@ -1,4 +1,4 @@
-# Template — `.contexto/specs/<repo>/<tarefa>/spec.md`
+# Template — `projects/<project>/.contexto/specs/<repo>/<tarefa>/spec.md`
 
 Copiar essa estrutura ao criar a spec de uma tarefa **Feature** ou **Big feature** (ver critério em [entrypoint.md](entrypoint.md)). Não preencher seções que não se aplicam — não é formulário obrigatório campo a campo, é estrutura de referência.
 

@@ -11,7 +11,7 @@ Regra central: **decisão sem certeza absoluta não é uma decisão a se tomar s
 | "Já fiz demais pra voltar e perguntar agora" | Sunk cost não é motivo pra continuar por um caminho errado — é mais barato parar agora do que terminar e refazer. |
 | "Isso é meio óbvio, não preciso confirmar" | Óbvio pra quem? Se a tarefa foi classificada como Feature/Big feature (ver [entrypoint.md](entrypoint.md)), o próprio fato de ter decisão de design em aberto já é sinal de que "óbvio" pode não ser. |
 | "Vou implementar dos dois jeitos e ele escolhe depois" | Isso é retrabalho disfarçado de cautela — pergunta antes, não implementa em duplicidade. |
-| "Essa lib/serviço deve seguir esse padrão porque os outros seguem" | Assumir simetria entre repos sem checar é exatamente o tipo de erro que já aconteceu antes (ex.: `database-console` presumido vazio quando não estava — ver [repos.md](repos.md)). Verificar antes de assumir. |
+| "Essa lib/serviço deve seguir esse padrão porque os outros seguem" | Assumir simetria entre repos/módulos sem checar é um erro recorrente — ver o inventário de repos do projeto (`.contexto/repos.md`, se existir) antes de assumir. Verificar antes de assumir. |
 
 ## O que fazer quando bate um desses sinais
 
