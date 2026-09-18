@@ -8,6 +8,8 @@ Before asking anything, confirm the project doesn't already have an SDD destinat
 
 ## 2. Ask: adapt an existing project or start from scratch?
 
+This is a context-gathering step that shapes how you read the project before the manifest questions start in step 3 — it is not itself one of the manifest-driven questions.
+
 - **Adapt existing**: the project already has code, possibly already has some documentation/process — read what exists (`README.md`, `CONTRIBUTING.md`, etc.) before proposing the structure, instead of just overwriting it.
 - **From scratch**: new project or one with no defined process yet — go straight to step 3.
 
