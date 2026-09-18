@@ -8,6 +8,7 @@ Excalibur/
   bootstrap/          onboarding wizard: manifest + question source files + init.sh
     manifest.yaml       declares the onboarding questions and their file copies
     onboarding/          source files copied verbatim per answer (github/, review-depth/, commit-convention/)
+    scripts/             git/GitHub detection and setup helpers (check-gh, install-gh-<os>, check/init-git-repo, create-github-repo)
   harnesses/
     <harness>/         thin harness adapter — just "when to trigger" + pointer to the rest
       skills/            <harness>'s skill-invocation adapters (e.g. sdd-init, sdd, for Claude)
