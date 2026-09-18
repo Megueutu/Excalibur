@@ -1,0 +1,65 @@
+version: 1
+
+questions:
+  - id: destination
+    prompt: "Where should this project's SDD live?"
+    options:
+      - value: embedded
+        label: "Embedded (.sdd/ at the repo root)"
+      - value: separate
+        label: "Separate repository (<repo>-sdd)"
+
+  - id: github_preset
+    prompt: "How should git/GitHub be handled on this project?"
+    options:
+      - value: conservative
+        label: "Conservative — never merge alone, always PR"
+        copy:
+          source: onboarding/github/conservative.md
+          dest: git.md
+      - value: direct
+        label: "Direct — push straight to the branch, PR only if asked"
+        copy:
+          source: onboarding/github/direct.md
+          dest: git.md
+      - value: custom
+        label: "Specify in free text"
+
+  - id: language
+    prompt: "What language should this project's specs be written in?"
+    options:
+      - value: en
+        label: "English (canonical source, no extra step)"
+      - value: other
+        label: "Another language (inferred from this conversation, or asked if unclear)"
+        translate: true
+
+  - id: review_depth
+    prompt: "Default depth for the final review checklist?"
+    options:
+      - value: light
+        label: "Light"
+        copy:
+          source: onboarding/review-depth/light.md
+          dest: review-checklist-override.md
+      - value: standard
+        label: "Standard (no override)"
+      - value: strict
+        label: "Strict"
+        copy:
+          source: onboarding/review-depth/strict.md
+          dest: review-checklist-override.md
+
+  - id: commit_convention
+    prompt: "Which commit/branch convention should this project adopt?"
+    options:
+      - value: conventional
+        label: "Conventional Commits"
+        copy:
+          source: onboarding/commit-convention/conventional.md
+          dest: commit-convention.md
+      - value: free
+        label: "Free-form"
+        copy:
+          source: onboarding/commit-convention/free.md
+          dest: commit-convention.md
