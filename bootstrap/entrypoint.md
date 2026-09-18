@@ -2,36 +2,39 @@
 
 Runs once per project, before any implementation task (`pipeline/entrypoint.md`) can start. Triggered by the harness adapter in use (see `harnesses/<harness>/`) when it doesn't find an SDD destination already configured for the project (see "Detection" below).
 
-## 1. Ask: adapt an existing project or start from scratch?
+## 1. Check detection first
+
+Before asking anything, confirm the project doesn't already have an SDD destination (see "Detection" below). If it does, stop — don't re-run onboarding on top of an existing destination.
+
+## 2. Ask: adapt an existing project or start from scratch?
 
 - **Adapt existing**: the project already has code, possibly already has some documentation/process — read what exists (`README.md`, `CONTRIBUTING.md`, etc.) before proposing the structure, instead of just overwriting it.
-- **From scratch**: new project or one with no defined process yet — go straight to question 2.
+- **From scratch**: new project or one with no defined process yet — go straight to step 3.
 
-## 2. Ask: where should the SDD be materialized?
+## 3. Ask every question in `manifest.yaml`, in order
 
-| Option | Where it lives | When it makes sense |
-|---|---|---|
-| **Embedded** | `.sdd/` at the root of the project's own repo | Team already OK with AI-assisted planning being version-tracked alongside the code. |
-| **Separate** | Sibling repo `<repo-name>-sdd`, outside the project's repo | Wants to keep the product repo's history free of AI artifacts (see the principle in `code-standards.md`, when it exists for the project). |
+Read [`bootstrap/manifest.yaml`](manifest.yaml). For each entry in `questions`, ask its `prompt` using its `options`' `label`s verbatim — don't invent a question that isn't in the manifest, don't skip one that is. For the `language` question, try inferring the answer from the language the user is using in this conversation before asking explicitly.
 
-## 3. GitHub preset
+## 4. Resolve answers into a copy-list file
 
-Ask how to handle git/GitHub on this project:
-- **Option A** — [`presets/github/conservative.md`](presets/github/conservative.md): never merge alone, always PR.
-- **Option B** — [`presets/github/direct.md`](presets/github/direct.md): push directly to the branch, PR only if asked.
-- **Option C — Specify**: user describes the rules in free text; that text becomes `git.md` in the destination, instead of a preset.
+For each answered question, look at the chosen option in the manifest:
+- If it has a `copy` block, add one `source<TAB>dest` line (using `copy.source` and `copy.dest` verbatim) to a temporary copy-list file.
+- If it has no `copy` block and no `translate` flag (e.g. `destination`, `review_depth: standard`, or `github_preset: custom`), it contributes no line — `destination` only decides the target path in step 5, and `custom` means the user's free text becomes `git.md` directly, without going through the copy list.
+- If it has `translate: true` (the `language: other` option), don't add a copy-list line — remember to run step 6 after step 5.
 
-## 4. Run the script
-
-With the three answers in hand, call:
+## 5. Run the script
 
 ```bash
-bootstrap/init.sh <embedded|separate> <target-path> [project-name]
+bootstrap/init.sh <embedded|separate> <target-path> [project-name] [copy-list-file]
 ```
 
-This creates the destination structure (specs/, Templates/, reflection/), copies spec-template.md into Templates/ and when-to-pause.md into reflection/, and prints a message asking you to manually copy the chosen GitHub preset as `git.md` — see the full script contract in `init.sh`'s header.
+This creates the destination structure (specs/, Templates/, reflection/) and copies every pair from the copy-list file on top of the two files it always copies (`pipeline/spec-template.md`, `reflection/when-to-pause.md`) — see the full contract in `init.sh`'s header. If `github_preset` was answered `custom`, write the user's free text to `git.md` in the destination yourself, after the script runs.
 
-## 5. After running it
+## 6. Translate, only if `language` was answered `other`
+
+Invoke the `translator` subagent (see `harnesses/claude/agents/translator.md` for the Claude adapter) against the destination's `Templates/` and `reflection/` folders, with the language resolved in step 3. This runs exactly once, right after step 5 — never automatically again later.
+
+## 7. After running it
 
 Go straight to [`pipeline/entrypoint.md`](../pipeline/entrypoint.md) with the project's first real task — bootstrap only prepares the destination, it doesn't implement anything.
 
