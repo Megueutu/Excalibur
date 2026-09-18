@@ -14,7 +14,7 @@ Se algum item falhar, corrigir antes de considerar a tarefa concluída — não 
 - Se algum comentário foi adicionado "pra facilitar entendimento" sem pedido — remover antes de commitar.
 
 ## Rastro de IA
-- `git diff` (ou `grep -ri "claude\|anthropic\|co-authored-by\|generated with"`) sobre tudo que vai ser commitado — nada disso pode aparecer em código, commit, PR ou nome de arquivo. Ver as regras gerais de código do projeto (`padrao-de-codigo.md`, se existir em `projects/<project>/.contexto/`).
+- `git diff` (ou `grep -ri "claude\|anthropic\|co-authored-by\|generated with"`) sobre tudo que vai ser commitado — nada disso pode aparecer em código, commit, PR ou nome de arquivo. Ver as regras gerais de código do projeto (`padrao-de-codigo.md`, se existir no destino de SDD do projeto — `.sdd/` embutido ou `<repo>-sdd/` separado).
 
 ## Formato de commit/PR
 - Commits seguem as convenções do projeto (`commits.md`, se existir).
@@ -25,4 +25,4 @@ Se algum item falhar, corrigir antes de considerar a tarefa concluída — não 
 - Se o repo tocado exige cuidado extra (ver inventário de repos do projeto, se existir), reconferir que a mudança é mínima e cirúrgica.
 
 ## Spec (Feature/Big feature)
-- O arquivo em `projects/<project>/.contexto/specs/<repo>/<tarefa>/spec.md` reflete o que foi de fato implementado (atualizar se o plano mudou no meio do caminho) — não deixar a spec desatualizada em relação ao código.
+- O arquivo `spec.md` no destino de SDD do projeto (`.sdd/` embutido ou `<repo>-sdd/` separado, ver [`bootstrap/entrypoint.md`](../bootstrap/entrypoint.md)), em `specs/<repo>/<tarefa>/spec.md`, reflete o que foi de fato implementado (atualizar se o plano mudou no meio do caminho) — não deixar a spec desatualizada em relação ao código.

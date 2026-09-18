@@ -21,7 +21,7 @@ Perguntar (ou inferir com alta confiança e confirmar em uma frase) qual das tr�
 | Classe | Critério | O que muda no processo |
 |---|---|---|
 | **Fix** | Bug pontual, comportamento errado com correção óbvia, sem decisão de design em aberto | Sem spec formal. Só o checklist final (ver [review-checklist.md](review-checklist.md)) antes de considerar concluído. |
-| **Feature** | Funcionalidade nova ou mudança de comportamento com escopo claro, mas com decisões de design reais (onde entra, como se integra, o que fica de fora) | Spec leve em `projects/<project>/.contexto/specs/<repo>/<tarefa>/spec.md` (ver [spec-template.md](spec-template.md)) antes de codar. |
+| **Feature** | Funcionalidade nova ou mudança de comportamento com escopo claro, mas com decisões de design reais (onde entra, como se integra, o que fica de fora) | Spec leve no destino de SDD do projeto (`.sdd/` embutido ou `<repo>-sdd/` separado, ver [`bootstrap/entrypoint.md`](../bootstrap/entrypoint.md)), em `specs/<repo>/<tarefa>/spec.md` (ver [spec-template.md](spec-template.md)) antes de codar. |
 | **Big feature** | Toca múltiplos módulos/repos, tem sequenciamento (fases), ou risco real de retrabalho se a abordagem errada for escolhida | Spec completa com roadmap faseado + checklist de análise por fase. Considerar quebrar em specs por fase se ficar grande demais pra um arquivo só. |
 
 Perguntar diretamente se não estiver claro qual classe — não adivinhar em caso de dúvida real (ver [when-to-pause.md](../reflection/when-to-pause.md)).
@@ -32,9 +32,9 @@ Perguntar explicitamente se o usuário quer uma análise profunda antes de imple
 
 ## 4. Onde os arquivos vivem
 
-- **Specs e análise da tarefa**: `projects/<project>/.contexto/specs/<repo>/<slug-da-tarefa>/` — nunca dentro do repositório sendo trabalhado (mesmo que o repo tenha seu próprio `.sdd/`). O objetivo é não deixar rastro de planejamento assistido por IA no histórico do repo sendo trabalhado.
+- **Specs e análise da tarefa**: no destino de SDD do projeto (`.sdd/` embutido ou `<repo>-sdd/` separado, ver [`bootstrap/entrypoint.md`](../bootstrap/entrypoint.md)), em `specs/<repo>/<slug-da-tarefa>/`. O objetivo é não deixar rastro de planejamento assistido por IA no histórico do repo sendo trabalhado.
 - **Definição do processo** (este pipeline): `pipeline/` — compartilhado entre todos os projetos e harnesses. A cadeia de raciocínio usada ao produzir specs vive em `reflection/`, separada deste pipeline.
-- **Regras sempre-lidas**: apontadas pelo `orientacoes.md` do projeto em `projects/<project>/.contexto/orientacoes.md`.
+- **Regras sempre-lidas**: apontadas pelo `orientacoes.md` (se existir) dentro do destino de SDD do projeto.
 
 ## 5. Depois de concluir a implementação
 
