@@ -53,7 +53,10 @@ The user wants a richer onboarding experience, delivered as its own installable 
 ## Roadmap
 
 1. Add `bootstrap/manifest.yaml` with the five questions described above.
-2. Create `bootstrap/onboarding/`, moving the existing GitHub presets into `onboarding/github/` and adding `review-depth/`, `commit-convention/`, and `templates/` (canonical English versions of `pipeline/spec-template.md` and any decision/context templates).
+2. Create `bootstrap/onboarding/`, moving the existing GitHub presets into `onboarding/github/` and adding `review-depth/` and `commit-convention/`.
+
+   > [!note] Deviation from this roadmap item during implementation
+   > No `onboarding/templates/` folder was created. `init.sh` keeps copying `pipeline/spec-template.md` directly instead of a duplicate under `onboarding/` — a second frozen copy would contradict "English is the single frozen source" (see Closed decisions above) by giving the template two places to drift out of sync. `pipeline/spec-template.md` itself already serves as the canonical English source.
 3. Generalize `bootstrap/init.sh` to accept a resolved copy list instead of two fixed `cp` calls.
 4. Split `harnesses/claude/skills/sdd/SKILL.md` into `sdd-init/SKILL.md` (onboarding) and `sdd/SKILL.md` (pipeline, assumes the SDD destination already exists).
 5. Add `harnesses/claude/agents/translator.md`.
