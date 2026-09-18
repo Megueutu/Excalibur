@@ -30,6 +30,8 @@ bootstrap/init.sh <embedded|separate> <target-path> [project-name] [copy-list-fi
 
 This creates the destination structure (specs/, Templates/, reflection/) and copies every pair from the copy-list file on top of the two files it always copies (`pipeline/spec-template.md`, `reflection/when-to-pause.md`) — see the full contract in `init.sh`'s header. If `github_preset` was answered `custom`, write the user's free text to `git.md` in the destination yourself, after the script runs.
 
+In embedded mode there is no `project-name` slot: pass `""` as the 3rd argument if you also need to pass a 4th argument (`copy-list-file`) — `bootstrap/init.sh embedded <target-path> "" <copy-list-file>`. Passing anything non-empty as the 3rd argument in embedded mode is an error.
+
 ## 6. Translate, only if `language` was answered `other`
 
 Invoke the `translator` subagent (see `harnesses/claude/agents/translator.md` for the Claude adapter) against the destination's `Templates/` and `reflection/` folders, with the language resolved in step 3. This runs exactly once, right after step 5 — never automatically again later.

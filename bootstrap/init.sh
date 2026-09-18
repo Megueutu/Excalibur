@@ -19,6 +19,10 @@ fi
 if [[ "$MODE" == "separate" ]]; then
   PROJECT_NAME="${3:-}"
 else
+  if [[ -n "${3:-}" ]]; then
+    echo "Error: embedded mode takes no project-name; pass an empty string as the 3rd argument if you need a 4th (copy-list-file) argument" >&2
+    exit 1
+  fi
   PROJECT_NAME=""
 fi
 COPY_LIST="${4:-}"
