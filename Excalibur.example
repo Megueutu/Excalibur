@@ -1,0 +1,39 @@
+# Excalibur — project configuration (example).
+#
+# The real file is named `Excalibur`, with no extension, at the project root —
+# same idea as a Dockerfile: the parser reads the content, not the name.
+# `excalibur init` writes it; this copy is here as documentation.
+#
+# Root only, because that is where the harness runs, and therefore the one place
+# reachable without resolving a relative path.
+#
+# Safe to edit by hand: `excalibur update` only ever touches `.excalibur/`.
+
+version: 1
+framework_version: 0.1.0
+
+# "defaults" means every question resolved to its default from wizard/manifest.yaml.
+# "customize" means they were answered one by one.
+setup_mode: defaults
+
+answers:
+  destination: embedded          # embedded | separate | external | new_repo
+  github_preset: conservative    # conservative | direct | custom
+  language: en                   # en | other
+  review_depth: standard         # light | standard | strict
+  commit_convention: conventional
+  project_type: app              # app | lib | cli | monorepo
+  stack_language: typescript
+  stack_framework: react
+  stack_ide: vscode
+  testing_policy: case_by_case   # required | never | case_by_case
+  ci_cd: none                    # none | github_actions | other
+  pr_policy: follow_preset       # follow_preset | always | never
+  autonomy: skip_on_fix          # always_ask | skip_on_fix | autonomous
+  obsidian_vault: md_only        # md_only | vault
+  task_class_criteria: ask_when_unsure
+  history_gitignore: ignored     # ignored | versioned
+  history_cleanup: none          # none | scheduled_task | github_actions | hook | manual | own
+
+# Optional: how long `excalibur clean-history` keeps entries before archiving them.
+# history_keep_days: 90

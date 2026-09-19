@@ -1,0 +1,9 @@
+# Dependencies
+node_modules/
+
+# Editor/OS noise
+.DS_Store
+Thumbs.db
+
+# Excalibur installed into a target project (never inside this repo, but harmless to guard)
+.excalibur/

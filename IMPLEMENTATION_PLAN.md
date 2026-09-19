@@ -46,16 +46,16 @@ Legenda: `[ ]` pendente · `[x]` concluído · `[!]` bloqueado (motivo em `IMPLE
 
 ## 5. CLI (`cli/`)
 
-- [ ] 5.1 `package.json` único na raiz + `cli/bin/excalibur.js` com `mri` + `picocolors` + `@clack/prompts` (seções 9, 20)
-- [ ] 5.2 `cli/src/lib/` — resolução base+override, build pro caminho lido pelo harness, paths, YAML mínimo (seções 6, 18)
-- [ ] 5.3 `init` — checagem antes de escrever (padrão `create-vite`, 3 opções) + formulário das 13 perguntas → `.excalibur-answers.yaml` (seções 9, 18)
-- [ ] 5.4 `update` — regrava `.excalibur/`, nunca toca `.excalibur.custom/`, aplica mapa de migração (seções 18, 22)
-- [ ] 5.5 `customize <caminho>` + `.excalibur.custom/manifest.yaml` (seção 18)
-- [ ] 5.6 `check`, `status` (seção 19)
-- [ ] 5.7 `session <flag>`, `reset` (seção 21)
-- [ ] 5.8 `clean-history`, `clean`, `kill-my-self` (seções 17, 19)
-- [ ] 5.9 `.vscode/settings.json` (`files.associations`) + `.vscode/extensions.json` (recomendação de tema de ícone) entregues pelo instalador (seção 18)
-- [ ] 5.10 `Excalibur` (config raiz, YAML sem extensão) escrito ao fim do init (seção 18)
+- [x] 5.1 `package.json` único na raiz + `cli/bin/excalibur.js` com `mri` + `picocolors` + `@clack/prompts` (seções 9, 20)
+- [x] 5.2 `cli/src/lib/` — resolução base+override, build pro caminho lido pelo harness, paths, YAML mínimo (seções 6, 18)
+- [x] 5.3 `init` — checagem antes de escrever (padrão `create-vite`, 3 opções) + formulário das 13 perguntas → `.excalibur-answers.yaml` (seções 9, 18)
+- [x] 5.4 `update` — regrava `.excalibur/`, nunca toca `.excalibur.custom/`, aplica mapa de migração (seções 18, 22)
+- [x] 5.5 `customize <caminho>` + `.excalibur.custom/manifest.yaml` (seção 18)
+- [x] 5.6 `check`, `status` (seção 19)
+- [x] 5.7 `session <flag>`, `reset` (seção 21)
+- [x] 5.8 `clean-history`, `clean`, `kill-my-self` (seções 17, 19)
+- [x] 5.9 `.vscode/settings.json` (`files.associations`) + `.vscode/extensions.json` (recomendação de tema de ícone) entregues pelo instalador (seção 18)
+- [x] 5.10 `Excalibur` (config raiz, YAML sem extensão) escrito ao fim do init (seção 18)
 
 ## 6. Harness Claude — skills
 
@@ -75,5 +75,5 @@ Legenda: `[ ]` pendente · `[x]` concluído · `[!]` bloqueado (motivo em `IMPLE
 
 - [x] 8.1 `pipeline/handoff-template.md` — `.md` curto com frontmatter (seção 13)
 - [x] 8.2 `rules/prompt-cache.md` — estratégia de prefixo estável e até 4 breakpoints (seção 13)
-- [ ] 8.3 `.excalibur-session.yaml` — 9 diretivas de sessão lidas pelo orquestrador (seção 21)
+- [x] 8.3 `.excalibur-session.yaml` — 9 diretivas de sessão lidas pelo orquestrador (seção 21)
 - [ ] 8.4 Histórico: `history.yaml` por tarefa, script de registro, conversor e as 6 opções de limpeza (seções 15, 17)
