@@ -1,30 +1,40 @@
 ---
 name: sdd
-description: Use before implementing, fixing, or changing anything in any project tracked by this Excalibur SDD setup — before writing code, opening a branch, or touching files as part of a task. Not for read-only questions, explanations, or exploring code with no change intended. Runs the grillme interview, classifies the task (fix/feature/big feature), and decides whether a spec is needed — keeping all planning out of the repo being worked on.
+description: Use before implementing, fixing, or changing anything in a project onboarded with Excalibur — before writing code, opening a branch, or touching files as part of a task. Not for read-only questions, explanations, or exploring code with no change intended. Classifies the task, runs the pipeline's layers, and keeps planning where the project decided it should live.
 ---
 
 # SDD (Claude adapter)
 
-This file is the Claude adapter for this Excalibur's SDD process. It doesn't contain the methodology itself — just enough to trigger at the right time and point to the shared content.
+The Claude adapter for Excalibur's implementation pipeline. It holds no methodology — just enough to trigger at the right moment and point at the shared process.
 
 ## When to trigger
 
-Whenever the request is to implement, fix, or change something in some repo/project — not for simple questions, reading code, or conceptual doubts.
+Whenever the request is to implement, fix or change something. Not for simple questions, reading code, or conceptual doubts.
+
+If the user came in through a task-type skill (`/feat`, `/fix`, `/refactor`…), that skill already routed here with an effort hint attached.
 
 ## What to do
 
-1. Identify the project's repo being worked on. Check whether it already has an SDD destination (see "Detection" in [`wizard/entrypoint.md`](../../../../wizard/entrypoint.md#detection-for-harness-adapters)):
-   - No destination yet → tell the user this project needs onboarding first, via the `sdd-init` skill. Don't skip to implementation before that.
-   - Already has a destination → go straight to step 2.
-2. Read, in this order:
-   - [`pipeline/entrypoint.md`](../../../../pipeline/entrypoint.md) — full process (grillme, classification, where spec/analysis live).
-   - [`reflection/reasoning-chain.md`](../../../../reflection/reasoning-chain.md) — reasoning chain to follow when writing the spec.
-   - `guidelines.md` (or equivalent, if it exists) inside the project's SDD destination (embedded `.sdd/` or separate `<repo>-sdd/`).
-3. Follow the process described in [`pipeline/entrypoint.md`](../../../../pipeline/entrypoint.md) strictly, including stopping to ask for `/grill-me` before any code exploration.
+1. **Confirm the project is onboarded.** Is there an `Excalibur` config file at the root? If not, check `.sdd/` and a sibling `<repo>-sdd/` (see "Detection" in [`wizard/entrypoint.md`](../../../../wizard/entrypoint.md)). If none exist, stop and offer `/excalibur-init` — don't improvise a structure.
+
+2. **Read, in this order:**
+   - `.excalibur-session.yaml`, if present — the session directives change what runs.
+   - `pipeline/entrypoint.md` — the full process.
+   - The project's own rules, from the destination named in the `Excalibur` config.
+
+   That order is also the prompt-cache order (`rules/prompt-cache.md`): stable content first, task-specific content last.
+
+3. **Follow `pipeline/entrypoint.md` strictly**, including stopping to ask for `/grill-me` before exploring any code.
+
+## The one thing not to improvise
+
+`grill-me` has `disable-model-invocation: true`. It cannot be called through the Skill tool — don't try, and don't run the interview yourself while claiming it's the grill-me step. Stop, ask the user to run it, and wait.
+
+The exceptions are decided elsewhere: the project's `autonomy` setting, a `skip-grillme` session flag, or the user saying to skip it.
 
 ## References
 
-- Methodology (shared, don't edit here): [`pipeline/`](../../../../pipeline/) and [`reflection/`](../../../../reflection/)
-- New project onboarding: [`wizard/`](../../../../wizard/)
-- Current project's rules: inside its SDD destination (`.sdd/` or `<repo>-sdd/`)
-- How this repo is organized: [`rules/structure.md`](../../../../rules/structure.md)
+- The process (shared, don't edit here): [`pipeline/entrypoint.md`](../../../../pipeline/entrypoint.md)
+- Task types and their effort hints: [`pipeline/task-types.md`](../../../../pipeline/task-types.md)
+- The agent catalog: [`pipeline/agents/`](../../../../pipeline/agents/)
+- Onboarding, if the project isn't set up yet: [`../excalibur-init/SKILL.md`](../excalibur-init/SKILL.md)

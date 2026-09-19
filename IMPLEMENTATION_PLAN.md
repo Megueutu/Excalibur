@@ -59,12 +59,12 @@ Legenda: `[ ]` pendente · `[x]` concluído · `[!]` bloqueado (motivo em `IMPLE
 
 ## 6. Harness Claude — skills
 
-- [ ] 6.1 `/excalibur-init` — atalho explícito pro wizard, detecta `.excalibur-answers.yaml` (seções 2, 9)
-- [ ] 6.2 `sdd` — skill existente atualizada pra nova arquitetura
-- [ ] 6.3 `/magic-book` — carrega o contexto do SDD numa sessão nova (seção 23)
-- [ ] 6.4 `/try-gh` — diagnóstico do `gh`, local antes de internet (seção 23)
-- [ ] 6.5 Skills de tipo de tarefa (Conventional Commits completo: `feat`, `fix`, `refactor`, `perf`, `test`, `docs`, `style`, `build`, `ci`, `chore`, `revert`) (seção 23)
-- [ ] 6.6 `/excalibur-skill-create` — orienta usar o `skill-creator` público antes de criar do zero (seção 3)
+- [x] 6.1 `/excalibur-init` — atalho explícito pro wizard, detecta `.excalibur-answers.yaml` (seções 2, 9)
+- [x] 6.2 `sdd` — skill existente atualizada pra nova arquitetura
+- [x] 6.3 `/magic-book` — carrega o contexto do SDD numa sessão nova (seção 23)
+- [x] 6.4 `/try-gh` — diagnóstico do `gh`, local antes de internet (seção 23)
+- [x] 6.5 Skills de tipo de tarefa (Conventional Commits completo: `feat`, `fix`, `refactor`, `perf`, `test`, `docs`, `style`, `build`, `ci`, `chore`, `revert`) (seção 23)
+- [x] 6.6 `/excalibur-skill-create` — orienta usar o `skill-creator` público antes de criar do zero (seção 3)
 
 ## 7. Obsidian e i18n
 
