@@ -1,0 +1,21 @@
+version: 1
+id: node
+name: "Node (backend)"
+requires_language: [typescript]
+detect: "grep -qE '\"(express|fastify|@nestjs/core)\"' package.json"
+
+tools:
+  - id: dotenv_check
+    name: "Environment variable validation"
+    why: >-
+      A service that starts with a missing variable and fails on the first request is
+      much harder to diagnose than one that refuses to start.
+    detect: "grep -qE '\"(zod|envalid)\"' package.json"
+    install: "npm install zod"
+
+conventions:
+  - Validate every input at the boundary — request body, query, env. Trust nothing that crossed a wire.
+  - Never log secrets, tokens or full request bodies that might contain them.
+  - Every async handler has error handling; an unhandled rejection can take the process down.
+  - Graceful shutdown on SIGTERM — stop accepting work, finish what's in flight, then exit.
+  - Keep business logic out of route handlers: a handler parses, delegates, and formats a response.

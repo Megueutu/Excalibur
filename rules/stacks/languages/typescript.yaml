@@ -1,0 +1,37 @@
+version: 1
+id: typescript
+name: TypeScript / JavaScript
+detect: "test -f package.json && test -f tsconfig.json"
+
+tools:
+  - id: eslint
+    name: ESLint
+    why: >-
+      Catches real, decidable problems (unused bindings, unreachable code, unsafe
+      any) before a review ever looks at the diff. Unlike the global principles,
+      this is mechanically checkable, which is why it ships as a tool and not a doc.
+    detect: "test -f eslint.config.js || test -f .eslintrc.json || test -f .eslintrc.cjs"
+    install: "npm install -D eslint @eslint/js typescript-eslint"
+
+  - id: prettier
+    name: Prettier
+    why: >-
+      Removes formatting from code review entirely. Style arguments in a diff cost
+      attention that should go to behavior.
+    detect: "test -f .prettierrc || test -f .prettierrc.json || test -f prettier.config.js"
+    install: "npm install -D prettier"
+
+  - id: strict_tsconfig
+    name: "tsconfig strict mode"
+    why: >-
+      Without `strict`, TypeScript's guarantees are largely advisory. An agent
+      writing code against a non-strict config gets much weaker feedback.
+    detect: "grep -q '\"strict\": *true' tsconfig.json"
+    install: "Set \"strict\": true in tsconfig.json — review the resulting errors, don't suppress them"
+
+conventions:
+  - Prefer `unknown` over `any` at boundaries; narrow explicitly.
+  - Don't export a type just because it exists — export what callers need.
+  - `satisfies` over type assertions when checking an object against a shape.
+  - Keep `null` and `undefined` distinguishable; don't normalize one into the other by reflex.
+  - No default exports in a codebase that already uses named ones — renaming on import defeats find-references.

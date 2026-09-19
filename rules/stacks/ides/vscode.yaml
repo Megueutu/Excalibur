@@ -1,0 +1,27 @@
+version: 1
+id: vscode
+name: VSCode
+detect: "test -d .vscode"
+
+tools:
+  - id: workspace_settings
+    name: ".vscode/settings.json"
+    why: >-
+      Committed editor settings mean formatting and lint-on-save behave the same for
+      everyone, instead of depending on each person's personal config.
+    detect: "test -f .vscode/settings.json"
+    install: "Written by `excalibur init` — includes files.associations for the Excalibur config file"
+
+  - id: extension_recommendations
+    name: ".vscode/extensions.json"
+    why: >-
+      VSCode's native recommendation prompt is the only non-hostile way to suggest an
+      extension. Silent installation via `code --install-extension` is aggressive and
+      brittle, and is deliberately not used.
+    detect: "test -f .vscode/extensions.json"
+    install: "Written by `excalibur init`"
+
+conventions:
+  - Commit `.vscode/settings.json` and `.vscode/extensions.json`; never commit `.vscode/launch.json` with machine-specific paths.
+  - Format on save, with the formatter pinned in workspace settings so it doesn't vary per machine.
+  - The `Excalibur` config file has no extension — `files.associations` maps it to YAML, the same trick VSCode uses natively for `Dockerfile`.

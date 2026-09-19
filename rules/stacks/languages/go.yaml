@@ -1,0 +1,28 @@
+version: 1
+id: go
+name: Go
+detect: "test -f go.mod"
+
+tools:
+  - id: golangci_lint
+    name: golangci-lint
+    why: >-
+      Aggregates the linters the ecosystem already agrees on, behind one config and
+      one command.
+    detect: "test -f .golangci.yml || test -f .golangci.yaml"
+    install: "go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest"
+
+  - id: gofmt
+    name: "gofmt / go vet"
+    why: >-
+      Ships with the toolchain. Formatting is not a discussion in Go, and `go vet`
+      catches real mistakes for free.
+    detect: "command -v gofmt"
+    install: "Included with Go — nothing to install"
+
+conventions:
+  - Handle every error at the point it happens. `_ =` on an error needs a comment saying why it's safe.
+  - Wrap errors with context (`fmt.Errorf(\"...: %w\", err)`) rather than returning them bare.
+  - Accept interfaces, return structs.
+  - Keep the happy path at the leftmost indentation; return early on failure.
+  - A goroutine needs a defined way to stop before it's written.

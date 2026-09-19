@@ -1,0 +1,67 @@
+# Size limits for generated markdown.
+#
+# Model: ALLOWLIST. By default NO file type has a limit. Only the types listed
+# below are checked — the ones the framework already knows are absurd past a
+# certain size. A type that matches nothing here is unlimited, on purpose.
+#
+# This is deliberately not a set of "profiles". A spec documenting an API payload
+# legitimately runs past any arbitrary ceiling, and forcing it to split makes it
+# worse. The limit exists where growth is a symptom, not where it is normal.
+#
+# THIS FILE IS THE SOURCE OF TRUTH. A file's own frontmatter may mirror its limit
+# (useful for Obsidian), but that copy is decorative — whether agents read
+# frontmatter reliably is still an open question, so nothing depends on it.
+#
+# Checked by pipeline/review-checklist.md: a task cannot be called done with an
+# allowlisted file over its limit.
+
+version: 1
+
+limits:
+  - type: skill_user_prompt
+    match: "**/skills/**/prompts/*.md"
+    max_lines: 60
+    why: >-
+      A skill's user prompt is loaded every time that skill runs. Past a certain
+      size it stops being a prompt and becomes documentation the model pays for
+      on every invocation.
+
+  - type: handoff
+    match: "**/handoffs/*.md"
+    max_lines: 80
+    why: >-
+      A handoff is the entire input of an isolated subagent. Too small and the
+      agent can't do the work; too large and it carries the bias the isolation
+      exists to prevent. See pipeline/handoff-template.md.
+
+  - type: agent_frontmatter
+    match: "**/agents/*.md"
+    max_frontmatter_lines: 15
+    why: >-
+      Metadata that grows past a screen stops being metadata. The body of the
+      agent file has no limit — only its frontmatter block is checked.
+
+  - type: skill_frontmatter
+    match: "**/skills/**/SKILL.md"
+    max_frontmatter_lines: 15
+    why: Same reasoning as agent frontmatter.
+
+# What to do when a limit is exceeded: granularize. Split by subject with names
+# that say what each piece is — never file-1.md, file-2.md (see rules/naming.md)
+# — and link the pieces.
+#
+# Whether the index becomes a new file or stays in the original is NOT decided
+# here. It depends on the directory's own convention, and since users configure
+# their own directory structure, no single global answer is correct. The
+# convention for specs/ may answer it differently than the one for architecture/.
+granularization:
+  strategy: split-by-subject
+  index: decided-by-directory-convention
+  never: numbered-suffixes
+
+# Explicitly unlimited, so nobody adds them later by reflex:
+#   spec.md          — API specs with payloads legitimately grow
+#   proposal.md      — prose
+#   design.md        — prose
+#   manifest.yaml    — a finite list of questions; it does not sprawl
+#   architecture/*   — living documentation, split by subject not by size

@@ -1,0 +1,52 @@
+# What the review agent checks before touching the project canvas.
+#
+# The canvas (.canvas, JSON Canvas — open format, plain JSON) is a macro view of
+# the project, not a per-task diagram. The review agent passes through every task
+# anyway, so it owns keeping it current.
+#
+# Why a checklist instead of "look at the project and update the canvas": walking a
+# short fixed list is cheap. Re-deriving what the canvas should look like from the
+# whole project on every task is not.
+
+version: 1
+
+# For each item: did this change in the task that just finished? If yes, update the
+# named node. If nothing changed, the canvas is not touched at all — that is the
+# common case and it should cost almost nothing.
+checks:
+  - id: new_module
+    question: "Was a new module, service or package added?"
+    on_change: "Add a node for it, and an edge to whatever it depends on"
+
+  - id: removed_module
+    question: "Was a module, service or package removed?"
+    on_change: "Remove its node and every edge touching it — an orphan edge breaks the file"
+
+  - id: integration
+    question: "Did an integration between two parts change (new call, removed call, different protocol)?"
+    on_change: "Update the edge between those two nodes"
+
+  - id: stack
+    question: "Was a technology added or dropped from the stack?"
+    on_change: "Update the stack node and, if architecture/stack.md exists, the file node pointing at it"
+
+  - id: new_architecture_doc
+    question: "Was a new file added to architecture/?"
+    on_change: "Add a file node pointing at it, grouped with related docs"
+
+  - id: phase_done
+    question: "Did a Big feature phase complete?"
+    on_change: "Update that phase's node so the macro view reflects real progress"
+
+# Nodes for individual tasks are deliberately absent. The canvas is a project view;
+# tasks already have tasks.yaml, and mirroring every task here would make the canvas
+# unreadable within a month.
+not_tracked:
+  - "individual tasks"
+  - "individual commits"
+  - "per-task specs"
+
+format:
+  spec: "JSON Canvas (MIT) — nodes of type text/file/link/group, plus edges"
+  edit: "Written directly as JSON, like any other file. The Obsidian app is never involved."
+  location: "<sdd-destination>/project.canvas"

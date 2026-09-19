@@ -1,0 +1,18 @@
+version: 1
+id: jetbrains
+name: "JetBrains IDEs"
+detect: "test -d .idea"
+
+tools:
+  - id: editorconfig
+    name: .editorconfig
+    why: >-
+      The portable way to share formatting across JetBrains IDEs and everything else.
+      Better than committing IDE-specific code-style XML that only one editor reads.
+    detect: "test -f .editorconfig"
+    install: "Create .editorconfig at the repo root"
+
+conventions:
+  - Commit `.idea/codeStyles/` and `.idea/inspectionProfiles/`; ignore the rest of `.idea/`, which is per-machine state.
+  - Prefer `.editorconfig` over IDE-only style config so contributors on other editors get the same result.
+  - Don't commit run configurations that embed absolute paths or credentials.

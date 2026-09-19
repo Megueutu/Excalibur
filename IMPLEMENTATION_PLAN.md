@@ -36,13 +36,13 @@ Legenda: `[ ]` pendente · `[x]` concluído · `[!]` bloqueado (motivo em `IMPLE
 
 ## 4. Regras globais e por stack
 
-- [ ] 4.1 `rules/global/{kiss,yagni,dry,solid}.md` (seção 12)
-- [ ] 4.2 `rules/stacks/{languages,frameworks,ides}/*.yaml` combináveis (seção 12)
-- [ ] 4.3 `rules/md-size-limits.yaml` — allowlist de limites, tabela central (seção 14)
-- [ ] 4.4 `rules/tasks-ordering.yaml` — heurística fixa "com ordem vs. sem ordem" (seção 16)
-- [ ] 4.5 `rules/naming.md` — convenção de nomenclatura e datas (seção 13)
-- [ ] 4.6 `rules/interaction.md` — formato `P:`/`R:` como convenção de interação (seção 6)
-- [ ] 4.7 `rules/writing-md-obsidian.md` — convenções de escrita pra todo `.md` do SDD (seção 10)
+- [x] 4.1 `rules/global/{kiss,yagni,dry,solid}.md` (seção 12)
+- [x] 4.2 `rules/stacks/{languages,frameworks,ides}/*.yaml` combináveis (seção 12)
+- [x] 4.3 `rules/md-size-limits.yaml` — allowlist de limites, tabela central (seção 14)
+- [x] 4.4 `rules/tasks-ordering.yaml` — heurística fixa "com ordem vs. sem ordem" (seção 16)
+- [x] 4.5 `rules/naming.md` — convenção de nomenclatura e datas (seção 13)
+- [x] 4.6 `rules/interaction.md` — formato `P:`/`R:` como convenção de interação (seção 6)
+- [x] 4.7 `rules/writing-md-obsidian.md` — convenções de escrita pra todo `.md` do SDD (seção 10)
 
 ## 5. CLI (`cli/`)
 
@@ -68,12 +68,12 @@ Legenda: `[ ]` pendente · `[x]` concluído · `[!]` bloqueado (motivo em `IMPLE
 
 ## 7. Obsidian e i18n
 
-- [ ] 7.1 Canvas do projeto (JSON Canvas) + `rules/canvas-update-checklist.yaml` consultado pelo agente de revisão (seção 16)
+- [x] 7.1 Canvas do projeto (JSON Canvas) + `rules/canvas-update-checklist.yaml` consultado pelo agente de revisão (seção 16)
 - [x] 7.2 Regra de tradução "SDD visível" vs. "Excalibur operacional" no agente `translator` (seção 8)
 
 ## 8. Orquestrador, handoff e cache (por último)
 
-- [ ] 8.1 `pipeline/handoff-template.md` — `.md` curto com frontmatter (seção 13)
-- [ ] 8.2 `rules/prompt-cache.md` — estratégia de prefixo estável e até 4 breakpoints (seção 13)
+- [x] 8.1 `pipeline/handoff-template.md` — `.md` curto com frontmatter (seção 13)
+- [x] 8.2 `rules/prompt-cache.md` — estratégia de prefixo estável e até 4 breakpoints (seção 13)
 - [ ] 8.3 `.excalibur-session.yaml` — 9 diretivas de sessão lidas pelo orquestrador (seção 21)
 - [ ] 8.4 Histórico: `history.yaml` por tarefa, script de registro, conversor e as 6 opções de limpeza (seções 15, 17)

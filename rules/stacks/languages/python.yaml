@@ -1,0 +1,28 @@
+version: 1
+id: python
+name: Python
+detect: "test -f pyproject.toml || test -f requirements.txt || test -f setup.py"
+
+tools:
+  - id: ruff
+    name: Ruff
+    why: >-
+      Replaces flake8, isort and several plugins with one fast tool. Fewer tools to
+      configure means fewer configs to keep consistent.
+    detect: "grep -q 'ruff' pyproject.toml 2>/dev/null"
+    install: "pip install ruff"
+
+  - id: mypy
+    name: mypy
+    why: >-
+      Type checking is optional in Python, which means an agent gets no feedback on
+      a whole class of mistakes unless a checker is present.
+    detect: "grep -q 'mypy' pyproject.toml 2>/dev/null"
+    install: "pip install mypy"
+
+conventions:
+  - Type hints on anything public. Internal helpers can go without when the types are obvious.
+  - Prefer `pathlib` over `os.path` in new code.
+  - Never a mutable default argument — the classic `def f(x=[])` trap.
+  - Catch the specific exception, not bare `except:`.
+  - f-strings for formatting; don't mix three styles in one file.

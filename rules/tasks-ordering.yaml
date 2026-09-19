@@ -1,0 +1,54 @@
+# How to number a task checklist (tasks.yaml).
+#
+# This is a FIXED HEURISTIC, consulted rather than reasoned out. The orchestrator
+# reads this file and applies it; it does not judge each task on its merits.
+# That is a token-economy decision: reading a short rule costs less than thinking
+# through the same question on every task, and it produces the same answer twice.
+
+version: 1
+
+# Decide ordered vs. unordered by asking the questions below, in order. The first
+# one that answers "yes" decides it. If none do, the list is unordered.
+decision:
+  - question: "Does any step consume output produced by another step?"
+    yes: ordered
+    example: "Write the migration -> run the migration -> use the new column"
+
+  - question: "Would running step B before step A break the build or the tests?"
+    yes: ordered
+    example: "Rename the type -> update its call sites"
+
+  - question: "Do the steps have to land in one specific sequence to keep the system working at every point in between?"
+    yes: ordered
+    example: "Add the new field -> backfill it -> start reading it -> drop the old one"
+
+  - question: "Are the steps the same operation applied to independent targets?"
+    yes: unordered
+    example: "Add the header to each of five pages"
+
+  default: unordered
+
+formats:
+  ordered:
+    ids: hierarchical        # 1.1, 1.2, 2.1, 2.2
+    depends_on: required     # every item after the first names what it waits on
+    why: >-
+      Hierarchical ids state that a sequence exists and which steps belong to the
+      same phase. The grouping is the point — 1.x and 2.x being separate phases is
+      information, not decoration.
+
+  unordered:
+    ids: flat                # a, b, c
+    depends_on: omitted
+    why: >-
+      Numbering implies a sequence. When there is no sequence, numbering is
+      misinformation: it tells a reader something about the work that is not true,
+      and it discourages doing independent items in parallel.
+
+# A mixed task is normal: phase 1 ordered, phase 2 a set of independent items.
+# Handle it by nesting — keep hierarchical ids for the phases that need them and
+# flat ids inside a phase whose items are independent. Do not force the whole
+# list into one shape to be consistent.
+mixed:
+  allowed: true
+  rule: "Apply the decision per phase, not once for the whole file"

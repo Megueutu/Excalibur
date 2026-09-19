@@ -1,0 +1,22 @@
+version: 1
+id: react
+name: React
+requires_language: [typescript]
+detect: "grep -q '\"react\"' package.json"
+
+tools:
+  - id: eslint_react_hooks
+    name: "eslint-plugin-react-hooks"
+    why: >-
+      The rules of hooks are mechanically checkable and violating them produces bugs
+      that only appear on re-render — expensive to find by reading.
+    detect: "grep -q 'react-hooks' package.json"
+    install: "npm install -D eslint-plugin-react-hooks"
+
+conventions:
+  - One component per file, named after the file.
+  - Derive state instead of syncing it. An effect that only copies one state into another is a bug waiting to happen.
+  - `useEffect` is for synchronizing with something outside React — not for reacting to a prop change.
+  - Lift state only as far as it actually needs to go.
+  - A list key is a stable id, never the array index, whenever items can reorder.
+  - Fetching, caching and retries belong in a data layer, not inlined in a component.
