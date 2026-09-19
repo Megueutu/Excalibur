@@ -1,0 +1,100 @@
+{
+  "nodes": [
+    {
+      "id": "project",
+      "type": "text",
+      "x": -220,
+      "y": -360,
+      "width": 440,
+      "height": 100,
+      "color": "5",
+      "text": "# Project\n\nReplace with the project's name and one line about what it is."
+    },
+    {
+      "id": "architecture-group",
+      "type": "group",
+      "x": -520,
+      "y": -180,
+      "width": 480,
+      "height": 380,
+      "label": "Architecture"
+    },
+    {
+      "id": "stack",
+      "type": "text",
+      "x": -480,
+      "y": -120,
+      "width": 400,
+      "height": 120,
+      "color": "4",
+      "text": "## Stack\n\nLanguage, framework, editor. Updated when a technology is added or dropped."
+    },
+    {
+      "id": "modules",
+      "type": "text",
+      "x": -480,
+      "y": 40,
+      "width": 400,
+      "height": 120,
+      "text": "## Modules\n\nOne node per module or service, with edges for the integrations between them."
+    },
+    {
+      "id": "pipeline-group",
+      "type": "group",
+      "x": 60,
+      "y": -180,
+      "width": 480,
+      "height": 380,
+      "label": "Task flow"
+    },
+    {
+      "id": "flow",
+      "type": "text",
+      "x": 100,
+      "y": -120,
+      "width": 400,
+      "height": 140,
+      "color": "6",
+      "text": "## Flow\n\nproposal -> spec -> design -> tasks -> history\n\nThe five files of a task folder."
+    },
+    {
+      "id": "phases",
+      "type": "text",
+      "x": 100,
+      "y": 40,
+      "width": 400,
+      "height": 120,
+      "text": "## Phases in progress\n\nOne node per Big feature phase. Updated when a phase completes."
+    }
+  ],
+  "edges": [
+    {
+      "id": "project-to-architecture",
+      "fromNode": "project",
+      "fromSide": "bottom",
+      "toNode": "stack",
+      "toSide": "top"
+    },
+    {
+      "id": "project-to-flow",
+      "fromNode": "project",
+      "fromSide": "bottom",
+      "toNode": "flow",
+      "toSide": "top"
+    },
+    {
+      "id": "stack-to-modules",
+      "fromNode": "stack",
+      "fromSide": "bottom",
+      "toNode": "modules",
+      "toSide": "top"
+    },
+    {
+      "id": "flow-to-phases",
+      "fromNode": "flow",
+      "fromSide": "bottom",
+      "toNode": "phases",
+      "toSide": "top"
+    }
+  ]
+}

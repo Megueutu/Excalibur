@@ -290,6 +290,31 @@ Seção 17, ✅: limpeza default é combinada — sai do controle de versão **e
 
 ---
 
+## Verificação executada
+
+O que foi de fato exercitado, e o que não foi (ver `PENDENCIAS.md` item 14).
+
+**CLI, ponta a ponta contra um projeto de teste:** `check`, `init --yes`, `customize`, `session`, `status`, `update`, `clean-history`, `clean`, `reset`, `kill-my-self`. Confirmado no teste:
+
+- A resolução base+override é **por arquivo**: com `pipeline/agents/review.md` customizado e `grill-me.md` não customizado, o build levou a versão customizada de um e a padrão do outro.
+- `update` reescreveu `.excalibur/` sem tocar em `.excalibur.custom/` — as duas customizações editadas à mão sobreviveram.
+- O mapa de migração moveu um override de caminho antigo pro novo (🔧 seção 22 — continua precisando de revisão humana, só foi exercitado contra um mapa de teste).
+- `kill-my-self` removeu a maquinaria e **não** tocou no `.sdd/` do projeto.
+
+**`init.sh` nos três modos** (`embedded`, `separate`, `external`), com copy-list, mais os casos de erro: caminho relativo em `external`, destino já existente, modo inválido.
+
+**Scripts:** `detect-stack.sh` contra um projeto TypeScript+React+VSCode de teste, `record-history.sh` e `convert-history.sh`.
+
+**Parser YAML:** validado contra o `manifest.yaml` real (17 perguntas + pergunta-mestre, com `copy`, `review_hint` em bloco dobrado e `free_text`).
+
+**Consistência:** os 75 arquivos `.md` tiveram todos os links relativos resolvidos (nenhum quebrado); `bash -n` e `node --check` passaram em todos os 13 scripts e 18 módulos JS.
+
+**Dois defeitos encontrados e corrigidos no caminho:** o arquivo de arquivamento do histórico virava arquivo oculto (nome derivado de um caminho iniciado em `.`), e a reescrita do `history.yaml` perdia o cabeçalho que diz que aquele arquivo não é lido por padrão.
+
+**O que não foi exercitado:** o fluxo conversacional completo dentro do harness (wizard → agente interpretador → primeira tarefa real). Isso precisa de uma sessão guiada, e provavelmente resolve também os itens 3 e 4 de `PENDENCIAS.md`.
+
+---
+
 ## Etapas bloqueadas
 
-Nenhuma até agora. Se alguma travar por exigir escolha de arquitetura sem base no design doc, ela é marcada `[!]` no plano e o motivo entra aqui.
+Nenhuma. As 43 etapas do plano foram concluídas; o que ficou de fora está em `PENDENCIAS.md`, por decisão explícita do prompt de implementação. Se alguma travar por exigir escolha de arquitetura sem base no design doc, ela é marcada `[!]` no plano e o motivo entra aqui.

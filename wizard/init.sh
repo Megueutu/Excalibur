@@ -99,6 +99,9 @@ cp "$EXCALIBUR_ROOT/pipeline/spec-template.md" "$DEST/Templates/spec-template.md
 cp "$EXCALIBUR_ROOT/pipeline/handoff-template.md" "$DEST/Templates/handoff-template.md"
 cp "$EXCALIBUR_ROOT/reflection/when-to-pause.md" "$DEST/reflection/when-to-pause.md"
 cp "$EXCALIBUR_ROOT/reflection/reasoning-chain.md" "$DEST/reflection/reasoning-chain.md"
+# JSON Canvas is an open format (plain JSON), so this is just a seed file the review
+# agent keeps current — the Obsidian app is never involved in writing it.
+cp "$EXCALIBUR_ROOT/pipeline/project-canvas-template.canvas" "$DEST/project.canvas"
 touch "$DEST/specs/.gitkeep" "$DEST/ideas/.gitkeep" "$DEST/architecture/.gitkeep"
 
 if [[ -n "$COPY_LIST" ]]; then

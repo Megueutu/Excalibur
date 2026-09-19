@@ -76,4 +76,4 @@ Legenda: `[ ]` pendente · `[x]` concluído · `[!]` bloqueado (motivo em `IMPLE
 - [x] 8.1 `pipeline/handoff-template.md` — `.md` curto com frontmatter (seção 13)
 - [x] 8.2 `rules/prompt-cache.md` — estratégia de prefixo estável e até 4 breakpoints (seção 13)
 - [x] 8.3 `.excalibur-session.yaml` — 9 diretivas de sessão lidas pelo orquestrador (seção 21)
-- [ ] 8.4 Histórico: `history.yaml` por tarefa, script de registro, conversor e as 6 opções de limpeza (seções 15, 17)
+- [x] 8.4 Histórico: `history.yaml` por tarefa, script de registro, conversor e as 6 opções de limpeza (seções 15, 17)

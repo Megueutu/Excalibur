@@ -12,6 +12,7 @@ Shell helpers the wizard and the pipeline call. Small, single-purpose, and calla
 | `install-gh-*.sh` | Installs `gh` for the OS `detect-os.sh` reported | 0 ok |
 | `detect-stack.sh` | Guesses language, framework and IDE from files on disk | 0 always |
 | `record-history.sh` | Appends one changelog entry to a task's `history.yaml` | 0 ok |
+| `convert-history.sh` | Builds a compact, fixed-schema digest of every task's history | 0 ok |
 
 ## Why `.sh` and not Node — do not reopen this without reading
 
