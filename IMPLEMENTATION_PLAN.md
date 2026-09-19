@@ -28,11 +28,11 @@ Legenda: `[ ]` pendente · `[x]` concluído · `[!]` bloqueado (motivo em `IMPLE
 
 ## 3. Pipeline e agentes internos
 
-- [ ] 3.1 `pipeline/agents/` com um `.md` por agente (frontmatter `tools:`/`skills:` + corpo Markdown): `orchestrator`, `spec-writer`, `idealizador`, `grill-me`, `review`, `translator` (seção 6)
-- [ ] 3.2 Persona `guardrail` como Skill nativa em `harnesses/claude/skills/guardrail/` (seção 6)
-- [ ] 3.3 `pipeline/entrypoint.md` reescrito — 4 camadas (orquestrador → spec → implementar → revisar), classificação alimentada pelas skills de tipo (seções 13, 23)
-- [ ] 3.4 Estrutura de tarefa com 5 arquivos: `proposal.md`, `spec.md`, `design.md`, `tasks.yaml`, `history.yaml` (seções 15, 16)
-- [ ] 3.5 `pipeline/review-checklist.md` ampliado — CI/CD, limite de `.md`, `tasks.yaml`, `history.yaml`, Canvas (seções 4, 14, 16)
+- [x] 3.1 `pipeline/agents/` com um `.md` por agente (frontmatter `tools:`/`skills:` + corpo Markdown): `orchestrator`, `spec-writer`, `idealizador`, `grill-me`, `review`, `translator` (seção 6)
+- [x] 3.2 Persona `guardrail` como Skill nativa em `harnesses/claude/skills/guardrail/` (seção 6)
+- [x] 3.3 `pipeline/entrypoint.md` reescrito — 4 camadas (orquestrador → spec → implementar → revisar), classificação alimentada pelas skills de tipo (seções 13, 23)
+- [x] 3.4 Estrutura de tarefa com 5 arquivos: `proposal.md`, `spec.md`, `design.md`, `tasks.yaml`, `history.yaml` (seções 15, 16)
+- [x] 3.5 `pipeline/review-checklist.md` ampliado — CI/CD, limite de `.md`, `tasks.yaml`, `history.yaml`, Canvas (seções 4, 14, 16)
 
 ## 4. Regras globais e por stack
 
@@ -69,7 +69,7 @@ Legenda: `[ ]` pendente · `[x]` concluído · `[!]` bloqueado (motivo em `IMPLE
 ## 7. Obsidian e i18n
 
 - [ ] 7.1 Canvas do projeto (JSON Canvas) + `rules/canvas-update-checklist.yaml` consultado pelo agente de revisão (seção 16)
-- [ ] 7.2 Regra de tradução "SDD visível" vs. "Excalibur operacional" no agente `translator` (seção 8)
+- [x] 7.2 Regra de tradução "SDD visível" vs. "Excalibur operacional" no agente `translator` (seção 8)
 
 ## 8. Orquestrador, handoff e cache (por último)
 

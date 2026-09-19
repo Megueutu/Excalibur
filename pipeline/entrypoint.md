@@ -1,41 +1,74 @@
-# Entrypoint — what to do when receiving an implementation request
+# Entrypoint — what to do when an implementation request arrives
 
-Triggered by the SDD adapter of the harness in use (see `harnesses/<harness>/`) whenever the request is to implement/fix/change something in some repo — not for simple questions, reading code, or conceptual doubts.
+Triggered by the harness adapter (see `harnesses/<harness>/`) whenever the request is to implement, fix or change something — not for simple questions, reading code, or conceptual doubts.
 
-## 1. Grillme (interview) — stop and ask, don't try to call it yourself
+If the project has no SDD destination yet, this is the wrong file: run the wizard first (`wizard/entrypoint.md`).
 
-`grill-me` has `disable-model-invocation: true` — **it cannot be called via the Skill tool under any circumstance**, not even as a fallback attempt. Don't try `Skill({skill: "grill-me"})`, don't try to replicate the interview yourself pretending to be grill-me.
+## The four layers
 
-Mandatory step, before exploring the repo or touching any file:
+```
+orchestrator  ->  write spec  ->  implement  ->  review
+```
+
+The orchestrator sits above the other three: it classifies the task, decides which layers actually run, and builds the handoff for each one. Everything below runs as an isolated subagent that sees its handoff and nothing else.
+
+Not every layer runs on every task. A Fix usually goes orchestrator → implement → review, with no spec at all.
+
+## 0. Read the session directives
+
+`.excalibur-session.yaml` at the project root, every session, before anything else. It's the orchestrator's job (see `pipeline/agents/orchestrator.md` for the full flag table), but any agent that changes behavior based on a flag reads it too. No file means no flags set — the normal case.
+
+## 1. Entry point: how the request arrived
+
+If the user invoked a task-type skill (`/feat`, `/fix`, `/refactor`, `/ci`…), the type already carries an effort hint — see [`task-types.md`](task-types.md). That's a strong hint, not a lock: it saves the orchestrator from inferring effort from free prose, and it gets revised when the real scope disagrees.
+
+If the request arrived as plain prose, classify it from scratch in step 3.
+
+## 2. Grill-me (the interview) — stop and ask, don't call it yourself
+
+`grill-me` has `disable-model-invocation: true` — **it cannot be called through the Skill tool at all**. Don't try `Skill({skill: "grill-me"})`, and don't replicate the interview yourself pretending to be it.
+
+Required before exploring the repo or touching any file:
 
 1. Stop and explicitly ask the user to run `/grill-me` with the task.
-2. Wait for the response — don't move on to code exploration, repo reading, or classification (step 2) until that happens.
-3. Only after the user confirms the interview is done (or explicitly says to skip this step) does the pipeline continue.
+2. Wait. Don't move on to exploration, reading the repo, or classification while waiting.
+3. Continue only once the user confirms the interview is done, or explicitly says to skip it.
 
-This holds even if the task seems simple enough to "just proceed" — the decision to skip the interview is the user's, not an inference that "it's not needed".
+This holds even when the task looks simple enough to just get on with — skipping the interview is the user's call, not an inference that it wasn't needed.
 
-## 2. Classifying the task
+**Exceptions**, all decided outside this file: the project's `autonomy` setting skips the interview on Fix tasks, the session has `skip-grillme`, or the user says to skip it.
 
-Ask (or infer with high confidence and confirm in one sentence) which of the three it is:
+## 3. Classify the task
 
-| Class | Criterion | What changes in the process |
+| Class | Criterion | What changes |
 |---|---|---|
-| **Fix** | A specific bug, wrong behavior with an obvious fix, no open design decision | No formal spec. Just the final checklist (see [review-checklist.md](review-checklist.md)) before considering it done. |
-| **Feature** | New functionality or behavior change with clear scope, but with real design decisions (where it fits in, how it integrates, what's out of scope) | Light spec in the project's SDD destination (embedded `.sdd/` or separate `<repo>-sdd/`, see [`wizard/entrypoint.md`](../wizard/entrypoint.md)), at `specs/<repo>/<task>/spec.md` (see [spec-template.md](spec-template.md)) before coding. |
-| **Big feature** | Touches multiple modules/repos, has sequencing (phases), or real risk of rework if the wrong approach is chosen | Full spec with phased roadmap + per-phase analysis checklist. Consider splitting into per-phase specs if a single file gets too large. |
+| **Fix** | A specific bug, wrong behavior with an obvious correction, no open design decision | No spec. Just the final checklist before it's done. |
+| **Feature** | New functionality or a behavior change with clear scope, but real design decisions (where it goes, how it integrates, what's excluded) | Full task folder before coding — see [`spec-template.md`](spec-template.md). |
+| **Big feature** | Touches multiple modules/repos, has sequencing (phases), or real risk of rework if the approach is wrong | Same, phased, with a per-phase definition of done. Consider splitting into per-phase specs if one file gets too big. |
 
-Ask directly if it's not clear which class applies — don't guess when genuinely in doubt (see [when-to-pause.md](../reflection/when-to-pause.md)).
+Feature vs. Big feature follows the project's `task_class_criteria` setting: ask when it isn't obvious, or apply the objective criterion (more than one module/repo → Big feature).
 
-## 3. Deep analysis — when
+Ask outright when the class isn't clear — don't guess through genuine doubt (see [`../reflection/when-to-pause.md`](../reflection/when-to-pause.md)).
 
-Explicitly ask whether the user wants a deep analysis before implementing (e.g.: mapping all call sites, reading multiple related repos, considering side effects on other services) whenever the task is **Feature** or **Big feature**. For **Fix**, only do this if the bug doesn't have an obvious cause up front.
+## 4. Deep analysis — when
 
-## 4. Where files live
+Ask explicitly whether the user wants deep analysis before implementing (mapping every call site, reading related repos, considering side effects elsewhere) on **Feature** and **Big feature**. On a **Fix**, only when the bug has no obvious cause.
 
-- **Task specs and analysis**: in the project's SDD destination (embedded `.sdd/` or separate `<repo>-sdd/`, see [`wizard/entrypoint.md`](../wizard/entrypoint.md)), at `specs/<repo>/<task-slug>/`. The goal is to leave no trace of AI-assisted planning in the history of the repo being worked on.
-- **Process definition** (this pipeline): `pipeline/` — shared across all projects and harnesses. The reasoning chain used when producing specs lives in `reflection/`, separate from this pipeline.
-- **Always-read rules**: pointed to by `guidelines.md` (if it exists) inside the project's SDD destination.
+## 5. Where the files live
 
-## 5. After finishing the implementation
+- **The task's files** — the SDD destination chosen during onboarding: `specs/<repo>/<task-slug>/`, holding the five files from [`spec-template.md`](spec-template.md).
+- **Project-wide knowledge** — `architecture/` (how things are built, stack, code standards, roadmap) and `ideas/` (thinking not yet formalized) in the same destination.
+- **The process** — `pipeline/`, shared across every project and harness. Never copied per project.
+- **The framework's machinery** — `.excalibur/` and, for overrides, `.excalibur.custom/`.
 
-Run the [review-checklist.md](review-checklist.md) before announcing the task as done — this applies to all three classes, only the depth changes.
+Planning artifacts stay in the SDD destination, not in the repository being worked on — unless the project deliberately chose the embedded destination, which puts them at `.sdd/` inside the repo.
+
+## 6. Implementing
+
+Whoever implements owns `design.md` — the technical approach, written for the agents that will execute it, not as passive documentation.
+
+Follow the global rules (`rules/global/`) and the project's stack rules (`rules/stacks/`). Under `strict-rules`, a violation fails the task instead of being noted.
+
+## 7. After implementing
+
+Run [`review-checklist.md`](review-checklist.md) before announcing the task as done. This applies to all three classes — only the depth changes.
