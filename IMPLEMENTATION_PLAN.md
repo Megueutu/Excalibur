@@ -13,13 +13,13 @@ Legenda: `[ ]` pendente · `[x]` concluído · `[!]` bloqueado (motivo em `IMPLE
 - [x] 1.1 Reconciliar `main` com `origin/main` e preservar o trabalho local não commitado (branch `pre-impl-snapshot`)
 - [x] 1.2 Trocar a licença para MIT (default de trabalho; TODO em aberto → `PENDENCIAS.md`)
 - [x] 1.3 Criar `IMPLEMENTATION_PLAN.md`, `IMPLEMENTATION_NOTES.md` e `PENDENCIAS.md`
-- [ ] 1.4 Reestruturar as pastas raiz para o alvo do design doc (`wizard/`, `pipeline/`, `rules/`, `harnesses/`, `cli/`, `docs/repo/`)
-- [ ] 1.5 Remover `projects/solaria/` (contexto de negócio — seção 11)
-- [ ] 1.6 `README.md` raiz reescrito + `README.md` obrigatório em toda pasta principal (seção 18)
+- [x] 1.4 Reestruturar as pastas raiz para o alvo do design doc (`wizard/`, `pipeline/`, `rules/`, `harnesses/`, `cli/`, `docs/repo/`)
+- [x] 1.5 Remover `projects/solaria/` (contexto de negócio — seção 11)
+- [x] 1.6 `README.md` raiz reescrito + `README.md` obrigatório em toda pasta principal (seção 18)
 
 ## 2. Wizard (renomeação + entrypoint + manifesto)
 
-- [ ] 2.1 `bootstrap/` → `wizard/` (renomeação 1:1, seção 1), atualizando todas as referências
+- [x] 2.1 `wizard/` → `wizard/` (renomeação 1:1, seção 1), atualizando todas as referências
 - [ ] 2.2 `wizard/manifest.yaml` — 13 perguntas com opções fixas, `default` por pergunta e `review_hint` onde necessário (seções 4, 5, 12, 15, 17)
 - [ ] 2.3 Pergunta-mestre "personalizar ou usar os padrões" no topo do manifesto (seção 17)
 - [ ] 2.4 `wizard/init.sh` com o 3º modo `external` (seção 5)

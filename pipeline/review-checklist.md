@@ -25,4 +25,4 @@ If any item fails, fix it before considering the task done — don't report it a
 - If the repo touched requires extra care (see the project's repo inventory, if it exists), double-check that the change is minimal and surgical.
 
 ## Spec (Feature/Big feature)
-- The `spec.md` file in the project's SDD destination (embedded `.sdd/` or separate `<repo>-sdd/`, see [`bootstrap/entrypoint.md`](../bootstrap/entrypoint.md)), at `specs/<repo>/<task>/spec.md`, reflects what was actually implemented (update it if the plan changed along the way) — don't leave the spec out of sync with the code.
+- The `spec.md` file in the project's SDD destination (embedded `.sdd/` or separate `<repo>-sdd/`, see [`wizard/entrypoint.md`](../wizard/entrypoint.md)), at `specs/<repo>/<task>/spec.md`, reflects what was actually implemented (update it if the plan changed along the way) — don't leave the spec out of sync with the code.

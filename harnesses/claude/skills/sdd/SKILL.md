@@ -13,7 +13,7 @@ Whenever the request is to implement, fix, or change something in some repo/proj
 
 ## What to do
 
-1. Identify the project's repo being worked on. Check whether it already has an SDD destination (see "Detection" in [`bootstrap/entrypoint.md`](../../../../bootstrap/entrypoint.md#detection-for-harness-adapters)):
+1. Identify the project's repo being worked on. Check whether it already has an SDD destination (see "Detection" in [`wizard/entrypoint.md`](../../../../wizard/entrypoint.md#detection-for-harness-adapters)):
    - No destination yet → tell the user this project needs onboarding first, via the `sdd-init` skill. Don't skip to implementation before that.
    - Already has a destination → go straight to step 2.
 2. Read, in this order:
@@ -25,6 +25,6 @@ Whenever the request is to implement, fix, or change something in some repo/proj
 ## References
 
 - Methodology (shared, don't edit here): [`pipeline/`](../../../../pipeline/) and [`reflection/`](../../../../reflection/)
-- New project onboarding: [`bootstrap/`](../../../../bootstrap/)
+- New project onboarding: [`wizard/`](../../../../wizard/)
 - Current project's rules: inside its SDD destination (`.sdd/` or `<repo>-sdd/`)
 - How this repo is organized: [`rules/structure.md`](../../../../rules/structure.md)

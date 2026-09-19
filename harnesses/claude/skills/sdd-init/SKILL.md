@@ -9,16 +9,16 @@ This file is the Claude adapter for Excalibur's onboarding wizard. It doesn't co
 
 ## When to trigger
 
-Only when the user explicitly asks to set up/bootstrap SDD for a project, or when the `sdd` skill detects the project has no SDD destination yet and the user confirms they want to proceed with onboarding. Never run silently as a side effect of an unrelated task.
+Only when the user explicitly asks to set up SDD for a project, or when the `sdd` skill detects the project has no SDD destination yet and the user confirms they want to proceed with onboarding. Never run silently as a side effect of an unrelated task.
 
 ## What to do
 
-1. Confirm the project has no SDD destination yet (see "Detection" in [`bootstrap/entrypoint.md`](../../../../bootstrap/entrypoint.md#detection-for-harness-adapters)). If it already has one, stop and tell the user — don't re-run onboarding on top of an existing destination.
-2. Follow [`bootstrap/entrypoint.md`](../../../../bootstrap/entrypoint.md) exactly: read `bootstrap/manifest.yaml`, ask each question in order, resolve the answers into a copy list, call `bootstrap/init.sh`, and invoke the `translator` subagent if the resolved language isn't English.
+1. Confirm the project has no SDD destination yet (see "Detection" in [`wizard/entrypoint.md`](../../../../wizard/entrypoint.md#detection-for-harness-adapters)). If it already has one, stop and tell the user — don't re-run onboarding on top of an existing destination.
+2. Follow [`wizard/entrypoint.md`](../../../../wizard/entrypoint.md) exactly: read `wizard/manifest.yaml`, ask each question in order, resolve the answers into a copy list, call `wizard/init.sh`, and invoke the `translator` subagent if the resolved language isn't English.
 3. Report what was created and hand off to the `sdd` skill for the project's first real task.
 
 ## References
 
-- Methodology (shared, don't edit here): [`bootstrap/entrypoint.md`](../../../../bootstrap/entrypoint.md), [`bootstrap/manifest.yaml`](../../../../bootstrap/manifest.yaml)
+- Methodology (shared, don't edit here): [`wizard/entrypoint.md`](../../../../wizard/entrypoint.md), [`wizard/manifest.yaml`](../../../../wizard/manifest.yaml)
 - Translation: [`harnesses/claude/agents/translator.md`](../../agents/translator.md)
 - Next step after onboarding: [`harnesses/claude/skills/sdd/SKILL.md`](../sdd/SKILL.md)

@@ -60,10 +60,9 @@ Itens da seção **"TODO — validações técnicas pendentes"** do `excalibur-d
 
 ## 10. Idioma fixo do "Excalibur operacional"
 
-- A seção 8 diz que o conteúdo operacional nunca é traduzido e fica num idioma fixo — "**provavelmente** inglês, o idioma canônico do framework". Não é uma decisão travada.
-- **Implementado como:** pt-BR, acompanhando todo o conteúdo que já existia no repositório. O invariante que a seção realmente estabelece (o `translator` não gasta token traduzindo conteúdo operacional) está valendo.
-- **O que falta:** decidir se o operacional migra pra inglês antes de qualquer publicação pública. Migrar depois é reescrita ampla, então vale decidir cedo.
-- Mensagens de commit seguem em inglês e lowercase de qualquer forma (`docs/repo/git.md`), independente dessa decisão.
+- A seção 8 diz que o conteúdo operacional nunca é traduzido e fica num idioma fixo — "**provavelmente** inglês, o idioma canônico do framework". Não era uma decisão travada.
+- **Implementado como:** inglês, confirmando a direção que o conteúdo mais recente do repositório já seguia (wizard, manifesto, agentes e skills já estavam em inglês, e o contrato do `translator` assume inglês como fonte).
+- **O que falta:** varrer os arquivos legados em pt-BR que esta rodada não tocou e converter, se algum sobrar. Nada disso bloqueia uso — só consistência.
 
 ## 11. Ícone customizado no VSCode
 

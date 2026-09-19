@@ -21,7 +21,7 @@ Ask (or infer with high confidence and confirm in one sentence) which of the thr
 | Class | Criterion | What changes in the process |
 |---|---|---|
 | **Fix** | A specific bug, wrong behavior with an obvious fix, no open design decision | No formal spec. Just the final checklist (see [review-checklist.md](review-checklist.md)) before considering it done. |
-| **Feature** | New functionality or behavior change with clear scope, but with real design decisions (where it fits in, how it integrates, what's out of scope) | Light spec in the project's SDD destination (embedded `.sdd/` or separate `<repo>-sdd/`, see [`bootstrap/entrypoint.md`](../bootstrap/entrypoint.md)), at `specs/<repo>/<task>/spec.md` (see [spec-template.md](spec-template.md)) before coding. |
+| **Feature** | New functionality or behavior change with clear scope, but with real design decisions (where it fits in, how it integrates, what's out of scope) | Light spec in the project's SDD destination (embedded `.sdd/` or separate `<repo>-sdd/`, see [`wizard/entrypoint.md`](../wizard/entrypoint.md)), at `specs/<repo>/<task>/spec.md` (see [spec-template.md](spec-template.md)) before coding. |
 | **Big feature** | Touches multiple modules/repos, has sequencing (phases), or real risk of rework if the wrong approach is chosen | Full spec with phased roadmap + per-phase analysis checklist. Consider splitting into per-phase specs if a single file gets too large. |
 
 Ask directly if it's not clear which class applies — don't guess when genuinely in doubt (see [when-to-pause.md](../reflection/when-to-pause.md)).
@@ -32,7 +32,7 @@ Explicitly ask whether the user wants a deep analysis before implementing (e.g.:
 
 ## 4. Where files live
 
-- **Task specs and analysis**: in the project's SDD destination (embedded `.sdd/` or separate `<repo>-sdd/`, see [`bootstrap/entrypoint.md`](../bootstrap/entrypoint.md)), at `specs/<repo>/<task-slug>/`. The goal is to leave no trace of AI-assisted planning in the history of the repo being worked on.
+- **Task specs and analysis**: in the project's SDD destination (embedded `.sdd/` or separate `<repo>-sdd/`, see [`wizard/entrypoint.md`](../wizard/entrypoint.md)), at `specs/<repo>/<task-slug>/`. The goal is to leave no trace of AI-assisted planning in the history of the repo being worked on.
 - **Process definition** (this pipeline): `pipeline/` — shared across all projects and harnesses. The reasoning chain used when producing specs lives in `reflection/`, separate from this pipeline.
 - **Always-read rules**: pointed to by `guidelines.md` (if it exists) inside the project's SDD destination.
 

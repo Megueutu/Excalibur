@@ -11,7 +11,7 @@ Sequence the agent follows when producing any `spec.md` (**Feature** or **Big fe
 
 ## Per-project override
 
-If the project's SDD destination (embedded or separate repo — see [bootstrap/entrypoint.md](../bootstrap/entrypoint.md)) has its own `reflection/reasoning-chain.md`, it takes precedence over this one. If it doesn't, this is the default used.
+If the project's SDD destination (embedded or separate repo — see [wizard/entrypoint.md](../wizard/entrypoint.md)) has its own `reflection/reasoning-chain.md`, it takes precedence over this one. If it doesn't, this is the default used.
 
 ## When it doesn't apply
 

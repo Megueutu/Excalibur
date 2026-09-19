@@ -22,7 +22,7 @@ Todas seguem os princípios que o próprio design doc repete (KISS, YAGNI, econo
 
 ### D1 — Baseline do repositório: reconciliar com `origin/main` antes de começar
 
-O repositório local estava 12 commits atrás de `origin/main` e com uma reestruturação não commitada em cima (uma variante `core/pipeline/` que não existe no design doc). O design doc foi escrito contra o estado de `origin/main` (`bootstrap/`, `pipeline/`, `reflection/`, `rules/`), então esse é o baseline correto.
+O repositório local estava 12 commits atrás de `origin/main` e com uma reestruturação não commitada em cima (uma variante `core/pipeline/` que não existe no design doc). O design doc foi escrito contra o estado de `origin/main` (`wizard/`, `pipeline/`, `reflection/`, `rules/`), então esse é o baseline correto.
 
 Para não perder nada, a árvore suja local foi commitada e empurrada na branch **`pre-impl-snapshot`** antes do fast-forward de `main`. Nada foi descartado — a variante `core/` continua recuperável ali.
 
@@ -32,17 +32,19 @@ Conflito real: hoje `rules/` guarda regras *sobre o repositório Excalibur* (`pu
 
 Resolução: `rules/` fica só com conteúdo distribuível (global, stacks, convenções de escrita, tabelas de heurística). A documentação sobre o próprio repo vai pra `docs/repo/`. `rules/adding-a-project.md` é descartado — descrevia `projects/<project>/.contexto/`, que a seção 11 remove.
 
-### D3 — `reflection/` é absorvido por `pipeline/`
+### D3 — `reflection/` fica onde está
 
-`reflection/when-to-pause.md` e `reasoning-chain.md` são metodologia de pipeline e já eram copiados pro destino do SDD pelo `init.sh`. Mantê-los numa pasta raiz separada cria uma terceira categoria de conteúdo distribuível sem ganho. Viram `pipeline/reflection/`. A seção 11 só protege os *nomes* (`pipeline`, `reflection`, `rules`, `harnesses`) de renomeação gratuita — o nome `reflection` continua existindo, só aninhado.
+Chegou a ser considerado absorver `reflection/` dentro de `pipeline/`, já que é metodologia e já era copiada pro destino do SDD pelo `init.sh`. Descartado: a seção 11 tem um 🟡 explícito dizendo que `pipeline`, `reflection`, `rules` e `harnesses` ficam como estão, e que renomear sem necessidade concreta é custo sem benefício. Só `wizard/` → `wizard/` muda de nome nesta rodada.
 
-### D4 — Idioma do "Excalibur operacional" fica em pt-BR
+### D4 — Idioma do "Excalibur operacional": inglês
 
-A seção 8 diz que o conteúdo operacional nunca é traduzido e fica num idioma fixo — "provavelmente inglês, o idioma canônico do framework". Como "provavelmente" não é uma decisão travada e todo o conteúdo existente do repositório está em pt-BR, reescrever tudo em inglês agora seria churn grande sem benefício imediato.
+A seção 8 diz que o conteúdo operacional nunca é traduzido e fica num idioma fixo — "provavelmente inglês, o idioma canônico do framework". O baseline confirma essa direção: o conteúdo mais recente do repositório (`wizard/manifest.yaml`, `wizard/entrypoint.md`, o agente `translator`, as skills) já está todo em inglês, e o próprio contrato do `translator` assume inglês como fonte ("translates every `.md` from English into the target language").
 
-O que importa de fato — o invariante que a seção estabelece — é que o `translator` **não gasta token traduzindo conteúdo operacional**. Isso está implementado. O idioma fixo escolhido é pt-BR, registrado em `PENDENCIAS.md` como revisável antes de qualquer publicação pública.
+Decisão: **inglês é o idioma canônico do Excalibur operacional**. Todo conteúdo novo nasce em inglês, e os arquivos legados em pt-BR (`pipeline/*.md`, `reflection/*.md`, `rules/*.md`) são convertidos conforme esta rodada os reescreve — sem rodada de tradução em massa separada.
 
-Exceção: **mensagens de commit continuam em inglês e lowercase**, conforme `docs/repo/git.md`, que não muda.
+O invariante que a seção 8 realmente estabelece continua valendo: o `translator` não gasta token traduzindo conteúdo operacional, só o "SDD visível".
+
+Exceção que não muda: **mensagens de commit em inglês e lowercase**, conforme `docs/repo/git.md`.
 
 ### D5 — O "build" é biblioteca interna, não comando de CLI
 
@@ -96,9 +98,9 @@ Seção 18, decisão ✅: toda pasta de primeiro nível do Excalibur (e as subpa
 
 ## Fase 2 — Wizard
 
-### 2.1 `bootstrap/` → `wizard/`
+### 2.1 `wizard/` → `wizard/`
 
-Seção 1, decisão ✅: troca de nome 1:1, mesma responsabilidade, sem absorver escopo novo. `wizard/entrypoint.md` mantém o nome do arquivo interno. Todas as referências textuais a "bootstrap" em `pipeline/`, `rules/`, `harnesses/` e `README.md` acompanham.
+Seção 1, decisão ✅: troca de nome 1:1, mesma responsabilidade, sem absorver escopo novo. `wizard/entrypoint.md` mantém o nome do arquivo interno. Todas as referências textuais a "wizard" em `pipeline/`, `rules/`, `harnesses/` e `README.md` acompanham.
 
 ### 2.2 `wizard/manifest.yaml` — 13 perguntas
 
