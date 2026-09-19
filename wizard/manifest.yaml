@@ -1,16 +1,58 @@
-version: 1
+# Excalibur onboarding manifest.
+#
+# Contract:
+#   - Linear list. No conditional dependency between questions: every question is
+#     asked (or defaulted) regardless of what came before.
+#   - Every question MUST have a `default`. The master question below lets the user
+#     accept all of them at once, so a question without a default would break that path.
+#   - `copy: {source, dest}` materializes a pre-written file. `source` is relative to
+#     wizard/ (matching init.sh's contract), `dest` is relative to the SDD destination.
+#   - `review_hint` is optional and only present where it earns its place. It feeds the
+#     post-manifest interpreter agent (see entrypoint.md step 5) with "dig into this"
+#     instructions, so interpretation logic never has to be hardcoded in the flow.
+#   - `free_text: true` means the option's answer is the user's own words.
+
+version: 2
+
+# Asked first, before anything in `questions`. Decides whether the rest is asked
+# one by one or resolved from the defaults in a single step.
+master:
+  id: setup_mode
+  prompt: "Customize Excalibur's settings, or use the defaults?"
+  default: defaults
+  options:
+    - value: defaults
+      label: "Use the defaults (recommended — every question below has one)"
+    - value: customize
+      label: "Customize — ask me each question"
 
 questions:
+  # --- the five original questions ---
+
   - id: destination
     prompt: "Where should this project's SDD live?"
+    default: embedded
     options:
       - value: embedded
         label: "Embedded (.sdd/ at the repo root)"
       - value: separate
-        label: "Separate repository (<repo>-sdd)"
+        label: "Separate sibling folder (<repo>-sdd/)"
+      - value: external
+        label: "External — fully outside the repo tree, never at risk of being committed"
+        review_hint: >-
+          Offer ~/.excalibur/projects/<name>/ as the predefined location, plus the option
+          to type a path. Confirm the chosen path back to the user, and ask whether the
+          SDD folder should also be added to .gitignore.
+      - value: new_repo
+        label: "Create the project repository from scratch, together with the SDD"
+        review_hint: >-
+          This unifies the git/GitHub creation from step 2 with the SDD destination choice.
+          Confirm repository name and visibility, then ask which of the three layouts above
+          the SDD should use inside the newly created repo.
 
   - id: github_preset
     prompt: "How should git/GitHub be handled on this project?"
+    default: conservative
     options:
       - value: conservative
         label: "Conservative — never merge alone, always PR"
@@ -24,18 +66,25 @@ questions:
           dest: git.md
       - value: custom
         label: "Specify in free text"
+        free_text: true
 
   - id: language
-    prompt: "What language should this project's specs be written in?"
+    prompt: "What language should this project's SDD be written in?"
+    default: en
     options:
       - value: en
         label: "English (canonical source, no extra step)"
       - value: other
         label: "Another language (inferred from this conversation, or asked if unclear)"
         translate: true
+        review_hint: >-
+          Try inferring from the conversation and from the target project's README.md before
+          asking. Do not use the OS locale. Remember the choice applies continuously to every
+          document written later, not only to the initial batch.
 
   - id: review_depth
     prompt: "Default depth for the final review checklist?"
+    default: standard
     options:
       - value: light
         label: "Light"
@@ -52,6 +101,7 @@ questions:
 
   - id: commit_convention
     prompt: "Which commit/branch convention should this project adopt?"
+    default: conventional
     options:
       - value: conventional
         label: "Conventional Commits"
@@ -63,3 +113,187 @@ questions:
         copy:
           source: onboarding/commit-convention/free.md
           dest: commit-convention.md
+
+  # --- the eight questions added in section 4 ---
+
+  - id: project_type
+    prompt: "What kind of project is this?"
+    default: app
+    options:
+      - value: app
+        label: "Application"
+      - value: lib
+        label: "Library"
+      - value: cli
+        label: "CLI tool"
+      - value: monorepo
+        label: "Monorepo"
+        review_hint: >-
+          Monorepo support is not decided yet (see PENDENCIAS.md). Collect the answer, tell
+          the user plainly that it does not change behavior yet, and do not invent a
+          per-package layout on the spot.
+
+  - id: stack_language
+    prompt: "Main language of the project?"
+    default: unknown
+    options:
+      - value: typescript
+        label: "TypeScript / JavaScript"
+      - value: python
+        label: "Python"
+      - value: go
+        label: "Go"
+      - value: other
+        label: "Another language (say which)"
+        free_text: true
+      - value: unknown
+        label: "Detect it from the project"
+        review_hint: >-
+          Run wizard/scripts/detect-stack.sh against the target path and confirm the result
+          with the user instead of silently accepting it.
+
+  - id: stack_framework
+    prompt: "Main framework, if any?"
+    default: none
+    options:
+      - value: none
+        label: "None / not applicable"
+      - value: react
+        label: "React"
+      - value: node
+        label: "Node (backend)"
+      - value: other
+        label: "Another framework (say which)"
+        free_text: true
+
+  - id: stack_ide
+    prompt: "Which editor/IDE does the team use?"
+    default: vscode
+    options:
+      - value: vscode
+        label: "VSCode"
+      - value: jetbrains
+        label: "JetBrains"
+      - value: other
+        label: "Another editor (say which)"
+        free_text: true
+
+  - id: testing_policy
+    prompt: "When are tests required?"
+    default: case_by_case
+    options:
+      - value: required
+        label: "Always, on Feature and Big feature"
+        copy:
+          source: onboarding/testing-policy/required.md
+          dest: testing-policy.md
+      - value: never
+        label: "Never required"
+        copy:
+          source: onboarding/testing-policy/never.md
+          dest: testing-policy.md
+      - value: case_by_case
+        label: "Decide per task"
+        copy:
+          source: onboarding/testing-policy/case-by-case.md
+          dest: testing-policy.md
+
+  - id: ci_cd
+    prompt: "Does this project have CI/CD, and should the final checklist wait for it?"
+    default: none
+    options:
+      - value: none
+        label: "No CI/CD"
+      - value: github_actions
+        label: "GitHub Actions — the checklist must confirm the pipeline passed"
+      - value: other
+        label: "Another CI provider (say which)"
+        free_text: true
+        review_hint: >-
+          Ask how the agent is supposed to check that pipeline's status from the terminal.
+          Without a concrete command, the checklist item is unenforceable and should not be
+          added.
+
+  - id: pr_policy
+    prompt: "When should a PR be opened?"
+    default: follow_preset
+    options:
+      - value: follow_preset
+        label: "Follow the git preset above (PR when conservative, direct push otherwise)"
+      - value: always
+        label: "Always open a PR, regardless of the preset"
+      - value: never
+        label: "Never open a PR automatically"
+
+  - id: autonomy
+    prompt: "How much should the agent interrupt you?"
+    default: skip_on_fix
+    options:
+      - value: always_ask
+        label: "Always run the grill-me interview, and always ask before installing anything"
+      - value: skip_on_fix
+        label: "Skip the interview on Fix tasks; ask before installing anything"
+      - value: autonomous
+        label: "Decide alone whenever possible — interview and install prompts off by default"
+        review_hint: >-
+          This same level also governs whether stack rule/tooling installs run straight away
+          or ask first. Make that consequence explicit before accepting `autonomous`.
+
+  - id: obsidian_vault
+    prompt: "Should Excalibur touch Obsidian's app configuration?"
+    default: md_only
+    options:
+      - value: md_only
+        label: "No — only write well-formatted .md (reads fine if opened in Obsidian)"
+      - value: vault
+        label: "Yes — also create an .obsidian/ config folder in the destination"
+
+  - id: task_class_criteria
+    prompt: "How should Feature vs. Big feature be decided?"
+    default: ask_when_unsure
+    options:
+      - value: ask_when_unsure
+        label: "Ask when it isn't obvious"
+      - value: objective
+        label: "Objective criterion — Big feature when more than one module/repo is touched"
+
+  # --- history, added by sections 15 and 17 ---
+
+  - id: history_gitignore
+    prompt: "Should the per-task execution history be versioned?"
+    default: ignored
+    options:
+      - value: ignored
+        label: "No — add history.yaml to .gitignore"
+      - value: versioned
+        label: "Yes — commit it along with the rest of the SDD"
+
+  - id: history_cleanup
+    prompt: "How should old history be pruned?"
+    default: none
+    options:
+      - value: none
+        label: "Nothing automatic — safe default, always available"
+      - value: scheduled_task
+        label: "Claude Code scheduled task — simplest, no git host needed"
+        copy:
+          source: onboarding/history-cleanup/scheduled-task.md
+          dest: history-cleanup.md
+      - value: github_actions
+        label: "GitHub Actions — runs in CI, outside the interactive session"
+        copy:
+          source: onboarding/history-cleanup/github-actions.md
+          dest: history-cleanup.md
+      - value: hook
+        label: "Local hook — reactive, fires with your own usage"
+        copy:
+          source: onboarding/history-cleanup/hook.md
+          dest: history-cleanup.md
+      - value: manual
+        label: "Manual — `npx excalibur clean-history` when you feel like it"
+        copy:
+          source: onboarding/history-cleanup/manual.md
+          dest: history-cleanup.md
+      - value: own
+        label: "I'll implement my own"
+        free_text: true

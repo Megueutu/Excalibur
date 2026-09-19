@@ -20,11 +20,11 @@ Legenda: `[ ]` pendente · `[x]` concluído · `[!]` bloqueado (motivo em `IMPLE
 ## 2. Wizard (renomeação + entrypoint + manifesto)
 
 - [x] 2.1 `wizard/` → `wizard/` (renomeação 1:1, seção 1), atualizando todas as referências
-- [ ] 2.2 `wizard/manifest.yaml` — 13 perguntas com opções fixas, `default` por pergunta e `review_hint` onde necessário (seções 4, 5, 12, 15, 17)
-- [ ] 2.3 Pergunta-mestre "personalizar ou usar os padrões" no topo do manifesto (seção 17)
-- [ ] 2.4 `wizard/init.sh` com o 3º modo `external` (seção 5)
-- [ ] 2.5 `wizard/entrypoint.md` — fluxo novo, incluindo o passo do agente interpretador pós-manifesto entre os passos 4 e 5 (seção 4)
-- [ ] 2.6 `wizard/scripts/*.sh` — biblioteca de scripts (`check-gh`, `detect-os`, `detect-stack`, `init-git-repo`, `create-github-repo`, `install-gh`, `record-history`) + `README.md` documentando a decisão `.sh` vs Node (seção 7)
+- [x] 2.2 `wizard/manifest.yaml` — 13 perguntas com opções fixas, `default` por pergunta e `review_hint` onde necessário (seções 4, 5, 12, 15, 17)
+- [x] 2.3 Pergunta-mestre "personalizar ou usar os padrões" no topo do manifesto (seção 17)
+- [x] 2.4 `wizard/init.sh` com o 3º modo `external` (seção 5)
+- [x] 2.5 `wizard/entrypoint.md` — fluxo novo, incluindo o passo do agente interpretador pós-manifesto entre os passos 4 e 5 (seção 4)
+- [x] 2.6 `wizard/scripts/*.sh` — biblioteca de scripts (`check-gh`, `detect-os`, `detect-stack`, `init-git-repo`, `create-github-repo`, `install-gh`, `record-history`) + `README.md` documentando a decisão `.sh` vs Node (seção 7)
 
 ## 3. Pipeline e agentes internos
 
