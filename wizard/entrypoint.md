@@ -28,7 +28,7 @@ b. Run [`wizard/scripts/check-git-repo.sh`](scripts/check-git-repo.sh) `<target-
    - Not a git repository → ask whether to initialize one; if yes, run [`wizard/scripts/init-git-repo.sh`](scripts/init-git-repo.sh) `<target-path>`.
    - If no → note that the SDD destination is still created, but there's nothing versioning the project itself.
 
-c. Repository creation is **not** decided here — it's part of the `destination` question in step 4, whose `new_repo` option unifies "create the repo from scratch" with "choose where the SDD lives". If that option is chosen, come back and run [`wizard/scripts/create-github-repo.sh`](scripts/create-github-repo.sh) `<target-path> <name> <public|private>` during step 6.
+c. Repository creation is **not** decided here — it's part of the `destination` question in step 4, whose `new_repo` option unifies "create the repo from scratch" with "choose where the SDD lives". If that option is chosen, come back and run [`wizard/scripts/create-github-repo.sh`](scripts/create-github-repo.sh) `<target-path> <name> <public|private>` during step 6, immediately followed by [`wizard/scripts/setup-new-repo.sh`](scripts/setup-new-repo.sh) `<target-path> <name> <github_preset>` to apply base repo config and the preset-specific setup (ruleset + PR template for `conservative`, none for `direct`/`custom`).
 
 ## 3. Ask: adapt an existing project or start from scratch?
 
@@ -82,6 +82,8 @@ This creates the destination structure (`specs/`, `ideas/`, `architecture/`, `Te
 For `destination: external`, the path comes from step 5 — `~/.excalibur/projects/<name>/` is the predefined offer, and the user can type their own. For `destination: new_repo`, create the repository first (step 2c), then run the script against the new repo with the layout confirmed in step 5.
 
 If `github_preset` was answered `custom`, write the user's free text to `git.md` in the destination yourself, after the script runs.
+
+If `obsidian_vault` was answered `vault`, run [`wizard/scripts/scaffold-obsidian-vault.sh`](scripts/scaffold-obsidian-vault.sh) `<sdd-destination-path>` right after `init.sh` finishes, to materialize a minimal `.obsidian/` config folder.
 
 ## 8. Translate, only if `language` was answered `other`
 
