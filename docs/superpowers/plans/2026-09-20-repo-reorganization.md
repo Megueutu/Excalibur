@@ -1209,11 +1209,34 @@ Expected: empty output. Fix any remaining hit the same way earlier tasks did (ma
 test -d pipeline && echo "STALE: pipeline/ still exists" || echo "OK: pipeline/ gone"
 test -d wizard && echo "STALE: wizard/ still exists" || echo "OK: wizard/ gone"
 test -d cli && echo "STALE: cli/ still exists" || echo "OK: cli/ gone"
-test -d lib/_migrations && echo "STALE: lib/_migrations still exists" || echo "OK: lib/_migrations gone (moved into excalibur/)"
+test -d lib/_migrations && echo "STALE: lib/_migrations still exists" || echo "OK: lib/_migrations gone (moved to repo-root _migrations/ in task 5)"
 ```
 Expected: all four print `OK:`.
 
-- [ ] **Step 3: Full end-to-end smoke test against the finished layout**
+- [ ] **Step 3: Complete the migration map with the renames Tasks 7 and 8 introduced**
+
+`_migrations/0.1.x-to-0.2.x.yaml` (written in Task 5) only covers the `pipeline/*` and `wizard/scripts/*` moves, because Task 5 runs before Task 7 (rules heuristics regroup) and Task 8 (task-type skills regroup) — at the time it was written, those renames didn't exist yet. This is a known, deliberately deferred gap (see this plan's pre-flight ruling in the ledger) — complete it now that every rename in this reorganization is known.
+
+Read the current `_migrations/0.1.x-to-0.2.x.yaml` and add these six entries to its existing `renames` list (don't replace the file, extend it):
+
+```yaml
+  - from: rules/md-size-limits.yaml
+    to: rules/heuristics/md-size-limits.yaml
+  - from: rules/tasks-ordering.yaml
+    to: rules/heuristics/tasks-ordering.yaml
+  - from: rules/canvas-update-checklist.yaml
+    to: rules/heuristics/canvas-update-checklist.yaml
+  - from: harnesses/claude/skills/feat
+    to: harnesses/claude/skills/task-types/feat
+  - from: harnesses/claude/skills/fix
+    to: harnesses/claude/skills/task-types/fix
+  - from: harnesses/claude/skills/refactor
+    to: harnesses/claude/skills/task-types/refactor
+```
+
+Note only 3 of the 11 task-type skills are listed as an example set here — extend this to all 11 (`feat`, `fix`, `refactor`, `perf`, `test`, `docs`, `style`, `build`, `ci`, `chore`, `revert`), each following the identical `harnesses/claude/skills/<type> → harnesses/claude/skills/task-types/<type>` pattern. The migration mechanism (`applyMigrations` in `cli/src/lib/migrations.js`) renames whole paths, including directories, so one entry per skill folder is correct — it doesn't need a separate entry for each file inside a renamed skill folder.
+
+- [ ] **Step 4: Full end-to-end smoke test against the finished layout**
 
 ```bash
 rm -rf /tmp/excalibur-final-smoke && mkdir -p /tmp/excalibur-final-smoke && cd /tmp/excalibur-final-smoke && git init -q
@@ -1237,7 +1260,7 @@ cd "C:/Users/davisilva-ieg/Excalibur" && rm -rf /tmp/excalibur-final-smoke
 ```
 Expected: every numbered `OK`/`built: OK` line prints (8 agent checks total, all `OK`), and `status`/`doctor`/`lint` each exit without a crash (their actual findings don't matter here — a clean scaffold should report a healthy project, but the smoke test is checking the commands run at all against the new layout, not auditing their output line by line).
 
-- [ ] **Step 4: Run every `.sh` and `.js` syntax check one more time, repo-wide**
+- [ ] **Step 5: Run every `.sh` and `.js` syntax check one more time, repo-wide**
 
 ```bash
 find . -name "node_modules" -prune -o -name "*.sh" -print | while read -r f; do bash -n "$f" || echo "FAIL $f"; done
@@ -1245,7 +1268,7 @@ find . -name "node_modules" -prune -o -name "*.js" -print | while read -r f; do 
 ```
 Expected: no `FAIL` lines.
 
-- [ ] **Step 5: Commit**
+- [ ] **Step 6: Commit**
 
 ```bash
 git add -A
@@ -1253,9 +1276,9 @@ git status
 git commit -m "fix: sweep remaining stale path references after the reorganization"
 ```
 
-(If Step 1–4 found nothing to fix, there's nothing to commit here — that's a valid outcome, skip the commit and say so rather than creating an empty one.)
+(If Steps 1–5 found nothing to fix, there's nothing to commit here — that's a valid outcome, skip the commit and say so rather than creating an empty one.)
 
-- [ ] **Step 6: Push**
+- [ ] **Step 7: Push**
 
 ```bash
 git push origin main
