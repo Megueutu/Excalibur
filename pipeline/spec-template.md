@@ -40,6 +40,16 @@ What this task is deliberately not doing. Usually the most valuable section.
 ## `spec.md`
 
 ```markdown
+---
+spec_id: <task-slug>
+status: draft          # draft | in_progress | blocked | done | obsolete
+last_updated: YYYY-MM-DD
+linked_commit: <sha>
+linked_release: <tag>  # optional — omit until a release actually ships it
+depends_on: []          # spec_ids this one assumes are still true
+freshness_check: pending  # ok | stale | pending
+---
+
 # <short task name>
 
 ## Context
@@ -129,3 +139,5 @@ entries:
 ## Obsidian
 
 Frontmatter, wikilinks and callouts follow [`../rules/writing-md-obsidian.md`](../rules/writing-md-obsidian.md). `status` and `class` are the fields worth filtering on later — keep them current, not just correct at creation.
+
+`spec.md`'s own frontmatter carries a second set of fields — `spec_id`, `status`, `last_updated`, `linked_commit`, `linked_release`, `depends_on`, `freshness_check` — that exist for anti-spec-drift, not for Obsidian filtering. What each one means and who writes it is documented in [`../rules/writing-md-obsidian.md`](../rules/writing-md-obsidian.md#anti-spec-drift-frontmatter).
