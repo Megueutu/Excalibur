@@ -17,7 +17,7 @@ This is deliberately **not** wired to a hook that fires on every session. Plenty
 
 The order is the point. It is the stable-prefix order from `rules/prompt-cache.md`, so running this consistently also makes the prompt cache hit:
 
-1. **`Excalibur`** (root config) — destination, language, autonomy, testing policy, the answers that shape everything else. Small, and it tells you where the rest lives.
+1. **`Excalibur`** (root config) — destination, language, autonomy, testing policy, the answers that shape everything else. Small, and it tells you where the rest lives. Read `sdd_path` from it to find the SDD destination directly, rather than re-deriving it from the `destination` mode. If that path doesn't exist, follow [`pipeline/sdd-path-recovery.md`](../../../../pipeline/sdd-path-recovery.md) before giving up on step 4.
 2. **`rules/global/`** — KISS, YAGNI, DRY, SOLID. Identical across every project, so it's the most cacheable thing there is.
 3. **`rules/stacks/`** — only the files matching this project's stack answers. Not the whole folder.
 4. **`architecture/`** — the project's living knowledge, from the SDD destination. Read the index first; read individual files when they're relevant.

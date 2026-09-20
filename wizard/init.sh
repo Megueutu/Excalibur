@@ -103,6 +103,9 @@ cp "$EXCALIBUR_ROOT/reflection/reasoning-chain.md" "$DEST/reflection/reasoning-c
 # agent keeps current — the Obsidian app is never involved in writing it.
 cp "$EXCALIBUR_ROOT/pipeline/project-canvas-template.canvas" "$DEST/project.canvas"
 touch "$DEST/specs/.gitkeep" "$DEST/ideas/.gitkeep" "$DEST/architecture/.gitkeep"
+# Empty marker so a renamed/moved SDD folder can still be found later by scanning
+# for this file instead of guessing by folder name — see pipeline/sdd-path-recovery.md.
+touch "$DEST/.excalibur-sdd-marker"
 
 if [[ -n "$COPY_LIST" ]]; then
   while IFS=$'\t' read -r SRC DST || [[ -n "$SRC" ]]; do

@@ -140,6 +140,47 @@ export const SESSION_FLAGS = {
   'explain-decisions': 'Justify every relevant decision out loud',
 }
 
+/**
+ * Hidden, empty marker file dropped inside the SDD destination. Its only job is to
+ * survive a folder rename so a later session can still find the SDD by scanning for
+ * it, instead of guessing from a folder name — see `pipeline/sdd-path-recovery.md`.
+ */
+export const SDD_MARKER_FILE = '.excalibur-sdd-marker'
+
+/**
+ * Best-effort literal SDD path from the collected answers, where it's derivable
+ * without the post-manifest interpretation step. `embedded` and `separate` are
+ * deterministic from `cwd` alone; `external` and `new_repo` need a path only that
+ * step resolves (a typed location, or a repo created on the spot), so those come
+ * back `null` here. `sdd_path` in the config stays `null` until whichever step
+ * actually materializes the destination fills it in.
+ */
+export function resolveSddPath(cwd, answers) {
+  switch (answers?.destination) {
+    case 'embedded':
+      return path.join(cwd, '.sdd')
+    case 'separate':
+      return path.join(path.dirname(cwd), `${path.basename(cwd)}-sdd`)
+    default:
+      return null
+  }
+}
+
+/**
+ * Writes the empty marker file inside the SDD destination, if that destination
+ * already exists. Most of the time it doesn't yet at this point — the CLI's `init`
+ * only collects answers and installs `.excalibur/`; the SDD folder itself is
+ * materialized later, by the harness skill (see `wizard/entrypoint.md` and
+ * `wizard/init.sh`). This is still worth calling: it covers a re-run of `init`
+ * against a project whose SDD destination already exists, and it keeps the marker
+ * logic in one place for whatever step creates the folder to reuse.
+ */
+export function writeSddMarker(sddPath) {
+  if (!sddPath || !fs.existsSync(sddPath)) return false
+  writeText(path.join(sddPath, SDD_MARKER_FILE), '')
+  return true
+}
+
 export function writeSession(cwd, flags) {
   const p = projectPaths(cwd)
   const header = [

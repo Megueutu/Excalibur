@@ -3,7 +3,15 @@ import * as p from '@clack/prompts'
 import pc from 'picocolors'
 import { packageRoot, shippedFolders, projectPaths, BASE_DIR, CUSTOM_DIR } from '../lib/paths.js'
 import { copyDir, ensureDir, exists, isEmptyDir, removeDir, writeText, ensureGitignore } from '../lib/fsx.js'
-import { loadManifest, defaultAnswers, writeAnswers, writeConfig, frameworkVersion } from '../lib/config.js'
+import {
+  loadManifest,
+  defaultAnswers,
+  writeAnswers,
+  writeConfig,
+  frameworkVersion,
+  resolveSddPath,
+  writeSddMarker,
+} from '../lib/config.js'
 import { build } from '../lib/build.js'
 
 /**
@@ -239,11 +247,18 @@ export async function init(args, cwd) {
   for (const [id, text] of Object.entries(freeText)) payload[`${id}_text`] = text
   writeAnswers(cwd, payload, mode)
 
+  // Best effort only: `embedded`/`separate` resolve deterministically from `cwd`,
+  // `external`/`new_repo` need the post-manifest interpretation step to pick a real
+  // path and fill this in later — see resolveSddPath's doc comment in lib/config.js.
+  const sddPath = resolveSddPath(cwd, answers)
+  writeSddMarker(sddPath)
+
   writeConfig(cwd, {
     version: 1,
     framework_version: frameworkVersion(),
     setup_mode: mode,
     answers: payload,
+    sdd_path: sddPath,
   })
 
   writeVscodeFiles(cwd)
