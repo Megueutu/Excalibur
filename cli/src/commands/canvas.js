@@ -14,7 +14,7 @@ const TEMPLATE = path.join(packageRoot, 'pipeline', 'project-canvas-template.can
  * `rules/canvas-update-checklist.yaml` after every Feature/Big feature task (see
  * lib/agents/review.yaml). That is a judgment call ("did this change deserve a
  * node?") this command cannot make — there is no LLM here. What it does mechanically:
- * materialize `project.canvas` from `pipeline/project-canvas-template.canvas` — the
+ * materialize `project.canvas` from `lib/pipeline/project-canvas-template.canvas` — the
  * exact file `wizard/manifest.yaml`-driven init would otherwise never place — when it
  * is missing, or reset it back to the blank template on request. Filling it in with
  * real project content afterward is still the review agent's (or a human's) job.

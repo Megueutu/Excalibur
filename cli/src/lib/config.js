@@ -143,7 +143,7 @@ export const SESSION_FLAGS = {
 /**
  * Hidden, empty marker file dropped inside the SDD destination. Its only job is to
  * survive a folder rename so a later session can still find the SDD by scanning for
- * it, instead of guessing from a folder name — see `pipeline/sdd-path-recovery.md`.
+ * it, instead of guessing from a folder name — see `lib/pipeline/sdd-path-recovery.md`.
  */
 export const SDD_MARKER_FILE = '.excalibur-sdd-marker'
 
