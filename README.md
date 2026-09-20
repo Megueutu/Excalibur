@@ -20,7 +20,8 @@ Then, inside your harness, run `/excalibur-init` to finish onboarding conversati
 | Folder | What it is |
 |---|---|
 | [`wizard/`](wizard/) | One-time onboarding: the question manifest, `init.sh`, presets and shell scripts |
-| [`pipeline/`](pipeline/) | The implementation process itself + the internal agent catalog (`pipeline/agents/`) |
+| [`pipeline/`](pipeline/) | The implementation process itself |
+| [`lib/agents/`](lib/agents/) | The internal agent catalog (YAML source files, built into `.claude/agents/` for Claude Code) |
 | [`rules/`](rules/) | Distributable rules: global principles, per-stack recommendations, writing and naming conventions |
 | [`reflection/`](reflection/) | How to *think* while producing a spec — reasoning chain and when to pause |
 | [`harnesses/`](harnesses/) | Thin per-harness adapters (skills). Today: `claude/` only |

@@ -36,5 +36,5 @@ The exceptions are decided elsewhere: the project's `autonomy` setting, a `skip-
 
 - The process (shared, don't edit here): [`pipeline/entrypoint.md`](../../../../pipeline/entrypoint.md)
 - Task types and their effort hints: [`pipeline/task-types.md`](../../../../pipeline/task-types.md)
-- The agent catalog: [`pipeline/agents/`](../../../../pipeline/agents/)
+- The agent catalog: [`lib/agents/`](../../../../lib/agents/)
 - Onboarding, if the project isn't set up yet: [`../excalibur-init/SKILL.md`](../excalibur-init/SKILL.md)

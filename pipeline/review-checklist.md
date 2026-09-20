@@ -5,7 +5,7 @@ This is not reference reading. It's a mandatory execution step with visible outp
 **How to run it, without exception:**
 
 1. Run `git diff` (or equivalent) over everything that changed — actually look at the diff, don't trust your memory of what was written.
-2. On **Feature** / **Big feature**: dispatch the `review` agent (`pipeline/agents/review.md`) with the diff and this file, and ask for a verdict item by item. A fresh agent without the "I already think I'm done" bias catches more. On a **Fix**, do it inline, but still explicitly.
+2. On **Feature** / **Big feature**: dispatch the `review` agent (`lib/agents/review.yaml`) with the diff and this file, and ask for a verdict item by item. A fresh agent without the "I already think I'm done" bias catches more. On a **Fix**, do it inline, but still explicitly.
 3. Write the final answer citing the result of each item below. It doesn't have to be long, but each item has to have actually been checked, not presumed.
 
 If any item fails, fix it before considering the task complete — never report it as done with a caveat attached.

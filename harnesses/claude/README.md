@@ -14,7 +14,7 @@ The Claude / Claude Code adapter — the only implemented harness (design doc se
 | `guardrail` | via `skills:` | The persona agents load; never invoked directly by a user |
 | `feat`, `fix`, `refactor`, … | `/feat …` | One per Conventional Commits type — the explicit entry point to the pipeline |
 
-Agents are **not** here — they live in [`../../pipeline/agents/`](../../pipeline/agents/). Only skills and harness-specific wiring belong in this folder.
+Agents are **not** here — they live in [`../../lib/agents/`](../../lib/agents/). Only skills and harness-specific wiring belong in this folder.
 
 ## Where these end up
 

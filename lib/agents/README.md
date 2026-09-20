@@ -1,17 +1,19 @@
-# pipeline/agents/
+# lib/agents/
 
-The framework's internal agent catalog. One `.md` per agent: YAML frontmatter (`name`, `description`, `tools`, `skills`) plus a Markdown body. No separate `.yaml` file.
+The framework's internal agent catalog. One `.yaml` source per agent (structured data with name, description, tools, skills, and Markdown body), built into `.claude/agents/<name>.md` by the build system (`excalibur/src/lib/build.js`). The `.md` output is what Claude Code actually reads and runs; this directory holds the source.
 
 This is the single, fixed home for agents — they don't live under `harnesses/<harness>/`. If a harness needs a specific invocation tweak, that belongs in the harness adapter, not in a duplicated copy of the agent.
 
 | Agent | Persona | Tools | Writes |
 |---|---|---|---|
-| [`orchestrator.md`](orchestrator.md) | guardrail | Read, Grep, Glob, Task | `proposal.md`, `tasks.yaml`, handoffs |
-| [`spec-writer.md`](spec-writer.md) | guardrail | Read, Grep, Glob, Write, Edit | `spec.md` |
-| [`idealizador.md`](idealizador.md) | guardrail | Read, Grep, Glob, Write, Edit | `ideas/`, project canvas |
-| [`grill-me.md`](grill-me.md) | — | Read, Grep, Glob | nothing (interviews only) |
-| [`review.md`](review.md) | guardrail | Read, Grep, Glob, Bash | `history.yaml`, `tasks.yaml` status, canvas |
-| [`translator.md`](translator.md) | — | Read, Write, Glob | translations in place |
+| `orchestrator.yaml` | guardrail | Read, Grep, Glob, Task | `proposal.md`, `tasks.yaml`, handoffs |
+| `spec-writer.yaml` | guardrail | Read, Grep, Glob, Write, Edit | `spec.md` |
+| `idealizador.yaml` | guardrail | Read, Grep, Glob, Write, Edit | `ideas/`, project canvas |
+| `grill-me.yaml` | — | Read, Grep, Glob | nothing (interviews only) |
+| `review.yaml` | guardrail | Read, Grep, Glob, Bash | `history.yaml`, `tasks.yaml` status, canvas |
+| `translator.yaml` | — | Read, Write, Glob | translations in place |
+| `docs-updater.yaml` | guardrail | Read, Grep, Bash, Edit | `freshness_check` (drift reporting only) |
+| `scenthound.yaml` | guardrail | Read, Grep, Bash | nothing (security audit only) |
 
 ## Two guardrails, not one
 

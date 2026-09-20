@@ -33,5 +33,5 @@ When the user asks to set up Excalibur for a project, or when the `sdd` skill fi
 
 - The flow (shared, don't duplicate here): [`wizard/entrypoint.md`](../../../../wizard/entrypoint.md)
 - The questions: [`wizard/manifest.yaml`](../../../../wizard/manifest.yaml)
-- Translation: [`pipeline/agents/translator.md`](../../../../pipeline/agents/translator.md)
+- Translation: [`lib/agents/translator.yaml`](../../../../lib/agents/translator.yaml)
 - Next step: [`../sdd/SKILL.md`](../sdd/SKILL.md)

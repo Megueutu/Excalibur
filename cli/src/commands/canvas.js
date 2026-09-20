@@ -12,7 +12,7 @@ const TEMPLATE = path.join(packageRoot, 'pipeline', 'project-canvas-template.can
  *
  * The `review` agent normally keeps `project.canvas` current automatically, walking
  * `rules/canvas-update-checklist.yaml` after every Feature/Big feature task (see
- * pipeline/agents/review.md). That is a judgment call ("did this change deserve a
+ * lib/agents/review.yaml). That is a judgment call ("did this change deserve a
  * node?") this command cannot make — there is no LLM here. What it does mechanically:
  * materialize `project.canvas` from `pipeline/project-canvas-template.canvas` — the
  * exact file `wizard/manifest.yaml`-driven init would otherwise never place — when it
