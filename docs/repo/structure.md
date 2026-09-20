@@ -13,8 +13,9 @@ Excalibur/
     init.sh                materializes the destination (embedded|separate|external)
     onboarding/            pre-written files copied based on the answers
     scripts/               shell helpers (git/GitHub, OS, stack, history)
-  pipeline/                the implementation process
-    agents/                the internal agent catalog, one .md each
+  lib/
+    agents/                the internal agent catalog, one .yaml each
+    pipeline/              the implementation process
   rules/                   rules shipped into projects
     global/                KISS, YAGNI, DRY, SOLID
     stacks/                per language / framework / IDE, combinable
@@ -31,18 +32,18 @@ Excalibur/
 | Layer | Rule for deciding |
 |---|---|
 | `cli/` | Executable Node code. Never framework *content* — the CLI copies content, it doesn't hold a second copy of it. |
-| `wizard/` | Only runs once per project, during onboarding. If it runs on every task, it belongs in `pipeline/`. |
-| `pipeline/` | What agents do on every task. Must be 100% generic — if it names a project, org or repo, it doesn't belong here. |
+| `wizard/` | Only runs once per project, during onboarding. If it runs on every task, it belongs in `lib/pipeline/`. |
+| `lib/pipeline/` | What agents do on every task. Must be 100% generic — if it names a project, org or repo, it doesn't belong here. |
 | `rules/` | Content that gets copied into a user's project. If it's about maintaining *this* repository, it goes to `docs/repo/` instead. |
 | `reflection/` | How to reason while writing a spec, as opposed to what to do in what order. |
-| `harnesses/<harness>/` | Only the trigger plus a pointer. Never a second copy of `pipeline/`. |
+| `harnesses/<harness>/` | Only the trigger plus a pointer. Never a second copy of `lib/pipeline/`. |
 | `docs/repo/` | About this repository. Never shipped to a project. |
 
 ## Two rules that are easy to get wrong
 
 **`rules/` is shipped; `docs/repo/` is not.** Anything under `rules/` lands in someone else's project as `.excalibur/rules/`. A note about how to maintain this repository has no business being copied there.
 
-**`cli/` doesn't duplicate content.** `wizard/`, `pipeline/` and `rules/` are the single source of truth. The CLI packages and copies them — if a rule's text ever appears inside `cli/src/`, that's a bug.
+**`cli/` doesn't duplicate content.** `wizard/`, `lib/pipeline/` and `rules/` are the single source of truth. The CLI packages and copies them — if a rule's text ever appears inside `cli/src/`, that's a bug.
 
 ## Every main folder has a README
 

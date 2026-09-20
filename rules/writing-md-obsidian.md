@@ -9,9 +9,9 @@ Excalibur only guarantees the content reads well *if* opened in Obsidian. It doe
 Excalibur's repository contains two very different kinds of `.md`, and this file governs exactly one of them:
 
 - **Visible SDD** — `specs/`, `architecture/`, `ideas/`, the Canvas: everything written to the SDD destination inside a target project. It is translated to the project's own language, it is meant for a human to read and collaborate on, and it lives in a vault a person actually opens. This is what every rule below applies to.
-- **Operational Excalibur** — `.excalibur/`, `pipeline/`, `rules/` themselves, `wizard/`, `harnesses/`. Fixed English, agent-only consumption. This category is **excluded on purpose, not by accident of where the files happen to sit.** Nobody browses `lib/agents/orchestrator.yaml` in Obsidian looking for backlinks — it's content an agent reads to know how to behave, not a note a person walks through. Frontmatter shaped for Dataview queries, wikilinks that feed a graph view, callouts sized for visual scanning — none of that serves a file whose only reader is a model executing it as instructions.
+- **Operational Excalibur** — `.excalibur/`, `lib/pipeline/`, `rules/` themselves, `wizard/`, `harnesses/`. Fixed English, agent-only consumption. This category is **excluded on purpose, not by accident of where the files happen to sit.** Nobody browses `lib/agents/orchestrator.yaml` in Obsidian looking for backlinks — it's content an agent reads to know how to behave, not a note a person walks through. Frontmatter shaped for Dataview queries, wikilinks that feed a graph view, callouts sized for visual scanning — none of that serves a file whose only reader is a model executing it as instructions.
 
-If you're editing something under `pipeline/`, `rules/`, `wizard/`, `harnesses/`, or `.excalibur/`, this file's conventions do not apply to it. Its own house style (YAML frontmatter for agents/skills, plain Markdown headings, no wikilinks, English-only) is set by the files already there — see `lib/agents/review.yaml` or `harnesses/claude/skills/try-gh/SKILL.md` for the pattern to follow instead.
+If you're editing something under `lib/pipeline/`, `rules/`, `wizard/`, `harnesses/`, or `.excalibur/`, this file's conventions do not apply to it. Its own house style (YAML frontmatter for agents/skills, plain Markdown headings, no wikilinks, English-only) is set by the files already there — see `lib/agents/review.yaml` or `harnesses/claude/skills/try-gh/SKILL.md` for the pattern to follow instead.
 
 ## Frontmatter
 
@@ -33,7 +33,7 @@ Keys stay in English even when the project's language isn't: they're queried, no
 
 ## Anti-spec-drift frontmatter
 
-`spec.md` (see `pipeline/spec-template.md`) carries a second, separate block of frontmatter fields on top of `status`/`project`/`task`/`class`/`created` above. These exist so drift between a spec and the code it describes can be detected mechanically instead of discovered by accident:
+`spec.md` (see `lib/pipeline/spec-template.md`) carries a second, separate block of frontmatter fields on top of `status`/`project`/`task`/`class`/`created` above. These exist so drift between a spec and the code it describes can be detected mechanically instead of discovered by accident:
 
 | Field | Meaning |
 |---|---|

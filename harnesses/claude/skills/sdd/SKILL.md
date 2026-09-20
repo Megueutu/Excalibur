@@ -19,12 +19,12 @@ If the user came in through a task-type skill (`/feat`, `/fix`, `/refactor`…),
 
 2. **Read, in this order:**
    - `.excalibur-session.yaml`, if present — the session directives change what runs.
-   - `pipeline/entrypoint.md` — the full process.
+   - `lib/pipeline/entrypoint.md` — the full process.
    - The project's own rules, from the destination named in the `Excalibur` config.
 
    That order is also the prompt-cache order (`rules/prompt-cache.md`): stable content first, task-specific content last.
 
-3. **Follow `pipeline/entrypoint.md` strictly**, including stopping to ask for `/grill-me` before exploring any code.
+3. **Follow `lib/pipeline/entrypoint.md` strictly**, including stopping to ask for `/grill-me` before exploring any code.
 
 ## The one thing not to improvise
 
@@ -34,7 +34,7 @@ The exceptions are decided elsewhere: the project's `autonomy` setting, a `skip-
 
 ## References
 
-- The process (shared, don't edit here): [`pipeline/entrypoint.md`](../../../../pipeline/entrypoint.md)
-- Task types and their effort hints: [`pipeline/task-types.md`](../../../../pipeline/task-types.md)
+- The process (shared, don't edit here): [`lib/pipeline/entrypoint.md`](../../../../lib/pipeline/entrypoint.md)
+- Task types and their effort hints: [`lib/pipeline/task-types.md`](../../../../lib/pipeline/task-types.md)
 - The agent catalog: [`lib/agents/`](../../../../lib/agents/)
 - Onboarding, if the project isn't set up yet: [`../excalibur-init/SKILL.md`](../excalibur-init/SKILL.md)

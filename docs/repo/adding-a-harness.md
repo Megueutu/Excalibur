@@ -9,9 +9,9 @@ The design doc's section 11 is explicit that multi-harness is **not** this round
 A harness adapter **never** contains methodology — only:
 
 1. When to trigger (that harness's native mechanism).
-2. A pointer to `pipeline/entrypoint.md` and to the project's own rules.
+2. A pointer to `lib/pipeline/entrypoint.md` and to the project's own rules.
 
-If the adapter starts explaining the process instead of pointing at it, it has grown too big — move the content back to `pipeline/` if it's generic, or into the project's SDD destination if it's specific.
+If the adapter starts explaining the process instead of pointing at it, it has grown too big — move the content back to `lib/pipeline/` if it's generic, or into the project's SDD destination if it's specific.
 
 Use [`harnesses/claude/skills/sdd/SKILL.md`](../../harnesses/claude/skills/sdd/SKILL.md) as the reference for size and shape.
 

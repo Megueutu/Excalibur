@@ -2,7 +2,7 @@
 
 The npm-publishable Node CLI. This is the **distribution mechanism** — it is not where framework content lives.
 
-`wizard/`, `pipeline/`, `rules/` and `reflection/` are the source of truth for content. The CLI packages and copies them. If a rule's text ever appears inside `cli/src/`, that's a bug.
+`wizard/`, `lib/pipeline/`, `rules/` and `reflection/` are the source of truth for content. The CLI packages and copies them. If a rule's text ever appears inside `cli/src/`, that's a bug.
 
 ```
 cli/

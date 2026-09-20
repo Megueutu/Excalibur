@@ -15,8 +15,8 @@ The orchestrator receives this as a starting expectation, not a rule.
 
 ## What to do
 
-1. Read [`pipeline/task-types.md`](../../../../pipeline/task-types.md) — the shared body behind every task-type skill. It holds the full effort table and how hints interact with classification.
-2. Follow [`pipeline/entrypoint.md`](../../../../pipeline/entrypoint.md) from step 1, passing `revert` as the declared type.
+1. Read [`lib/pipeline/task-types.md`](../../../../lib/pipeline/task-types.md) — the shared body behind every task-type skill. It holds the full effort table and how hints interact with classification.
+2. Follow [`lib/pipeline/entrypoint.md`](../../../../lib/pipeline/entrypoint.md) from step 1, passing `revert` as the declared type.
 3. The orchestrator confirms or adjusts the classification against the real scope. If it disagrees with the hint, say so out loud — a `/revert` that turns out to be something else is normal, not a failure.
 
 ## Why this is such a small file

@@ -9,7 +9,7 @@
 #       [--age-threshold-days N] [--output <file>]
 #
 # <sdd-path>            Folder containing specs/<repo>/<task-slug>/spec.md files
-#                        (the SDD destination — see pipeline/spec-template.md).
+#                        (the SDD destination — see lib/pipeline/spec-template.md).
 # --repo <path>          Git repository to check commits/tags against. Defaults to <sdd-path>
 #                        itself (the "embedded" destination case, where SDD and code share a repo).
 # --age-threshold-days   Flag a spec whose last_updated is older than this even with no other
@@ -82,7 +82,7 @@ frontmatter_depends_on() {
 }
 
 # Best-effort list of files/folders this spec is about, from the sibling design.md's
-# "Affected files" section (pipeline/spec-template.md). Falls back to the task folder
+# "Affected files" section (lib/pipeline/spec-template.md). Falls back to the task folder
 # itself when there is no design.md yet — a spec without a design still deserves an
 # age/tag/depends_on check even if it can't be tied to specific paths.
 referenced_paths() {

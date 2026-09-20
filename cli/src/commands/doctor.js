@@ -76,7 +76,7 @@ export async function doctor(args, cwd) {
     for (const o of orphans) lines.push(`    ${CUSTOM_DIR}/${o}`)
   }
 
-  // 2. Missing README.md in a top-level Excalibur-managed folder (wizard/, pipeline/,
+  // 2. Missing README.md in a top-level Excalibur-managed folder (wizard/, lib/pipeline/,
   //    rules/, reflection/ — see paths.js `shippedFolders`, the same list `build.js`
   //    and `init` use to know what gets materialized into .excalibur/).
   const missingReadme = shippedFolders.filter((folder) => !exists(path.join(paths.base, folder, 'README.md')))

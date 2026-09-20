@@ -23,11 +23,11 @@ It is **not** for creating domain skills for the target project ("how we deploy 
 
 ## Excalibur's conventions
 
-**Location.** `harnesses/claude/skills/<name>/SKILL.md`. Not in `pipeline/` — that's for agents and process. Not at the repository root.
+**Location.** `harnesses/claude/skills/<name>/SKILL.md`. Not in `lib/pipeline/` — that's for agents and process. Not at the repository root.
 
 **Frontmatter.** `name` and `description` only. The description says *when to use it* and *when not to* — that's what the model matches against, so "Use when… Not for…" beats a summary of what the skill contains. Keep it short: agent and skill frontmatter are both in the size allowlist (`rules/md-size-limits.yaml`).
 
-**Body.** Point, don't duplicate. A skill that explains the whole process instead of linking to `pipeline/entrypoint.md` has grown too big, and it will drift from the real process the first time that process changes.
+**Body.** Point, don't duplicate. A skill that explains the whole process instead of linking to `lib/pipeline/entrypoint.md` has grown too big, and it will drift from the real process the first time that process changes.
 
 **Language.** English. It's operational content, never translated (`rules/translation.md`).
 
@@ -36,5 +36,5 @@ It is **not** for creating domain skills for the target project ("how we deploy 
 ## After creating one
 
 1. Add a row to `harnesses/claude/README.md`.
-2. If it's a task-type skill, add it to the table in `pipeline/task-types.md` instead of writing a new body — the eleven existing ones share one.
+2. If it's a task-type skill, add it to the table in `lib/pipeline/task-types.md` instead of writing a new body — the eleven existing ones share one.
 3. Run `npx excalibur update` in a project using it, so the build copies it to the path the harness reads.

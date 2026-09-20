@@ -1,6 +1,6 @@
 # Wizard — creating the SDD for a new project
 
-Runs once per project, before any implementation task (`pipeline/entrypoint.md`) can start. Triggered by the harness adapter in use (see `harnesses/<harness>/`) when it doesn't find an SDD destination already configured, or explicitly by `/excalibur-init`.
+Runs once per project, before any implementation task (`lib/pipeline/entrypoint.md`) can start. Triggered by the harness adapter in use (see `harnesses/<harness>/`) when it doesn't find an SDD destination already configured, or explicitly by `/excalibur-init`.
 
 ## 0. Check for pre-collected answers
 
@@ -89,7 +89,7 @@ If `obsidian_vault` was answered `vault`, run [`wizard/scripts/scaffold-obsidian
 
 Invoke the `translator` subagent (see [`lib/agents/translator.yaml`](../lib/agents/translator.yaml)) against the destination's `Templates/` and `reflection/` folders, with the resolved language.
 
-What gets translated is decided structurally, by where a file sits — not by a list of exceptions. See `rules/translation.md`: the **visible SDD** (`ideas/`, `architecture/`, `proposal.md`, `spec.md`, `design.md`, canvas) is translated; the **operational Excalibur** (`.excalibur/`, `pipeline/`, `rules/`, `tasks.yaml`, `history.yaml`) never is. The point is token economy: no agent should spend tokens translating a file no human will read.
+What gets translated is decided structurally, by where a file sits — not by a list of exceptions. See `rules/translation.md`: the **visible SDD** (`ideas/`, `architecture/`, `proposal.md`, `spec.md`, `design.md`, canvas) is translated; the **operational Excalibur** (`.excalibur/`, `lib/pipeline/`, `rules/`, `tasks.yaml`, `history.yaml`) never is. The point is token economy: no agent should spend tokens translating a file no human will read.
 
 Unlike the original one-shot behavior, this applies continuously — documents written later follow the same language.
 
@@ -97,7 +97,7 @@ Unlike the original one-shot behavior, this applies continuously — documents w
 
 Write the `Excalibur` file (root, no extension, YAML content) with the resolved answers, so later sessions don't have to re-derive them. If the CLI ran `init`, it already did this — verify rather than overwrite.
 
-Then go straight to [`pipeline/entrypoint.md`](../pipeline/entrypoint.md) with the project's first real task — the wizard only prepares the destination, it doesn't implement anything.
+Then go straight to [`lib/pipeline/entrypoint.md`](../lib/pipeline/entrypoint.md) with the project's first real task — the wizard only prepares the destination, it doesn't implement anything.
 
 ## Detection (for harness adapters)
 

@@ -9,7 +9,7 @@ Not a list of exceptions to maintain — the answer comes from **where a file si
 | | Translated | What it is |
 |---|---|---|
 | **Visible SDD** | yes | `ideas/`, `architecture/`, `proposal.md`, `spec.md`, `design.md`, the project canvas |
-| **Operational Excalibur** | **never** | `.excalibur/` entirely (rules, agent prompts, session directives), `pipeline/`, `rules/`, `tasks.yaml`, `history.yaml` |
+| **Operational Excalibur** | **never** | `.excalibur/` entirely (rules, agent prompts, session directives), `lib/pipeline/`, `rules/`, `tasks.yaml`, `history.yaml` |
 
 Visible SDD is written for humans to read and collaborate on. Operational content is machinery an agent consumes.
 
@@ -21,7 +21,7 @@ Visible SDD is written for humans to read and collaborate on. Operational conten
 
 ## Canonical language of the operational layer
 
-English. Everything under `pipeline/`, `rules/` and `.excalibur/` is written and kept in English regardless of the project's language, so the same framework content works for every project and never needs a translation pass.
+English. Everything under `lib/pipeline/`, `rules/` and `.excalibur/` is written and kept in English regardless of the project's language, so the same framework content works for every project and never needs a translation pass.
 
 ## Detecting the project's language
 

@@ -20,15 +20,14 @@ Then, inside your harness, run `/excalibur-init` to finish onboarding conversati
 | Folder | What it is |
 |---|---|
 | [`wizard/`](wizard/) | One-time onboarding: the question manifest, `init.sh`, presets and shell scripts |
-| [`pipeline/`](pipeline/) | The implementation process itself |
-| [`lib/agents/`](lib/agents/) | The internal agent catalog (YAML source files, built into `.claude/agents/` for Claude Code) |
+| [`lib/`](lib/) | Framework libraries: `agents/` (internal agent catalog, YAML source files) and `pipeline/` (implementation process itself) |
 | [`rules/`](rules/) | Distributable rules: global principles, per-stack recommendations, writing and naming conventions |
 | [`reflection/`](reflection/) | How to *think* while producing a spec — reasoning chain and when to pause |
 | [`harnesses/`](harnesses/) | Thin per-harness adapters (skills). Today: `claude/` only |
 | [`cli/`](cli/) | The npm-publishable Node CLI that distributes and installs everything above |
 | [`docs/repo/`](docs/repo/) | Documentation about this repository itself — not shipped to target projects |
 
-`wizard/`, `pipeline/` and `rules/` are the source of truth for content; `cli/` only packages and copies them.
+`wizard/`, `lib/pipeline/` and `rules/` are the source of truth for content; `cli/` only packages and copies them.
 
 ## What lands in a project you onboard
 

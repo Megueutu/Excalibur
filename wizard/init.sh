@@ -95,8 +95,8 @@ fi
 # In external mode the destination lives outside the repo, so its parent may not
 # exist yet — that is the normal case, not an error.
 mkdir -p "$DEST/specs" "$DEST/ideas" "$DEST/architecture" "$DEST/Templates" "$DEST/reflection"
-cp "$EXCALIBUR_ROOT/pipeline/spec-template.md" "$DEST/Templates/spec-template.md"
-cp "$EXCALIBUR_ROOT/pipeline/handoff-template.md" "$DEST/Templates/handoff-template.md"
+cp "$EXCALIBUR_ROOT/lib/pipeline/spec-template.md" "$DEST/Templates/spec-template.md"
+cp "$EXCALIBUR_ROOT/lib/pipeline/handoff-template.md" "$DEST/Templates/handoff-template.md"
 cp "$EXCALIBUR_ROOT/reflection/when-to-pause.md" "$DEST/reflection/when-to-pause.md"
 cp "$EXCALIBUR_ROOT/reflection/reasoning-chain.md" "$DEST/reflection/reasoning-chain.md"
 # JSON Canvas is an open format (plain JSON), so this is just a seed file the review
