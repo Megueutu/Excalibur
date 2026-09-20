@@ -176,7 +176,7 @@ function parseMap(tokens, start, indent) {
       }
     } else if (isBlockScalarHeader(rest)) {
       const [text, next] = readBlockScalar(tokens, i + 1, t.indent, rest)
-      map[key] = text.replace(/\n+$/, '')
+      map[key] = text
       i = next
     } else {
       map[key] = parseScalar(rest)
@@ -225,7 +225,7 @@ function parseList(tokens, start, indent) {
       i = next
     } else if (isBlockScalarHeader(inline)) {
       const [text, next] = readBlockScalar(tokens, i + 1, t.indent, inline)
-      list.push(text.replace(/\n+$/, ''))
+      list.push(text)
       i = next
     } else {
       list.push(parseScalar(inline))

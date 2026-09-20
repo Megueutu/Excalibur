@@ -17,7 +17,7 @@ Use [`harnesses/claude/skills/sdd/SKILL.md`](../../harnesses/claude/skills/sdd/S
 
 ## What does not move
 
-Agents live in [`pipeline/agents/`](../../pipeline/agents/), not under a harness. A new harness reuses the same agent definitions; if it needs a different invocation mechanism, that wiring belongs in the adapter, not in a copied agent file.
+Agents live in [`lib/agents/`](../../lib/agents/), not under a harness. A new harness reuses the same agent definitions; if it needs a different invocation mechanism, that wiring belongs in the adapter, not in a copied agent file.
 
 ## Codex
 
