@@ -1,6 +1,6 @@
 {
   "name": "@easy-spec/excalibur",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "A ready-to-use SDD (Spec-Driven Development) framework for AI agents",
   "license": "MIT",
   "type": "module",
@@ -19,6 +19,7 @@
     "reflection/",
     "harnesses/",
     "onboarding/",
+    "scripts/",
     "README.md",
     "LICENSE"
   ],
