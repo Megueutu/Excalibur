@@ -15,7 +15,7 @@ export function frameworkVersion() {
 
 /** The manifest that drives onboarding — ships inside this same package now. */
 export function loadManifest() {
-  return parse(fs.readFileSync(path.join(packageRoot, 'onboarding', 'manifest.yaml'), 'utf8'))
+  return parse(fs.readFileSync(path.join(packageRoot, 'lib', 'onboarding', 'manifest.yaml'), 'utf8'))
 }
 
 /** Every question resolved to its default — the "use the defaults" path. */

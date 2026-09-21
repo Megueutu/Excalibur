@@ -21,7 +21,7 @@ import { orphanedCustomizations } from '../core/resolve.js'
  * done). This walks the tree the same way clean-history.js already walks for
  * history.yaml, rather than guessing a single fixed location. It only reaches an SDD
  * that lives somewhere under `cwd` — a `separate` sibling folder or a fully `external`
- * destination (see onboarding/manifest.yaml's `destination` question) is out of its reach,
+ * destination (see lib/onboarding/manifest.yaml's `destination` question) is out of its reach,
  * and that limitation is reported rather than silently producing a false "missing".
  */
 function findCanvasAndTasks(cwd) {

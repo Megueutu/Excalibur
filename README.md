@@ -21,15 +21,15 @@ Then, inside your harness, run `/excalibur-init` to finish onboarding conversati
 | Folder | What it is |
 |---|---|
 | [`packages/cli/`](packages/cli/) | The executable package: both entry points, commands and shared CLI core |
-| [`onboarding/`](onboarding/) | Data for one-time onboarding: the question manifest, `init.sh`, presets copied based on the answers |
+| [`lib/onboarding/`](lib/onboarding/) | Data for one-time onboarding: the question manifest, `init.sh`, presets copied based on the answers |
 | [`lib/`](lib/) | Framework content: `agents/`, `personas/`, `pipeline/` and opt-in `features/` |
 | [`rules/`](rules/) | Distributable rules: `global/` principles, per-`stacks/` recommendations, and `heuristics/` (mechanical yaml checks) |
-| [`reflection/`](reflection/) | How to *think* while producing a spec — reasoning chain and when to pause |
+| [`lib/reflection/`](lib/reflection/) | How to *think* while producing a spec — reasoning chain and when to pause |
 | [`harnesses/`](harnesses/) | Thin per-harness adapters (skills). Today: `claude/` only |
-| [`scripts/`](scripts/) | All executable support scripts: detection, Git/GitHub, history and the npm `postinstall` hook |
+| [`lib/scripts/`](lib/scripts/) | All executable support scripts: detection, Git/GitHub, history and the npm `postinstall` hook |
 | [`docs/repo/`](docs/repo/) | Documentation about this repository itself — not shipped to target projects |
 
-`onboarding/`, `lib/pipeline/` and `rules/` are the source of truth for content. `packages/cli/` reads and builds that content without keeping a second copy.
+`lib/onboarding/`, `lib/pipeline/` and `rules/` are the source of truth for content. `packages/cli/` reads and builds that content without keeping a second copy.
 
 ## What lands in a project you onboard
 

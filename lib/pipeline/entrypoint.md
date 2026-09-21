@@ -2,7 +2,7 @@
 
 Triggered by the harness adapter (see `harnesses/<harness>/`) whenever the request is to implement, fix or change something — not for simple questions, reading code, or conceptual doubts.
 
-If the project has no SDD destination yet, this is the wrong file: run onboarding first (`onboarding/flow.md`).
+If the project has no SDD destination yet, this is the wrong file: run onboarding first (`lib/onboarding/flow.md`).
 
 ## The four layers
 
@@ -71,7 +71,7 @@ Planning artifacts stay in the SDD destination, not in the repository being work
 
 Follow the global rules (`rules/global/`) and the project's stack rules (`rules/stacks/`). Under `strict-rules`, a violation fails the task instead of being noted.
 
-Before writing a script or a mechanical check from scratch, check [`scripts/mapping.yaml`](../../scripts/mapping.yaml) — a short index of every existing script, by name and one-line purpose. Cheaper than reading all of `scripts/` to find out one already does what's needed.
+Before writing a script or a mechanical check from scratch, check [`lib/scripts/mapping.yaml`](../scripts/mapping.yaml) — a short index of every existing script, by name and one-line purpose. Cheaper than reading all of `lib/scripts/` to find out one already does what's needed.
 
 ## 7. After implementing
 

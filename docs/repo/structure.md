@@ -9,20 +9,21 @@ Excalibur/
       create-excalibur.js    one-time onboarding entry point (`npx create-excalibur`)
       commands/              one file per command in the CLI reference
       core/                  override resolution, build, paths, minimal YAML
-  onboarding/                 manifest.yaml, init.sh, pre-written files copied based on the answers
   lib/
     agents/                  the internal agent catalog, one .yaml each
+    personas/                short behaviors composed into agent output
     pipeline/                the implementation process
     features/                optional feature fragments a project can opt into
+    onboarding/              manifest, wizard flow and presets
+    reflection/              how to reason while producing a spec
+    scripts/                 executable helpers and the npm postinstall hook
   rules/                     rules shipped into projects
     global/                  KISS, YAGNI, DRY, SOLID
     stacks/                  per language / framework / IDE, combinable
     heuristics/              machine-checked tables (mechanical YAML, not prose rules)
-  reflection/                how to think while producing a spec
   harnesses/
     claude/skills/           the only implemented harness adapter
       task-types/             one skill per conventional-commit task type (feat, fix, refactor, ...)
-  scripts/                   all executable helpers plus the npm postinstall hook
   docs/
     repo/                    documentation about this repository (not shipped)
   .docs/                     AI-assisted development process tracking (not shipped, hidden)
@@ -38,12 +39,12 @@ Excalibur/
 | Layer | Rule for deciding |
 |---|---|
 | `packages/cli/` | Executable Node code for both CLI entry points, their commands and shared core. Never framework content. |
-| `onboarding/` | Data for one-time onboarding only: the questions manifest and the pre-written files it can copy. If it runs on every task instead of once, it belongs in `lib/pipeline/`. |
+| `lib/onboarding/` | Data for one-time onboarding only: the questions manifest and the pre-written files it can copy. If it runs on every task instead of once, it belongs in `lib/pipeline/`. |
 | `lib/pipeline/` | What agents do on every task. Must be 100% generic — if it names a project, org or repo, it doesn't belong here. |
 | `lib/features/` | Optional fragments a project can opt into during onboarding, not part of the default pipeline. |
 | `rules/` | Content that gets copied into a user's project. If it's about maintaining *this* repository, it goes to `docs/repo/` instead. |
 | `rules/heuristics/` | Mechanical, machine-checked tables — read by a script or agent that needs a fixed answer without reasoning it out. Still shipped, like the rest of `rules/`. |
-| `reflection/` | How to reason while writing a spec, as opposed to what to do in what order. |
+| `lib/reflection/` | How to reason while writing a spec, as opposed to what to do in what order. |
 | `harnesses/<harness>/` | Only the trigger plus a pointer. Never a second copy of `lib/pipeline/`. |
 | `docs/repo/` | About this repository. Never shipped to a project. |
 | `.docs/` | AI-assisted development process tracking for this repository (plans, design specs, implementation notes). Never shipped, and not a repo visitor's concern — hence hidden. |
@@ -52,7 +53,7 @@ Excalibur/
 
 **`rules/` is shipped; `docs/repo/` and `.docs/` are not.** Anything under `rules/` (including `rules/heuristics/`) is read directly by a consuming project out of `node_modules/@easy-spec/excalibur/rules/` — nothing is ever copied there. A note about how to maintain this repository, or a record of how a feature was planned, has no business appearing there.
 
-**`packages/cli/` doesn't duplicate content.** `lib/`, `rules/` and `reflection/` are the single source of truth, read at the project root by both CLI entry points. If a rule's text appears inside the CLI package, that's a bug.
+**`packages/cli/` doesn't duplicate content.** `lib/` and `rules/` are the single source of truth, read at the project root by both CLI entry points. If a rule's text appears inside the CLI package, that's a bug.
 
 ## `docs/repo/` vs `.docs/`
 

@@ -9,9 +9,9 @@ Excalibur only guarantees the content reads well *if* opened in Obsidian. It doe
 Excalibur's repository contains two very different kinds of `.md`, and this file governs exactly one of them:
 
 - **Visible SDD** — `specs/`, `architecture/`, `ideas/`, the Canvas: everything written to the SDD destination inside a target project. It is translated to the project's own language, it is meant for a human to read and collaborate on, and it lives in a vault a person actually opens. This is what every rule below applies to.
-- **Operational Excalibur** — the installed package (`node_modules/@easy-spec/excalibur/`), `lib/pipeline/`, `rules/` themselves, `onboarding/`, `harnesses/`. Fixed English, agent-only consumption. This category is **excluded on purpose, not by accident of where the files happen to sit.** Nobody browses `lib/agents/orchestrator/agent.yaml` in Obsidian looking for backlinks — it's content an agent reads to know how to behave, not a note a person walks through. Frontmatter shaped for Dataview queries, wikilinks that feed a graph view, callouts sized for visual scanning — none of that serves a file whose only reader is a model executing it as instructions.
+- **Operational Excalibur** — the installed package (`node_modules/@easy-spec/excalibur/`), `lib/pipeline/`, `rules/` themselves, `lib/onboarding/`, `harnesses/`. Fixed English, agent-only consumption. This category is **excluded on purpose, not by accident of where the files happen to sit.** Nobody browses `lib/agents/orchestrator/agent.yaml` in Obsidian looking for backlinks — it's content an agent reads to know how to behave, not a note a person walks through. Frontmatter shaped for Dataview queries, wikilinks that feed a graph view, callouts sized for visual scanning — none of that serves a file whose only reader is a model executing it as instructions.
 
-If you're editing something under `lib/pipeline/`, `rules/`, `onboarding/`, `harnesses/`, or the installed package (`node_modules/@easy-spec/excalibur/`), this file's conventions do not apply to it. Its own house style (YAML frontmatter for agents/skills, plain Markdown headings, no wikilinks, English-only) is set by the files already there — see `lib/agents/review/agent.yaml` or `harnesses/claude/skills/try-gh/SKILL.md` for the pattern to follow instead.
+If you're editing something under `lib/pipeline/`, `rules/`, `lib/onboarding/`, `harnesses/`, or the installed package (`node_modules/@easy-spec/excalibur/`), this file's conventions do not apply to it. Its own house style (YAML frontmatter for agents/skills, plain Markdown headings, no wikilinks, English-only) is set by the files already there — see `lib/agents/review/agent.yaml` or `harnesses/claude/skills/try-gh/SKILL.md` for the pattern to follow instead.
 
 ## Frontmatter
 
@@ -40,14 +40,14 @@ Keys stay in English even when the project's language isn't: they're queried, no
 | `spec_id` | Stable identifier for the spec — the task slug, unless the project has a different convention. What `depends_on` on other specs points at. |
 | `status` | `draft \| in_progress \| blocked \| done \| obsolete` — the spec's own lifecycle, independent of `freshness_check` below. A `done` spec can still go stale later. |
 | `last_updated` | Date the spec's content was last genuinely revised — not touched, revised. Bumped by whoever edits the spec. |
-| `linked_commit` | The commit the spec was last verified against. `scripts/scan-spec-freshness.sh` diffs from here forward. |
+| `linked_commit` | The commit the spec was last verified against. `lib/scripts/scan-spec-freshness.sh` diffs from here forward. |
 | `linked_release` | Optional. A tag/release this spec's described behavior shipped in — omit until it actually has. |
 | `depends_on` | List of other `spec_id`s this one assumes are still true. If one of those goes stale, this one is a candidate too. |
 | `freshness_check` | `ok \| stale \| pending` — the last verdict from the drift pipeline. `pending` until the pipeline has run at least once. |
 
 Who writes what: a human or `scribe` sets `spec_id`, `status` and `depends_on` when the spec is written or revised, and bumps `last_updated`/`linked_commit` on a genuine revision. `freshness_check` is the one field `clerk` (`lib/agents/clerk/agent.yaml`) is allowed to touch on its own — nothing else in the frontmatter, and never the body.
 
-How `/docs-update` uses them: `scripts/scan-spec-freshness.sh` reads `linked_commit`, `last_updated` and `depends_on` to build a cheap, deterministic candidate list with no LLM involved; `clerk` then reads that list plus the actual diffs and decides, per candidate, whether it's real drift or noise — writing its verdict back into `freshness_check` and a one-line reason in its own report. See `harnesses/claude/skills/docs-update/SKILL.md` for the full flow.
+How `/docs-update` uses them: `lib/scripts/scan-spec-freshness.sh` reads `linked_commit`, `last_updated` and `depends_on` to build a cheap, deterministic candidate list with no LLM involved; `clerk` then reads that list plus the actual diffs and decides, per candidate, whether it's real drift or noise — writing its verdict back into `freshness_check` and a one-line reason in its own report. See `harnesses/claude/skills/docs-update/SKILL.md` for the full flow.
 
 ## Wikilinks
 

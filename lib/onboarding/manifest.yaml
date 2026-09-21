@@ -6,7 +6,7 @@
 #   - Every question MUST have a `default`. The master question below lets the user
 #     accept all of them at once, so a question without a default would break that path.
 #   - `copy: {source, dest}` materializes a pre-written file. `source` is relative to
-#     onboarding/ (matching init.sh's contract), `dest` is relative to the SDD destination.
+#     lib/onboarding/ (matching init.sh's contract), `dest` is relative to the SDD destination.
 #   - `review_hint` is optional and only present where it earns its place. It feeds the
 #     post-manifest interpreter agent (see entrypoint.md step 5) with "dig into this"
 #     instructions, so interpretation logic never has to be hardcoded in the flow.
@@ -57,12 +57,12 @@ questions:
       - value: conservative
         label: "Conservative — never merge alone, always PR"
         copy:
-          source: onboarding/github/conservative.md
+          source: presets/github/conservative.md
           dest: git.md
       - value: direct
         label: "Direct — push straight to the branch, PR only if asked"
         copy:
-          source: onboarding/github/direct.md
+          source: presets/github/direct.md
           dest: git.md
       - value: custom
         label: "Specify in free text"
@@ -89,14 +89,14 @@ questions:
       - value: light
         label: "Light"
         copy:
-          source: onboarding/review-depth/light.md
+          source: presets/review-depth/light.md
           dest: review-checklist-override.md
       - value: standard
         label: "Standard (no override)"
       - value: strict
         label: "Strict"
         copy:
-          source: onboarding/review-depth/strict.md
+          source: presets/review-depth/strict.md
           dest: review-checklist-override.md
 
   - id: commit_convention
@@ -106,12 +106,12 @@ questions:
       - value: conventional
         label: "Conventional Commits"
         copy:
-          source: onboarding/commit-convention/conventional.md
+          source: presets/commit-convention/conventional.md
           dest: commit-convention.md
       - value: free
         label: "Free-form"
         copy:
-          source: onboarding/commit-convention/free.md
+          source: presets/commit-convention/free.md
           dest: commit-convention.md
 
   # --- the eight questions added in section 4 ---
@@ -226,17 +226,17 @@ questions:
       - value: required
         label: "Always, on Feature and Big feature"
         copy:
-          source: onboarding/testing-policy/required.md
+          source: presets/testing-policy/required.md
           dest: testing-policy.md
       - value: never
         label: "Never required"
         copy:
-          source: onboarding/testing-policy/never.md
+          source: presets/testing-policy/never.md
           dest: testing-policy.md
       - value: case_by_case
         label: "Decide per task"
         copy:
-          source: onboarding/testing-policy/case-by-case.md
+          source: presets/testing-policy/case-by-case.md
           dest: testing-policy.md
 
   - id: ci_cd
@@ -318,22 +318,22 @@ questions:
       - value: scheduled_task
         label: "Claude Code scheduled task — simplest, no git host needed"
         copy:
-          source: onboarding/history-cleanup/scheduled-task.md
+          source: presets/history-cleanup/scheduled-task.md
           dest: history-cleanup.md
       - value: github_actions
         label: "GitHub Actions — runs in CI, outside the interactive session"
         copy:
-          source: onboarding/history-cleanup/github-actions.md
+          source: presets/history-cleanup/github-actions.md
           dest: history-cleanup.md
       - value: hook
         label: "Local hook — reactive, fires with your own usage"
         copy:
-          source: onboarding/history-cleanup/hook.md
+          source: presets/history-cleanup/hook.md
           dest: history-cleanup.md
       - value: manual
         label: "Manual — `npx @easy-spec/excalibur clean-history` when you feel like it"
         copy:
-          source: onboarding/history-cleanup/manual.md
+          source: presets/history-cleanup/manual.md
           dest: history-cleanup.md
       - value: own
         label: "I'll implement my own"

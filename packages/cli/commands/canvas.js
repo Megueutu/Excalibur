@@ -15,7 +15,7 @@ const TEMPLATE = path.join(packageRoot, 'lib', 'pipeline', 'project-canvas-templ
  * lib/agents/review/agent.yaml). That is a judgment call ("did this change deserve a
  * node?") this command cannot make — there is no LLM here. What it does mechanically:
  * materialize `project.canvas` from `lib/pipeline/project-canvas-template.canvas` — the
- * exact file `onboarding/manifest.yaml`-driven init would otherwise never place — when it
+ * exact file `lib/onboarding/manifest.yaml`-driven init would otherwise never place — when it
  * is missing, or reset it back to the blank template on request. Filling it in with
  * real project content afterward is still the review agent's (or a human's) job.
  */

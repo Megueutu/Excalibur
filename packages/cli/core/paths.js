@@ -13,8 +13,8 @@ const here = path.dirname(fileURLToPath(import.meta.url))
  * Root of the running excalibur package — wherever npm actually put it. In a real
  * consuming project this already IS `node_modules/@easy-spec/excalibur/`, because the code
  * currently executing (this very file) lives inside that installed package — no
- * separate lookup needed. Content (`lib/`, `rules/`, `reflection/`, `harnesses/`,
- * `onboarding/`) ships inside the same package at the same root, so this one
+ * separate lookup needed. Content (`lib/`, `rules/`, `harnesses/`) ships inside
+ * the same package at the same root, so this one
  * constant is also the content source. There is no copy step: nothing is ever
  * written under `packageRoot` by any command — it's read-only package content,
  * exactly like the rest of `node_modules`.

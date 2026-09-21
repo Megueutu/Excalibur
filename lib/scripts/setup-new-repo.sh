@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# scripts/setup-new-repo.sh — finishes setting up a brand-new GitHub repo,
-# right after scripts/create-github-repo.sh, branching on `github_preset`
-# from create-excalibur/onboarding/manifest.yaml (values: conservative/direct/custom).
+# lib/scripts/setup-new-repo.sh — finishes setting up a brand-new GitHub repo,
+# right after lib/scripts/create-github-repo.sh, branching on `github_preset`
+# from create-excalibur/lib/onboarding/manifest.yaml (values: conservative/direct/custom).
 #
-# Usage: scripts/setup-new-repo.sh <path> <repo-name> <conservative|direct|custom> [description]
+# Usage: lib/scripts/setup-new-repo.sh <path> <repo-name> <conservative|direct|custom> [description]
 # Requires: gh installed and authenticated (see check-gh.sh); <path> must already
 #   be a git repository with a GitHub remote (see create-github-repo.sh).
 # Exit codes: 0 = done, 1 = bad args, 2 = gh not available/authenticated,
@@ -17,7 +17,7 @@
 #                   this preset.
 #   custom       -> base config only. Deliberate no-op beyond that: the manifest's
 #                   `custom` option is open-ended free text with no fixed script
-#                   behavior yet (see create-excalibur/onboarding/manifest.yaml, github_preset).
+#                   behavior yet (see create-excalibur/lib/onboarding/manifest.yaml, github_preset).
 set -euo pipefail
 
 TARGET_PATH="${1:-}"
@@ -26,14 +26,14 @@ PRESET="${3:-}"
 DESCRIPTION="${4:-}"
 
 if [[ -z "$TARGET_PATH" || -z "$REPO_NAME" ]]; then
-  echo "Usage: scripts/setup-new-repo.sh <path> <repo-name> <conservative|direct|custom> [description]" >&2
+  echo "Usage: lib/scripts/setup-new-repo.sh <path> <repo-name> <conservative|direct|custom> [description]" >&2
   exit 1
 fi
 
 case "$PRESET" in
   conservative|direct|custom) ;;
   *)
-    echo "Usage: scripts/setup-new-repo.sh <path> <repo-name> <conservative|direct|custom> [description]" >&2
+    echo "Usage: lib/scripts/setup-new-repo.sh <path> <repo-name> <conservative|direct|custom> [description]" >&2
     exit 1
     ;;
 esac

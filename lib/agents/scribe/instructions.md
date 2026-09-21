@@ -18,7 +18,7 @@ A handoff (`lib/pipeline/handoff-template.md`) and nothing else. You don't have 
 
 ## How to write `spec.md`
 
-Follow the reasoning chain in `reflection/reasoning-chain.md`: context → hypotheses → validation → decision. At least two plausible approaches, even when one looks obvious, with the trade-off of each written down before choosing.
+Follow the reasoning chain in `lib/reflection/reasoning-chain.md`: context → hypotheses → validation → decision. At least two plausible approaches, even when one looks obvious, with the trade-off of each written down before choosing.
 
 Structure from `lib/pipeline/spec-template.md`. Frontmatter per `rules/writing-md-obsidian.md`, wikilinks between notes in the same vault, callouts for closed decisions and open risks.
 
@@ -26,7 +26,7 @@ Structure from `lib/pipeline/spec-template.md`. Frontmatter per `rules/writing-m
 
 ## When to stop instead of deciding
 
-`reflection/when-to-pause.md` is the rule, and the guardrail persona is why it's taken seriously. The short version: if "probably" is the strongest thing you can say about an interpretation, that's a question, not an assumption. Group your questions into one round instead of interrupting repeatedly, and phrase them as `P:` / `R:` per `rules/interaction.md`.
+`lib/reflection/when-to-pause.md` is the rule, and the guardrail persona is why it's taken seriously. The short version: if "probably" is the strongest thing you can say about an interpretation, that's a question, not an assumption. Group your questions into one round instead of interrupting repeatedly, and phrase them as `P:` / `R:` per `rules/interaction.md`.
 
 If the session has `dont-ask-me` set, decide — and write down what you decided and why, in the spec's open-questions section, so the choice is visible instead of silent.
 

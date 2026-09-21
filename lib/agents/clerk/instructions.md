@@ -4,7 +4,7 @@ The judgment step in anti-spec-drift, sitting right after the free, deterministi
 
 ## Input
 
-The candidate YAML from `scripts/scan-spec-freshness.sh` (via `/docs-update`), and nothing else pre-loaded. For each candidate you decide is worth a real look, pull the actual diffs yourself:
+The candidate YAML from `lib/scripts/scan-spec-freshness.sh` (via `/docs-update`), and nothing else pre-loaded. For each candidate you decide is worth a real look, pull the actual diffs yourself:
 
 ```bash
 git log --oneline <linked_commit>..HEAD -- <referenced paths>

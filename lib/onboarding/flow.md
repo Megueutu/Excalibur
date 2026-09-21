@@ -14,21 +14,21 @@ Before asking anything, confirm the project doesn't already have an SDD destinat
 
 ## 2. Detect and configure git/GitHub
 
-A context-gathering and setup step, not a manifest-driven question — it uses the scripts under [`scripts/`](../scripts/) directly. It stays outside the CLI form on purpose: `gh auth login` is an interactive OAuth flow that can't be driven from a non-interactive collection script.
+A context-gathering and setup step, not a manifest-driven question — it uses the scripts under [`lib/scripts/`](../scripts/) directly. It stays outside the CLI form on purpose: `gh auth login` is an interactive OAuth flow that can't be driven from a non-interactive collection script.
 
-a. Run [`scripts/check-gh.sh`](../scripts/check-gh.sh).
+a. Run [`lib/scripts/check-gh.sh`](../scripts/check-gh.sh).
    - Installed and authenticated → note it and continue.
    - Not installed → ask the user: "Install GitHub CLI (`gh`) now?"
-     - Yes → run [`scripts/detect-os.sh`](../scripts/detect-os.sh) and run the matching installer (`install-gh-windows.sh`, `install-gh-macos.sh`, `install-gh-linux-apt.sh`, or `install-gh-linux-dnf.sh`) from the same folder, then re-run `check-gh.sh` to confirm.
+     - Yes → run [`lib/scripts/detect-os.sh`](../scripts/detect-os.sh) and run the matching installer (`install-gh-windows.sh`, `install-gh-macos.sh`, `install-gh-linux-apt.sh`, or `install-gh-linux-dnf.sh`) from the same folder, then re-run `check-gh.sh` to confirm.
      - No → note "manual git workflow: no `gh`, PRs opened via a browser link, no automated repo creation" and continue.
    - Installed but not authenticated → tell the user to run `gh auth login` themselves; continue treating this the same as "not installed" for the rest of this step until they confirm.
 
-b. Run [`scripts/check-git-repo.sh`](../scripts/check-git-repo.sh) `<target-path>`.
+b. Run [`lib/scripts/check-git-repo.sh`](../scripts/check-git-repo.sh) `<target-path>`.
    - Already a git repository → continue.
-   - Not a git repository → ask whether to initialize one; if yes, run [`scripts/init-git-repo.sh`](../scripts/init-git-repo.sh) `<target-path>`.
+   - Not a git repository → ask whether to initialize one; if yes, run [`lib/scripts/init-git-repo.sh`](../scripts/init-git-repo.sh) `<target-path>`.
    - If no → note that the SDD destination is still created, but there's nothing versioning the project itself.
 
-c. Repository creation is **not** decided here — it's part of the `destination` question in step 4, whose `new_repo` option unifies "create the repo from scratch" with "choose where the SDD lives". If that option is chosen, come back and run [`scripts/create-github-repo.sh`](../scripts/create-github-repo.sh) `<target-path> <name> <public|private>` during step 6, immediately followed by [`scripts/setup-new-repo.sh`](../scripts/setup-new-repo.sh) `<target-path> <name> <github_preset>` to apply base repo config and the preset-specific setup (ruleset + PR template for `conservative`, none for `direct`/`custom`).
+c. Repository creation is **not** decided here — it's part of the `destination` question in step 4, whose `new_repo` option unifies "create the repo from scratch" with "choose where the SDD lives". If that option is chosen, come back and run [`lib/scripts/create-github-repo.sh`](../scripts/create-github-repo.sh) `<target-path> <name> <public|private>` during step 6, immediately followed by [`lib/scripts/setup-new-repo.sh`](../scripts/setup-new-repo.sh) `<target-path> <name> <github_preset>` to apply base repo config and the preset-specific setup (ruleset + PR template for `conservative`, none for `direct`/`custom`).
 
 ## 3. Ask: adapt an existing project or start from scratch?
 
@@ -39,7 +39,7 @@ Context-gathering, not a manifest question. It shapes how you read the project b
 
 ## 4. Ask the manifest questions
 
-Read [`onboarding/manifest.yaml`](manifest.yaml).
+Read [`lib/onboarding/manifest.yaml`](manifest.yaml).
 
 **First, ask the `master` question**: customize, or use the defaults?
 
@@ -64,7 +64,7 @@ Do not invent new configuration here. This step resolves ambiguity in what was a
 
 For each answered question, look at the chosen option:
 
-- Has a `copy` block → add one `source<TAB>dest` line (values verbatim) to a temporary copy-list file. `copy.source` is relative to `onboarding/`, matching `init.sh`'s contract — not to the Excalibur root.
+- Has a `copy` block → add one `source<TAB>dest` line (values verbatim) to a temporary copy-list file. `copy.source` is relative to `lib/onboarding/`, matching `init.sh`'s contract — not to the Excalibur root.
 - Has `free_text: true` → the user's text becomes the destination file directly, written by you after the script runs. It doesn't go through the copy list.
 - Has neither, and no `translate` flag → contributes nothing. `destination` only decides the target path; `review_depth: standard` deliberately has no override file.
 - Has `translate: true` → no copy-list line; remember to run step 8.
@@ -72,9 +72,9 @@ For each answered question, look at the chosen option:
 ## 7. Run the script
 
 ```bash
-onboarding/init.sh embedded <target-path> ""             [copy-list-file]
-onboarding/init.sh separate <target-path> <project-name> [copy-list-file]
-onboarding/init.sh external <target-path> <sdd-path>     [copy-list-file]
+lib/onboarding/init.sh embedded <target-path> ""             [copy-list-file]
+lib/onboarding/init.sh separate <target-path> <project-name> [copy-list-file]
+lib/onboarding/init.sh external <target-path> <sdd-path>     [copy-list-file]
 ```
 
 This creates the destination structure (`specs/`, `ideas/`, `architecture/`, `Templates/`, `reflection/`) and copies every pair from the copy list on top of the files it always copies. Full contract in `init.sh`'s header.
@@ -83,11 +83,11 @@ For `destination: external`, the path comes from step 5 — `~/.excalibur/projec
 
 If `github_preset` was answered `custom`, write the user's free text to `git.md` in the destination yourself, after the script runs.
 
-If `obsidian_vault` was answered `vault`, run [`scripts/scaffold-obsidian-vault.sh`](../scripts/scaffold-obsidian-vault.sh) `<sdd-destination-path>` right after `init.sh` finishes, to materialize a minimal `.obsidian/` config folder.
+If `obsidian_vault` was answered `vault`, run [`lib/scripts/scaffold-obsidian-vault.sh`](../scripts/scaffold-obsidian-vault.sh) `<sdd-destination-path>` right after `init.sh` finishes, to materialize a minimal `.obsidian/` config folder.
 
 ## 8. Translate, only if `language` was answered `other`
 
-Invoke the `translator` subagent (see [`lib/agents/translator/agent.yaml`](../../lib/agents/translator/agent.yaml)) against the destination's `Templates/` and `reflection/` folders, with the resolved language.
+Invoke the `translator` subagent (see [`lib/agents/translator/agent.yaml`](../agents/translator/agent.yaml)) against the destination's `Templates/` and `reflection/` folders, with the resolved language.
 
 What gets translated is decided structurally, by where a file sits — not by a list of exceptions. See `rules/translation.md`: the **visible SDD** (`ideas/`, `architecture/`, `proposal.md`, `spec.md`, `design.md`, canvas) is translated; the **operational Excalibur** (the installed package under `node_modules/@easy-spec/excalibur/`, `lib/pipeline/`, `rules/`, `tasks.yaml`, `history.yaml`) never is. The point is token economy: no agent should spend tokens translating a file no human will read.
 

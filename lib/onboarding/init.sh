@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# create-excalibur/onboarding/init.sh — materializes the SDD destination for a project.
+# create-excalibur/lib/onboarding/init.sh — materializes the SDD destination for a project.
 #
 # Usage:
-#   create-excalibur/onboarding/init.sh embedded <target-path> ""             [copy-list-file]
-#   create-excalibur/onboarding/init.sh separate <target-path> <project-name> [copy-list-file]
-#   create-excalibur/onboarding/init.sh external <target-path> <sdd-path>     [copy-list-file]
+#   create-excalibur/lib/onboarding/init.sh embedded <target-path> ""             [copy-list-file]
+#   create-excalibur/lib/onboarding/init.sh separate <target-path> <project-name> [copy-list-file]
+#   create-excalibur/lib/onboarding/init.sh external <target-path> <sdd-path>     [copy-list-file]
 #
 #   embedded  -> <target-path>/.sdd
 #   separate  -> <target-path>/<project-name>-sdd        (sibling of the repo)
@@ -12,7 +12,7 @@
 #                fully outside the repo tree; created if missing)
 #
 #   copy-list-file: optional path to a file with "<source>\t<dest>" lines —
-#     source relative to create-excalibur/onboarding/ (this script's directory), dest relative
+#     source relative to create-excalibur/lib/onboarding/ (this script's directory), dest relative
 #     to the SDD destination. Each pair is copied after the base structure
 #     is created.
 #
@@ -22,9 +22,9 @@ set -euo pipefail
 usage() {
   cat >&2 <<'USAGE'
 Usage:
-  create-excalibur/onboarding/init.sh embedded <target-path> ""             [copy-list-file]
-  create-excalibur/onboarding/init.sh separate <target-path> <project-name> [copy-list-file]
-  create-excalibur/onboarding/init.sh external <target-path> <sdd-path>     [copy-list-file]
+  create-excalibur/lib/onboarding/init.sh embedded <target-path> ""             [copy-list-file]
+  create-excalibur/lib/onboarding/init.sh separate <target-path> <project-name> [copy-list-file]
+  create-excalibur/lib/onboarding/init.sh external <target-path> <sdd-path>     [copy-list-file]
 USAGE
 }
 
@@ -97,8 +97,8 @@ fi
 mkdir -p "$DEST/specs" "$DEST/ideas" "$DEST/architecture" "$DEST/Templates" "$DEST/reflection"
 cp "$EXCALIBUR_ROOT/lib/pipeline/spec-template.md" "$DEST/Templates/spec-template.md"
 cp "$EXCALIBUR_ROOT/lib/pipeline/handoff-template.md" "$DEST/Templates/handoff-template.md"
-cp "$EXCALIBUR_ROOT/reflection/when-to-pause.md" "$DEST/reflection/when-to-pause.md"
-cp "$EXCALIBUR_ROOT/reflection/reasoning-chain.md" "$DEST/reflection/reasoning-chain.md"
+cp "$EXCALIBUR_ROOT/lib/reflection/when-to-pause.md" "$DEST/reflection/when-to-pause.md"
+cp "$EXCALIBUR_ROOT/lib/reflection/reasoning-chain.md" "$DEST/reflection/reasoning-chain.md"
 # JSON Canvas is an open format (plain JSON), so this is just a seed file the review
 # agent keeps current — the Obsidian app is never involved in writing it.
 cp "$EXCALIBUR_ROOT/lib/pipeline/project-canvas-template.canvas" "$DEST/project.canvas"

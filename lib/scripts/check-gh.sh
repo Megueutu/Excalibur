@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# scripts/check-gh.sh — checks whether the GitHub CLI is installed and authenticated.
-# Usage: scripts/check-gh.sh
+# lib/scripts/check-gh.sh — checks whether the GitHub CLI is installed and authenticated.
+# Usage: lib/scripts/check-gh.sh
 # Exit codes: 0 = installed and authenticated, 1 = installed but not authenticated, 2 = not installed
 set -euo pipefail
 

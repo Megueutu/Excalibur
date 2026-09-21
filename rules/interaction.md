@@ -38,7 +38,7 @@ If you have three uncertainties, ask them together once. Three separate interrup
 
 Asking about everything is not caution — it's inefficiency wearing caution's clothes, and it trains the user to skip interviews. Ask about what would be expensive to get wrong, and decide the rest yourself following the project's conventions.
 
-`reflection/when-to-pause.md` is the rule for which is which.
+`lib/reflection/when-to-pause.md` is the rule for which is which.
 
 ## When the session says not to ask
 

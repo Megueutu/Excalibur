@@ -13,7 +13,7 @@ import { exists, listFiles } from '../core/fsx.js'
  *
  * Two independent, mechanical checks:
  *   1. .md size limits (rules/heuristics/md-size-limits.yaml) — shells out to
- *      scripts/validate-md-size.sh (5.3) rather than re-parsing the YAML
+ *      lib/scripts/validate-md-size.sh (5.3) rather than re-parsing the YAML
  *      allowlist a second time in JS. The script is the single source of truth for
  *      that logic; check.js already establishes that shelling out to bash is this
  *      CLI's accepted way to reuse a .sh script instead of duplicating it.
@@ -27,7 +27,7 @@ const NUMBERED_SUFFIX = /-\d+\.md$/i
 const SLUG = /^[a-z0-9]+(-[a-z0-9]+)*$/
 
 function findValidateScript() {
-  const script = path.join(packageRoot, 'scripts', 'validate-md-size.sh')
+  const script = path.join(packageRoot, 'lib', 'scripts', 'validate-md-size.sh')
   return exists(script) ? script : null
 }
 

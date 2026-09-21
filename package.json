@@ -1,6 +1,6 @@
 {
   "name": "@easy-spec/excalibur",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "A ready-to-use SDD (Spec-Driven Development) framework for AI agents",
   "license": "MIT",
   "type": "module",
@@ -15,16 +15,13 @@
     "packages/",
     "lib/",
     "rules/",
-    "reflection/",
     "harnesses/",
-    "onboarding/",
-    "scripts/",
     "README.md",
     "LICENSE"
   ],
   "scripts": {
     "check": "node packages/cli/excalibur.js check",
-    "postinstall": "node scripts/postinstall.js"
+    "postinstall": "node lib/scripts/postinstall.js"
   },
   "dependencies": {
     "@clack/prompts": "^0.7.0",

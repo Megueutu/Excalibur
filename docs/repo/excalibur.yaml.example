@@ -13,7 +13,7 @@ base_dir: node_modules/@easy-spec/excalibur
 custom_dir: .overrides
 framework_version: 0.4.2
 
-# "defaults" means every question resolved to its default from onboarding/manifest.yaml.
+# "defaults" means every question resolved to its default from lib/onboarding/manifest.yaml.
 # "customize" means they were answered one by one.
 setup_mode: customize
 

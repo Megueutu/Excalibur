@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# scripts/install-gh-linux-dnf.sh — installs the latest GitHub CLI via dnf (Fedora/RHEL).
-# Usage: scripts/install-gh-linux-dnf.sh
+# lib/scripts/install-gh-linux-dnf.sh — installs the latest GitHub CLI via dnf (Fedora/RHEL).
+# Usage: lib/scripts/install-gh-linux-dnf.sh
 # Follows the official install steps from https://github.com/cli/cli/blob/trunk/docs/install_linux.md
 set -euo pipefail
 

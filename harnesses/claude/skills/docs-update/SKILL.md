@@ -12,7 +12,7 @@ Anti-spec-drift, end to end: cheap sweep first, judgment only where the sweep fo
 1. **Deterministic sweep — free, no LLM.** Run:
 
    ```bash
-   scripts/scan-spec-freshness.sh <sdd-path> --repo <repo-path>
+   lib/scripts/scan-spec-freshness.sh <sdd-path> --repo <repo-path>
    ```
 
    `<sdd-path>` is the project's SDD destination (where `specs/` lives). This produces a YAML candidate list from commit history, tags and `depends_on` alone — see `lib/agents/clerk/agent.yaml` and `rules/writing-md-obsidian.md#anti-spec-drift-frontmatter` for what the fields mean. If it returns no candidates, say so and stop — there is nothing for judgment to do.

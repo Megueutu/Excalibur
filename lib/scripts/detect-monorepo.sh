@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# scripts/detect-monorepo.sh — detects whether the target project root is a
+# lib/scripts/detect-monorepo.sh — detects whether the target project root is a
 # monorepo, from marker files that are already on disk, so onboarding doesn't have
 # to ask. Informational only: monorepo support itself is still an open question
 # (see PENDENCIAS.md item 9) — this script just detects, it doesn't decide anything.
 #
-# Usage: scripts/detect-monorepo.sh <target-path>
+# Usage: lib/scripts/detect-monorepo.sh <target-path>
 # Output: two "key=value" lines — monorepo= (true/false) and marker= (the matched
 #   file, or "none") — checked in this order: lerna.json, pnpm-workspace.yaml,
 #   turbo.json, nx.json. Always exits 0: "not a monorepo" is a valid answer, not a
@@ -15,7 +15,7 @@ set -euo pipefail
 TARGET="${1:-}"
 
 if [[ -z "$TARGET" || ! -d "$TARGET" ]]; then
-  echo "Usage: scripts/detect-monorepo.sh <target-path>" >&2
+  echo "Usage: lib/scripts/detect-monorepo.sh <target-path>" >&2
   exit 1
 fi
 

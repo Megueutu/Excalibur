@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
-# scripts/init-git-repo.sh — initializes a git repository at the given path.
-# Usage: scripts/init-git-repo.sh <path>
+# lib/scripts/init-git-repo.sh — initializes a git repository at the given path.
+# Usage: lib/scripts/init-git-repo.sh <path>
 # Exit codes: 0 = initialized, 1 = bad args, 2 = already a git repository
 set -euo pipefail
 
 TARGET_PATH="${1:-}"
 
 if [[ -z "$TARGET_PATH" ]]; then
-  echo "Usage: scripts/init-git-repo.sh <path>" >&2
+  echo "Usage: lib/scripts/init-git-repo.sh <path>" >&2
   exit 1
 fi
 

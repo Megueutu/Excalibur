@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# scripts/detect-stack.sh — guesses a project's language, framework and IDE
+# lib/scripts/detect-stack.sh — guesses a project's language, framework and IDE
 # from files that are already on disk, so onboarding doesn't have to ask.
 #
-# Usage: scripts/detect-stack.sh <target-path>
+# Usage: lib/scripts/detect-stack.sh <target-path>
 # Output: three "key=value" lines — language=, framework=, ide= — each `unknown`
 #   when nothing matched. Always exits 0: "found nothing" is a valid answer,
 #   not a failure, and the caller confirms the result with the user either way.
@@ -11,7 +11,7 @@ set -euo pipefail
 TARGET="${1:-}"
 
 if [[ -z "$TARGET" || ! -d "$TARGET" ]]; then
-  echo "Usage: scripts/detect-stack.sh <target-path>" >&2
+  echo "Usage: lib/scripts/detect-stack.sh <target-path>" >&2
   exit 1
 fi
 
