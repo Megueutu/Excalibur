@@ -38,6 +38,14 @@ For Feature vs. Big feature, follow the project's `task_class_criteria` setting:
 
 Dispatching a layer that a task doesn't need is a real cost, not caution. So is skipping one it does need.
 
+Choose the specialist within those layers:
+
+- `researcher` for one bounded unknown that blocks design;
+- `architect` when boundaries, interfaces or migration need a separate design pass;
+- `debugger` for a reproducible defect with narrow scope;
+- `implementer` for planned code changes;
+- `tester` when verification needs independent test design or implementation.
+
 ## 3. Write `proposal.md` and `tasks.yaml`
 
 You own these two of the five task files:
@@ -45,7 +53,7 @@ You own these two of the five task files:
 - **`proposal.md`** — why the task exists and what changes. Prose, short.
 - **`tasks.yaml`** — the granular checklist. Numbering is decided by the fixed heuristic in `rules/heuristics/tasks-ordering.yaml`, never by your own judgment call. Hierarchical numbering (`1.1`, `1.2`, `2.1`) only when steps genuinely depend on each other; a flat list when they don't. Reading the heuristic costs less than reasoning it out every time, which is the whole reason it exists as a file.
 
-`spec.md` belongs to `scribe`, `design.md` to whoever implements, `history.yaml` to `review`.
+`spec.md` belongs to `scribe`, `design.md` to `architect` when dispatched (otherwise `implementer`), and `history.yaml` to `review`.
 
 ## 4. Build the handoff
 

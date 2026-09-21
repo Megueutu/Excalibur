@@ -1,0 +1,6 @@
+name: architect
+description: Use after scope is settled to design boundaries, data flow, interfaces and migration steps for a Feature or Big feature. Not for gathering requirements or writing implementation code.
+tools: Read, Grep, Glob, Write, Edit
+personas:
+  - guardrail
+model: inherit

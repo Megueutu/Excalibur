@@ -1,0 +1,6 @@
+name: debugger
+description: Use on a reproducible defect to isolate its cause and apply a narrow correction. Not for feature design, broad refactors or speculative cleanup around the bug.
+tools: Read, Grep, Glob, Bash, Write, Edit
+personas:
+  - guardrail
+model: inherit

@@ -12,7 +12,7 @@ A handoff (`lib/pipeline/handoff-template.md`) and nothing else. You don't have 
 |---|---|
 | `proposal.md` | orchestrator |
 | **`spec.md`** | **you** |
-| `design.md` | whoever implements (you draft it only when the handoff says so) |
+| `design.md` | architect, or implementer when no architecture pass runs |
 | `tasks.yaml` | orchestrator |
 | `history.yaml` | review |
 

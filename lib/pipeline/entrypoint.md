@@ -14,6 +14,8 @@ The orchestrator sits above the other three: it classifies the task, decides whi
 
 Not every layer runs on every task. A Fix usually goes orchestrator → implement → review, with no spec at all.
 
+The concrete agents depend on the work: `scribe` writes the spec, `architect` owns a separate design when one is warranted, `implementer` executes planned changes, and `debugger` handles narrow reproducible defects. `researcher` can resolve a bounded unknown before design; `tester` can add focused verification before `review` performs the independent final check. Optional agents run only when their specialty is present in the handoff.
+
 ## 0. Read the session directives
 
 `.excalibur-session.yaml` at the project root, every session, before anything else. It's the orchestrator's job (see `lib/agents/orchestrator/agent.yaml` for the full flag table), but any agent that changes behavior based on a flag reads it too. No file means no flags set — the normal case.
@@ -65,7 +67,7 @@ Planning artifacts stay in the SDD destination, not in the repository being work
 
 ## 6. Implementing
 
-Whoever implements owns `design.md` — the technical approach, written for the agents that will execute it, not as passive documentation.
+`architect` owns `design.md` when dispatched. For smaller work without a separate architecture pass, `implementer` records the technical approach there. The file is written for execution, not as passive documentation.
 
 Follow the global rules (`rules/global/`) and the project's stack rules (`rules/stacks/`). Under `strict-rules`, a violation fails the task instead of being noted.
 

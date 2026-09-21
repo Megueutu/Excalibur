@@ -1,0 +1,4 @@
+name: researcher
+description: Use before design when a task depends on unfamiliar code, an external API or competing technical approaches. Not for choosing product requirements, editing code or making the final architecture decision.
+tools: Read, Grep, Glob, Bash
+model: inherit

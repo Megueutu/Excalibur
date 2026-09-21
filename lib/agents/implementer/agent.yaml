@@ -1,0 +1,6 @@
+name: implementer
+description: Use to execute an approved task from its handoff, spec and design, including code changes and focused validation. Not for redefining requirements or performing the independent final review.
+tools: Read, Grep, Glob, Bash, Write, Edit
+personas:
+  - guardrail
+model: inherit
