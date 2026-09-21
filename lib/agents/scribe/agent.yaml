@@ -3,4 +3,5 @@ description: Use to write or update the specification of a task in an Excalibur 
 tools: Read, Grep, Glob, Write, Edit
 personas:
   - guardrail
+  - user-advocate
 model: inherit

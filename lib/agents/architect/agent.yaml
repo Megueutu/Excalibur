@@ -3,4 +3,5 @@ description: Use after scope is settled to design boundaries, data flow, interfa
 tools: Read, Grep, Glob, Write, Edit
 personas:
   - guardrail
+  - systems-thinker
 model: inherit

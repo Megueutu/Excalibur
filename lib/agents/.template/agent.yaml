@@ -19,9 +19,9 @@ description: TODO
 tools: Read
 
 # personas: optional list, omit the key entirely if none apply. Each name
-#   must have a matching lib/personas/<name>.md. guardrail is the only one
-#   that exists today — see lib/personas/guardrail.md for what it's for and
-#   which agents already carry it.
+#   must have a matching lib/personas/<name>.md. Keep personas short and
+#   composable: shared behavior belongs there; procedures stay in the
+#   agent's own instructions.md.
 # personas:
 #   - guardrail
 

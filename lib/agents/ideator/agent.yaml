@@ -3,4 +3,5 @@ description: Use during the ideation phase of an Excalibur project, before a tas
 tools: Read, Grep, Glob, Write, Edit
 personas:
   - guardrail
+  - user-advocate
 model: inherit

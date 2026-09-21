@@ -3,4 +3,5 @@ description: Use after an implementation is complete and before calling a task d
 tools: Read, Grep, Glob, Bash
 personas:
   - guardrail
+  - adversarial-reviewer
 model: inherit

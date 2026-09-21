@@ -1,4 +1,6 @@
 name: tester
 description: Use to design or implement focused tests for changed behavior and important failure paths. Not for duplicating implementation details or replacing the final review checklist.
 tools: Read, Grep, Glob, Bash, Write, Edit
+personas:
+  - adversarial-reviewer
 model: inherit

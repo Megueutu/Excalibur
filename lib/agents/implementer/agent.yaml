@@ -3,4 +3,5 @@ description: Use to execute an approved task from its handoff, spec and design, 
 tools: Read, Grep, Glob, Bash, Write, Edit
 personas:
   - guardrail
+  - craftsperson
 model: inherit

@@ -3,4 +3,5 @@ description: Use on a reproducible defect to isolate its cause and apply a narro
 tools: Read, Grep, Glob, Bash, Write, Edit
 personas:
   - guardrail
+  - craftsperson
 model: inherit

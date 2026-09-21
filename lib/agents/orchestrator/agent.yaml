@@ -3,4 +3,5 @@ description: Use at the start of any implementation task in an Excalibur project
 tools: Read, Grep, Glob, Task
 personas:
   - guardrail
+  - systems-thinker
 model: inherit

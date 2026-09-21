@@ -3,4 +3,5 @@ description: Use before a push, or whenever a diff should be sniffed for securit
 tools: Read, Grep, Bash
 personas:
   - guardrail
+  - adversarial-reviewer
 model: inherit
