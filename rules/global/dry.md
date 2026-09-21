@@ -18,6 +18,6 @@ Premature extraction is often more expensive to undo than duplication is to live
 
 ## Applied to this framework
 
-- `onboarding/`, `lib/pipeline/` and `rules/` are the single source of truth for content. `bin/`/`src/` read them at run time from wherever npm installed the package; neither holds a second copy.
+- `onboarding/`, `lib/pipeline/` and `rules/` are the single source of truth for content. `packages/cli/` reads them at run time from wherever npm installed the package and keeps no second copy.
 - The task-type skills share one body (`lib/pipeline/task-types.md`) instead of eleven near-identical files.
 - Agents don't get duplicated per harness — they live once in `lib/agents/`.

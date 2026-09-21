@@ -1,19 +1,18 @@
 {
   "name": "@easy-spec/excalibur",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "A ready-to-use SDD (Spec-Driven Development) framework for AI agents",
   "license": "MIT",
   "type": "module",
   "bin": {
-    "excalibur": "bin/excalibur.js",
-    "create-excalibur": "bin/create-excalibur.js"
+    "excalibur": "packages/cli/excalibur.js",
+    "create-excalibur": "packages/cli/create-excalibur.js"
   },
   "engines": {
     "node": ">=18"
   },
   "files": [
-    "bin/",
-    "src/",
+    "packages/",
     "lib/",
     "rules/",
     "reflection/",
@@ -24,7 +23,7 @@
     "LICENSE"
   ],
   "scripts": {
-    "check": "node bin/excalibur.js check",
+    "check": "node packages/cli/excalibur.js check",
     "postinstall": "node scripts/postinstall.js"
   },
   "dependencies": {

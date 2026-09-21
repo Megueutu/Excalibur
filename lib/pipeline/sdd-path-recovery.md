@@ -24,7 +24,7 @@ the fallback for exactly that.
 2. **If the path is missing or no longer exists, scan for the marker instead of
    guessing by name.** Every SDD destination has a hidden, empty
    `.excalibur-sdd-marker` file inside it, dropped there when the destination was
-   materialized (see `src/commands/init.js` / `src/lib/config.js`
+   materialized (see `packages/cli/commands/init.js` / `packages/cli/core/config.js`
    for `embedded`/`separate`, and `onboarding/init.sh` for whichever
    step materializes `external`/`new_repo`). List first-level folders at the project root and check each
    one for that marker. Don't shortcut this by looking for a folder that merely looks

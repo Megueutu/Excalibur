@@ -21,7 +21,7 @@ A long-running task shouldn't be re-read from the beginning every time it's resu
 
 A single task that tries to both find problems and judge them pays full attention cost on every part, even the part a cheap deterministic pass would have handled for free. Splitting scan from judgment is already how two parts of this framework work:
 
-- `docs-update` (`harnesses/claude/skills/docs-update/SKILL.md`) runs `lib/scripts/scan-spec-freshness.sh` — free, deterministic — before ever dispatching `clerk` to spend judgment only on what the sweep actually flagged.
+- `docs-update` (`harnesses/claude/skills/docs-update/SKILL.md`) runs `scripts/scan-spec-freshness.sh` — free, deterministic — before ever dispatching `clerk` to spend judgment only on what the sweep actually flagged.
 - `scenthound-scan` (`harnesses/claude/skills/scenthound-scan/SKILL.md`) is itself the cheap, narrowly-scoped pass — a pre-push sniff test, not a full audit — precisely so most runs end at `approved` without needing more.
 
 The same split applies to any new task: separate the mechanical part from the part that genuinely needs judgment, and only pay for the second where the first didn't already answer the question.

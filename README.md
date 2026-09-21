@@ -20,16 +20,16 @@ Then, inside your harness, run `/excalibur-init` to finish onboarding conversati
 
 | Folder | What it is |
 |---|---|
-| [`bin/`](bin/), [`src/`](src/) | The single CLI package's code — two entry points: `excalibur` (ongoing: `init`, `update`, `status`, `doctor`, `lint`, `check`, `clean-history`, ...) and `create-excalibur` (one-time onboarding) |
+| [`packages/cli/`](packages/cli/) | The executable package: both entry points, commands and shared CLI core |
 | [`onboarding/`](onboarding/) | Data for one-time onboarding: the question manifest, `init.sh`, presets copied based on the answers |
-| [`lib/`](lib/) | Framework libraries: `agents/` (internal agent catalog, YAML source files), `pipeline/` (implementation process itself), `scripts/` (shell helpers) and `features/` (opt-in feature fragments) |
+| [`lib/`](lib/) | Framework content: `agents/`, `personas/`, `pipeline/` and opt-in `features/` |
 | [`rules/`](rules/) | Distributable rules: `global/` principles, per-`stacks/` recommendations, and `heuristics/` (mechanical yaml checks) |
 | [`reflection/`](reflection/) | How to *think* while producing a spec — reasoning chain and when to pause |
 | [`harnesses/`](harnesses/) | Thin per-harness adapters (skills). Today: `claude/` only |
-| [`scripts/`](scripts/) | Repo-maintenance Node scripts — `postinstall.js` rebuilds the harness files automatically on `npm install` |
+| [`scripts/`](scripts/) | All executable support scripts: detection, Git/GitHub, history and the npm `postinstall` hook |
 | [`docs/repo/`](docs/repo/) | Documentation about this repository itself — not shipped to target projects |
 
-`onboarding/`, `lib/pipeline/` and `rules/` are the source of truth for content; `bin/`/`src/` only read and package them — nothing is copied into the target project at publish time, and nothing is copied into `bin/`/`src/` either.
+`onboarding/`, `lib/pipeline/` and `rules/` are the source of truth for content. `packages/cli/` reads and builds that content without keeping a second copy.
 
 ## What lands in a project you onboard
 

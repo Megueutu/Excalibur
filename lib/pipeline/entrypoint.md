@@ -69,7 +69,7 @@ Whoever implements owns `design.md` — the technical approach, written for the 
 
 Follow the global rules (`rules/global/`) and the project's stack rules (`rules/stacks/`). Under `strict-rules`, a violation fails the task instead of being noted.
 
-Before writing a script or a mechanical check from scratch, check [`lib/scripts/mapping.yaml`](../scripts/mapping.yaml) — a short index of every existing script, by name and one-line purpose. Cheaper than reading all of `lib/scripts/` to find out one already does what's needed.
+Before writing a script or a mechanical check from scratch, check [`scripts/mapping.yaml`](../../scripts/mapping.yaml) — a short index of every existing script, by name and one-line purpose. Cheaper than reading all of `scripts/` to find out one already does what's needed.
 
 ## 7. After implementing
 

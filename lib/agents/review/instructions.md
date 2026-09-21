@@ -19,7 +19,7 @@ Flip each finished item's `status` from `pending` to `done`. Only the ones genui
 Through the script, never by hand:
 
 ```bash
-lib/scripts/record-history.sh <task-dir> --what "…" --why "…" --checklist pass|fail --agent review
+scripts/record-history.sh <task-dir> --what "…" --why "…" --checklist pass|fail --agent review
 ```
 
 The script owns the format so the record stays consistent and costs nothing to produce. A changelog per task — what changed, why, how the checklist came out — not a granular event log.

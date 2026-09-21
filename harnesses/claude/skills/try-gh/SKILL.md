@@ -5,11 +5,11 @@ description: Use when a task needs the GitHub CLI and it may not be ready — ch
 
 # Try gh
 
-A friendly diagnostic on top of `lib/scripts/check-gh.sh`.
+A friendly diagnostic on top of `scripts/check-gh.sh`.
 
 ## The order matters: cheap first
 
-1. **Local check — free.** Run `lib/scripts/check-gh.sh` and read its exit code:
+1. **Local check — free.** Run `scripts/check-gh.sh` and read its exit code:
 
    | Exit | Meaning | What to say |
    |---|---|---|
@@ -17,7 +17,7 @@ A friendly diagnostic on top of `lib/scripts/check-gh.sh`.
    | 1 | Installed, not authenticated | The user runs `gh auth login` themselves — it's interactive OAuth and can't be driven for them. |
    | 2 | Not installed | Continue to step 2. |
 
-2. **Local install path — still free.** Run `lib/scripts/detect-os.sh` and use the matching installer already in `lib/scripts/` (`install-gh-windows.sh`, `install-gh-macos.sh`, `install-gh-linux-apt.sh`, `install-gh-linux-dnf.sh`). Ask before running it, unless the project's autonomy setting says otherwise.
+2. **Local install path — still free.** Run `scripts/detect-os.sh` and use the matching installer already in `scripts/` (`install-gh-windows.sh`, `install-gh-macos.sh`, `install-gh-linux-apt.sh`, `install-gh-linux-dnf.sh`). Ask before running it, unless the project's autonomy setting says otherwise.
 
 3. **The web — only as a last resort.** Search for install instructions **only** when the OS didn't match any of the four installers above. That's the expensive step, and it's rarely needed.
 

@@ -3,17 +3,16 @@
 ```
 Excalibur/
   package.json              a single npm-publishable package — two bin entries, one tree
-  bin/
-    excalibur.js              the ongoing, per-task CLI entry point
-    create-excalibur.js        one-time onboarding entry point (`npx create-excalibur`)
-  src/
-    commands/                one file per command in the CLI reference
-    lib/                     override resolution, build, paths, minimal YAML
+  packages/
+    cli/
+      excalibur.js           the ongoing, per-task CLI entry point
+      create-excalibur.js    one-time onboarding entry point (`npx create-excalibur`)
+      commands/              one file per command in the CLI reference
+      core/                  override resolution, build, paths, minimal YAML
   onboarding/                 manifest.yaml, init.sh, pre-written files copied based on the answers
   lib/
     agents/                  the internal agent catalog, one .yaml each
     pipeline/                the implementation process
-    scripts/                 shell helpers (git/GitHub, OS, stack, history)
     features/                optional feature fragments a project can opt into
   rules/                     rules shipped into projects
     global/                  KISS, YAGNI, DRY, SOLID
@@ -23,7 +22,7 @@ Excalibur/
   harnesses/
     claude/skills/           the only implemented harness adapter
       task-types/             one skill per conventional-commit task type (feat, fix, refactor, ...)
-  scripts/                   repo-maintenance Node scripts (postinstall.js: rebuild on install)
+  scripts/                   all executable helpers plus the npm postinstall hook
   docs/
     repo/                    documentation about this repository (not shipped)
   .docs/                     AI-assisted development process tracking (not shipped, hidden)
@@ -38,7 +37,7 @@ Excalibur/
 
 | Layer | Rule for deciding |
 |---|---|
-| `bin/`, `src/` | Executable Node code for the CLI (both entry points: the ongoing `excalibur` command and the one-time `create-excalibur` onboarding command). Never framework *content* — it reads content from `lib/`, `rules/`, etc. straight out of wherever npm installed the package, it doesn't hold a second copy of it. |
+| `packages/cli/` | Executable Node code for both CLI entry points, their commands and shared core. Never framework content. |
 | `onboarding/` | Data for one-time onboarding only: the questions manifest and the pre-written files it can copy. If it runs on every task instead of once, it belongs in `lib/pipeline/`. |
 | `lib/pipeline/` | What agents do on every task. Must be 100% generic — if it names a project, org or repo, it doesn't belong here. |
 | `lib/features/` | Optional fragments a project can opt into during onboarding, not part of the default pipeline. |
@@ -53,7 +52,7 @@ Excalibur/
 
 **`rules/` is shipped; `docs/repo/` and `.docs/` are not.** Anything under `rules/` (including `rules/heuristics/`) is read directly by a consuming project out of `node_modules/@easy-spec/excalibur/rules/` — nothing is ever copied there. A note about how to maintain this repository, or a record of how a feature was planned, has no business appearing there.
 
-**`bin/`/`src/` don't duplicate content.** `lib/`, `rules/` and `reflection/` are the single source of truth, read at the project root by both CLI entry points. Neither entry point ever holds a second copy — if a rule's text ever appears inside `src/`, that's a bug.
+**`packages/cli/` doesn't duplicate content.** `lib/`, `rules/` and `reflection/` are the single source of truth, read at the project root by both CLI entry points. If a rule's text appears inside the CLI package, that's a bug.
 
 ## `docs/repo/` vs `.docs/`
 

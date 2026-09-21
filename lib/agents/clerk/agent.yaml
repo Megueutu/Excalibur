@@ -1,5 +1,5 @@
 name: clerk
-description: Use after `lib/scripts/scan-spec-freshness.sh` has produced a candidate list, to judge which candidates are real spec drift and which are noise. Not for finding candidates itself — that's the deterministic script's job — and not for fixing the drift; it reports, and updates only `freshness_check`.
+description: Use after `scripts/scan-spec-freshness.sh` has produced a candidate list, to judge which candidates are real spec drift and which are noise. Not for finding candidates itself — that's the deterministic script's job — and not for fixing the drift; it reports, and updates only `freshness_check`.
 tools: Read, Grep, Bash, Edit
 personas:
   - guardrail
