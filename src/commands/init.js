@@ -1,28 +1,17 @@
 import path from 'node:path'
 import * as p from '@clack/prompts'
 import pc from 'picocolors'
+import { packageRoot, projectPaths, DEFAULT_CUSTOM_DIR, CONTEXT_DIR, locateConfig } from '../lib/paths.js'
 import {
-  packageRoot,
-  shippedFolders,
-  projectPaths,
-  BASE_DIR,
-  CUSTOM_DIR,
-  CONTEXT_DIR,
-} from '../lib/paths.js'
-import {
-  copyDir,
   copyFile,
   ensureDir,
   exists,
-  isEmptyDir,
-  removeDir,
   writeText,
   ensureGitignore,
 } from '../lib/fsx.js'
 import {
   loadManifest,
   defaultAnswers,
-  writeAnswers,
   writeConfig,
   frameworkVersion,
   resolveSddPath,
@@ -31,12 +20,10 @@ import {
 import { build } from '../lib/build.js'
 
 /**
- * `excalibur init` — collect answers, then materialize .excalibur/.
- *
- * The form COLLECTS; it doesn't implement the SDD. The harness skill (/excalibur-init)
- * picks the answers up and does the rest, because the parts that remain need a
- * conversation (and `gh auth login` is an interactive OAuth flow no collection script
- * can drive).
+ * `excalibur init` (via `create-excalibur` or re-run directly) — collect answers,
+ * write the config, build the harness files. No framework content is copied
+ * anywhere: `build()` resolves `lib/`/`rules/`/etc. straight from `packageRoot`
+ * (wherever npm installed this package) every time.
  */
 
 async function askQuestion(question) {
@@ -56,7 +43,6 @@ async function askQuestion(question) {
 
   const chosen = (question.options ?? []).find((o) => o.value === answer)
 
-  // A free-text option means the user's own words are the answer.
   if (chosen?.free_text) {
     const text = await p.text({
       message: `${question.prompt} — describe it:`,
@@ -70,71 +56,26 @@ async function askQuestion(question) {
 }
 
 /**
- * Checks BEFORE writing anything, the way create-vite does — it doesn't undo after
- * a failure, it asks first. Same three options, and much simpler than a real
- * rollback, which would need a snapshot.
+ * Checks BEFORE writing anything, the way create-vite does. There's no big folder
+ * to offer "remove vs. ignore" for anymore — just a config to overwrite or not.
  */
 async function checkExistingInstall(cwd) {
-  const paths = projectPaths(cwd)
-  if (!exists(paths.base) || isEmptyDir(paths.base)) return 'continue'
+  const located = locateConfig(cwd)
+  if (!located) return 'continue'
 
-  p.log.warn(`${pc.yellow(BASE_DIR + '/')} already exists and is not empty.`)
+  p.log.warn(`A config already exists: ${pc.yellow(path.relative(cwd, located.file))} (mode: ${located.mode}).`)
 
   const choice = await p.select({
     message: 'How should this be handled?',
     options: [
       { value: 'cancel', label: 'Cancel operation', hint: 'nothing is written' },
-      { value: 'remove', label: 'Remove existing files and continue' },
-      { value: 'ignore', label: 'Ignore files and continue', hint: 'overwrites file by file' },
+      { value: 'overwrite', label: 'Overwrite the existing config and continue' },
     ],
     initialValue: 'cancel',
   })
 
   if (p.isCancel(choice) || choice === 'cancel') return 'cancel'
-  if (choice === 'remove') {
-    removeDir(paths.base)
-    return 'continue'
-  }
   return 'continue'
-}
-
-function installFramework(cwd) {
-  const paths = projectPaths(cwd)
-  ensureDir(paths.base)
-
-  for (const folder of shippedFolders) {
-    copyDir(path.join(packageRoot, folder), path.join(paths.base, folder))
-  }
-  copyDir(path.join(packageRoot, 'harnesses'), path.join(paths.base, 'harnesses'))
-  // onboarding/ ships the flow that .../skills/excalibur-init and .../skills/sdd
-  // point at (`.excalibur/onboarding/...`) — it lives under create-excalibur/
-  // rather than as a shippedFolders sibling, but a target project still needs it.
-  copyDir(path.join(packageRoot, 'create-excalibur', 'onboarding'), path.join(paths.base, 'onboarding'))
-
-  writeText(
-    path.join(paths.base, 'README.md'),
-    [
-      '# .excalibur/',
-      '',
-      "The framework's default content, installed by the CLI.",
-      '',
-      '**Do not edit anything in here.** `excalibur update` overwrites this folder',
-      'completely, so a hand edit is lost on the next update without warning. It is',
-      `gitignored for the same reason — it is regenerated content, like \`node_modules/\`.`,
-      '',
-      'To change something, copy it into the override folder first:',
-      '',
-      '```bash',
-      'npx excalibur customize rules/global/kiss.md',
-      '```',
-      '',
-      `That puts an editable copy at \`${CUSTOM_DIR}/rules/global/kiss.md\`, which update`,
-      'never touches. Resolution is per file: customizing one file leaves its siblings',
-      'coming from here as usual.',
-      '',
-    ].join('\n'),
-  )
-
 }
 
 /**
@@ -142,6 +83,8 @@ function installFramework(cwd) {
  * answers turned on. Read in FULL, every session — unlike architecture/, which is
  * pulled selectively per handoff. One manifest answer per feature gates one
  * lib/features/<feature>.md fragment; Obsidian is the first, not the only one.
+ * Lives under the custom-overrides folder now (context/ is project-writable
+ * content, never under packageRoot).
  */
 export function installFeatureFragments(cwd, answers) {
   const paths = projectPaths(cwd)
@@ -160,64 +103,52 @@ export function installFeatureFragments(cwd, answers) {
 }
 
 /**
- * CLAUDE.md is part of the regenerable .excalibur/ machinery — rewritten by every
- * init/update, same as everything else there. It's the one file Claude Code reads
- * automatically at the start of every session, so it's what points a brand-new
- * session at the Excalibur flow without the user invoking a skill by hand first.
+ * CLAUDE.md is regenerated by every init/update — Claude Code's one automatically-
+ * read entry point, so it's what points a brand-new session at the Excalibur flow.
+ * Discreet mode's wording never names "Excalibur" or "SDD" — that's the one visible
+ * file discreet mode can't avoid writing (removing it would break Claude Code's own
+ * session loading), so its CONTENT carries the discretion instead.
  */
-export function writeClaudeMd(cwd) {
-  const claudeMdPath = path.join(cwd, 'CLAUDE.md')
-  writeText(
-    claudeMdPath,
-    [
-      '# CLAUDE.md',
-      '',
-      'This project uses Excalibur (SDD). Before doing anything else:',
-      '',
-      `1. Read every file in \`${BASE_DIR}/${CONTEXT_DIR}/\` in full, if that folder`,
-      '   has any files — those are standing project context that applies to every',
-      '   session (installed by `excalibur init` for the features this project',
-      '   opted into, e.g. Obsidian integration).',
-      `2. Follow \`${BASE_DIR}/lib/pipeline/entrypoint.md\` for how to handle any`,
-      '   implementation request — it defines the four pipeline layers',
-      '   (orchestrator → spec → implement → review) and which ones a given task',
-      '   actually needs.',
-      '',
-      `This file is regenerated by \`excalibur update\` — don't hand-edit it. Project-`,
-      'specific standing instructions belong in a `lib/features/` fragment (ask for',
-      'one to be added) or in your SDD destination, not here.',
-      '',
-    ].join('\n'),
-  )
-}
-
-function writeVscodeFiles(cwd) {
+export function writeClaudeMd(cwd, mode) {
   const paths = projectPaths(cwd)
-  ensureDir(paths.vscode)
+  const claudeMdPath = path.join(cwd, 'CLAUDE.md')
 
-  const settingsPath = path.join(paths.vscode, 'settings.json')
-  if (!exists(settingsPath)) {
-    writeText(
-      settingsPath,
-      JSON.stringify(
-        {
-          'files.associations': {
-            Excalibur: 'yaml',
-          },
-        },
-        null,
-        2,
-      ) + '\n',
-    )
-  }
+  const lines = mode === 'discreet'
+    ? [
+        '# CLAUDE.md',
+        '',
+        'Before doing anything else:',
+        '',
+        `1. Read every file in \`${paths.customDir}/${CONTEXT_DIR}/\` in full, if that`,
+        '   folder has any files — those are standing project context that applies',
+        '   to every session.',
+        `2. Follow \`node_modules/excalibur/lib/pipeline/entrypoint.md\` for how to`,
+        '   handle any implementation request.',
+        '',
+        `This file is regenerated automatically — don't hand-edit it.`,
+        '',
+      ]
+    : [
+        '# CLAUDE.md',
+        '',
+        'This project uses Excalibur (SDD). Before doing anything else:',
+        '',
+        `1. Read every file in \`${paths.customDir}/${CONTEXT_DIR}/\` in full, if that`,
+        '   folder has any files — those are standing project context that applies',
+        '   to every session (installed by \`create-excalibur\` for the features',
+        '   this project opted into, e.g. Obsidian integration).',
+        `2. Follow \`node_modules/excalibur/lib/pipeline/entrypoint.md\` for how to`,
+        '   handle any implementation request — it defines the four pipeline layers',
+        '   (orchestrator → spec → implement → review) and which ones a given task',
+        '   actually needs.',
+        '',
+        `This file is regenerated by \`excalibur update\` — don't hand-edit it.`,
+        'Project-specific standing instructions belong in a `lib/features/`',
+        'fragment (ask for one to be added) or in your SDD destination, not here.',
+        '',
+      ]
 
-  const extensionsPath = path.join(paths.vscode, 'extensions.json')
-  if (!exists(extensionsPath)) {
-    writeText(
-      extensionsPath,
-      JSON.stringify({ recommendations: ['excalibur.icon-theme'] }, null, 2) + '\n',
-    )
-  }
+  writeText(claudeMdPath, lines.join('\n'))
 }
 
 export async function init(args, cwd) {
@@ -227,6 +158,22 @@ export async function init(args, cwd) {
   if (decision === 'cancel') {
     p.cancel('Nothing was written.')
     return 1
+  }
+
+  const configMode = args.discreet ? 'discreet' : 'public'
+
+  let customDir = DEFAULT_CUSTOM_DIR
+  if (args.custom) {
+    const answer = await p.text({
+      message: 'Name for the overrides folder (where your customizations live)?',
+      placeholder: DEFAULT_CUSTOM_DIR,
+      initialValue: DEFAULT_CUSTOM_DIR,
+    })
+    if (p.isCancel(answer)) {
+      p.cancel('Nothing was written.')
+      return 1
+    }
+    customDir = String(answer).trim() || DEFAULT_CUSTOM_DIR
   }
 
   const manifest = loadManifest()
@@ -271,52 +218,50 @@ export async function init(args, cwd) {
     }
   }
 
-  const spinner = p.spinner()
-  spinner.start('Installing the framework')
-  installFramework(cwd)
-  spinner.stop('Framework installed')
-
-  spinner.start('Building harness files')
-  const built = build(cwd)
-  spinner.stop(`Built ${built.agents.length} agents and ${built.skills.length} skill files`)
-
   const payload = { ...answers }
   for (const [id, text] of Object.entries(freeText)) payload[`${id}_text`] = text
-  writeAnswers(cwd, payload, mode)
 
-  // Best effort only: `embedded`/`separate` resolve deterministically from `cwd`,
-  // `external`/`new_repo` need the post-manifest interpretation step to pick a real
-  // path and fill this in later — see resolveSddPath's doc comment in lib/config.js.
+  // customDir has to be resolved before projectPaths(cwd) can find the right
+  // context/ folder — write the config FIRST, then everything else can call
+  // projectPaths(cwd) normally and get the right paths back.
   const sddPath = resolveSddPath(cwd, answers)
   writeSddMarker(sddPath)
 
   writeConfig(cwd, {
     version: 1,
+    mode: configMode,
+    base_dir: 'node_modules/excalibur',
+    custom_dir: customDir,
     framework_version: frameworkVersion(),
     setup_mode: mode,
     answers: payload,
     sdd_path: sddPath,
+    session: { flags: {} },
   })
 
-  writeVscodeFiles(cwd)
+  const spinner = p.spinner()
+  spinner.start('Building harness files')
+  const built = build(cwd)
+  spinner.stop(`Built ${built.agents.length} agents and ${built.skills.length} skill files`)
 
   const installedFeatures = installFeatureFragments(cwd, answers)
-  writeClaudeMd(cwd)
+  writeClaudeMd(cwd, configMode)
 
   const paths = projectPaths(cwd)
-  const ignored = [`${BASE_DIR}/`]
+  // Nothing needs a default gitignore entry anymore — there's no more disposable
+  // .excalibur/ copy, and `custom_dir` is meant to be committed in both modes. Only
+  // the optional history-archive entries are ever added, same as before.
+  const ignored = []
   if (answers.history_gitignore === 'ignored') ignored.push('history.yaml', 'history/archive/')
-  const added = ensureGitignore(paths.gitignore, ignored, 'Excalibur')
+  const added = ignored.length ? ensureGitignore(paths.gitignore, ignored, 'Excalibur') : []
 
   p.note(
     [
-      `${pc.green('✓')} ${BASE_DIR}/            framework content (gitignored, regenerated)`,
-      `${pc.dim('·')} ${CUSTOM_DIR}/     your overrides (commit this)`,
-      `${pc.green('✓')} Excalibur              project config`,
-      `${pc.green('✓')} .excalibur-answers.yaml  collected answers`,
+      `${pc.green('✓')} ${configMode === 'discreet' ? 'package.json ("excalibur" key)' : 'excalibur.yaml'}   project config`,
+      `${pc.dim('·')} ${paths.customDir}/     your overrides (commit this)`,
       added.length ? `${pc.green('✓')} .gitignore             + ${added.join(', ')}` : '',
       installedFeatures.length
-        ? `${pc.green('✓')} ${BASE_DIR}/${CONTEXT_DIR}/     ${installedFeatures.join(', ')} standing context`
+        ? `${pc.green('✓')} ${paths.customDir}/${CONTEXT_DIR}/     ${installedFeatures.join(', ')} standing context`
         : '',
       `${pc.green('✓')} CLAUDE.md              entrypoint the harness reads every session`,
     ]

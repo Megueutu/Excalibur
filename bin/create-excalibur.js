@@ -3,7 +3,10 @@ import mri from 'mri'
 import pc from 'picocolors'
 import { init } from '../src/commands/init.js'
 
-const args = mri(process.argv.slice(2), { boolean: ['yes', 'help'], alias: { h: 'help', y: 'yes' } })
+const args = mri(process.argv.slice(2), {
+  boolean: ['yes', 'help', 'discreet', 'custom'],
+  alias: { h: 'help', y: 'yes' },
+})
 
 if (args.help) {
   console.log(

@@ -65,7 +65,7 @@ ${pc.dim('Docs: https://github.com/Megueutu/Excalibur')}
 
 async function main() {
   const argv = mri(process.argv.slice(2), {
-    boolean: ['help', 'version', 'yes', 'dry-run', 'quiet', 'off', 'if-stale', 'no-rebuild'],
+    boolean: ['help', 'version', 'yes', 'dry-run', 'quiet', 'off', 'if-stale', 'no-rebuild', 'discreet', 'custom'],
     alias: { h: 'help', v: 'version', y: 'yes' },
   })
 
