@@ -1,7 +1,6 @@
 import * as p from '@clack/prompts'
 import pc from 'picocolors'
-import { readSession, writeSession, SESSION_FLAGS } from '../lib/config.js'
-import { SESSION_FILE } from '../lib/paths.js'
+import { readConfig, updateConfig, SESSION_FLAGS } from '../lib/config.js'
 
 /**
  * `excalibur session <flag>` — set or clear a session directive.
@@ -12,8 +11,8 @@ import { SESSION_FILE } from '../lib/paths.js'
 export async function session(args, cwd) {
   p.intro(pc.bgCyan(pc.black(' excalibur session ')))
 
-  const current = readSession(cwd)
-  const flags = { ...(current?.flags ?? {}) }
+  const config = readConfig(cwd)
+  const flags = { ...(config?.session?.flags ?? {}) }
   const requested = args._[0]
 
   if (!requested) {
@@ -22,7 +21,7 @@ export async function session(args, cwd) {
       const state = value === undefined || value === false ? pc.dim('off') : pc.green(value === true ? 'on' : String(value))
       return `${state.padEnd(16)} ${flag.padEnd(18)} ${pc.dim(description)}`
     })
-    p.note(lines.join('\n'), SESSION_FILE)
+    p.note(lines.join('\n'), 'Session flags')
     p.outro('Set one with: npx excalibur session <flag> [value]  ·  clear with --off')
     return 0
   }
@@ -35,12 +34,11 @@ export async function session(args, cwd) {
 
   if (args.off) {
     delete flags[flag]
-    writeSession(cwd, flags)
+    updateConfig(cwd, (current) => ({ ...current, session: { flags } }))
     p.outro(`${flag} cleared.`)
     return 0
   }
 
-  // Two flags carry a value rather than being on/off.
   const value = args._[1]
   if (flag === 'budget-limit' || flag === 'read-history') {
     if (value === undefined) {
@@ -56,8 +54,8 @@ export async function session(args, cwd) {
     flags[flag] = true
   }
 
-  writeSession(cwd, flags)
+  updateConfig(cwd, (current) => ({ ...current, session: { flags } }))
   p.note(`${flag} = ${pc.green(String(flags[flag]))}`, 'Set')
-  p.outro(`Written to ${SESSION_FILE}. The orchestrator reads it at the start of every session.`)
+  p.outro('Written. The orchestrator reads it at the start of every session.')
   return 0
 }

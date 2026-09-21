@@ -33,6 +33,12 @@ function parseScalar(raw) {
   if (s === 'null' || s === '~') return null
   if (s === 'true') return true
   if (s === 'false') return false
+  // Flow collections aren't supported in general, but the writer emits these two
+  // exact literals for empty maps/lists (see stringify's isEmpty branch) — round
+  // tripping those specific tokens back to {} / [] keeps that symmetric instead of
+  // silently turning an empty object into the literal string "{}".
+  if (s === '{}') return {}
+  if (s === '[]') return []
   if (/^-?\d+$/.test(s)) return Number(s)
   if (/^-?\d*\.\d+$/.test(s)) return Number(s)
   if (s.length >= 2 && s[0] === '"' && s.endsWith('"')) {

@@ -2,7 +2,7 @@ import path from 'node:path'
 import fs from 'node:fs'
 import * as p from '@clack/prompts'
 import pc from 'picocolors'
-import { projectPaths, BASE_DIR, CUSTOM_DIR } from '../lib/paths.js'
+import { projectPaths } from '../lib/paths.js'
 import { exists } from '../lib/fsx.js'
 import { orphanedCustomizations } from '../lib/resolve.js'
 
@@ -52,10 +52,10 @@ export async function doctor(args, cwd) {
 
   const paths = projectPaths(cwd)
 
-  if (!exists(paths.base)) {
+  if (!paths.configured) {
     if (!quiet) {
-      p.log.warn(`No ${BASE_DIR}/ in this folder — not onboarded yet.`)
-      p.outro('Run `npx excalibur init`.')
+      p.log.warn('No config found here — not onboarded yet.')
+      p.outro('Run `npx create-excalibur`.')
     }
     return 1
   }
@@ -68,11 +68,11 @@ export async function doctor(args, cwd) {
   //    the same check `status` already surfaces — rather than re-deriving it here.
   const orphans = orphanedCustomizations(cwd)
   if (orphans.length === 0) {
-    lines.push(`${pc.green('✓')} customizations   no orphans in ${CUSTOM_DIR}/`)
+    lines.push(`${pc.green('✓')} customizations   no orphans in ${paths.customDir}/`)
   } else {
     problems++
-    lines.push(`${pc.red('✗')} customizations   ${orphans.length} orphaned file(s) in ${CUSTOM_DIR}/`)
-    for (const o of orphans) lines.push(`    ${CUSTOM_DIR}/${o}`)
+    lines.push(`${pc.red('✗')} customizations   ${orphans.length} orphaned file(s) in ${paths.customDir}/`)
+    for (const o of orphans) lines.push(`    ${paths.customDir}/${o}`)
   }
 
   // 2. Canvas out of sync with tasks.yaml. Best effort, not exact: a real diff would

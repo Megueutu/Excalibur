@@ -3,7 +3,7 @@ import fs from 'node:fs'
 import { execFileSync } from 'node:child_process'
 import * as p from '@clack/prompts'
 import pc from 'picocolors'
-import { packageRoot, BASE_DIR } from '../lib/paths.js'
+import { packageRoot } from '../lib/paths.js'
 import { exists, listFiles } from '../lib/fsx.js'
 
 /**
@@ -26,15 +26,9 @@ import { exists, listFiles } from '../lib/fsx.js'
 const NUMBERED_SUFFIX = /-\d+\.md$/i
 const SLUG = /^[a-z0-9]+(-[a-z0-9]+)*$/
 
-function findValidateScript(cwd) {
-  // Prefer the copy materialized inside the target project (.excalibur/lib/...),
-  // since that's the version actually shipped to whoever runs `excalibur lint` in
-  // their own CI. Fall back to the package's own copy — e.g. linting this repo itself.
-  const inProject = path.join(cwd, BASE_DIR, 'lib', 'scripts', 'validate-md-size.sh')
-  if (exists(inProject)) return inProject
-  const inPackage = path.join(packageRoot, 'lib', 'scripts', 'validate-md-size.sh')
-  if (exists(inPackage)) return inPackage
-  return null
+function findValidateScript() {
+  const script = path.join(packageRoot, 'lib', 'scripts', 'validate-md-size.sh')
+  return exists(script) ? script : null
 }
 
 function parseViolations(out) {
@@ -47,8 +41,8 @@ function parseViolations(out) {
     })
 }
 
-function runSizeCheck(cwd, target) {
-  const script = findValidateScript(cwd)
+function runSizeCheck(target) {
+  const script = findValidateScript()
   if (!script) return { ran: false, violations: [] }
 
   try {
@@ -112,7 +106,7 @@ export async function lint(args, cwd) {
     return 1
   }
 
-  const size = runSizeCheck(cwd, target)
+  const size = runSizeCheck(target)
   const naming = namingViolations(target)
 
   const lines = []

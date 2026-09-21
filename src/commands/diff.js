@@ -2,7 +2,7 @@ import path from 'node:path'
 import fs from 'node:fs'
 import * as p from '@clack/prompts'
 import pc from 'picocolors'
-import { projectPaths, BASE_DIR, CUSTOM_DIR } from '../lib/paths.js'
+import { projectPaths } from '../lib/paths.js'
 import { exists } from '../lib/fsx.js'
 import { effectiveFiles } from '../lib/resolve.js'
 
@@ -78,10 +78,10 @@ export async function diff(args, cwd) {
   if (!quiet) p.intro(pc.bgCyan(pc.black(' excalibur diff ')))
 
   const paths = projectPaths(cwd)
-  if (!exists(paths.base)) {
+  if (!paths.configured) {
     if (!quiet) {
-      p.log.warn(`No ${BASE_DIR}/ in this folder — not onboarded yet.`)
-      p.outro('Run `npx excalibur init`.')
+      p.log.warn('No config found here — not onboarded yet.')
+      p.outro('Run `npx create-excalibur`.')
     }
     return 1
   }
@@ -93,7 +93,7 @@ export async function diff(args, cwd) {
   const customized = effectiveFiles(cwd).filter((f) => f.source === 'custom')
 
   if (customized.length === 0) {
-    if (!quiet) p.outro(`Nothing customized — ${CUSTOM_DIR}/ has no overrides yet.`)
+    if (!quiet) p.outro(`Nothing customized — ${paths.customDir}/ has no overrides yet.`)
     return 0
   }
 
@@ -108,7 +108,7 @@ export async function diff(args, cwd) {
 
   for (const f of toShow) {
     if (f.orphan) {
-      summary.push(`${pc.yellow('!')} ${f.path}  ${pc.yellow('orphaned — no matching file in ' + BASE_DIR + '/')}`)
+      summary.push(`${pc.yellow('!')} ${f.path}  ${pc.yellow('orphaned — no matching file in the installed package')}`)
       continue
     }
 
