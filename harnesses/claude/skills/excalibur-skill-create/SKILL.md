@@ -25,7 +25,7 @@ It is **not** for creating domain skills for the target project ("how we deploy 
 
 **Location.** `harnesses/claude/skills/<name>/SKILL.md`. Not in `lib/pipeline/` — that's for agents and process. Not at the repository root.
 
-**Frontmatter.** `name` and `description` only. The description says *when to use it* and *when not to* — that's what the model matches against, so "Use when… Not for…" beats a summary of what the skill contains. Keep it short: agent and skill frontmatter are both in the size allowlist (`rules/md-size-limits.yaml`).
+**Frontmatter.** `name` and `description` only. The description says *when to use it* and *when not to* — that's what the model matches against, so "Use when… Not for…" beats a summary of what the skill contains. Keep it short: agent and skill frontmatter are both in the size allowlist (`rules/heuristics/md-size-limits.yaml`).
 
 **Body.** Point, don't duplicate. A skill that explains the whole process instead of linking to `lib/pipeline/entrypoint.md` has grown too big, and it will drift from the real process the first time that process changes.
 

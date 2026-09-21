@@ -91,7 +91,7 @@ export async function doctor(args, cwd) {
   // 3. Canvas out of sync with tasks.yaml. Best effort, not exact: a real diff would
   //    need to know which tasks.yaml the canvas is *supposed* to reflect, and nothing
   //    records that (updating it is a judgment call the `review` agent makes, per
-  //    rules/canvas-update-checklist.yaml). The heuristic here is mtime-based — any
+  //    rules/heuristics/canvas-update-checklist.yaml). The heuristic here is mtime-based — any
   //    tasks.yaml newer than project.canvas is presumed to carry unreflected progress.
   //    False positives are possible (a tasks.yaml touched without anything
   //    canvas-worthy changing), and false negatives too (the canvas kept up by hand

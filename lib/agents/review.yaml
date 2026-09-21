@@ -35,7 +35,7 @@ body: |+
 
   ## 4. Update the project canvas
 
-  Walk `rules/canvas-update-checklist.yaml` — a short list of "did X change?" questions. For each one that changed, update the corresponding node in the project `.canvas`. It's plain JSON; edit it directly.
+  Walk `rules/heuristics/canvas-update-checklist.yaml` — a short list of "did X change?" questions. For each one that changed, update the corresponding node in the project `.canvas`. It's plain JSON; edit it directly.
 
   Checking a fixed list is cheap. Re-deriving what the canvas should look like from the whole project, every time, is not — which is why the checklist exists as a file.
 

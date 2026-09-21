@@ -39,7 +39,7 @@ function findSpecsDirs(cwd) {
 /**
  * tasks.yaml has no single frozen schema yet — tolerate the reasonable shapes: a
  * top-level `tasks:` list or `items:`, each item `{ id/title, status, blocked? }`.
- * An ordered checklist (rules/tasks-ordering.yaml) nests phases, each phase carrying
+ * An ordered checklist (rules/heuristics/tasks-ordering.yaml) nests phases, each phase carrying
  * its own `items`/`tasks` instead of a `status` — flatten one level of that so
  * done/total/blocked counts the same way for ordered and unordered checklists.
  */

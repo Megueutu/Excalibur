@@ -12,7 +12,7 @@ import { exists, listFiles } from '../lib/fsx.js'
  * target project's own CI (`npx excalibur lint` in a workflow step).
  *
  * Two independent, mechanical checks:
- *   1. .md size limits (rules/md-size-limits.yaml) — shells out to
+ *   1. .md size limits (rules/heuristics/md-size-limits.yaml) — shells out to
  *      lib/scripts/validate-md-size.sh (5.3) rather than re-parsing the YAML
  *      allowlist a second time in JS. The script is the single source of truth for
  *      that logic; check.js already establishes that shelling out to bash is this

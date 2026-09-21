@@ -106,7 +106,7 @@ What could go wrong and what would signal it.
 
 ```yaml
 version: 1
-# Numbering follows rules/tasks-ordering.yaml — a fixed heuristic, not a
+# Numbering follows rules/heuristics/tasks-ordering.yaml — a fixed heuristic, not a
 # per-task judgment call. Hierarchical when steps depend on each other,
 # flat when they don't.
 ordered: true

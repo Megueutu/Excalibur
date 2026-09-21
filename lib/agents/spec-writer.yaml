@@ -29,7 +29,7 @@ body: |+
 
   Structure from `pipeline/spec-template.md`. Frontmatter per `rules/writing-md-obsidian.md`, wikilinks between notes in the same vault, callouts for closed decisions and open risks.
 
-  `spec.md` has **no size limit** — see `rules/md-size-limits.yaml`. An API spec with a documented payload legitimately runs long, and forcing it to split at an arbitrary line count makes it worse, not better. Split when the content has genuinely separate subjects, not because of a number.
+  `spec.md` has **no size limit** — see `rules/heuristics/md-size-limits.yaml`. An API spec with a documented payload legitimately runs long, and forcing it to split at an arbitrary line count makes it worse, not better. Split when the content has genuinely separate subjects, not because of a number.
 
   ## When to stop instead of deciding
 

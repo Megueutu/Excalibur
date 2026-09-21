@@ -8,9 +8,7 @@ Rules **about this repository** are not here — they live in [`../docs/repo/`](
 |---|---|
 | [`global/`](global/) | KISS, YAGNI, DRY, SOLID — apply to every project regardless of stack |
 | [`stacks/`](stacks/) | Per-language / per-framework / per-IDE recommendations, combinable |
-| [`md-size-limits.yaml`](md-size-limits.yaml) | Allowlist of file types that do have a size limit, and what it is |
-| [`tasks-ordering.yaml`](tasks-ordering.yaml) | Fixed heuristic for numbering task checklists |
-| [`canvas-update-checklist.yaml`](canvas-update-checklist.yaml) | What the review agent checks before updating the project canvas |
+| [`heuristics/`](heuristics/) | Machine-checked tables, not prose: size limits, task numbering, canvas checklist |
 | [`naming.md`](naming.md) | File naming and dating conventions |
 | [`interaction.md`](interaction.md) | How agents phrase questions to the user |
 | [`writing-md-obsidian.md`](writing-md-obsidian.md) | Markdown conventions so the SDD reads well in Obsidian |

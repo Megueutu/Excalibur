@@ -38,7 +38,7 @@ That cuts both ways:
 - **Leave something out** and the agent simply won't know it. It can't ask the session, because it can't see the session.
 - **Put too much in** — the whole project, the full history, every architecture file — and you've paid for context that biases the agent toward what has already been tried. That bias is exactly what the isolation exists to prevent.
 
-The handoff is a size limit that matters, and it's in the allowlist in `rules/md-size-limits.yaml` for that reason.
+The handoff is a size limit that matters, and it's in the allowlist in `rules/heuristics/md-size-limits.yaml` for that reason.
 
 ## Fields
 

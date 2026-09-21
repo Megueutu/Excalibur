@@ -20,7 +20,7 @@ Itens da seção **"TODO — validações técnicas pendentes"** do `excalibur-d
 ## 3. O agente lê/considera frontmatter de metadados de forma confiável?
 
 - Dúvida original da seção 14, ainda não validada na prática.
-- **Impacto direto no que foi implementado:** por causa dessa incerteza, `rules/md-size-limits.yaml` é a fonte de verdade dos limites e o frontmatter espelhado é tratado como decorativo. Se a validação mostrar que o frontmatter é confiável, dá pra simplificar.
+- **Impacto direto no que foi implementado:** por causa dessa incerteza, `rules/heuristics/md-size-limits.yaml` é a fonte de verdade dos limites e o frontmatter espelhado é tratado como decorativo. Se a validação mostrar que o frontmatter é confiável, dá pra simplificar.
 
 ## 4. Onde exatamente o Claude Code espera skills/agentes num projeto-alvo
 

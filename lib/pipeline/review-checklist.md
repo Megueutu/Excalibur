@@ -50,7 +50,7 @@ Skip this entirely only when the session sets `skip-review`.
 
 ## Markdown size
 
-- Any `.md` touched in this task that belongs to an allowlisted type in `rules/md-size-limits.yaml` is under its limit. If it isn't, granularize before the task can be called done: split by subject with clear names — never `file-1.md`, `file-2.md` — and link the pieces.
+- Any `.md` touched in this task that belongs to an allowlisted type in `rules/heuristics/md-size-limits.yaml` is under its limit. If it isn't, granularize before the task can be called done: split by subject with clear names — never `file-1.md`, `file-2.md` — and link the pieces.
 - A file type that isn't in the allowlist has **no limit** and is not checked. Most files are in this category, on purpose.
 
 ## History
@@ -59,4 +59,4 @@ Skip this entirely only when the session sets `skip-review`.
 
 ## Canvas
 
-- Walk `rules/canvas-update-checklist.yaml`. For every item that changed, the corresponding node in the project `.canvas` was updated.
+- Walk `rules/heuristics/canvas-update-checklist.yaml`. For every item that changed, the corresponding node in the project `.canvas` was updated.

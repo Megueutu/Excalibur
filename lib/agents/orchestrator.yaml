@@ -50,7 +50,7 @@ body: |+
   You own these two of the five task files:
 
   - **`proposal.md`** — why the task exists and what changes. Prose, short.
-  - **`tasks.yaml`** — the granular checklist. Numbering is decided by the fixed heuristic in `rules/tasks-ordering.yaml`, never by your own judgment call. Hierarchical numbering (`1.1`, `1.2`, `2.1`) only when steps genuinely depend on each other; a flat list when they don't. Reading the heuristic costs less than reasoning it out every time, which is the whole reason it exists as a file.
+  - **`tasks.yaml`** — the granular checklist. Numbering is decided by the fixed heuristic in `rules/heuristics/tasks-ordering.yaml`, never by your own judgment call. Hierarchical numbering (`1.1`, `1.2`, `2.1`) only when steps genuinely depend on each other; a flat list when they don't. Reading the heuristic costs less than reasoning it out every time, which is the whole reason it exists as a file.
 
   `spec.md` belongs to `spec-writer`, `design.md` to whoever implements, `history.yaml` to `review`.
 

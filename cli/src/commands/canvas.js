@@ -11,7 +11,7 @@ const TEMPLATE = path.join(packageRoot, 'pipeline', 'project-canvas-template.can
  * `excalibur canvas` — regenerate the project-level Obsidian Canvas on demand.
  *
  * The `review` agent normally keeps `project.canvas` current automatically, walking
- * `rules/canvas-update-checklist.yaml` after every Feature/Big feature task (see
+ * `rules/heuristics/canvas-update-checklist.yaml` after every Feature/Big feature task (see
  * lib/agents/review.yaml). That is a judgment call ("did this change deserve a
  * node?") this command cannot make — there is no LLM here. What it does mechanically:
  * materialize `project.canvas` from `lib/pipeline/project-canvas-template.canvas` — the
@@ -79,7 +79,7 @@ export async function canvas(args, cwd) {
       '',
       'This is the blank template — nodes for the stack, modules, flow and phases still',
       'need real content. That normally happens automatically: the `review` agent walks',
-      'rules/canvas-update-checklist.yaml after every Feature/Big feature task.',
+      'rules/heuristics/canvas-update-checklist.yaml after every Feature/Big feature task.',
     ].join('\n'),
     'Canvas',
   )

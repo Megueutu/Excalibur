@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # lib/scripts/validate-md-size.sh — mechanical check of .md files under a target
-# directory against the allowlist in rules/md-size-limits.yaml.
+# directory against the allowlist in rules/heuristics/md-size-limits.yaml.
 #
 # Model: ALLOWLIST (see that file's own header). Only files matching one of its
 # `match` globs are checked; everything else has no limit, by design — this script
@@ -17,7 +17,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Relative to this script, not to $PWD: this file ships both at the package root
 # (lib/scripts/) and materialized into a target project (.excalibur/lib/scripts/)
 # — rules/ sits two levels up from either location, so one relative path works for both.
-LIMITS_FILE="$SCRIPT_DIR/../../rules/md-size-limits.yaml"
+LIMITS_FILE="$SCRIPT_DIR/../../rules/heuristics/md-size-limits.yaml"
 TARGET="${1:-}"
 
 if [[ -z "$TARGET" || ! -d "$TARGET" ]]; then
