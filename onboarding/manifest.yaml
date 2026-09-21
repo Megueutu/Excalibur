@@ -290,7 +290,7 @@ questions:
           source: onboarding/history-cleanup/hook.md
           dest: history-cleanup.md
       - value: manual
-        label: "Manual — `npx @spec/excalibur clean-history` when you feel like it"
+        label: "Manual — `npx @easy-spec/excalibur clean-history` when you feel like it"
         copy:
           source: onboarding/history-cleanup/manual.md
           dest: history-cleanup.md

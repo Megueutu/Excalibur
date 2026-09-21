@@ -9,9 +9,9 @@ Currently targets Claude / Claude Code. The architecture keeps the framework con
 Excalibur is never installed by cloning this repository. The CLI does the installing:
 
 ```bash
-npm install --save-dev @spec/excalibur
-npx @spec/excalibur check    # verify dependencies (bash, git, gh, node)
-npx @spec/excalibur init     # collect answers, write the config into the target project
+npm install --save-dev @easy-spec/excalibur
+npx @easy-spec/excalibur check    # verify dependencies (bash, git, gh, node)
+npx @easy-spec/excalibur init     # collect answers, write the config into the target project
 ```
 
 Then, inside your harness, run `/excalibur-init` to finish onboarding conversationally.
@@ -35,7 +35,7 @@ Then, inside your harness, run `/excalibur-init` to finish onboarding conversati
 
 | Path | Versioned? | What it holds |
 |---|---|---|
-| `node_modules/@spec/excalibur/` | no (managed by npm) | The installed package: framework content, read directly, never copied |
+| `node_modules/@easy-spec/excalibur/` | no (managed by npm) | The installed package: framework content, read directly, never copied |
 | `.overrides/` (configurable via `custom_dir`) | yes | Your overrides, per file. `update` never touches it |
 | `excalibur.yaml` (public mode) or the `"excalibur"` key in `package.json` (discreet mode) | yes | The project config: mode, paths, onboarding answers, session flags |
 | *(your chosen SDD folder)* | yes | The actual SDD content: specs, architecture, ideas |

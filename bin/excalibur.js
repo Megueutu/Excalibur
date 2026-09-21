@@ -35,7 +35,7 @@ const HELP = `
 ${pc.bold('excalibur')} — a ready-to-use SDD framework for AI agents
 
 ${pc.bold('Usage')}
-  npx @spec/excalibur <command> [options]
+  npx @easy-spec/excalibur <command> [options]
 
 ${pc.bold('Commands')}
   init                 Collect answers and write the config (excalibur.yaml or package.json)

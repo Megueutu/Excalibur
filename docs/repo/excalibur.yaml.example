@@ -9,7 +9,7 @@
 
 version: 1
 mode: public
-base_dir: node_modules/@spec/excalibur
+base_dir: node_modules/@easy-spec/excalibur
 custom_dir: .overrides
 framework_version: 0.4.2
 

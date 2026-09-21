@@ -8,7 +8,7 @@ import { build } from '../lib/build.js'
 
 /**
  * `excalibur customize <path>` — copy one file from the installed package
- * (`node_modules/@spec/excalibur/`) to the project's overrides folder (`custom_dir`,
+ * (`node_modules/@easy-spec/excalibur/`) to the project's overrides folder (`custom_dir`,
  * `.overrides/` by default) so it can be edited safely.
  *
  * The point is that the user never edits the installed package directly: it's
@@ -21,7 +21,7 @@ export async function customize(args, cwd) {
   p.intro(pc.bgCyan(pc.black(' excalibur customize ')))
 
   if (!target) {
-    p.cancel('Usage: npx @spec/excalibur customize <path-inside-the-package>')
+    p.cancel('Usage: npx @easy-spec/excalibur customize <path-inside-the-package>')
     return 1
   }
 

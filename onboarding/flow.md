@@ -4,7 +4,7 @@ Runs once per project, before any implementation task (`lib/pipeline/entrypoint.
 
 ## 0. Check for pre-collected answers
 
-If `.excalibur-answers.yaml` exists at the root of the target project, the user already ran `npx @spec/excalibur init` and answered the form in the terminal. Read it, skip steps 3 and 4, and go straight to step 5 (the interpreter still runs — the form collects, it doesn't decide).
+If `.excalibur-answers.yaml` exists at the root of the target project, the user already ran `npx @easy-spec/excalibur init` and answered the form in the terminal. Read it, skip steps 3 and 4, and go straight to step 5 (the interpreter still runs — the form collects, it doesn't decide).
 
 If it doesn't exist, this is the conversational path: ask everything here.
 
@@ -89,7 +89,7 @@ If `obsidian_vault` was answered `vault`, run [`lib/scripts/scaffold-obsidian-va
 
 Invoke the `translator` subagent (see [`lib/agents/translator/agent.yaml`](../../lib/agents/translator/agent.yaml)) against the destination's `Templates/` and `reflection/` folders, with the resolved language.
 
-What gets translated is decided structurally, by where a file sits — not by a list of exceptions. See `rules/translation.md`: the **visible SDD** (`ideas/`, `architecture/`, `proposal.md`, `spec.md`, `design.md`, canvas) is translated; the **operational Excalibur** (the installed package under `node_modules/@spec/excalibur/`, `lib/pipeline/`, `rules/`, `tasks.yaml`, `history.yaml`) never is. The point is token economy: no agent should spend tokens translating a file no human will read.
+What gets translated is decided structurally, by where a file sits — not by a list of exceptions. See `rules/translation.md`: the **visible SDD** (`ideas/`, `architecture/`, `proposal.md`, `spec.md`, `design.md`, canvas) is translated; the **operational Excalibur** (the installed package under `node_modules/@easy-spec/excalibur/`, `lib/pipeline/`, `rules/`, `tasks.yaml`, `history.yaml`) never is. The point is token economy: no agent should spend tokens translating a file no human will read.
 
 Unlike the original one-shot behavior, this applies continuously — documents written later follow the same language.
 

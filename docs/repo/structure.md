@@ -51,7 +51,7 @@ Excalibur/
 
 ## Two rules that are easy to get wrong
 
-**`rules/` is shipped; `docs/repo/` and `.docs/` are not.** Anything under `rules/` (including `rules/heuristics/`) is read directly by a consuming project out of `node_modules/@spec/excalibur/rules/` — nothing is ever copied there. A note about how to maintain this repository, or a record of how a feature was planned, has no business appearing there.
+**`rules/` is shipped; `docs/repo/` and `.docs/` are not.** Anything under `rules/` (including `rules/heuristics/`) is read directly by a consuming project out of `node_modules/@easy-spec/excalibur/rules/` — nothing is ever copied there. A note about how to maintain this repository, or a record of how a feature was planned, has no business appearing there.
 
 **`bin/`/`src/` don't duplicate content.** `lib/`, `rules/` and `reflection/` are the single source of truth, read at the project root by both CLI entry points. Neither entry point ever holds a second copy — if a rule's text ever appears inside `src/`, that's a bug.
 

@@ -15,7 +15,7 @@ When the user asks to set up Excalibur for a project, or when the `sdd` skill fi
 
 ## What to do
 
-1. **Check for pre-collected answers.** If `.excalibur-answers.yaml` exists at the project root, the user already ran `npx @spec/excalibur init` in the terminal. Read it and skip the question-asking — the form collected them, so asking again wastes the user's time.
+1. **Check for pre-collected answers.** If `.excalibur-answers.yaml` exists at the project root, the user already ran `npx @easy-spec/excalibur init` in the terminal. Read it and skip the question-asking — the form collected them, so asking again wastes the user's time.
 
 2. **Confirm the project isn't already onboarded.** See "Detection" in [`onboarding/flow.md`](../../../../onboarding/flow.md). If it is, stop and say so — don't run onboarding on top of an existing destination.
 

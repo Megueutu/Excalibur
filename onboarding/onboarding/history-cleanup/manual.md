@@ -3,7 +3,7 @@
 No automation. Run it when you feel like it:
 
 ```bash
-npx @spec/excalibur clean-history
+npx @easy-spec/excalibur clean-history
 ```
 
 ## What it does

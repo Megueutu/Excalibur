@@ -22,7 +22,7 @@ export async function session(args, cwd) {
       return `${state.padEnd(16)} ${flag.padEnd(18)} ${pc.dim(description)}`
     })
     p.note(lines.join('\n'), 'Session flags')
-    p.outro('Set one with: npx @spec/excalibur session <flag> [value]  ·  clear with --off')
+    p.outro('Set one with: npx @easy-spec/excalibur session <flag> [value]  ·  clear with --off')
     return 0
   }
 
@@ -44,8 +44,8 @@ export async function session(args, cwd) {
     if (value === undefined) {
       p.cancel(
         flag === 'budget-limit'
-          ? 'budget-limit needs a value: npx @spec/excalibur session budget-limit 50000'
-          : 'read-history needs a value: npx @spec/excalibur session read-history always',
+          ? 'budget-limit needs a value: npx @easy-spec/excalibur session budget-limit 50000'
+          : 'read-history needs a value: npx @easy-spec/excalibur session read-history always',
       )
       return 1
     }

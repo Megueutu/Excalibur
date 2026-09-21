@@ -12,7 +12,7 @@ In `.claude/settings.json`, on the `Stop` event (end of a task) rather than `Pos
     "Stop": [
       {
         "hooks": [
-          { "type": "command", "command": "npx @spec/excalibur clean-history --quiet --if-stale" }
+          { "type": "command", "command": "npx @easy-spec/excalibur clean-history --quiet --if-stale" }
         ]
       }
     ]

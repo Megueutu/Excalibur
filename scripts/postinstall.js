@@ -9,7 +9,7 @@ import { update } from '../src/commands/update.js'
  * calling the same logic `excalibur update` exposes manually.
  *
  * `INIT_CWD` is what npm sets to the directory `npm install` was actually invoked
- * from — this script's own `cwd` is inside `node_modules/@spec/excalibur/`, not the
+ * from — this script's own `cwd` is inside `node_modules/@easy-spec/excalibur/`, not the
  * consuming project's root, since that's where npm runs every package's lifecycle
  * scripts. Known limitation, not solved here: pnpm/Yarn have their own (different)
  * lifecycle-script conventions and may not set INIT_CWD the same way, or may block
@@ -37,7 +37,7 @@ async function main() {
     // A postinstall failure must never fail the whole `npm install` — the package
     // is still correctly installed even if the rebuild had a problem. Report it
     // and let `excalibur update` be run manually to see the real error.
-    console.error('excalibur postinstall: rebuild failed, run `npx @spec/excalibur update` to see why:', error.message)
+    console.error('excalibur postinstall: rebuild failed, run `npx @easy-spec/excalibur update` to see why:', error.message)
   }
 }
 
