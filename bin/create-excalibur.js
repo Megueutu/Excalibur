@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import mri from 'mri'
 import pc from 'picocolors'
-import { init } from 'excalibur/src/commands/init.js'
+import { init } from '../src/commands/init.js'
 
 const args = mri(process.argv.slice(2), { boolean: ['yes', 'help'], alias: { h: 'help', y: 'yes' } })
 

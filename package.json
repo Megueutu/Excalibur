@@ -1,7 +1,41 @@
 {
-  "name": "excalibur-monorepo",
-  "version": "0.0.0",
-  "private": true,
-  "description": "Development root for the excalibur and create-excalibur packages — not published itself",
-  "license": "MIT"
+  "name": "excalibur",
+  "version": "0.3.0",
+  "description": "A ready-to-use SDD (Spec-Driven Development) framework for AI agents",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "excalibur": "bin/excalibur.js",
+    "create-excalibur": "bin/create-excalibur.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "lib/",
+    "rules/",
+    "reflection/",
+    "harnesses/",
+    "onboarding/",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "check": "node bin/excalibur.js check",
+    "postinstall": "node scripts/postinstall.js"
+  },
+  "dependencies": {
+    "@clack/prompts": "^0.7.0",
+    "mri": "^1.2.0",
+    "picocolors": "^1.0.0"
+  },
+  "keywords": [
+    "sdd",
+    "spec-driven-development",
+    "claude",
+    "claude-code",
+    "agents"
+  ]
 }
