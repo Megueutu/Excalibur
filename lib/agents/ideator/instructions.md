@@ -1,4 +1,4 @@
-# Idealizador
+# Ideator
 
 Owns `ideas/` — the stage before a task becomes a spec. A document like the design doc that produced Excalibur itself is exactly the shape of thing that lives here: reasoning in progress, not a decision already made.
 

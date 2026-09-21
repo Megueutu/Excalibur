@@ -15,7 +15,7 @@ Anti-spec-drift, end to end: cheap sweep first, judgment only where the sweep fo
    lib/scripts/scan-spec-freshness.sh <sdd-path> --repo <repo-path>
    ```
 
-   `<sdd-path>` is the project's SDD destination (where `specs/` lives). This produces a YAML candidate list from commit history, tags and `depends_on` alone — see `lib/agents/docs-updater.yaml` and `rules/writing-md-obsidian.md#anti-spec-drift-frontmatter` for what the fields mean. If it returns no candidates, say so and stop — there is nothing for judgment to do.
+   `<sdd-path>` is the project's SDD destination (where `specs/` lives). This produces a YAML candidate list from commit history, tags and `depends_on` alone — see `lib/agents/docs-updater/agent.yaml` and `rules/writing-md-obsidian.md#anti-spec-drift-frontmatter` for what the fields mean. If it returns no candidates, say so and stop — there is nothing for judgment to do.
 
 2. **Judgment — only on what the sweep flagged.** Dispatch the `docs-updater` subagent with the candidate list as input. It reads the real diffs behind each candidate and decides real drift vs. noise, writing a one-line reason for anything it confirms. It also updates each confirmed candidate's `freshness_check` field directly — that part is already done by the time it reports back.
 

@@ -87,7 +87,7 @@ If `obsidian_vault` was answered `vault`, run [`lib/scripts/scaffold-obsidian-va
 
 ## 8. Translate, only if `language` was answered `other`
 
-Invoke the `translator` subagent (see [`lib/agents/translator.yaml`](../../lib/agents/translator.yaml)) against the destination's `Templates/` and `reflection/` folders, with the resolved language.
+Invoke the `translator` subagent (see [`lib/agents/translator/agent.yaml`](../../lib/agents/translator/agent.yaml)) against the destination's `Templates/` and `reflection/` folders, with the resolved language.
 
 What gets translated is decided structurally, by where a file sits — not by a list of exceptions. See `rules/translation.md`: the **visible SDD** (`ideas/`, `architecture/`, `proposal.md`, `spec.md`, `design.md`, canvas) is translated; the **operational Excalibur** (`.excalibur/`, `lib/pipeline/`, `rules/`, `tasks.yaml`, `history.yaml`) never is. The point is token economy: no agent should spend tokens translating a file no human will read.
 

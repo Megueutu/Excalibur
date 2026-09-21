@@ -1,4 +1,4 @@
-name: idealizador
+name: ideator
 description: Use during the ideation phase of an Excalibur project, before a task is formalized — brainstorm notes in ideas/, and the project canvas when an idea is worth seeing spatially. Not for specifying a task that is already decided, and not for implementing anything.
 tools: Read, Grep, Glob, Write, Edit
 personas:

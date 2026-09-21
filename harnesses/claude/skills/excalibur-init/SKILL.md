@@ -33,5 +33,5 @@ When the user asks to set up Excalibur for a project, or when the `sdd` skill fi
 
 - The flow (shared, don't duplicate here): [`.excalibur/onboarding/flow.md`](../../../../onboarding/flow.md)
 - The questions: [`.excalibur/onboarding/manifest.yaml`](../../../../onboarding/manifest.yaml)
-- Translation: [`lib/agents/translator.yaml`](../../../../lib/agents/translator.yaml)
+- Translation: [`lib/agents/translator/agent.yaml`](../../../../lib/agents/translator/agent.yaml)
 - Next step: [`../sdd/SKILL.md`](../sdd/SKILL.md)

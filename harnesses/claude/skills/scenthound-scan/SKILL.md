@@ -5,7 +5,7 @@ description: Use before pushing a change, to sniff the diff for security problem
 
 # /scenthound-scan
 
-A thin wrapper over the `scenthound` subagent (`lib/agents/scenthound.yaml`). The caller doesn't need to know a full agent runs behind it — just that this command sniffs before a push and hands back a verdict.
+A thin wrapper over the `scenthound` subagent (`lib/agents/scenthound/agent.yaml`). The caller doesn't need to know a full agent runs behind it — just that this command sniffs before a push and hands back a verdict.
 
 ## What to do
 

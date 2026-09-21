@@ -62,37 +62,40 @@ function buildGroup(cwd, relDir, targetDir, filter = () => true) {
 
 /**
  * Builds agents from YAML sources, converting to .md for Claude Code. Each
- * agent is two sibling files under `sourceDir` — `<name>.yaml` (metadata) and
- * `<name>.md` (the agent's own body) — both resolved independently through
- * base+override, so a project can customize either without touching the other.
+ * agent is its own subfolder under `sourceDir` — `<name>/agent.yaml`
+ * (metadata) and `<name>/instructions.md` (the agent's own body), each
+ * resolved independently through base+override, so a project can customize
+ * either without touching the other. `TEMPLATE/` is the skeleton for creating
+ * a new agent, never built.
  */
 function buildAgents(cwd, sourceDir, targetDir) {
   const p = projectPaths(cwd)
   const written = []
 
   // The candidate list comes from base; anything custom-only is picked up too.
-  const fromBase = listFiles(path.join(p.base, sourceDir)).filter((f) => f.endsWith('.yaml'))
-  const fromCustom = listFiles(path.join(p.custom, sourceDir)).filter((f) => f.endsWith('.yaml'))
-  const candidates = [...new Set([...fromBase, ...fromCustom])]
+  const fromBase = listFiles(path.join(p.base, sourceDir)).filter((f) => f.endsWith('/agent.yaml'))
+  const fromCustom = listFiles(path.join(p.custom, sourceDir)).filter((f) => f.endsWith('/agent.yaml'))
+  const candidates = [...new Set([...fromBase, ...fromCustom])].filter((rel) => !rel.startsWith('TEMPLATE/'))
 
   for (const rel of candidates) {
+    const agentName = rel.split('/')[0]
     const source = resolveFile(cwd, path.join(sourceDir, rel).split(path.sep).join('/'))
     if (!source) continue
 
     const agent = parse(fs.readFileSync(source, 'utf8'))
 
-    const bodyRel = rel.replace(/\.yaml$/, '.md')
+    const bodyRel = `${agentName}/instructions.md`
     const bodySource = resolveFile(cwd, path.join(sourceDir, bodyRel).split(path.sep).join('/'))
     if (!bodySource) throw new Error(`Agent "${agent.name}" has no body file at ${sourceDir}/${bodyRel}`)
     const body = fs.readFileSync(bodySource, 'utf8').replace(/\n+$/, '\n')
 
     const mdContent = assembleAgentMd(cwd, agent, body)
 
-    const dest = path.join(cwd, targetDir, bodyRel)
+    const dest = path.join(cwd, targetDir, `${agentName}.md`)
     ensureDir(path.dirname(dest))
     fs.writeFileSync(dest, mdContent, 'utf8')
 
-    written.push(path.join(targetDir, bodyRel).split(path.sep).join('/'))
+    written.push(path.join(targetDir, `${agentName}.md`).split(path.sep).join('/'))
   }
 
   return written

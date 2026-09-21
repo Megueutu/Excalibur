@@ -1,0 +1,29 @@
+# Template for a new agent. Copy this whole folder to lib/agents/<name>/,
+# rename it, then fill in both files. This TEMPLATE/ folder itself is never
+# built — the build step skips it by name.
+#
+# name: lowercase, hyphenated, matches the folder name exactly (build.js
+#   derives the target filename from the folder, but the harness reads this
+#   field too — keep the two in sync by hand).
+name: TEMPLATE
+
+# description: when the orchestrator should dispatch this agent, and when it
+#   shouldn't. Follow the existing agents' shape: "Use to/for X. Not for Y."
+#   — the "not for" half is what stops scope creep into a neighboring agent's job.
+description: TODO
+
+# tools: comma-separated, exactly what this agent can physically do. No
+#   Write/Edit for an agent that should only report (see review.yaml,
+#   scenthound.yaml for that pattern). No Task for anything but the
+#   orchestrator, which is the only agent allowed to dispatch others.
+tools: Read
+
+# personas: optional list, omit the key entirely if none apply. Each name
+#   must have a matching lib/personas/<name>.md. guardrail is the only one
+#   that exists today — see lib/personas/guardrail.md for what it's for and
+#   which agents already carry it.
+# personas:
+#   - guardrail
+
+# model: "inherit" unless there's a specific reason to pin one.
+model: inherit

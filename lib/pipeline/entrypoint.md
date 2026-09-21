@@ -16,7 +16,7 @@ Not every layer runs on every task. A Fix usually goes orchestrator → implemen
 
 ## 0. Read the session directives
 
-`.excalibur-session.yaml` at the project root, every session, before anything else. It's the orchestrator's job (see `lib/agents/orchestrator.yaml` for the full flag table), but any agent that changes behavior based on a flag reads it too. No file means no flags set — the normal case.
+`.excalibur-session.yaml` at the project root, every session, before anything else. It's the orchestrator's job (see `lib/agents/orchestrator/agent.yaml` for the full flag table), but any agent that changes behavior based on a flag reads it too. No file means no flags set — the normal case.
 
 ## 1. Entry point: how the request arrived
 
