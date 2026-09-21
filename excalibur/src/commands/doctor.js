@@ -2,7 +2,7 @@ import path from 'node:path'
 import fs from 'node:fs'
 import * as p from '@clack/prompts'
 import pc from 'picocolors'
-import { projectPaths, BASE_DIR, CUSTOM_DIR, shippedFolders } from '../lib/paths.js'
+import { projectPaths, BASE_DIR, CUSTOM_DIR } from '../lib/paths.js'
 import { exists } from '../lib/fsx.js'
 import { orphanedCustomizations } from '../lib/resolve.js'
 
@@ -76,19 +76,7 @@ export async function doctor(args, cwd) {
     for (const o of orphans) lines.push(`    ${CUSTOM_DIR}/${o}`)
   }
 
-  // 2. Missing README.md in a top-level Excalibur-managed folder (lib/, rules/,
-  //    reflection/ — see paths.js `shippedFolders`, the same list `build.js`
-  //    and `init` use to know what gets materialized into .excalibur/).
-  const missingReadme = shippedFolders.filter((folder) => !exists(path.join(paths.base, folder, 'README.md')))
-  if (missingReadme.length === 0) {
-    lines.push(`${pc.green('✓')} readmes          every top-level folder has a README.md`)
-  } else {
-    problems++
-    lines.push(`${pc.red('✗')} readmes          missing in ${missingReadme.length} folder(s)`)
-    for (const f of missingReadme) lines.push(`    ${BASE_DIR}/${f}/README.md`)
-  }
-
-  // 3. Canvas out of sync with tasks.yaml. Best effort, not exact: a real diff would
+  // 2. Canvas out of sync with tasks.yaml. Best effort, not exact: a real diff would
   //    need to know which tasks.yaml the canvas is *supposed* to reflect, and nothing
   //    records that (updating it is a judgment call the `review` agent makes, per
   //    rules/heuristics/canvas-update-checklist.yaml). The heuristic here is mtime-based — any

@@ -16,8 +16,6 @@ renames:
     to: lib/pipeline/project-canvas-template.canvas
   - from: pipeline/sdd-path-recovery.md
     to: lib/pipeline/sdd-path-recovery.md
-  - from: pipeline/README.md
-    to: lib/pipeline/README.md
   - from: rules/md-size-limits.yaml
     to: rules/heuristics/md-size-limits.yaml
   - from: rules/tasks-ordering.yaml
@@ -52,8 +50,6 @@ renames:
     to: onboarding/manifest.yaml
   - from: wizard/init.sh
     to: onboarding/init.sh
-  - from: wizard/README.md
-    to: onboarding/README.md
   - from: wizard/onboarding/commit-convention/conventional.md
     to: onboarding/onboarding/commit-convention/conventional.md
   - from: wizard/onboarding/commit-convention/free.md
@@ -70,8 +66,6 @@ renames:
     to: onboarding/onboarding/history-cleanup/manual.md
   - from: wizard/onboarding/history-cleanup/scheduled-task.md
     to: onboarding/onboarding/history-cleanup/scheduled-task.md
-  - from: wizard/onboarding/README.md
-    to: onboarding/onboarding/README.md
   - from: wizard/onboarding/review-depth/light.md
     to: onboarding/onboarding/review-depth/light.md
   - from: wizard/onboarding/review-depth/strict.md
@@ -82,8 +76,6 @@ renames:
     to: onboarding/onboarding/testing-policy/never.md
   - from: wizard/onboarding/testing-policy/required.md
     to: onboarding/onboarding/testing-policy/required.md
-  - from: wizard/scripts/README.md
-    to: lib/scripts/README.md
   - from: wizard/scripts/check-gh.sh
     to: lib/scripts/check-gh.sh
   - from: wizard/scripts/check-git-repo.sh
@@ -120,8 +112,6 @@ renames:
     to: lib/scripts/setup-new-repo.sh
   - from: wizard/scripts/validate-md-size.sh
     to: lib/scripts/validate-md-size.sh
-  - from: pipeline/agents/README.md
-    to: lib/agents/README.md
 removed:
   - pipeline/agents/orchestrator.md
   - pipeline/agents/spec-writer.md
@@ -131,3 +121,23 @@ removed:
   - pipeline/agents/translator.md
   - pipeline/agents/docs-updater.md
   - pipeline/agents/scenthound.md
+  # README.md convention dropped repo-wide (kept only at the project root) —
+  # every one of these previously had, or would have had, a rename entry into
+  # the reorganized tree; none has a live counterpart anymore. Content for
+  # each is archived at .docs/READMES/<dir>.md in this repository, for anyone
+  # reconstructing intent — that archive isn't shipped to a target project,
+  # so there is nothing to migrate a customization *to*.
+  - cli/README.md
+  - docs/README.md
+  - docs/repo/README.md
+  - harnesses/README.md
+  - harnesses/claude/README.md
+  - pipeline/README.md
+  - pipeline/agents/README.md
+  - reflection/README.md
+  - rules/README.md
+  - rules/global/README.md
+  - rules/stacks/README.md
+  - wizard/README.md
+  - wizard/onboarding/README.md
+  - wizard/scripts/README.md

@@ -59,6 +59,8 @@ Excalibur/
 
 Both are repo-maintenance documentation, never shipped — but they answer different questions. `docs/repo/` explains how Excalibur itself is organized today (purpose, structure, commit conventions) for anyone reading the repo. `.docs/` is the historical record of *how* that state was reached while building it with AI assistance (brainstorm specs, task plans, implementation notes, open TODOs) — useful for anyone reconstructing intent, not something a repo visitor needs to see, which is why it's hidden.
 
-## Every main folder has a README
+## No per-folder README convention
 
-A short `README.md` in each top-level folder (and in the subfolders that carry weight) explaining what it's for. That is a documentation convention for **this repository only** — it is not a rule imposed on projects that install Excalibur. `excalibur doctor` does enforce it, but only for the `shippedFolders` it installs into a project (`lib/`, `rules/`, `reflection/` — see `excalibur/src/commands/doctor.js`); nothing enforces the convention for the rest of this repository's own folders.
+Earlier revisions of this repository required a short `README.md` in every top-level folder (and weighty subfolders). That convention was dropped — it added noise without enough payoff to justify keeping every one current as the tree moved. `excalibur doctor` no longer checks for them, and nothing else enforces the convention. The old per-folder READMEs weren't deleted outright — they were archived under `.docs/READMES/<dir>.md`, one file per folder, named after the directory it came from, so the content is still recoverable if a given folder's documentation is worth restoring or reworking later.
+
+Only the repository root keeps its `README.md` — the entry point for anyone landing on the repo.

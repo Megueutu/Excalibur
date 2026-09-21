@@ -35,6 +35,5 @@ It is **not** for creating domain skills for the target project ("how we deploy 
 
 ## After creating one
 
-1. Add a row to `harnesses/claude/README.md`.
-2. If it's a task-type skill, add it to the table in `lib/pipeline/task-types.md` instead of writing a new body — the eleven existing ones share one.
-3. Run `npx excalibur update` in a project using it, so the build copies it to the path the harness reads.
+1. If it's a task-type skill, add it to the table in `lib/pipeline/task-types.md` instead of writing a new body — the eleven existing ones share one.
+2. Run `npx excalibur update` in a project using it, so the build copies it to the path the harness reads.

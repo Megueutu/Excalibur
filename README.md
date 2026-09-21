@@ -13,7 +13,7 @@ npx excalibur check    # verify dependencies (bash, git, gh, node)
 npx excalibur init     # collect answers, materialize .excalibur/ into the target project
 ```
 
-Then, inside your harness, run `/excalibur-init` to finish onboarding conversationally. See [`excalibur/README.md`](excalibur/README.md) for the full command reference, and [`create-excalibur/onboarding/README.md`](create-excalibur/onboarding/README.md) for the onboarding flow.
+Then, inside your harness, run `/excalibur-init` to finish onboarding conversationally.
 
 ## How the pieces fit
 
