@@ -1,6 +1,6 @@
 # How agents ask questions
 
-Applies to every agent, not only `grill-me`.
+Applies to every agent, not only `prober`.
 
 ## The `P:` / `R:` format
 

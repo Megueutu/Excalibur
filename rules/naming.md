@@ -6,7 +6,7 @@ Applies to every file the framework or its agents create in the SDD destination.
 
 | Kind | Format | Examples |
 |---|---|---|
-| **A moment in time** — written once, about a specific point | `YYYY-MM-DD-title.md` | `2026-09-18-auth-rewrite-plan.md`, `2026-09-18-spec-writer.md` (a handoff) |
+| **A moment in time** — written once, about a specific point | `YYYY-MM-DD-title.md` | `2026-09-18-auth-rewrite-plan.md`, `2026-09-18-scribe.md` (a handoff) |
 | **Living** — continuously updated, always current | `title.md`, no date | `roadmap.md`, `stack.md`, `code-standards.md` |
 
 The distinction is whether the file has a "true as of" date. A plan written in September is a September artifact even when read in March. A roadmap is only ever about now — dating it implies a version history the file doesn't have.

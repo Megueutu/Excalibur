@@ -131,7 +131,7 @@ export function readSession(cwd) {
 export const SESSION_FLAGS = {
   'dont-ask-me': 'Decide at ambiguous points instead of stopping to ask',
   'dry-run': 'Report what would happen; write and commit nothing',
-  'skip-grillme': 'Skip the grill-me interview this session',
+  'skip-prober': 'Skip the prober interview this session',
   'skip-review': 'Skip the review checklist this session',
   'no-history': 'Write nothing to history.yaml this session',
   'strict-rules': 'Apply global and stack rules strictly; fail the task on a violation',

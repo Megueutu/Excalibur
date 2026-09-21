@@ -24,13 +24,13 @@ If the user came in through a task-type skill (`/feat`, `/fix`, `/refactor`…),
 
    That order is also the prompt-cache order (`rules/prompt-cache.md`): stable content first, task-specific content last.
 
-3. **Follow `lib/pipeline/entrypoint.md` strictly**, including stopping to ask for `/grill-me` before exploring any code.
+3. **Follow `lib/pipeline/entrypoint.md` strictly**, including stopping to ask for `/prober` before exploring any code.
 
 ## The one thing not to improvise
 
-`grill-me` has `disable-model-invocation: true`. It cannot be called through the Skill tool — don't try, and don't run the interview yourself while claiming it's the grill-me step. Stop, ask the user to run it, and wait.
+`prober` has `disable-model-invocation: true`. It cannot be called through the Skill tool — don't try, and don't run the interview yourself while claiming it's the prober step. Stop, ask the user to run it, and wait.
 
-The exceptions are decided elsewhere: the project's `autonomy` setting, a `skip-grillme` session flag, or the user saying to skip it.
+The exceptions are decided elsewhere: the project's `autonomy` setting, a `skip-prober` session flag, or the user saying to skip it.
 
 ## References
 

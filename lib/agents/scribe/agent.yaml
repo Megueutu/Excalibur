@@ -1,4 +1,4 @@
-name: spec-writer
+name: scribe
 description: Use to write or update the specification of a task in an Excalibur project — spec.md, and design.md when the implementation approach needs writing down. Not for implementing the change, and not for tasks classified as Fix, which don't get a formal spec.
 tools: Read, Grep, Glob, Write, Edit
 personas:

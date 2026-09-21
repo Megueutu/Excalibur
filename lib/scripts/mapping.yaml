@@ -71,7 +71,7 @@ scripts:
     usage: lib/scripts/scaffold-obsidian-vault.sh <sdd-destination-path>
 
   - name: scan-spec-freshness.sh
-    purpose: Deterministic sweep for specs that may have drifted from the code they describe (commit/tag/date checks, no LLM). docs-updater judges the candidates it finds.
+    purpose: Deterministic sweep for specs that may have drifted from the code they describe (commit/tag/date checks, no LLM). clerk judges the candidates it finds.
     usage: 'lib/scripts/scan-spec-freshness.sh <sdd-path> [--repo <git-repo-path>] ...'
 
   - name: setup-new-repo.sh

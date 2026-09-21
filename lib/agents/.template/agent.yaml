@@ -1,11 +1,11 @@
 # Template for a new agent. Copy this whole folder to lib/agents/<name>/,
-# rename it, then fill in both files. This TEMPLATE/ folder itself is never
+# rename it, then fill in both files. This .template/ folder itself is never
 # built — the build step skips it by name.
 #
 # name: lowercase, hyphenated, matches the folder name exactly (build.js
 #   derives the target filename from the folder, but the harness reads this
 #   field too — keep the two in sync by hand).
-name: TEMPLATE
+name: TODO
 
 # description: when the orchestrator should dispatch this agent, and when it
 #   shouldn't. Follow the existing agents' shape: "Use to/for X. Not for Y."

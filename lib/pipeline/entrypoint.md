@@ -24,19 +24,19 @@ If the user invoked a task-type skill (`/feat`, `/fix`, `/refactor`, `/ci`…), 
 
 If the request arrived as plain prose, classify it from scratch in step 3.
 
-## 2. Grill-me (the interview) — stop and ask, don't call it yourself
+## 2. Prober (the interview) — stop and ask, don't call it yourself
 
-`grill-me` has `disable-model-invocation: true` — **it cannot be called through the Skill tool at all**. Don't try `Skill({skill: "grill-me"})`, and don't replicate the interview yourself pretending to be it.
+`prober` has `disable-model-invocation: true` — **it cannot be called through the Skill tool at all**. Don't try `Skill({skill: "prober"})`, and don't replicate the interview yourself pretending to be it.
 
 Required before exploring the repo or touching any file:
 
-1. Stop and explicitly ask the user to run `/grill-me` with the task.
+1. Stop and explicitly ask the user to run `/prober` with the task.
 2. Wait. Don't move on to exploration, reading the repo, or classification while waiting.
 3. Continue only once the user confirms the interview is done, or explicitly says to skip it.
 
 This holds even when the task looks simple enough to just get on with — skipping the interview is the user's call, not an inference that it wasn't needed.
 
-**Exceptions**, all decided outside this file: the project's `autonomy` setting skips the interview on Fix tasks, the session has `skip-grillme`, or the user says to skip it.
+**Exceptions**, all decided outside this file: the project's `autonomy` setting skips the interview on Fix tasks, the session has `skip-prober`, or the user says to skip it.
 
 ## 3. Classify the task
 

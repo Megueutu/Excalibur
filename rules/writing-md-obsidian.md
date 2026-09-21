@@ -45,9 +45,9 @@ Keys stay in English even when the project's language isn't: they're queried, no
 | `depends_on` | List of other `spec_id`s this one assumes are still true. If one of those goes stale, this one is a candidate too. |
 | `freshness_check` | `ok \| stale \| pending` — the last verdict from the drift pipeline. `pending` until the pipeline has run at least once. |
 
-Who writes what: a human or `spec-writer` sets `spec_id`, `status` and `depends_on` when the spec is written or revised, and bumps `last_updated`/`linked_commit` on a genuine revision. `freshness_check` is the one field `docs-updater` (`lib/agents/docs-updater/agent.yaml`) is allowed to touch on its own — nothing else in the frontmatter, and never the body.
+Who writes what: a human or `scribe` sets `spec_id`, `status` and `depends_on` when the spec is written or revised, and bumps `last_updated`/`linked_commit` on a genuine revision. `freshness_check` is the one field `clerk` (`lib/agents/clerk/agent.yaml`) is allowed to touch on its own — nothing else in the frontmatter, and never the body.
 
-How `/docs-update` uses them: `lib/scripts/scan-spec-freshness.sh` reads `linked_commit`, `last_updated` and `depends_on` to build a cheap, deterministic candidate list with no LLM involved; `docs-updater` then reads that list plus the actual diffs and decides, per candidate, whether it's real drift or noise — writing its verdict back into `freshness_check` and a one-line reason in its own report. See `harnesses/claude/skills/docs-update/SKILL.md` for the full flow.
+How `/docs-update` uses them: `lib/scripts/scan-spec-freshness.sh` reads `linked_commit`, `last_updated` and `depends_on` to build a cheap, deterministic candidate list with no LLM involved; `clerk` then reads that list plus the actual diffs and decides, per candidate, whether it's real drift or noise — writing its verdict back into `freshness_check` and a one-line reason in its own report. See `harnesses/claude/skills/docs-update/SKILL.md` for the full flow.
 
 ## Wikilinks
 

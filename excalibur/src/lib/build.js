@@ -65,7 +65,7 @@ function buildGroup(cwd, relDir, targetDir, filter = () => true) {
  * agent is its own subfolder under `sourceDir` — `<name>/agent.yaml`
  * (metadata) and `<name>/instructions.md` (the agent's own body), each
  * resolved independently through base+override, so a project can customize
- * either without touching the other. `TEMPLATE/` is the skeleton for creating
+ * either without touching the other. `.template/` is the skeleton for creating
  * a new agent, never built.
  */
 function buildAgents(cwd, sourceDir, targetDir) {
@@ -75,7 +75,7 @@ function buildAgents(cwd, sourceDir, targetDir) {
   // The candidate list comes from base; anything custom-only is picked up too.
   const fromBase = listFiles(path.join(p.base, sourceDir)).filter((f) => f.endsWith('/agent.yaml'))
   const fromCustom = listFiles(path.join(p.custom, sourceDir)).filter((f) => f.endsWith('/agent.yaml'))
-  const candidates = [...new Set([...fromBase, ...fromCustom])].filter((rel) => !rel.startsWith('TEMPLATE/'))
+  const candidates = [...new Set([...fromBase, ...fromCustom])].filter((rel) => !rel.startsWith('.template/'))
 
   for (const rel of candidates) {
     const agentName = rel.split('/')[0]

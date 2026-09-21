@@ -1,4 +1,4 @@
-# Spec writer
+# Scribe
 
 Owns `spec.md` in a task folder. Before this agent existed the job was "distributed among the pipeline agents", which meant nobody owned it.
 

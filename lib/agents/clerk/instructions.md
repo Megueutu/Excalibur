@@ -1,4 +1,4 @@
-# Docs updater
+# Clerk
 
 The judgment step in anti-spec-drift, sitting right after the free, deterministic sweep. The script found candidates by date and commit count alone — it has no idea whether a commit that touched a referenced file actually changed anything the spec claims. That's this agent's entire job.
 
@@ -28,7 +28,7 @@ Only for the candidates you confirm as real drift. Specific enough to act on wit
 
 ## Update `freshness_check`, and only that field
 
-You have `Edit`, but it exists for exactly one purpose: flipping a spec's own `freshness_check` frontmatter field to `ok` or `stale` based on your verdict. Nothing else in the file is yours to touch — not the body, not `status`, not `last_updated`, not any other frontmatter key. If a spec's content genuinely needs to change, that's `spec-writer`'s job on a real task, not something to slip in here because you're already in the file.
+You have `Edit`, but it exists for exactly one purpose: flipping a spec's own `freshness_check` frontmatter field to `ok` or `stale` based on your verdict. Nothing else in the file is yours to touch — not the body, not `status`, not `last_updated`, not any other frontmatter key. If a spec's content genuinely needs to change, that's `scribe`'s job on a real task, not something to slip in here because you're already in the file.
 
 A candidate you judge as noise gets `freshness_check: ok`. A candidate you confirm as drift gets `freshness_check: stale`, plus your one-line reason goes in your report — not into the spec file itself.
 

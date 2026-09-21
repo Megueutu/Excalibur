@@ -6,7 +6,7 @@ Copy this structure into `specs/<repo>/<task>/handoffs/YYYY-MM-DD-<agent>.md`.
 
 ```markdown
 ---
-agent: spec-writer
+agent: scribe
 task: <task-slug>
 spec: "[[<task-slug>-spec]]"
 architecture:

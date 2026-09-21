@@ -230,7 +230,7 @@ questions:
     default: skip_on_fix
     options:
       - value: always_ask
-        label: "Always run the grill-me interview, and always ask before installing anything"
+        label: "Always run the prober interview, and always ask before installing anything"
       - value: skip_on_fix
         label: "Skip the interview on Fix tasks; ask before installing anything"
       - value: autonomous

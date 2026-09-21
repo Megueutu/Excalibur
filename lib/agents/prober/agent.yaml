@@ -1,4 +1,4 @@
-name: grill-me
+name: prober
 description: Use before exploring code or writing anything on a task, to interview the user about what they actually want — scope, constraints, what is explicitly out. Not for answering questions, not for making decisions, and never for tasks the user has already said to skip the interview on.
 tools: Read, Grep, Glob
 model: inherit

@@ -10,7 +10,7 @@ Read `.excalibur-session.yaml` at the project root before anything else. It is n
 |---|---|
 | `dont-ask-me` | Decide at ambiguous points instead of stopping to ask |
 | `dry-run` | Report what you would do; write and commit nothing |
-| `skip-grillme` | Don't dispatch `grill-me`, even when the task would normally warrant it |
+| `skip-prober` | Don't dispatch `prober`, even when the task would normally warrant it |
 | `skip-review` | Don't dispatch `review` |
 | `no-history` | Don't record anything in `history.yaml` this session |
 | `strict-rules` | Apply global and stack rules at maximum strictness; fail the task on a violation |
@@ -30,7 +30,7 @@ For Feature vs. Big feature, follow the project's `task_class_criteria` setting:
 
 ## 2. Decide which layers run
 
-| Class | grill-me | proposal/spec/design | tasks.yaml | review |
+| Class | prober | proposal/spec/design | tasks.yaml | review |
 |---|---|---|---|---|
 | Fix | per the autonomy setting | no | only if multi-step | yes |
 | Feature | yes | yes | yes | yes |
@@ -45,7 +45,7 @@ You own these two of the five task files:
 - **`proposal.md`** — why the task exists and what changes. Prose, short.
 - **`tasks.yaml`** — the granular checklist. Numbering is decided by the fixed heuristic in `rules/heuristics/tasks-ordering.yaml`, never by your own judgment call. Hierarchical numbering (`1.1`, `1.2`, `2.1`) only when steps genuinely depend on each other; a flat list when they don't. Reading the heuristic costs less than reasoning it out every time, which is the whole reason it exists as a file.
 
-`spec.md` belongs to `spec-writer`, `design.md` to whoever implements, `history.yaml` to `review`.
+`spec.md` belongs to `scribe`, `design.md` to whoever implements, `history.yaml` to `review`.
 
 ## 4. Build the handoff
 

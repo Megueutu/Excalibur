@@ -5,7 +5,7 @@ A task lives in `specs/<repo>/<task-slug>/` in the SDD destination, and holds **
 | File | Format | Written by | What it holds |
 |---|---|---|---|
 | `proposal.md` | Markdown | orchestrator | Why the task exists, what changes |
-| `spec.md` | Markdown | spec-writer | The requirements themselves |
+| `spec.md` | Markdown | scribe | The requirements themselves |
 | `design.md` | Markdown | implementer | Technical approach, written for agents to execute |
 | `tasks.yaml` | YAML | orchestrator | The granular checklist |
 | `history.yaml` | YAML | review (via script) | Changelog of what actually happened |
