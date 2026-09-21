@@ -12,6 +12,12 @@ renames:
     to: lib/pipeline/review-checklist.md
   - from: pipeline/handoff-template.md
     to: lib/pipeline/handoff-template.md
+  - from: pipeline/project-canvas-template.canvas
+    to: lib/pipeline/project-canvas-template.canvas
+  - from: pipeline/sdd-path-recovery.md
+    to: lib/pipeline/sdd-path-recovery.md
+  - from: pipeline/README.md
+    to: lib/pipeline/README.md
   - from: rules/md-size-limits.yaml
     to: rules/heuristics/md-size-limits.yaml
   - from: rules/tasks-ordering.yaml
@@ -40,6 +46,42 @@ renames:
     to: harnesses/claude/skills/task-types/chore
   - from: harnesses/claude/skills/revert
     to: harnesses/claude/skills/task-types/revert
+  - from: wizard/entrypoint.md
+    to: onboarding/flow.md
+  - from: wizard/manifest.yaml
+    to: onboarding/manifest.yaml
+  - from: wizard/init.sh
+    to: onboarding/init.sh
+  - from: wizard/README.md
+    to: onboarding/README.md
+  - from: wizard/onboarding/commit-convention/conventional.md
+    to: onboarding/onboarding/commit-convention/conventional.md
+  - from: wizard/onboarding/commit-convention/free.md
+    to: onboarding/onboarding/commit-convention/free.md
+  - from: wizard/onboarding/github/conservative.md
+    to: onboarding/onboarding/github/conservative.md
+  - from: wizard/onboarding/github/direct.md
+    to: onboarding/onboarding/github/direct.md
+  - from: wizard/onboarding/history-cleanup/github-actions.md
+    to: onboarding/onboarding/history-cleanup/github-actions.md
+  - from: wizard/onboarding/history-cleanup/hook.md
+    to: onboarding/onboarding/history-cleanup/hook.md
+  - from: wizard/onboarding/history-cleanup/manual.md
+    to: onboarding/onboarding/history-cleanup/manual.md
+  - from: wizard/onboarding/history-cleanup/scheduled-task.md
+    to: onboarding/onboarding/history-cleanup/scheduled-task.md
+  - from: wizard/onboarding/README.md
+    to: onboarding/onboarding/README.md
+  - from: wizard/onboarding/review-depth/light.md
+    to: onboarding/onboarding/review-depth/light.md
+  - from: wizard/onboarding/review-depth/strict.md
+    to: onboarding/onboarding/review-depth/strict.md
+  - from: wizard/onboarding/testing-policy/case-by-case.md
+    to: onboarding/onboarding/testing-policy/case-by-case.md
+  - from: wizard/onboarding/testing-policy/never.md
+    to: onboarding/onboarding/testing-policy/never.md
+  - from: wizard/onboarding/testing-policy/required.md
+    to: onboarding/onboarding/testing-policy/required.md
 removed:
   - pipeline/agents/orchestrator.md
   - pipeline/agents/spec-writer.md

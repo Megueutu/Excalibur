@@ -28,7 +28,10 @@ Excalibur/
   .docs/                     AI-assisted development process tracking (not shipped, hidden)
     superpowers/              plans and design specs produced while building this repo
     IMPLEMENTATION_PLAN*.md, IMPLEMENTATION_NOTES*.md, PENDENCIAS.md
+  .superpowers/               local, gitignored-by-default working state for the superpowers skills (briefs, reports, progress notes)
   _migrations/                versioned migration maps consumed by `excalibur update`
+  scratchpad/                 local scratch space for temporary files, not part of the shipped framework
+  bootstrap-check.ps1         the one .ps1 wrapper in the repo — checks whether `bash` is on PATH before any .sh script runs
 ```
 
 ## Which layer does new content belong to?
@@ -58,4 +61,4 @@ Both are repo-maintenance documentation, never shipped — but they answer diffe
 
 ## Every main folder has a README
 
-A short `README.md` in each top-level folder (and in the subfolders that carry weight) explaining what it's for. That is a documentation convention for **this repository only** — it is not a rule imposed on projects that install Excalibur, and no review checklist enforces it there.
+A short `README.md` in each top-level folder (and in the subfolders that carry weight) explaining what it's for. That is a documentation convention for **this repository only** — it is not a rule imposed on projects that install Excalibur. `excalibur doctor` does enforce it, but only for the `shippedFolders` it installs into a project (`lib/`, `rules/`, `reflection/` — see `excalibur/src/commands/doctor.js`); nothing enforces the convention for the rest of this repository's own folders.

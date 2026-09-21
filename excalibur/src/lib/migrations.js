@@ -79,6 +79,14 @@ export function applyMigrations(cwd, { dryRun = false } = {}) {
         continue
       }
 
+      // Defense in depth against a malformed or malicious migration map: never let
+      // a rename resolve outside .excalibur.custom/, e.g. via a `../` in `to`.
+      const relative = path.relative(p.custom, dst)
+      if (relative.startsWith('..') || path.isAbsolute(relative)) {
+        conflicts.push({ from: rename.from, to: rename.to })
+        continue
+      }
+
       if (!dryRun) {
         ensureDir(path.dirname(dst))
         fs.renameSync(src, dst)

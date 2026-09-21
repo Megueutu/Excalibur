@@ -17,9 +17,9 @@ When the user asks to set up Excalibur for a project, or when the `sdd` skill fi
 
 1. **Check for pre-collected answers.** If `.excalibur-answers.yaml` exists at the project root, the user already ran `npx excalibur init` in the terminal. Read it and skip the question-asking — the form collected them, so asking again wastes the user's time.
 
-2. **Confirm the project isn't already onboarded.** See "Detection" in [`create-excalibur/onboarding/flow.md`](../../../../create-excalibur/onboarding/flow.md). If it is, stop and say so — don't run onboarding on top of an existing destination.
+2. **Confirm the project isn't already onboarded.** See "Detection" in [`.excalibur/onboarding/flow.md`](../../../../.excalibur/onboarding/flow.md). If it is, stop and say so — don't run onboarding on top of an existing destination.
 
-3. **Follow [`create-excalibur/onboarding/flow.md`](../../../../create-excalibur/onboarding/flow.md) exactly.** Git/GitHub setup, the manifest questions (or their defaults, if the user picks that), the post-manifest interpretation step, the copy list, `init.sh`, and translation if the language isn't English.
+3. **Follow [`.excalibur/onboarding/flow.md`](../../../../.excalibur/onboarding/flow.md) exactly.** Git/GitHub setup, the manifest questions (or their defaults, if the user picks that), the post-manifest interpretation step, the copy list, `init.sh`, and translation if the language isn't English.
 
 4. **Report what was created**, then hand off to the `sdd` skill for the project's first real task.
 
@@ -31,7 +31,7 @@ When the user asks to set up Excalibur for a project, or when the `sdd` skill fi
 
 ## References
 
-- The flow (shared, don't duplicate here): [`create-excalibur/onboarding/flow.md`](../../../../create-excalibur/onboarding/flow.md)
-- The questions: [`create-excalibur/onboarding/manifest.yaml`](../../../../create-excalibur/onboarding/manifest.yaml)
+- The flow (shared, don't duplicate here): [`.excalibur/onboarding/flow.md`](../../../../.excalibur/onboarding/flow.md)
+- The questions: [`.excalibur/onboarding/manifest.yaml`](../../../../.excalibur/onboarding/manifest.yaml)
 - Translation: [`lib/agents/translator.yaml`](../../../../lib/agents/translator.yaml)
 - Next step: [`../sdd/SKILL.md`](../sdd/SKILL.md)

@@ -45,6 +45,13 @@ export const onboardingManifestPath = path.join(packageRoot, 'create-excalibur',
 /** Folders of the package that get installed into a target project's .excalibur/. */
 export const shippedFolders = ['lib', 'rules', 'reflection']
 
+/**
+ * `onboarding` is shipped into `.excalibur/onboarding/` too, but it is not a plain
+ * sibling of `shippedFolders` at the repo root — it lives under
+ * `create-excalibur/onboarding/` (a different package) and is copied separately by
+ * `init.js`/`update.js`, not looped over generically like `shippedFolders`.
+ */
+
 /** Names used inside a target project. Fixed convention — not configurable. */
 export const BASE_DIR = '.excalibur'
 export const CUSTOM_DIR = '.excalibur.custom'

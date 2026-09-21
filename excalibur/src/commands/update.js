@@ -1,8 +1,9 @@
 import path from 'node:path'
+import { readdirSync } from 'node:fs'
 import * as p from '@clack/prompts'
 import pc from 'picocolors'
-import { packageRoot, shippedFolders, projectPaths, BASE_DIR, CUSTOM_DIR } from '../lib/paths.js'
-import { copyDir, ensureDir, exists, removeDir } from '../lib/fsx.js'
+import { packageRoot, shippedFolders, projectPaths, BASE_DIR, CUSTOM_DIR, MIGRATIONS_DIR } from '../lib/paths.js'
+import { copyDir, exists, removeDir } from '../lib/fsx.js'
 import {
   readConfig,
   writeConfig,
@@ -44,7 +45,27 @@ export async function update(args, cwd) {
     removeDir(path.join(paths.base, folder))
     copyDir(path.join(packageRoot, folder), path.join(paths.base, folder))
   }
-  ensureDir(paths.migrations)
+
+  // _migrations/ and onboarding/ are framework-shipped content too, but they don't
+  // live as plain siblings of shippedFolders at the repo root (see paths.js), so
+  // they're re-synced explicitly here instead of through the loop above.
+  removeDir(paths.migrations)
+  copyDir(path.join(packageRoot, '_migrations'), paths.migrations)
+
+  const onboardingDir = path.join(paths.base, 'onboarding')
+  removeDir(onboardingDir)
+  copyDir(path.join(packageRoot, 'create-excalibur', 'onboarding'), onboardingDir)
+
+  // Remove any first-level entry of .excalibur/ that isn't part of the current
+  // expected set — leftovers from an older shippedFolders (e.g. a pre-reorg
+  // `wizard/` or `pipeline/`) would otherwise sit there forever, and would also
+  // defeat orphanedCustomizations() by making a stale path look alive.
+  const expectedTopLevel = new Set([...shippedFolders, 'harnesses', 'onboarding', MIGRATIONS_DIR, 'README.md'])
+  if (exists(paths.base)) {
+    for (const entry of readdirSync(paths.base)) {
+      if (!expectedTopLevel.has(entry)) removeDir(path.join(paths.base, entry))
+    }
+  }
 
   const savedAnswers = readAnswers(cwd)?.answers ?? {}
   installFeatureFragments(cwd, savedAnswers)

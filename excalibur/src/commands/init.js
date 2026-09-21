@@ -107,6 +107,10 @@ function installFramework(cwd) {
   }
   copyDir(path.join(packageRoot, '_migrations'), paths.migrations)
   copyDir(path.join(packageRoot, 'harnesses'), path.join(paths.base, 'harnesses'))
+  // onboarding/ ships the flow that .../skills/excalibur-init and .../skills/sdd
+  // point at (`.excalibur/onboarding/...`) — it lives under create-excalibur/
+  // rather than as a shippedFolders sibling, but a target project still needs it.
+  copyDir(path.join(packageRoot, 'create-excalibur', 'onboarding'), path.join(paths.base, 'onboarding'))
 
   writeText(
     path.join(paths.base, 'README.md'),

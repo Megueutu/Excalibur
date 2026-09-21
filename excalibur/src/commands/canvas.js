@@ -5,7 +5,7 @@ import pc from 'picocolors'
 import { packageRoot } from '../lib/paths.js'
 import { exists, copyFile } from '../lib/fsx.js'
 
-const TEMPLATE = path.join(packageRoot, 'pipeline', 'project-canvas-template.canvas')
+const TEMPLATE = path.join(packageRoot, 'lib', 'pipeline', 'project-canvas-template.canvas')
 
 /**
  * `excalibur canvas` — regenerate the project-level Obsidian Canvas on demand.
