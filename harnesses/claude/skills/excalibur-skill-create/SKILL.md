@@ -31,7 +31,7 @@ It is **not** for creating domain skills for the target project ("how we deploy 
 
 **Language.** English. It's operational content, never translated (`rules/translation.md`).
 
-**A persona is a skill too.** `guardrail` is a skill agents load through their `skills:` frontmatter. If you're creating a disposition rather than a procedure, that's the shape to follow.
+**A persona is not a skill.** `guardrail` (`lib/personas/guardrail.md`) is plain prose an agent's YAML source references under `personas:`, baked into its built `.md` by the build step. If you're creating a disposition rather than a procedure, write it there instead of as a skill here.
 
 ## After creating one
 

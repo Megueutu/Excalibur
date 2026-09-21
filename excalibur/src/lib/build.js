@@ -20,12 +20,23 @@ import { parse } from './yaml.js'
  * is a closed decision and doesn't include a build verb.
  */
 
-/** Converts a YAML agent definition to Markdown format. */
-function yamlAgentToMd(agent) {
-  const lines = ['---', `name: ${agent.name}`, `description: ${agent.description}`, `tools: ${agent.tools}`]
-  if (agent.skills && agent.skills.length) lines.push(`skills: [${agent.skills.join(', ')}]`)
-  lines.push(`model: ${agent.model}`, '---', '', '')
-  return lines.join('\n') + agent.body
+/**
+ * Assembles one agent's final .md: frontmatter (name/description/tools/model —
+ * no `skills:` line, personas are baked into the body, not preloaded by the
+ * harness), then each persona's content in list order, then the agent's own
+ * body. Personas and the body are separate files, each resolved through the
+ * normal base+override chain, so either can be customized independently of
+ * the agent's own metadata.
+ */
+function assembleAgentMd(cwd, agent, body) {
+  const personaBlocks = (agent.personas ?? []).map((name) => {
+    const source = resolveFile(cwd, `lib/personas/${name}.md`)
+    if (!source) throw new Error(`Agent "${agent.name}" references unknown persona "${name}" (no lib/personas/${name}.md)`)
+    return fs.readFileSync(source, 'utf8').replace(/\n+$/, '\n')
+  })
+
+  const frontmatter = ['---', `name: ${agent.name}`, `description: ${agent.description}`, `tools: ${agent.tools}`, `model: ${agent.model}`, '---', '']
+  return [frontmatter.join('\n'), ...personaBlocks, body].join('\n')
 }
 
 /** Copies one logical group (a folder of the installed tree) to a harness path. */
@@ -49,32 +60,39 @@ function buildGroup(cwd, relDir, targetDir, filter = () => true) {
   return written
 }
 
-/** Builds agents from YAML sources, converting to .md for Claude Code. */
+/**
+ * Builds agents from YAML sources, converting to .md for Claude Code. Each
+ * agent is two sibling files under `sourceDir` — `<name>.yaml` (metadata) and
+ * `<name>.md` (the agent's own body) — both resolved independently through
+ * base+override, so a project can customize either without touching the other.
+ */
 function buildAgents(cwd, sourceDir, targetDir) {
   const p = projectPaths(cwd)
   const written = []
 
   // The candidate list comes from base; anything custom-only is picked up too.
-  const fromBase = listFiles(path.join(p.base, sourceDir)).filter((f) => f.endsWith('.yaml') && f !== 'README.yaml')
-  const fromCustom = listFiles(path.join(p.custom, sourceDir)).filter((f) => f.endsWith('.yaml') && f !== 'README.yaml')
+  const fromBase = listFiles(path.join(p.base, sourceDir)).filter((f) => f.endsWith('.yaml'))
+  const fromCustom = listFiles(path.join(p.custom, sourceDir)).filter((f) => f.endsWith('.yaml'))
   const candidates = [...new Set([...fromBase, ...fromCustom])]
 
   for (const rel of candidates) {
     const source = resolveFile(cwd, path.join(sourceDir, rel).split(path.sep).join('/'))
     if (!source) continue
 
-    // Read and parse the YAML source
-    const yamlText = fs.readFileSync(source, 'utf8')
-    const agent = parse(yamlText)
-    const mdContent = yamlAgentToMd(agent)
+    const agent = parse(fs.readFileSync(source, 'utf8'))
 
-    // Write as .md file for Claude Code
-    const mdFilename = rel.replace(/\.yaml$/, '.md')
-    const dest = path.join(cwd, targetDir, mdFilename)
+    const bodyRel = rel.replace(/\.yaml$/, '.md')
+    const bodySource = resolveFile(cwd, path.join(sourceDir, bodyRel).split(path.sep).join('/'))
+    if (!bodySource) throw new Error(`Agent "${agent.name}" has no body file at ${sourceDir}/${bodyRel}`)
+    const body = fs.readFileSync(bodySource, 'utf8').replace(/\n+$/, '\n')
+
+    const mdContent = assembleAgentMd(cwd, agent, body)
+
+    const dest = path.join(cwd, targetDir, bodyRel)
     ensureDir(path.dirname(dest))
     fs.writeFileSync(dest, mdContent, 'utf8')
 
-    written.push(path.join(targetDir, mdFilename).split(path.sep).join('/'))
+    written.push(path.join(targetDir, bodyRel).split(path.sep).join('/'))
   }
 
   return written
