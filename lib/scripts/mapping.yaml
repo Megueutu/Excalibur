@@ -1,0 +1,83 @@
+# lib/scripts/mapping.yaml
+#
+# Index of every script in this folder — name, one-line purpose, and usage. An
+# agent deciding "is there already a script for X" reads this file instead of
+# opening all 18 scripts (or worse, never discovering one exists). Keep entries
+# short: this is a lookup table, not documentation — the script's own header
+# comment is the source of truth for exact args/exit codes.
+#
+# When adding a script: add its entry here in the same commit. Nothing enforces
+# this automatically (see PENDENCIAS.md if that's ever worth a mechanical check).
+
+scripts:
+  - name: check-gh.sh
+    purpose: Checks whether the GitHub CLI (gh) is installed and authenticated.
+    usage: lib/scripts/check-gh.sh
+
+  - name: check-git-repo.sh
+    purpose: Checks whether a path is itself the root of a git repository (its own .git, not an ancestor's).
+    usage: lib/scripts/check-git-repo.sh <path>
+
+  - name: convert-history.sh
+    purpose: Converts a task's working-format history.yaml into a compact digest for reading later.
+    usage: lib/scripts/convert-history.sh <sdd-destination> [output-file]
+
+  - name: create-github-repo.sh
+    purpose: Creates a GitHub repository for an existing local git repo.
+    usage: lib/scripts/create-github-repo.sh <path> <name> <public|private>
+
+  - name: detect-ci.sh
+    purpose: Detects whether the target project already has CI/CD configured (GitHub Actions first), so onboarding doesn't have to ask.
+    usage: lib/scripts/detect-ci.sh <target-path>
+
+  - name: detect-monorepo.sh
+    purpose: Detects whether the target project root is a monorepo, from marker files already on disk. Informational only.
+    usage: lib/scripts/detect-monorepo.sh <target-path>
+
+  - name: detect-os.sh
+    purpose: Prints the current OS/package-manager family (windows, macos, linux-apt, linux-dnf, unknown).
+    usage: lib/scripts/detect-os.sh
+
+  - name: detect-stack.sh
+    purpose: Guesses a project's language, framework and IDE from files already on disk, so onboarding doesn't have to ask.
+    usage: lib/scripts/detect-stack.sh <target-path>
+
+  - name: init-git-repo.sh
+    purpose: Initializes a git repository at the given path.
+    usage: lib/scripts/init-git-repo.sh <path>
+
+  - name: install-gh-linux-apt.sh
+    purpose: Installs the GitHub CLI via apt (Debian/Ubuntu).
+    usage: lib/scripts/install-gh-linux-apt.sh
+
+  - name: install-gh-linux-dnf.sh
+    purpose: Installs the GitHub CLI via dnf (Fedora/RHEL).
+    usage: lib/scripts/install-gh-linux-dnf.sh
+
+  - name: install-gh-macos.sh
+    purpose: Installs the GitHub CLI via Homebrew.
+    usage: lib/scripts/install-gh-macos.sh
+
+  - name: install-gh-windows.sh
+    purpose: Installs the GitHub CLI via winget.
+    usage: lib/scripts/install-gh-windows.sh
+
+  - name: record-history.sh
+    purpose: Appends one changelog entry to a task's history.yaml. Mechanical and deterministic — no agent formats this by hand.
+    usage: 'lib/scripts/record-history.sh <task-dir> --what <text> --why <text> [--result <text>] [--checklist pass|fail|skipped] [--agent <name>]'
+
+  - name: scaffold-obsidian-vault.sh
+    purpose: Materializes a minimal .obsidian/ config folder inside the SDD destination, when the manifest's obsidian_vault answer is `vault`.
+    usage: lib/scripts/scaffold-obsidian-vault.sh <sdd-destination-path>
+
+  - name: scan-spec-freshness.sh
+    purpose: Deterministic sweep for specs that may have drifted from the code they describe (commit/tag/date checks, no LLM). docs-updater judges the candidates it finds.
+    usage: 'lib/scripts/scan-spec-freshness.sh <sdd-path> [--repo <git-repo-path>] ...'
+
+  - name: setup-new-repo.sh
+    purpose: Finishes setting up a brand-new GitHub repo right after create-github-repo.sh, branching on the github_preset manifest answer.
+    usage: lib/scripts/setup-new-repo.sh <path> <repo-name> <conservative|direct|custom> [description]
+
+  - name: validate-md-size.sh
+    purpose: Mechanical check of .md files under a target directory against the allowlist in rules/heuristics/md-size-limits.yaml.
+    usage: lib/scripts/validate-md-size.sh <target-directory>
