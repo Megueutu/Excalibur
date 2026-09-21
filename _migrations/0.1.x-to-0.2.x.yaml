@@ -82,6 +82,46 @@ renames:
     to: onboarding/onboarding/testing-policy/never.md
   - from: wizard/onboarding/testing-policy/required.md
     to: onboarding/onboarding/testing-policy/required.md
+  - from: wizard/scripts/README.md
+    to: lib/scripts/README.md
+  - from: wizard/scripts/check-gh.sh
+    to: lib/scripts/check-gh.sh
+  - from: wizard/scripts/check-git-repo.sh
+    to: lib/scripts/check-git-repo.sh
+  - from: wizard/scripts/convert-history.sh
+    to: lib/scripts/convert-history.sh
+  - from: wizard/scripts/create-github-repo.sh
+    to: lib/scripts/create-github-repo.sh
+  - from: wizard/scripts/detect-ci.sh
+    to: lib/scripts/detect-ci.sh
+  - from: wizard/scripts/detect-monorepo.sh
+    to: lib/scripts/detect-monorepo.sh
+  - from: wizard/scripts/detect-os.sh
+    to: lib/scripts/detect-os.sh
+  - from: wizard/scripts/detect-stack.sh
+    to: lib/scripts/detect-stack.sh
+  - from: wizard/scripts/init-git-repo.sh
+    to: lib/scripts/init-git-repo.sh
+  - from: wizard/scripts/install-gh-linux-apt.sh
+    to: lib/scripts/install-gh-linux-apt.sh
+  - from: wizard/scripts/install-gh-linux-dnf.sh
+    to: lib/scripts/install-gh-linux-dnf.sh
+  - from: wizard/scripts/install-gh-macos.sh
+    to: lib/scripts/install-gh-macos.sh
+  - from: wizard/scripts/install-gh-windows.sh
+    to: lib/scripts/install-gh-windows.sh
+  - from: wizard/scripts/record-history.sh
+    to: lib/scripts/record-history.sh
+  - from: wizard/scripts/scaffold-obsidian-vault.sh
+    to: lib/scripts/scaffold-obsidian-vault.sh
+  - from: wizard/scripts/scan-spec-freshness.sh
+    to: lib/scripts/scan-spec-freshness.sh
+  - from: wizard/scripts/setup-new-repo.sh
+    to: lib/scripts/setup-new-repo.sh
+  - from: wizard/scripts/validate-md-size.sh
+    to: lib/scripts/validate-md-size.sh
+  - from: pipeline/agents/README.md
+    to: lib/agents/README.md
 removed:
   - pipeline/agents/orchestrator.md
   - pipeline/agents/spec-writer.md
@@ -91,21 +131,3 @@ removed:
   - pipeline/agents/translator.md
   - pipeline/agents/docs-updater.md
   - pipeline/agents/scenthound.md
-  - wizard/scripts/check-gh.sh
-  - wizard/scripts/check-git-repo.sh
-  - wizard/scripts/convert-history.sh
-  - wizard/scripts/create-github-repo.sh
-  - wizard/scripts/detect-ci.sh
-  - wizard/scripts/detect-monorepo.sh
-  - wizard/scripts/detect-os.sh
-  - wizard/scripts/detect-stack.sh
-  - wizard/scripts/init-git-repo.sh
-  - wizard/scripts/install-gh-linux-apt.sh
-  - wizard/scripts/install-gh-linux-dnf.sh
-  - wizard/scripts/install-gh-macos.sh
-  - wizard/scripts/install-gh-windows.sh
-  - wizard/scripts/record-history.sh
-  - wizard/scripts/scaffold-obsidian-vault.sh
-  - wizard/scripts/scan-spec-freshness.sh
-  - wizard/scripts/setup-new-repo.sh
-  - wizard/scripts/validate-md-size.sh

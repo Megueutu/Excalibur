@@ -72,17 +72,23 @@ export function applyMigrations(cwd, { dryRun = false } = {}) {
       if (!rename?.from || !rename?.to) continue
       const src = path.join(p.custom, rename.from)
       const dst = path.join(p.custom, rename.to)
-      if (!fs.existsSync(src)) continue
 
-      if (fs.existsSync(dst)) {
+      // Defense in depth against a malformed or malicious migration map: never let
+      // a rename read from or resolve outside .excalibur.custom/, e.g. via a `../`
+      // in `from` or `to`.
+      const relativeSrc = path.relative(p.custom, src)
+      const relativeDst = path.relative(p.custom, dst)
+      if (
+        relativeSrc.startsWith('..') || path.isAbsolute(relativeSrc) ||
+        relativeDst.startsWith('..') || path.isAbsolute(relativeDst)
+      ) {
         conflicts.push({ from: rename.from, to: rename.to })
         continue
       }
 
-      // Defense in depth against a malformed or malicious migration map: never let
-      // a rename resolve outside .excalibur.custom/, e.g. via a `../` in `to`.
-      const relative = path.relative(p.custom, dst)
-      if (relative.startsWith('..') || path.isAbsolute(relative)) {
+      if (!fs.existsSync(src)) continue
+
+      if (fs.existsSync(dst)) {
         conflicts.push({ from: rename.from, to: rename.to })
         continue
       }

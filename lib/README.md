@@ -8,5 +8,5 @@ Always English, and never translated — unlike `reflection/`, which is translat
 |---|---|
 | [`agents/`](agents/) | The internal agent catalog, one `.yaml` source per agent |
 | [`pipeline/`](pipeline/) | The implementation process — what happens, in what order, for every task |
-| [`scripts/`](scripts/) | Shell helpers the wizard and the pipeline call |
+| [`scripts/`](scripts/) | Shell helpers onboarding and the pipeline call |
 | [`features/`](features/) | Optional standing-context fragments a project can opt into during onboarding |

@@ -2,7 +2,7 @@
 
 Triggered by the harness adapter (see `harnesses/<harness>/`) whenever the request is to implement, fix or change something — not for simple questions, reading code, or conceptual doubts.
 
-If the project has no SDD destination yet, this is the wrong file: run onboarding first (`create-excalibur/onboarding/flow.md`).
+If the project has no SDD destination yet, this is the wrong file: run onboarding first (`.excalibur/onboarding/flow.md`).
 
 ## The four layers
 
