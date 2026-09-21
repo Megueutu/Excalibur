@@ -94,6 +94,6 @@ export async function check(args, cwd) {
     return 1
   }
 
-  p.outro('Ready for `npx excalibur init`.')
+  p.outro('Ready for `npx @spec/excalibur init`.')
   return 0
 }

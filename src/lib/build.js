@@ -7,7 +7,7 @@ import { parse } from './yaml.js'
 
 /**
  * Resolves the project's overrides folder (`custom_dir`) over the installed
- * package (`node_modules/excalibur/`) and writes the effective files to the fixed
+ * package (`node_modules/@spec/excalibur/`) and writes the effective files to the fixed
  * paths the harness actually reads.
  *
  * Why this exists: Claude Code reads one fixed path. It has no notion of "look in

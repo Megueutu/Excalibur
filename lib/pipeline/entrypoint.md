@@ -59,7 +59,7 @@ Ask explicitly whether the user wants deep analysis before implementing (mapping
 - **The task's files** — the SDD destination chosen during onboarding: `specs/<repo>/<task-slug>/`, holding the five files from [`spec-template.md`](spec-template.md).
 - **Project-wide knowledge** — `architecture/` (how things are built, stack, code standards, roadmap) and `ideas/` (thinking not yet formalized) in the same destination.
 - **The process** — `lib/pipeline/`, shared across every project and harness. Never copied per project.
-- **The framework's machinery** — the installed package (`node_modules/excalibur/`) and, for overrides, the project's overrides folder (`custom_dir`).
+- **The framework's machinery** — the installed package (`node_modules/@spec/excalibur/`) and, for overrides, the project's overrides folder (`custom_dir`).
 
 Planning artifacts stay in the SDD destination, not in the repository being worked on — unless the project deliberately chose the embedded destination, which puts them at `.sdd/` inside the repo.
 

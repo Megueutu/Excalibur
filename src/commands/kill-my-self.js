@@ -10,7 +10,7 @@ import { exists, removeDir, removeFile, listFiles, writeText } from '../lib/fsx.
  *
  * Removes the config, the overrides folder, and the built harness files. Never
  * touches `node_modules/` — that's the installed package, not something this
- * command owns; `npm uninstall excalibur` is how that actually goes away. It also
+ * command owns; `npm uninstall @spec/excalibur` is how that actually goes away. It also
  * never removes the SDD destination: specs, architecture and ideas are the
  * project's own knowledge, not part of the installation.
  */
@@ -53,7 +53,7 @@ export async function killMySelf(args, cwd) {
   }
 
   p.log.info('Your SDD content (specs, architecture, ideas) is NOT touched — it is your project, not the installation.')
-  p.log.info('node_modules/excalibur is NOT removed — run `npm uninstall excalibur` for that, separately.')
+  p.log.info('node_modules/@spec/excalibur is NOT removed — run `npm uninstall @spec/excalibur` for that, separately.')
 
   if (!args.yes) {
     const confirmed = await p.confirm({

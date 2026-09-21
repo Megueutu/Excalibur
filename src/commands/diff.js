@@ -8,7 +8,7 @@ import { effectiveFiles } from '../lib/resolve.js'
 
 /**
  * `excalibur diff` — shows what's in the overrides folder (`custom_dir`) vs. the
- * installed package's defaults (`node_modules/excalibur/`).
+ * installed package's defaults (`node_modules/@spec/excalibur/`).
  *
  * Complements `status`, which only lists which paths are customized. This shows what
  * actually changed: a unified-ish diff per file, `+`/`-` prefixed. No `diff` npm

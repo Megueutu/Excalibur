@@ -7,7 +7,7 @@ Cleanup runs on a schedule managed by Claude Code itself. No git host involved, 
 Create a scheduled task that runs, from the project root:
 
 ```bash
-npx excalibur clean-history
+npx @spec/excalibur clean-history
 ```
 
 Weekly is a reasonable starting cadence — history grows per task, not per hour.

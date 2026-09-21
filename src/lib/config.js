@@ -66,7 +66,7 @@ export function writeConfig(cwd, config) {
     '#',
     '# base_dir and custom_dir are recorded here for documentation, not because',
     '# anything reads them back to resolve paths — base_dir is always wherever the',
-    '# excalibur package itself is installed (node_modules/excalibur/), and custom_dir',
+    '# excalibur package itself is installed (node_modules/@spec/excalibur/), and custom_dir',
     '# is read directly by every command that needs it.',
     '#',
     '# Written by `npx create-excalibur`. Safe to edit by hand — `excalibur update`',

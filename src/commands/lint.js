@@ -9,7 +9,7 @@ import { exists, listFiles } from '../lib/fsx.js'
 /**
  * `excalibur lint` — the .md size-limit + naming-convention checks, outside the
  * `review` agent's own cycle. Meant to be usable standalone, including from the
- * target project's own CI (`npx excalibur lint` in a workflow step).
+ * target project's own CI (`npx @spec/excalibur lint` in a workflow step).
  *
  * Two independent, mechanical checks:
  *   1. .md size limits (rules/heuristics/md-size-limits.yaml) — shells out to

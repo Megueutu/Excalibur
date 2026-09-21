@@ -25,7 +25,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
-      - run: npx excalibur clean-history --yes
+      - run: npx @spec/excalibur clean-history --yes
       - name: Commit the pruned history
         run: |
           git config user.name "github-actions[bot]"

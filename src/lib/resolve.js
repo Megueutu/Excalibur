@@ -9,7 +9,7 @@ import { listFiles } from './fsx.js'
  * A customized file lives at `<custom_dir>/<same relative path>`. Resolution is
  * PER FILE, never per folder: customizing one file in a folder must not cost the
  * user the sibling files they never touched — those keep coming from the installed
- * package (`node_modules/excalibur/`).
+ * package (`node_modules/@spec/excalibur/`).
  */
 
 /** Absolute path of the effective version of `relPath`, or null if neither exists. */
