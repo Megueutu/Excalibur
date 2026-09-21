@@ -3,10 +3,17 @@ import * as p from '@clack/prompts'
 import pc from 'picocolors'
 import { packageRoot, shippedFolders, projectPaths, BASE_DIR, CUSTOM_DIR } from '../lib/paths.js'
 import { copyDir, ensureDir, exists, removeDir } from '../lib/fsx.js'
-import { readConfig, writeConfig, frameworkVersion, syncCustomManifest } from '../lib/config.js'
+import {
+  readConfig,
+  writeConfig,
+  frameworkVersion,
+  syncCustomManifest,
+  readAnswers,
+} from '../lib/config.js'
 import { applyMigrations } from '../lib/migrations.js'
 import { orphanedCustomizations } from '../lib/resolve.js'
 import { build } from '../lib/build.js'
+import { installFeatureFragments, writeClaudeMd } from './init.js'
 
 /**
  * `excalibur update` — rewrite .excalibur/ with the current framework version.
@@ -38,6 +45,11 @@ export async function update(args, cwd) {
     copyDir(path.join(packageRoot, folder), path.join(paths.base, folder))
   }
   ensureDir(paths.migrations)
+
+  const savedAnswers = readAnswers(cwd)?.answers ?? {}
+  installFeatureFragments(cwd, savedAnswers)
+  writeClaudeMd(cwd)
+
   spinner.stop(`${BASE_DIR}/ updated`)
 
   // PENDENTE-REVISÃO: see cli/src/lib/migrations.js — section 22 is a 🔧 proposal
