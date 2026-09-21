@@ -1,24 +1,21 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import { createRequire } from 'node:module'
-import { projectPaths, ownRoot, onboardingManifestPath, CUSTOM_DIR } from './paths.js'
+import { locateConfig, projectPaths, packageRoot, PUBLIC_CONFIG_FILE, PACKAGE_JSON, CUSTOM_MANIFEST_FILE } from './paths.js'
 import { parse, stringify } from './yaml.js'
 import { writeText, listFiles } from './fsx.js'
-
-const require = createRequire(import.meta.url)
 
 /** Version of the installed framework, read from the package's own package.json. */
 export function frameworkVersion() {
   try {
-    return require(path.join(ownRoot, 'package.json')).version
+    return JSON.parse(fs.readFileSync(path.join(packageRoot, 'package.json'), 'utf8')).version
   } catch {
     return '0.0.0'
   }
 }
 
-/** The manifest that drives onboarding. */
+/** The manifest that drives onboarding — ships inside this same package now. */
 export function loadManifest() {
-  return parse(fs.readFileSync(onboardingManifestPath, 'utf8'))
+  return parse(fs.readFileSync(path.join(packageRoot, 'onboarding', 'manifest.yaml'), 'utf8'))
 }
 
 /** Every question resolved to its default — the "use the defaults" path. */
@@ -28,58 +25,69 @@ export function defaultAnswers(manifest) {
   return answers
 }
 
-/** Reads the root `Excalibur` config file (no extension, YAML content). */
+/**
+ * Reads the whole config document, wherever it lives (`excalibur.yaml` in public
+ * mode, the `package.json` `"excalibur"` key in discreet mode). `null` for a project
+ * that hasn't been scaffolded yet.
+ */
 export function readConfig(cwd) {
-  const p = projectPaths(cwd)
-  if (!fs.existsSync(p.config)) return null
+  const located = locateConfig(cwd)
+  if (!located) return null
+
   try {
-    return parse(fs.readFileSync(p.config, 'utf8'))
+    if (located.mode === 'public') {
+      return parse(fs.readFileSync(located.file, 'utf8'))
+    }
+    const pkg = JSON.parse(fs.readFileSync(located.file, 'utf8'))
+    return pkg.excalibur ?? null
   } catch {
     return null
   }
 }
 
+/**
+ * Writes the whole config document. `config.mode` decides where: `excalibur.yaml`
+ * at the project root for `'public'`, or the `"excalibur"` key of the project's own
+ * `package.json` for `'discreet'` — read-modify-write, touching no other
+ * `package.json` field.
+ */
 export function writeConfig(cwd, config) {
-  const p = projectPaths(cwd)
-  const header = [
-    '# Excalibur — project configuration.',
-    '#',
-    '# No extension on purpose, YAML content, same idea as a Dockerfile: the parser',
-    '# reads the content, not the name. Lives at the root only, because that is where',
-    '# the harness runs and therefore the one place reachable without resolving a',
-    '# relative path.',
-    '#',
-    '# Written by `excalibur init`. Safe to edit by hand — `excalibur update` only ever',
-    '# touches .excalibur/, so nothing here is overwritten by an update.',
-    '',
-  ].join('\n')
-  writeText(p.config, header + stringify(config))
-}
-
-export function readAnswers(cwd) {
-  const p = projectPaths(cwd)
-  if (!fs.existsSync(p.answers)) return null
-  try {
-    return parse(fs.readFileSync(p.answers, 'utf8'))
-  } catch {
-    return null
+  if (config.mode === 'discreet') {
+    const pkgPath = path.join(cwd, PACKAGE_JSON)
+    const pkg = fs.existsSync(pkgPath) ? JSON.parse(fs.readFileSync(pkgPath, 'utf8')) : {}
+    pkg.excalibur = config
+    writeText(pkgPath, JSON.stringify(pkg, null, 2) + '\n')
+    return
   }
-}
 
-export function writeAnswers(cwd, answers, mode) {
-  const p = projectPaths(cwd)
+  const publicPath = path.join(cwd, PUBLIC_CONFIG_FILE)
   const header = [
-    '# Answers collected by `npx excalibur init`.',
+    '# excalibur.yaml — project configuration.',
     '#',
-    '# This file COLLECTS, it does not implement. Run /excalibur-init in your harness',
-    '# next: it picks this up and skips straight to materializing the SDD, instead of',
-    '# asking everything again in chat.',
+    '# base_dir and custom_dir are recorded here for documentation, not because',
+    '# anything reads them back to resolve paths — base_dir is always wherever the',
+    '# excalibur package itself is installed (node_modules/excalibur/), and custom_dir',
+    '# is read directly by every command that needs it.',
     '#',
-    '# YAML rather than JSON: more compact for a model to read, and the same format the',
-    '# rest of the framework already uses.',
+    '# Written by `npx create-excalibur`. Safe to edit by hand — `excalibur update`',
+    '# only overwrites the `framework_version` field, and `excalibur session` only',
+    '# the `session` field.',
     '',
   ].join('\n')
-  writeText(p.answers, header + stringify({ version: 1, setup_mode: mode, answers }))
+  writeText(publicPath, header + stringify(config))
+}
+
+/**
+ * Read-patch-write. `patch` is either an object shallow-merged into the current
+ * config's top level, or a function `(current) => next` for anything deeper (e.g.
+ * setting one key inside `session.flags` without clobbering the rest of `session`).
+ * Returns the config that was written.
+ */
+export function updateConfig(cwd, patch) {
+  const current = readConfig(cwd) ?? {}
+  const next = typeof patch === 'function' ? patch(current) : { ...current, ...patch }
+  writeConfig(cwd, next)
+  return next
 }
 
 /** The index of what has been customized — metadata only, never content. */
@@ -97,10 +105,10 @@ export function readCustomManifest(cwd) {
 export function writeCustomManifest(cwd, manifest) {
   const p = projectPaths(cwd)
   const header = [
-    `# Index of which paths under ${CUSTOM_DIR}/ are customized.`,
+    `# Index of which paths under ${p.customDir}/ are customized.`,
     '#',
     '# Metadata only — the customized content stays in normal files at the same relative',
-    '# path. This exists so init/update can see what to apply without walking the tree.',
+    '# path. This exists so a caller can see what to apply without walking the tree.',
     '#',
     '# Updated automatically by `excalibur customize`.',
     '',
@@ -111,20 +119,10 @@ export function writeCustomManifest(cwd, manifest) {
 /** Rebuilds the index from what is actually on disk — the disk is the truth. */
 export function syncCustomManifest(cwd) {
   const p = projectPaths(cwd)
-  const files = listFiles(p.custom).filter((f) => f !== 'manifest.yaml')
+  const files = listFiles(p.custom).filter((f) => f !== CUSTOM_MANIFEST_FILE)
   const manifest = { version: 1, customized: files.sort() }
   if (files.length > 0 || fs.existsSync(p.customManifest)) writeCustomManifest(cwd, manifest)
   return manifest
-}
-
-export function readSession(cwd) {
-  const p = projectPaths(cwd)
-  if (!fs.existsSync(p.session)) return null
-  try {
-    return parse(fs.readFileSync(p.session, 'utf8'))
-  } catch {
-    return null
-  }
 }
 
 /** The nine session flags, from section 21. */
@@ -151,9 +149,7 @@ export const SDD_MARKER_FILE = '.excalibur-sdd-marker'
  * Best-effort literal SDD path from the collected answers, where it's derivable
  * without the post-manifest interpretation step. `embedded` and `separate` are
  * deterministic from `cwd` alone; `external` and `new_repo` need a path only that
- * step resolves (a typed location, or a repo created on the spot), so those come
- * back `null` here. `sdd_path` in the config stays `null` until whichever step
- * actually materializes the destination fills it in.
+ * step resolves, so those come back `null` here.
  */
 export function resolveSddPath(cwd, answers) {
   switch (answers?.destination) {
@@ -168,30 +164,10 @@ export function resolveSddPath(cwd, answers) {
 
 /**
  * Writes the empty marker file inside the SDD destination, if that destination
- * already exists. Most of the time it doesn't yet at this point — the CLI's `init`
- * only collects answers and installs `.excalibur/`; the SDD folder itself is
- * materialized later, by the harness skill (see `create-excalibur/onboarding/flow.md` and
- * `create-excalibur/onboarding/init.sh`). This is still worth calling: it covers a re-run of `init`
- * against a project whose SDD destination already exists, and it keeps the marker
- * logic in one place for whatever step creates the folder to reuse.
+ * already exists.
  */
 export function writeSddMarker(sddPath) {
   if (!sddPath || !fs.existsSync(sddPath)) return false
   writeText(path.join(sddPath, SDD_MARKER_FILE), '')
   return true
-}
-
-export function writeSession(cwd, flags) {
-  const p = projectPaths(cwd)
-  const header = [
-    '# Session directives, read by the orchestrator at the start of every session.',
-    '#',
-    '# Lives OUTSIDE .excalibur/ and .excalibur.custom/ on purpose: this is session state,',
-    '# not a customization of a framework file. Because it sits outside .excalibur/,',
-    '# `excalibur update` never touches it — editing it by hand is safe.',
-    '#',
-    '# Generated by `npx excalibur session <flag>`. Reset with `npx excalibur reset`.',
-    '',
-  ].join('\n')
-  writeText(p.session, header + stringify({ version: 1, flags }))
 }
