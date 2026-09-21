@@ -9,8 +9,9 @@ Currently targets Claude / Claude Code. The architecture keeps the framework con
 Excalibur is never installed by cloning this repository. The CLI does the installing:
 
 ```bash
-npx excalibur check    # verify dependencies (bash, git, gh, node)
-npx excalibur init     # collect answers, write the config into the target project
+npm install --save-dev @spec/excalibur
+npx @spec/excalibur check    # verify dependencies (bash, git, gh, node)
+npx @spec/excalibur init     # collect answers, write the config into the target project
 ```
 
 Then, inside your harness, run `/excalibur-init` to finish onboarding conversationally.
@@ -19,7 +20,7 @@ Then, inside your harness, run `/excalibur-init` to finish onboarding conversati
 
 | Folder | What it is |
 |---|---|
-| [`bin/`](bin/), [`src/`](src/) | The single CLI package's code — two entry points: `excalibur` (ongoing: `init`, `update`, `status`, `doctor`, `lint`, `check`, `clean-history`, ...) and `create-excalibur` (`npm create excalibur`, one-time onboarding) |
+| [`bin/`](bin/), [`src/`](src/) | The single CLI package's code — two entry points: `excalibur` (ongoing: `init`, `update`, `status`, `doctor`, `lint`, `check`, `clean-history`, ...) and `create-excalibur` (one-time onboarding) |
 | [`onboarding/`](onboarding/) | Data for one-time onboarding: the question manifest, `init.sh`, presets copied based on the answers |
 | [`lib/`](lib/) | Framework libraries: `agents/` (internal agent catalog, YAML source files), `pipeline/` (implementation process itself), `scripts/` (shell helpers) and `features/` (opt-in feature fragments) |
 | [`rules/`](rules/) | Distributable rules: `global/` principles, per-`stacks/` recommendations, and `heuristics/` (mechanical yaml checks) |
@@ -34,7 +35,7 @@ Then, inside your harness, run `/excalibur-init` to finish onboarding conversati
 
 | Path | Versioned? | What it holds |
 |---|---|---|
-| `node_modules/excalibur/` | no (managed by npm) | The installed package: framework content, read directly, never copied |
+| `node_modules/@spec/excalibur/` | no (managed by npm) | The installed package: framework content, read directly, never copied |
 | `.overrides/` (configurable via `custom_dir`) | yes | Your overrides, per file. `update` never touches it |
 | `excalibur.yaml` (public mode) or the `"excalibur"` key in `package.json` (discreet mode) | yes | The project config: mode, paths, onboarding answers, session flags |
 | *(your chosen SDD folder)* | yes | The actual SDD content: specs, architecture, ideas |
@@ -43,6 +44,7 @@ The first three are the framework's machinery; the last one is your project's co
 
 ## Documentation
 
+- [`CONTRIBUTING.md`](CONTRIBUTING.md) — how to set up the repository and contribute
 - [`docs/repo/purpose.md`](docs/repo/purpose.md) — why this exists
 - [`docs/repo/structure.md`](docs/repo/structure.md) — how the repository is organized
 - [`docs/repo/git.md`](docs/repo/git.md) — commit conventions for this repository
