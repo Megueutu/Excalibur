@@ -1,7 +1,7 @@
 # bootstrap-check.ps1 — checks whether `bash` is on PATH.
 #
 # This is the ONLY .ps1/.bat wrapper in the whole framework. Every other script here
-# is POSIX `.sh` and assumes Git Bash on Windows (see wizard/scripts/check-gh.sh for
+# is POSIX `.sh` and assumes Git Bash on Windows (see lib/scripts/check-gh.sh for
 # the same "check X, guide the user if missing" shape, applied to `gh` instead of
 # `bash`). PowerShell exists only to answer the one question a .sh script can't ask
 # about itself before it has an interpreter to run in: is there a shell to run it?

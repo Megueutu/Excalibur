@@ -49,7 +49,7 @@ if [[ ! -d "$TARGET_PATH" ]]; then
 fi
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-EXCALIBUR_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+EXCALIBUR_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 TARGET_ABS="$(cd "$TARGET_PATH" && pwd)"
 
 case "$MODE" in

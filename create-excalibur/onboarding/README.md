@@ -8,7 +8,7 @@ One-time onboarding for a project. Runs before any implementation task can start
 | [`manifest.yaml`](manifest.yaml) | Every question asked during onboarding, with fixed options and a default per question |
 | [`init.sh`](init.sh) | Materializes the SDD destination — `embedded`, `separate` or `external` |
 | [`onboarding/`](onboarding/) | Pre-written files copied into the destination based on the answers |
-| [`scripts/`](scripts/) | Shell helpers for git/GitHub, OS and stack detection — see [`scripts/README.md`](scripts/README.md) |
+| [`../../lib/scripts/`](../../lib/scripts/) | Shell helpers for git/GitHub, OS and stack detection — see [`lib/scripts/README.md`](../../lib/scripts/README.md) |
 
 ## Two ways in
 

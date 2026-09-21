@@ -13,21 +13,21 @@ npx excalibur check    # verify dependencies (bash, git, gh, node)
 npx excalibur init     # collect answers, materialize .excalibur/ into the target project
 ```
 
-Then, inside your harness, run `/excalibur-init` to finish onboarding conversationally. See [`cli/README.md`](cli/README.md) for the full command reference.
+Then, inside your harness, run `/excalibur-init` to finish onboarding conversationally. See [`excalibur/README.md`](excalibur/README.md) for the full command reference, and [`create-excalibur/onboarding/README.md`](create-excalibur/onboarding/README.md) for the onboarding flow.
 
 ## How the pieces fit
 
 | Folder | What it is |
 |---|---|
-| [`wizard/`](wizard/) | One-time onboarding: the question manifest, `init.sh`, presets and shell scripts |
-| [`lib/`](lib/) | Framework libraries: `agents/` (internal agent catalog, YAML source files) and `pipeline/` (implementation process itself) |
-| [`rules/`](rules/) | Distributable rules: global principles, per-stack recommendations, writing and naming conventions |
+| [`create-excalibur/`](create-excalibur/) | Scaffold package (`npm create excalibur`): one-time onboarding — the question manifest, `onboarding/init.sh`, presets and shell scripts |
+| [`excalibur/`](excalibur/) | Ongoing CLI package (`npx excalibur ...`): `init`, `update`, `status`, `doctor`, `lint`, `check`, `clean-history` |
+| [`lib/`](lib/) | Framework libraries: `agents/` (internal agent catalog, YAML source files), `pipeline/` (implementation process itself), `scripts/` (shell helpers) and `features/` (opt-in feature fragments) |
+| [`rules/`](rules/) | Distributable rules: `global/` principles, per-`stacks/` recommendations, and `heuristics/` (mechanical yaml checks) |
 | [`reflection/`](reflection/) | How to *think* while producing a spec — reasoning chain and when to pause |
 | [`harnesses/`](harnesses/) | Thin per-harness adapters (skills). Today: `claude/` only |
-| [`cli/`](cli/) | The npm-publishable Node CLI that distributes and installs everything above |
 | [`docs/repo/`](docs/repo/) | Documentation about this repository itself — not shipped to target projects |
 
-`wizard/`, `lib/pipeline/` and `rules/` are the source of truth for content; `cli/` only packages and copies them.
+`create-excalibur/onboarding/`, `lib/pipeline/` and `rules/` are the source of truth for content; `excalibur/` and `create-excalibur/` only package and copy them.
 
 ## What lands in a project you onboard
 

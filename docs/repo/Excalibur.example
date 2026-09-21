@@ -12,7 +12,7 @@
 version: 1
 framework_version: 0.1.0
 
-# "defaults" means every question resolved to its default from wizard/manifest.yaml.
+# "defaults" means every question resolved to its default from create-excalibur/onboarding/manifest.yaml.
 # "customize" means they were answered one by one.
 setup_mode: defaults
 

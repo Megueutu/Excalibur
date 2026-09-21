@@ -12,6 +12,34 @@ renames:
     to: lib/pipeline/review-checklist.md
   - from: pipeline/handoff-template.md
     to: lib/pipeline/handoff-template.md
+  - from: rules/md-size-limits.yaml
+    to: rules/heuristics/md-size-limits.yaml
+  - from: rules/tasks-ordering.yaml
+    to: rules/heuristics/tasks-ordering.yaml
+  - from: rules/canvas-update-checklist.yaml
+    to: rules/heuristics/canvas-update-checklist.yaml
+  - from: harnesses/claude/skills/feat
+    to: harnesses/claude/skills/task-types/feat
+  - from: harnesses/claude/skills/fix
+    to: harnesses/claude/skills/task-types/fix
+  - from: harnesses/claude/skills/refactor
+    to: harnesses/claude/skills/task-types/refactor
+  - from: harnesses/claude/skills/perf
+    to: harnesses/claude/skills/task-types/perf
+  - from: harnesses/claude/skills/test
+    to: harnesses/claude/skills/task-types/test
+  - from: harnesses/claude/skills/docs
+    to: harnesses/claude/skills/task-types/docs
+  - from: harnesses/claude/skills/style
+    to: harnesses/claude/skills/task-types/style
+  - from: harnesses/claude/skills/build
+    to: harnesses/claude/skills/task-types/build
+  - from: harnesses/claude/skills/ci
+    to: harnesses/claude/skills/task-types/ci
+  - from: harnesses/claude/skills/chore
+    to: harnesses/claude/skills/task-types/chore
+  - from: harnesses/claude/skills/revert
+    to: harnesses/claude/skills/task-types/revert
 removed:
   - pipeline/agents/orchestrator.md
   - pipeline/agents/spec-writer.md

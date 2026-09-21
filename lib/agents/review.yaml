@@ -11,7 +11,7 @@ body: |+
 
   ## 1. Run the checklist for real
 
-  `pipeline/review-checklist.md` is an execution step with visible output, not reference reading. "I read it earlier" does not count as having run it.
+  `lib/pipeline/review-checklist.md` is an execution step with visible output, not reference reading. "I read it earlier" does not count as having run it.
 
   Start with `git diff` over everything that changed and actually look at it. Reviewing from memory of what was written is how a review passes something it would have caught.
 

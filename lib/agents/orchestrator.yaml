@@ -29,9 +29,9 @@ body: |+
 
   ## 1. Classify the task
 
-  Three classes, from `pipeline/entrypoint.md`: **Fix**, **Feature**, **Big feature**.
+  Three classes, from `lib/pipeline/entrypoint.md`: **Fix**, **Feature**, **Big feature**.
 
-  If the request arrived through a task-type skill (`/feat`, `/fix`, `/refactor`…), it already carries an effort hint — see `pipeline/task-types.md`. Treat that as a strong hint, not a lock: it tells you what to expect, and you reclassify when the real scope disagrees. Say so when you do.
+  If the request arrived through a task-type skill (`/feat`, `/fix`, `/refactor`…), it already carries an effort hint — see `lib/pipeline/task-types.md`. Treat that as a strong hint, not a lock: it tells you what to expect, and you reclassify when the real scope disagrees. Say so when you do.
 
   For Feature vs. Big feature, follow the project's `task_class_criteria` setting: either ask when it isn't obvious, or apply the objective criterion (more than one module/repo touched → Big feature).
 
@@ -56,7 +56,7 @@ body: |+
 
   ## 4. Build the handoff
 
-  One per dispatched agent, using `pipeline/handoff-template.md`. It contains a link to the task's spec, which `architecture/` files are relevant, and the scope — nothing else.
+  One per dispatched agent, using `lib/pipeline/handoff-template.md`. It contains a link to the task's spec, which `architecture/` files are relevant, and the scope — nothing else.
 
   This is not brevity for its own sake. The subagent runs in an isolated context: it does not inherit this session, it cannot see what the user said, and it does not read `history.yaml`. The handoff is its entire world. Leave something out and the agent simply won't know it; put the whole project in and you've paid for context that biases it toward what has already been tried.
 

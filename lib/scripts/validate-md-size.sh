@@ -36,7 +36,7 @@ fi
 # empty field between two tabs would silently vanish and shift the rest). Deliberately
 # not a general YAML parser — the file's shape (a flat list of small maps under one
 # key) is fixed and simple enough that awk is the honest tool for it, matching the
-# project's own minimal-YAML philosophy (see cli/src/lib/yaml.js).
+# project's own minimal-YAML philosophy (see excalibur/src/lib/yaml.js).
 RECORDS="$(awk '
   { gsub(/\r$/, "") }
   function emit() { print type "\t" match_pat "\t" (max_lines=="" ? "-" : max_lines) "\t" (max_fm=="" ? "-" : max_fm) }

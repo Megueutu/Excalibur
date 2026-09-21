@@ -18,6 +18,6 @@ Premature extraction is often more expensive to undo than duplication is to live
 
 ## Applied to this framework
 
-- `wizard/`, `lib/pipeline/` and `rules/` are the single source of truth for content. `cli/` copies them; it never holds a second copy.
+- `create-excalibur/onboarding/`, `lib/pipeline/` and `rules/` are the single source of truth for content. `excalibur/` and `create-excalibur/` copy them; neither holds a second copy.
 - The task-type skills share one body (`lib/pipeline/task-types.md`) instead of eleven near-identical files.
 - Agents don't get duplicated per harness — they live once in `lib/agents/`.

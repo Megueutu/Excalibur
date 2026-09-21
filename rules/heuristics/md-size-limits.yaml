@@ -12,7 +12,7 @@
 # (useful for Obsidian), but that copy is decorative — whether agents read
 # frontmatter reliably is still an open question, so nothing depends on it.
 #
-# Checked by pipeline/review-checklist.md: a task cannot be called done with an
+# Checked by lib/pipeline/review-checklist.md: a task cannot be called done with an
 # allowlisted file over its limit.
 
 version: 1
@@ -32,7 +32,7 @@ limits:
     why: >-
       A handoff is the entire input of an isolated subagent. Too small and the
       agent can't do the work; too large and it carries the bias the isolation
-      exists to prevent. See pipeline/handoff-template.md.
+      exists to prevent. See lib/pipeline/handoff-template.md.
 
   - type: agent_frontmatter
     match: "**/agents/*.md"
