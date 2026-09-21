@@ -2,14 +2,14 @@
 
 ```
 Excalibur/
-  package.json              private monorepo root — not published itself
-  excalibur/                 npm-publishable CLI: the ongoing, per-task distribution mechanism
-    bin/excalibur.js
-    src/commands/            one file per command in the CLI reference
-    src/lib/                 override resolution, build, paths, minimal YAML
-  create-excalibur/          npm-publishable scaffold CLI: one-time onboarding (`npx create-excalibur`)
-    bin/create-excalibur.js
-    onboarding/               manifest.yaml, init.sh, pre-written files copied based on the answers
+  package.json              a single npm-publishable package — two bin entries, one tree
+  bin/
+    excalibur.js              the ongoing, per-task CLI entry point
+    create-excalibur.js        one-time onboarding entry point (`npx create-excalibur`)
+  src/
+    commands/                one file per command in the CLI reference
+    lib/                     override resolution, build, paths, minimal YAML
+  onboarding/                 manifest.yaml, init.sh, pre-written files copied based on the answers
   lib/
     agents/                  the internal agent catalog, one .yaml each
     pipeline/                the implementation process
@@ -23,6 +23,7 @@ Excalibur/
   harnesses/
     claude/skills/           the only implemented harness adapter
       task-types/             one skill per conventional-commit task type (feat, fix, refactor, ...)
+  scripts/                   repo-maintenance Node scripts (postinstall.js: rebuild on install)
   docs/
     repo/                    documentation about this repository (not shipped)
   .docs/                     AI-assisted development process tracking (not shipped, hidden)
@@ -37,8 +38,8 @@ Excalibur/
 
 | Layer | Rule for deciding |
 |---|---|
-| `excalibur/` | Executable Node code for the ongoing CLI. Never framework *content* — it copies content, it doesn't hold a second copy of it. |
-| `create-excalibur/` | Executable Node code for one-time onboarding only. If it runs on every task instead of once, it belongs in `lib/pipeline/`. |
+| `bin/`, `src/` | Executable Node code for the CLI (both entry points: the ongoing `excalibur` command and the one-time `create-excalibur` onboarding command). Never framework *content* — it reads content from `lib/`, `rules/`, etc. straight out of wherever npm installed the package, it doesn't hold a second copy of it. |
+| `onboarding/` | Data for one-time onboarding only: the questions manifest and the pre-written files it can copy. If it runs on every task instead of once, it belongs in `lib/pipeline/`. |
 | `lib/pipeline/` | What agents do on every task. Must be 100% generic — if it names a project, org or repo, it doesn't belong here. |
 | `lib/features/` | Optional fragments a project can opt into during onboarding, not part of the default pipeline. |
 | `rules/` | Content that gets copied into a user's project. If it's about maintaining *this* repository, it goes to `docs/repo/` instead. |
@@ -50,9 +51,9 @@ Excalibur/
 
 ## Two rules that are easy to get wrong
 
-**`rules/` is shipped; `docs/repo/` and `.docs/` are not.** Anything under `rules/` (including `rules/heuristics/`) lands in someone else's project as `.excalibur/rules/`. A note about how to maintain this repository, or a record of how a feature was planned, has no business being copied there.
+**`rules/` is shipped; `docs/repo/` and `.docs/` are not.** Anything under `rules/` (including `rules/heuristics/`) is read directly by a consuming project out of `node_modules/excalibur/rules/` — nothing is ever copied there. A note about how to maintain this repository, or a record of how a feature was planned, has no business appearing there.
 
-**`excalibur/` and `create-excalibur/` don't duplicate content.** `lib/`, `rules/` and `reflection/` are the single source of truth, shared by both packages. Each CLI packages and copies them — if a rule's text ever appears inside `excalibur/src/` or `create-excalibur/`, that's a bug.
+**`bin/`/`src/` don't duplicate content.** `lib/`, `rules/` and `reflection/` are the single source of truth, read at the project root by both CLI entry points. Neither entry point ever holds a second copy — if a rule's text ever appears inside `src/`, that's a bug.
 
 ## `docs/repo/` vs `.docs/`
 

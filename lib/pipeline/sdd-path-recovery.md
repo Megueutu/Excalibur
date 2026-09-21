@@ -17,14 +17,15 @@ the fallback for exactly that.
 
 ## The flow
 
-1. **Read `sdd_path` from the `Excalibur` config.** If it's set and the path exists,
+1. **Read `sdd_path` from the config** (`excalibur.yaml`, or `package.json`'s
+   `"excalibur"` key in discreet mode). If it's set and the path exists,
    that's the SDD destination — stop here, nothing to recover.
 
 2. **If the path is missing or no longer exists, scan for the marker instead of
    guessing by name.** Every SDD destination has a hidden, empty
    `.excalibur-sdd-marker` file inside it, dropped there when the destination was
-   materialized (see `excalibur/src/commands/init.js` / `excalibur/src/lib/config.js`
-   for `embedded`/`separate`, and `.excalibur/onboarding/init.sh` for whichever
+   materialized (see `src/commands/init.js` / `src/lib/config.js`
+   for `embedded`/`separate`, and `onboarding/init.sh` for whichever
    step materializes `external`/`new_repo`). List first-level folders at the project root and check each
    one for that marker. Don't shortcut this by looking for a folder that merely looks
    like `.sdd` or `<repo>-sdd` — the whole point of the marker is that the name is no

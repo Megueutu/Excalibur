@@ -7,11 +7,13 @@ import { syncCustomManifest } from '../lib/config.js'
 import { build } from '../lib/build.js'
 
 /**
- * `excalibur customize <path>` — copy one file from .excalibur/ to .excalibur.custom/
- * so it can be edited safely.
+ * `excalibur customize <path>` — copy one file from the installed package
+ * (`node_modules/excalibur/`) to the project's overrides folder (`custom_dir`,
+ * `.overrides/` by default) so it can be edited safely.
  *
- * The point is that the user never edits .excalibur/ directly: that folder is
- * overwritten wholesale on every update. Copying first means the edit survives.
+ * The point is that the user never edits the installed package directly: it's
+ * read-only content, overwritten wholesale on every `npm install`/`npm update`.
+ * Copying first means the edit survives.
  */
 export async function customize(args, cwd) {
   const target = args._[0]
@@ -19,7 +21,7 @@ export async function customize(args, cwd) {
   p.intro(pc.bgCyan(pc.black(' excalibur customize ')))
 
   if (!target) {
-    p.cancel('Usage: npx excalibur customize <path-inside-.excalibur>')
+    p.cancel('Usage: npx excalibur customize <path-inside-the-package>')
     return 1
   }
 

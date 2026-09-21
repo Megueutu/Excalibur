@@ -38,15 +38,15 @@ ${pc.bold('Usage')}
   npx excalibur <command> [options]
 
 ${pc.bold('Commands')}
-  init                 Collect answers and materialize .excalibur/ in this project
-  update               Rewrite .excalibur/ with the current version — never touches .excalibur.custom/
-  customize <path>     Copy one file out of .excalibur/ so it can be edited safely
+  init                 Collect answers and write the config (excalibur.yaml or package.json)
+  update               Rebuild the harness files from the installed package — never touches your overrides folder
+  customize <path>     Copy one file out of the installed package into your overrides folder, safe to edit
   check                Verify dependencies (node, git, bash, gh) before init
   status               Destination, customized files, last prune, installed version
   doctor               Deeper SDD health check: orphaned customizations, stale canvas
   list                 List in-progress tasks under specs/<repo>/*/ (alias: tasks)
   canvas               Regenerate project.canvas from the template, on demand
-  diff [path]          Show .excalibur.custom/ vs. .excalibur/ defaults, with content
+  diff [path]          Show your overrides folder vs. the package defaults, with content
   lint [dir]           Run the .md size-limit + naming-convention checks (CI-friendly)
   session [flag]       Set a session directive; with no argument, list them all
   reset                Clear every session directive

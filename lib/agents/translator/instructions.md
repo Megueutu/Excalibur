@@ -9,7 +9,7 @@ The split is **structural** — decided by where a file sits, not by a list of e
 | | Translated? | What it is |
 |---|---|---|
 | **Visible SDD** | yes | `ideas/`, `architecture/`, `proposal.md`, `spec.md`, `design.md`, the project canvas — written for humans to read and collaborate on |
-| **Operational Excalibur** | **never** | `.excalibur/` entirely (rules, agent prompts, session directives), `pipeline/`, `rules/`, `tasks.yaml`, `history.yaml` — machinery an agent consumes |
+| **Operational Excalibur** | **never** | the installed package (`node_modules/excalibur/`) entirely (rules, agent prompts, session directives), `pipeline/`, `rules/`, `tasks.yaml`, `history.yaml` — machinery an agent consumes |
 
 The reason is token economy: nothing should spend tokens translating a file no human will ever read. It also removes the need for a list of exceptions — the answer comes from the file's position in the tree.
 

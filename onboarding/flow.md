@@ -39,7 +39,7 @@ Context-gathering, not a manifest question. It shapes how you read the project b
 
 ## 4. Ask the manifest questions
 
-Read [`create-excalibur/onboarding/manifest.yaml`](manifest.yaml).
+Read [`onboarding/manifest.yaml`](manifest.yaml).
 
 **First, ask the `master` question**: customize, or use the defaults?
 
@@ -64,7 +64,7 @@ Do not invent new configuration here. This step resolves ambiguity in what was a
 
 For each answered question, look at the chosen option:
 
-- Has a `copy` block → add one `source<TAB>dest` line (values verbatim) to a temporary copy-list file. `copy.source` is relative to `create-excalibur/onboarding/`, matching `init.sh`'s contract — not to the Excalibur root.
+- Has a `copy` block → add one `source<TAB>dest` line (values verbatim) to a temporary copy-list file. `copy.source` is relative to `onboarding/`, matching `init.sh`'s contract — not to the Excalibur root.
 - Has `free_text: true` → the user's text becomes the destination file directly, written by you after the script runs. It doesn't go through the copy list.
 - Has neither, and no `translate` flag → contributes nothing. `destination` only decides the target path; `review_depth: standard` deliberately has no override file.
 - Has `translate: true` → no copy-list line; remember to run step 8.
@@ -72,9 +72,9 @@ For each answered question, look at the chosen option:
 ## 7. Run the script
 
 ```bash
-create-excalibur/onboarding/init.sh embedded <target-path> ""             [copy-list-file]
-create-excalibur/onboarding/init.sh separate <target-path> <project-name> [copy-list-file]
-create-excalibur/onboarding/init.sh external <target-path> <sdd-path>     [copy-list-file]
+onboarding/init.sh embedded <target-path> ""             [copy-list-file]
+onboarding/init.sh separate <target-path> <project-name> [copy-list-file]
+onboarding/init.sh external <target-path> <sdd-path>     [copy-list-file]
 ```
 
 This creates the destination structure (`specs/`, `ideas/`, `architecture/`, `Templates/`, `reflection/`) and copies every pair from the copy list on top of the files it always copies. Full contract in `init.sh`'s header.
@@ -89,7 +89,7 @@ If `obsidian_vault` was answered `vault`, run [`lib/scripts/scaffold-obsidian-va
 
 Invoke the `translator` subagent (see [`lib/agents/translator/agent.yaml`](../../lib/agents/translator/agent.yaml)) against the destination's `Templates/` and `reflection/` folders, with the resolved language.
 
-What gets translated is decided structurally, by where a file sits — not by a list of exceptions. See `rules/translation.md`: the **visible SDD** (`ideas/`, `architecture/`, `proposal.md`, `spec.md`, `design.md`, canvas) is translated; the **operational Excalibur** (`.excalibur/`, `lib/pipeline/`, `rules/`, `tasks.yaml`, `history.yaml`) never is. The point is token economy: no agent should spend tokens translating a file no human will read.
+What gets translated is decided structurally, by where a file sits — not by a list of exceptions. See `rules/translation.md`: the **visible SDD** (`ideas/`, `architecture/`, `proposal.md`, `spec.md`, `design.md`, canvas) is translated; the **operational Excalibur** (the installed package under `node_modules/excalibur/`, `lib/pipeline/`, `rules/`, `tasks.yaml`, `history.yaml`) never is. The point is token economy: no agent should spend tokens translating a file no human will read.
 
 Unlike the original one-shot behavior, this applies continuously — documents written later follow the same language.
 

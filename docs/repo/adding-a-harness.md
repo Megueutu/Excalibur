@@ -33,7 +33,7 @@ Agents live in [`lib/agents/`](../../lib/agents/), not under a harness. A new ha
 
 ## Also needed for any new harness
 
-The CLI's build step writes the effective (override-resolved) files to the fixed path the harness reads. For Claude that's `.claude/agents/` and `.claude/skills/`. A new harness means adding its target paths to `excalibur/src/lib/paths.js` — that's the only place in the CLI that should know them.
+The CLI's build step writes the effective (override-resolved) files to the fixed path the harness reads. For Claude that's `.claude/agents/` and `.claude/skills/`. A new harness means adding its target paths to `src/lib/paths.js` — that's the only place in the CLI that should know them.
 
 ## When an adapter is done
 

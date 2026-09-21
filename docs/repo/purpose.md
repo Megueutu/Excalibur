@@ -19,7 +19,7 @@ It solves three problems:
 
 | | Where | Versioned? |
 |---|---|---|
-| **The framework's machinery** | `.excalibur/` + `.excalibur.custom/` + `Excalibur` | `.excalibur/` no, the rest yes |
+| **The framework's machinery** | `node_modules/excalibur/` + the overrides folder (`custom_dir`) + the config (`excalibur.yaml` or `package.json`'s `"excalibur"` key) | `node_modules/excalibur/` no, the rest yes |
 | **The project's SDD content** | a folder the user names during onboarding | yes |
 
 The first is an installation, regenerated on demand like `node_modules/`. The second is the project's actual knowledge, and losing it would matter. They are independent on purpose.

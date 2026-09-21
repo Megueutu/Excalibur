@@ -1,0 +1,29 @@
+# excalibur.yaml — project configuration (example).
+#
+# This is public mode's shape: a standalone `excalibur.yaml` at the project root.
+# In discreet mode, this same document lives under the `"excalibur"` key of the
+# project's own `package.json` instead — no separate file.
+#
+# Written by `npx create-excalibur`. Safe to edit by hand: `excalibur update` only
+# ever overwrites `framework_version`, and `excalibur session` only `session`.
+
+version: 1
+mode: public
+base_dir: node_modules/excalibur
+custom_dir: .overrides
+framework_version: 0.4.2
+
+# "defaults" means every question resolved to its default from onboarding/manifest.yaml.
+# "customize" means they were answered one by one.
+setup_mode: customize
+
+answers:
+  destination: embedded          # embedded | separate | external | new_repo
+  language: en                   # en | other
+  github_preset: conservative    # conservative | direct | custom
+  autonomy: skip_on_fix          # always_ask | skip_on_fix | autonomous
+
+sdd_path: .sdd
+
+session:
+  flags: {}

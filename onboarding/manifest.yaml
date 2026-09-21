@@ -6,7 +6,7 @@
 #   - Every question MUST have a `default`. The master question below lets the user
 #     accept all of them at once, so a question without a default would break that path.
 #   - `copy: {source, dest}` materializes a pre-written file. `source` is relative to
-#     create-excalibur/onboarding/ (matching init.sh's contract), `dest` is relative to the SDD destination.
+#     onboarding/ (matching init.sh's contract), `dest` is relative to the SDD destination.
 #   - `review_hint` is optional and only present where it earns its place. It feeds the
 #     post-manifest interpreter agent (see entrypoint.md step 5) with "dig into this"
 #     instructions, so interpretation logic never has to be hardcoded in the flow.

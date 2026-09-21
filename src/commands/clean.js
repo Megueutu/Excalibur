@@ -11,10 +11,11 @@ import { build, canBuild } from '../lib/build.js'
  *
  * Distinct from `clean-history`, which is only about history.yaml. This one removes
  * build output: the files written into the harness's fixed paths, which are copies
- * and can always be regenerated from .excalibur/ + .excalibur.custom/.
+ * and can always be regenerated from the installed package (`node_modules/excalibur/`)
+ * + the project's overrides folder (`custom_dir`).
  *
- * It never touches .excalibur.custom/, the SDD destination, or the config — nothing
- * here is a source of truth.
+ * It never touches the overrides folder, the SDD destination, or the config —
+ * nothing here is a source of truth.
  */
 export async function clean(args, cwd) {
   p.intro(pc.bgCyan(pc.black(' excalibur clean ')))
@@ -39,7 +40,7 @@ export async function clean(args, cwd) {
 
   if (!args.yes) {
     const confirmed = await p.confirm({
-      message: 'Remove these? They are rebuilt from .excalibur/ on the next init/update.',
+      message: 'Remove these? They are rebuilt from the installed package on the next init/update.',
       initialValue: true,
     })
     if (p.isCancel(confirmed) || !confirmed) {

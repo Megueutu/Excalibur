@@ -6,8 +6,9 @@ import { copyFile, ensureDir, listFiles } from './fsx.js'
 import { parse } from './yaml.js'
 
 /**
- * Resolves .excalibur.custom/ over .excalibur/ and writes the effective files to
- * the fixed paths the harness actually reads.
+ * Resolves the project's overrides folder (`custom_dir`) over the installed
+ * package (`node_modules/excalibur/`) and writes the effective files to the fixed
+ * paths the harness actually reads.
  *
  * Why this exists: Claude Code reads one fixed path. It has no notion of "look in
  * the override folder first, then fall back". So something has to decide up front
