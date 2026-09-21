@@ -1,65 +1,31 @@
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
+import fs from 'node:fs'
+import { parse } from './yaml.js'
 
 /**
  * Every path the CLI knows about, in one place.
- *
- * Where a harness expects agents and skills inside a target project is still an
- * open question (see PENDENCIAS.md item 4) — it needs a practical test to answer.
- * Keeping the answer here means correcting it later is a one-line change instead
- * of a search across the codebase.
  */
 
 const here = path.dirname(fileURLToPath(import.meta.url))
 
 /**
- * Root of the excalibur package itself (the source of truth for content).
- *
- * Three levels up from here (excalibur/src/lib) is the repo root, where lib/,
- * rules/, reflection/ and harnesses/ live as siblings of excalibur/ and
- * create-excalibur/ — not inside excalibur/ itself. This only resolves correctly
- * when excalibur/ is used from within this repo checkout (directly, or as a
- * file: dependency of create-excalibur/, which npm resolves as a symlink back
- * into this same checkout). A real npm registry publish would break this — see
- * PENDENCIAS.md item 5, deliberately not solved here.
+ * Root of the running excalibur package — wherever npm actually put it. In a real
+ * consuming project this already IS `node_modules/excalibur/`, because the code
+ * currently executing (this very file) lives inside that installed package — no
+ * separate lookup needed. Content (`lib/`, `rules/`, `reflection/`, `harnesses/`,
+ * `onboarding/`) ships inside the same package at the same root, so this one
+ * constant is also the content source. There is no copy step: nothing is ever
+ * written under `packageRoot` by any command — it's read-only package content,
+ * exactly like the rest of `node_modules`.
  */
-export const packageRoot = path.resolve(here, '..', '..', '..')
+export const packageRoot = path.resolve(here, '..', '..')
 
-/**
- * This package's own root folder (excalibur/ itself, two levels up from
- * excalibur/src/lib) — distinct from `packageRoot` above, which is the repo root.
- * Needed for anything that belongs to this package specifically, such as its own
- * `package.json` (for `frameworkVersion()`) — reading `packageRoot`'s package.json
- * would instead pick up the repo-root `excalibur-monorepo` marker, not this package.
- */
-export const ownRoot = path.resolve(here, '..', '..')
-
-/**
- * The onboarding manifest that drives `init` now lives in the sibling
- * `create-excalibur/onboarding/` package folder (see Task 9), not inside
- * `excalibur/` itself — `init`'s logic is shared, but the manifest content is
- * scaffold-only and belongs with `create-excalibur`.
- */
-export const onboardingManifestPath = path.join(packageRoot, 'create-excalibur', 'onboarding', 'manifest.yaml')
-
-/** Folders of the package that get installed into a target project's .excalibur/. */
-export const shippedFolders = ['lib', 'rules', 'reflection']
-
-/**
- * `onboarding` is shipped into `.excalibur/onboarding/` too, but it is not a plain
- * sibling of `shippedFolders` at the repo root — it lives under
- * `create-excalibur/onboarding/` (a different package) and is copied separately by
- * `init.js`/`update.js`, not looped over generically like `shippedFolders`.
- */
-
-/** Names used inside a target project. Fixed convention — not configurable. */
-export const BASE_DIR = '.excalibur'
-export const CUSTOM_DIR = '.excalibur.custom'
-export const CONFIG_FILE = 'Excalibur'
-export const SESSION_FILE = '.excalibur-session.yaml'
-export const ANSWERS_FILE = '.excalibur-answers.yaml'
-export const CUSTOM_MANIFEST = 'manifest.yaml'
 export const CONTEXT_DIR = 'context'
+export const DEFAULT_CUSTOM_DIR = '.overrides'
+export const PUBLIC_CONFIG_FILE = 'excalibur.yaml'
+export const PACKAGE_JSON = 'package.json'
+export const CUSTOM_MANIFEST_FILE = 'manifest.yaml'
 
 /** Where each harness actually reads its files from, inside a target project. */
 export const harnessTargets = {
@@ -69,17 +35,70 @@ export const harnessTargets = {
   },
 }
 
-/** Absolute paths inside a target project. */
+/**
+ * Finds this project's config, wherever it lives, and says which mode it implies.
+ * Public: `excalibur.yaml` at the project root. Discreet: an `"excalibur"` key
+ * inside the project's own `package.json`. Checks both locations — a caller never
+ * needs to already know the mode before it can find the config that states it.
+ * Returns `null` for a project that hasn't been scaffolded yet.
+ */
+export function locateConfig(cwd) {
+  const publicPath = path.join(cwd, PUBLIC_CONFIG_FILE)
+  if (fs.existsSync(publicPath)) return { mode: 'public', file: publicPath }
+
+  const pkgPath = path.join(cwd, PACKAGE_JSON)
+  if (fs.existsSync(pkgPath)) {
+    try {
+      const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'))
+      if (pkg.excalibur) return { mode: 'discreet', file: pkgPath }
+    } catch {
+      // A malformed package.json is treated the same as "no config" — not a crash.
+    }
+  }
+
+  return null
+}
+
+/** Reads just enough of the config to resolve paths — custom_dir and mode. */
+function loadPathConfig(cwd) {
+  const located = locateConfig(cwd)
+  if (!located) return { mode: 'public', customDir: DEFAULT_CUSTOM_DIR, located: null }
+
+  try {
+    if (located.mode === 'public') {
+      const doc = parse(fs.readFileSync(located.file, 'utf8'))
+      return { mode: doc.mode ?? 'public', customDir: doc.custom_dir ?? DEFAULT_CUSTOM_DIR, located }
+    }
+    const pkg = JSON.parse(fs.readFileSync(located.file, 'utf8'))
+    const doc = pkg.excalibur ?? {}
+    return { mode: doc.mode ?? 'discreet', customDir: doc.custom_dir ?? DEFAULT_CUSTOM_DIR, located }
+  } catch {
+    return { mode: located.mode, customDir: DEFAULT_CUSTOM_DIR, located }
+  }
+}
+
+/**
+ * Absolute paths inside a target project.
+ *
+ * `base` is always `packageRoot` — read-only, never written to. `configured` is
+ * `true` only when a config was actually found; every command that used to check
+ * `exists(paths.base)` to mean "is this project onboarded" must check
+ * `paths.configured` instead, since `base` now always exists (it's wherever the
+ * currently-running code lives).
+ */
 export function projectPaths(cwd) {
+  const { mode, customDir, located } = loadPathConfig(cwd)
+
   return {
     root: cwd,
-    base: path.join(cwd, BASE_DIR),
-    custom: path.join(cwd, CUSTOM_DIR),
-    config: path.join(cwd, CONFIG_FILE),
-    session: path.join(cwd, SESSION_FILE),
-    answers: path.join(cwd, ANSWERS_FILE),
-    customManifest: path.join(cwd, CUSTOM_DIR, CUSTOM_MANIFEST),
-    context: path.join(cwd, BASE_DIR, CONTEXT_DIR),
+    mode,
+    configured: Boolean(located),
+    configFile: located?.file ?? null,
+    base: packageRoot,
+    customDir,
+    custom: path.join(cwd, customDir),
+    customManifest: path.join(cwd, customDir, CUSTOM_MANIFEST_FILE),
+    context: path.join(cwd, customDir, CONTEXT_DIR),
     vscode: path.join(cwd, '.vscode'),
     gitignore: path.join(cwd, '.gitignore'),
   }
