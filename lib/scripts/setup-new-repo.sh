@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # lib/scripts/setup-new-repo.sh — finishes setting up a brand-new GitHub repo,
 # right after lib/scripts/create-github-repo.sh, branching on `github_preset`
-# from wizard/manifest.yaml (values: conservative/direct/custom).
+# from create-excalibur/onboarding/manifest.yaml (values: conservative/direct/custom).
 #
 # Usage: lib/scripts/setup-new-repo.sh <path> <repo-name> <conservative|direct|custom> [description]
 # Requires: gh installed and authenticated (see check-gh.sh); <path> must already
@@ -17,7 +17,7 @@
 #                   this preset.
 #   custom       -> base config only. Deliberate no-op beyond that: the manifest's
 #                   `custom` option is open-ended free text with no fixed script
-#                   behavior yet (see wizard/manifest.yaml, github_preset).
+#                   behavior yet (see create-excalibur/onboarding/manifest.yaml, github_preset).
 set -euo pipefail
 
 TARGET_PATH="${1:-}"

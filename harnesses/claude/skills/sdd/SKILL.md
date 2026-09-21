@@ -15,7 +15,7 @@ If the user came in through a task-type skill (`/feat`, `/fix`, `/refactor`…),
 
 ## What to do
 
-1. **Confirm the project is onboarded.** Is there an `Excalibur` config file at the root? If not, check `.sdd/` and a sibling `<repo>-sdd/` (see "Detection" in [`wizard/entrypoint.md`](../../../../wizard/entrypoint.md)). If none exist, stop and offer `/excalibur-init` — don't improvise a structure.
+1. **Confirm the project is onboarded.** Is there an `Excalibur` config file at the root? If not, check `.sdd/` and a sibling `<repo>-sdd/` (see "Detection" in [`create-excalibur/onboarding/flow.md`](../../../../create-excalibur/onboarding/flow.md)). If none exist, stop and offer `/excalibur-init` — don't improvise a structure.
 
 2. **Read, in this order:**
    - `.excalibur-session.yaml`, if present — the session directives change what runs.

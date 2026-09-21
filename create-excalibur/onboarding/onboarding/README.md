@@ -1,4 +1,4 @@
-# wizard/onboarding/
+# create-excalibur/onboarding/onboarding/
 
 Pre-written files copied into the SDD destination based on the answers to [`../manifest.yaml`](../manifest.yaml). One folder per question that materializes a file.
 

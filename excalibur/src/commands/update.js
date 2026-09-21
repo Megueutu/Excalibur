@@ -52,7 +52,7 @@ export async function update(args, cwd) {
 
   spinner.stop(`${BASE_DIR}/ updated`)
 
-  // PENDENTE-REVISÃO: see cli/src/lib/migrations.js — section 22 is a 🔧 proposal
+  // PENDENTE-REVISÃO: see src/lib/migrations.js — section 22 is a 🔧 proposal
   // and this path has never run against a real breaking change.
   const migrated = applyMigrations(cwd, { dryRun: Boolean(args['dry-run']) })
   if (migrated.moved.length) {

@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# wizard/init.sh — materializes the SDD destination for a project.
+# create-excalibur/onboarding/init.sh — materializes the SDD destination for a project.
 #
 # Usage:
-#   wizard/init.sh embedded <target-path> ""             [copy-list-file]
-#   wizard/init.sh separate <target-path> <project-name> [copy-list-file]
-#   wizard/init.sh external <target-path> <sdd-path>     [copy-list-file]
+#   create-excalibur/onboarding/init.sh embedded <target-path> ""             [copy-list-file]
+#   create-excalibur/onboarding/init.sh separate <target-path> <project-name> [copy-list-file]
+#   create-excalibur/onboarding/init.sh external <target-path> <sdd-path>     [copy-list-file]
 #
 #   embedded  -> <target-path>/.sdd
 #   separate  -> <target-path>/<project-name>-sdd        (sibling of the repo)
@@ -12,7 +12,7 @@
 #                fully outside the repo tree; created if missing)
 #
 #   copy-list-file: optional path to a file with "<source>\t<dest>" lines —
-#     source relative to wizard/ (this script's directory), dest relative
+#     source relative to create-excalibur/onboarding/ (this script's directory), dest relative
 #     to the SDD destination. Each pair is copied after the base structure
 #     is created.
 #
@@ -22,9 +22,9 @@ set -euo pipefail
 usage() {
   cat >&2 <<'USAGE'
 Usage:
-  wizard/init.sh embedded <target-path> ""             [copy-list-file]
-  wizard/init.sh separate <target-path> <project-name> [copy-list-file]
-  wizard/init.sh external <target-path> <sdd-path>     [copy-list-file]
+  create-excalibur/onboarding/init.sh embedded <target-path> ""             [copy-list-file]
+  create-excalibur/onboarding/init.sh separate <target-path> <project-name> [copy-list-file]
+  create-excalibur/onboarding/init.sh external <target-path> <sdd-path>     [copy-list-file]
 USAGE
 }
 

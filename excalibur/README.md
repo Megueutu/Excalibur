@@ -1,15 +1,17 @@
-# cli/
+# excalibur/
 
-The npm-publishable Node CLI. This is the **distribution mechanism** — it is not where framework content lives.
+The npm-publishable Node CLI for ongoing Excalibur commands (`init`, `update`, `customize`, `check`, `status`, and the rest — see the table below). This is the **distribution mechanism** — it is not where framework content lives.
 
-`wizard/`, `lib/pipeline/`, `rules/` and `reflection/` are the source of truth for content. The CLI packages and copies them. If a rule's text ever appears inside `cli/src/`, that's a bug.
+`lib/`, `rules/` and `reflection/`, at the repo root, are the source of truth for content. The CLI packages and copies them. If a rule's text ever appears inside `excalibur/src/`, that's a bug.
 
 ```
-cli/
+excalibur/
   bin/excalibur.js        entrypoint and command dispatch
   src/commands/           one file per command
   src/lib/                override resolution, build, paths, minimal YAML
 ```
+
+`excalibur/` is one of two packages in this repo. The other, `create-excalibur/`, is the separate one-time scaffold package behind `npm create excalibur` — it depends on this package (`file:../excalibur`) to reuse the `init` command's logic rather than duplicating it. `excalibur/` itself has no dependency in the other direction.
 
 ## Commands
 
@@ -28,7 +30,7 @@ cli/
 
 ## Decisions worth knowing before changing anything here
 
-**Single package.** One `package.json` at the repository root covers the CLI *and* the framework content, at one version. That's what OpenSpec and BMad Method both do. Splitting into a workspace with independent versions is a later move, justified only if the CLI and the content start evolving at genuinely different rates.
+**Two packages, one repo.** `excalibur/` and `create-excalibur/` are separate `package.json`s living side by side at the repo root, each with its own version and `bin` entry. `lib/`, `rules/`, `reflection/` and `harnesses/` stay at the repo root rather than inside either package — they're shared source-of-truth content, not code that belongs to the CLI. This package finds them by walking up from its own location: `excalibur/src/lib/paths.js`'s `packageRoot` resolves three levels up from `excalibur/src/lib`, which lands back on the repo root regardless of whether `excalibur/` is used directly or pulled in as `create-excalibur/`'s `file:../excalibur` dependency (npm resolves that as a symlink back into this same checkout, so the three-levels-up arithmetic still lands in the right place). That resolution only works from inside this repo checkout — a real npm registry publish of either package would need to solve how `lib/`/`rules/`/`reflection/`/`harnesses/` travel with it, which is deliberately deferred (see `PENDENCIAS.md` item 5). A full npm-workspaces setup, or fully independent publishable packages with their own copies of shared content, is a later move if the two packages start evolving at genuinely different rates.
 
 **Three dependencies, deliberately.** `@clack/prompts` (the interface), `mri` (flag parsing, for non-interactive use), `picocolors` (color) — exactly what `create-vite` uses. YAML is read by a small in-repo reader (`src/lib/yaml.js`) rather than a fourth dependency; if it ever needs anchors or flow collections, that's the signal to swap in the `yaml` package, and the change is contained to that one file.
 

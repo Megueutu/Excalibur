@@ -39,7 +39,7 @@ Context-gathering, not a manifest question. It shapes how you read the project b
 
 ## 4. Ask the manifest questions
 
-Read [`wizard/manifest.yaml`](manifest.yaml).
+Read [`create-excalibur/onboarding/manifest.yaml`](manifest.yaml).
 
 **First, ask the `master` question**: customize, or use the defaults?
 
@@ -72,9 +72,9 @@ For each answered question, look at the chosen option:
 ## 7. Run the script
 
 ```bash
-wizard/init.sh embedded <target-path> ""             [copy-list-file]
-wizard/init.sh separate <target-path> <project-name> [copy-list-file]
-wizard/init.sh external <target-path> <sdd-path>     [copy-list-file]
+create-excalibur/onboarding/init.sh embedded <target-path> ""             [copy-list-file]
+create-excalibur/onboarding/init.sh separate <target-path> <project-name> [copy-list-file]
+create-excalibur/onboarding/init.sh external <target-path> <sdd-path>     [copy-list-file]
 ```
 
 This creates the destination structure (`specs/`, `ideas/`, `architecture/`, `Templates/`, `reflection/`) and copies every pair from the copy list on top of the files it always copies. Full contract in `init.sh`'s header.

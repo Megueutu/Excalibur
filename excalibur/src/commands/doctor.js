@@ -21,7 +21,7 @@ import { orphanedCustomizations } from '../lib/resolve.js'
  * done). This walks the tree the same way clean-history.js already walks for
  * history.yaml, rather than guessing a single fixed location. It only reaches an SDD
  * that lives somewhere under `cwd` — a `separate` sibling folder or a fully `external`
- * destination (see wizard/manifest.yaml's `destination` question) is out of its reach,
+ * destination (see create-excalibur/onboarding/manifest.yaml's `destination` question) is out of its reach,
  * and that limitation is reported rather than silently producing a false "missing".
  */
 function findCanvasAndTasks(cwd) {
@@ -63,7 +63,7 @@ export async function doctor(args, cwd) {
   const lines = []
   let problems = 0
 
-  // 1. Orphaned customizations — a rename or removal upstream (see cli/src/lib/
+  // 1. Orphaned customizations — a rename or removal upstream (see src/lib/
   //    migrations.js) left a customized file pointing at nothing in the current
   //    .excalibur/. Reuses resolve.js — the same check `status` already surfaces —
   //    rather than re-deriving it here.

@@ -1,6 +1,6 @@
 # Git — conventions for this repository
 
-Commit rules for the Excalibur repository itself. Not to be confused with the git rules Excalibur *generates* for other projects (`wizard/onboarding/github/`) — those are independent and chosen per project.
+Commit rules for the Excalibur repository itself. Not to be confused with the git rules Excalibur *generates* for other projects (`create-excalibur/onboarding/onboarding/github/`) — those are independent and chosen per project.
 
 ## Commit messages
 

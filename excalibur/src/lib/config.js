@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { createRequire } from 'node:module'
-import { projectPaths, packageRoot, CUSTOM_DIR } from './paths.js'
+import { projectPaths, ownRoot, onboardingManifestPath, CUSTOM_DIR } from './paths.js'
 import { parse, stringify } from './yaml.js'
 import { writeText, listFiles } from './fsx.js'
 
@@ -10,7 +10,7 @@ const require = createRequire(import.meta.url)
 /** Version of the installed framework, read from the package's own package.json. */
 export function frameworkVersion() {
   try {
-    return require(path.join(packageRoot, 'package.json')).version
+    return require(path.join(ownRoot, 'package.json')).version
   } catch {
     return '0.0.0'
   }
@@ -18,7 +18,7 @@ export function frameworkVersion() {
 
 /** The manifest that drives onboarding. */
 export function loadManifest() {
-  return parse(fs.readFileSync(path.join(packageRoot, 'wizard', 'manifest.yaml'), 'utf8'))
+  return parse(fs.readFileSync(onboardingManifestPath, 'utf8'))
 }
 
 /** Every question resolved to its default — the "use the defaults" path. */
@@ -170,8 +170,8 @@ export function resolveSddPath(cwd, answers) {
  * Writes the empty marker file inside the SDD destination, if that destination
  * already exists. Most of the time it doesn't yet at this point — the CLI's `init`
  * only collects answers and installs `.excalibur/`; the SDD folder itself is
- * materialized later, by the harness skill (see `wizard/entrypoint.md` and
- * `wizard/init.sh`). This is still worth calling: it covers a re-run of `init`
+ * materialized later, by the harness skill (see `create-excalibur/onboarding/flow.md` and
+ * `create-excalibur/onboarding/init.sh`). This is still worth calling: it covers a re-run of `init`
  * against a project whose SDD destination already exists, and it keeps the marker
  * logic in one place for whatever step creates the folder to reuse.
  */

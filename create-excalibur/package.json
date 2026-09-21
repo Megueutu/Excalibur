@@ -1,0 +1,34 @@
+{
+  "name": "create-excalibur",
+  "version": "0.2.0",
+  "description": "Scaffold a new Excalibur SDD project — the npm create excalibur entry point",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "create-excalibur": "bin/create-excalibur.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "onboarding/",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {},
+  "dependencies": {
+    "@clack/prompts": "^0.7.0",
+    "mri": "^1.2.0",
+    "picocolors": "^1.0.0",
+    "excalibur": "file:../excalibur"
+  },
+  "keywords": [
+    "sdd",
+    "spec-driven-development",
+    "claude",
+    "claude-code",
+    "create-excalibur"
+  ]
+}

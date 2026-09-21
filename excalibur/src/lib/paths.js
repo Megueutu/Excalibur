@@ -12,8 +12,35 @@ import path from 'node:path'
 
 const here = path.dirname(fileURLToPath(import.meta.url))
 
-/** Root of the Excalibur package itself (the source of truth for content). */
+/**
+ * Root of the excalibur package itself (the source of truth for content).
+ *
+ * Three levels up from here (excalibur/src/lib) is the repo root, where lib/,
+ * rules/, reflection/ and harnesses/ live as siblings of excalibur/ and
+ * create-excalibur/ — not inside excalibur/ itself. This only resolves correctly
+ * when excalibur/ is used from within this repo checkout (directly, or as a
+ * file: dependency of create-excalibur/, which npm resolves as a symlink back
+ * into this same checkout). A real npm registry publish would break this — see
+ * PENDENCIAS.md item 5, deliberately not solved here.
+ */
 export const packageRoot = path.resolve(here, '..', '..', '..')
+
+/**
+ * This package's own root folder (excalibur/ itself, two levels up from
+ * excalibur/src/lib) — distinct from `packageRoot` above, which is the repo root.
+ * Needed for anything that belongs to this package specifically, such as its own
+ * `package.json` (for `frameworkVersion()`) — reading `packageRoot`'s package.json
+ * would instead pick up the repo-root `excalibur-monorepo` marker, not this package.
+ */
+export const ownRoot = path.resolve(here, '..', '..')
+
+/**
+ * The onboarding manifest that drives `init` now lives in the sibling
+ * `create-excalibur/onboarding/` package folder (see Task 9), not inside
+ * `excalibur/` itself — `init`'s logic is shared, but the manifest content is
+ * scaffold-only and belongs with `create-excalibur`.
+ */
+export const onboardingManifestPath = path.join(packageRoot, 'create-excalibur', 'onboarding', 'manifest.yaml')
 
 /** Folders of the package that get installed into a target project's .excalibur/. */
 export const shippedFolders = ['lib', 'rules', 'reflection']

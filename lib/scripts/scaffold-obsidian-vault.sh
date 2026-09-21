@@ -2,10 +2,10 @@
 # lib/scripts/scaffold-obsidian-vault.sh — materializes a minimal .obsidian/
 # config folder inside the SDD destination, when the manifest's `obsidian_vault`
 # answer is `vault` (not `md_only`). Closes a real gap: the option has existed in
-# wizard/manifest.yaml since onboarding was written, but nothing implemented it.
+# create-excalibur/onboarding/manifest.yaml since onboarding was written, but nothing implemented it.
 #
 # Usage: lib/scripts/scaffold-obsidian-vault.sh <sdd-destination-path>
-# Requires: the destination must already exist (run after wizard/init.sh).
+# Requires: the destination must already exist (run after create-excalibur/onboarding/init.sh).
 # Exit codes: 0 = created (or already present), 1 = bad args, 2 = destination
 #   missing.
 #
