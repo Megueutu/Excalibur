@@ -89,6 +89,7 @@ function installFramework(cwd) {
   for (const folder of shippedFolders) {
     copyDir(path.join(packageRoot, folder), path.join(paths.base, folder))
   }
+  copyDir(path.join(packageRoot, '_migrations'), paths.migrations)
   copyDir(path.join(packageRoot, 'harnesses'), path.join(paths.base, 'harnesses'))
 
   writeText(

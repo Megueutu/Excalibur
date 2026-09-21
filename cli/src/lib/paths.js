@@ -16,7 +16,7 @@ const here = path.dirname(fileURLToPath(import.meta.url))
 export const packageRoot = path.resolve(here, '..', '..', '..')
 
 /** Folders of the package that get installed into a target project's .excalibur/. */
-export const shippedFolders = ['wizard', 'pipeline', 'rules', 'reflection']
+export const shippedFolders = ['lib', 'rules', 'reflection']
 
 /** Names used inside a target project. Fixed convention — not configurable. */
 export const BASE_DIR = '.excalibur'

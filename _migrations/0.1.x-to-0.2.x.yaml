@@ -1,0 +1,41 @@
+version: 1
+from: "0.1.x"
+to: "0.2.x"
+renames:
+  - from: pipeline/entrypoint.md
+    to: lib/pipeline/entrypoint.md
+  - from: pipeline/task-types.md
+    to: lib/pipeline/task-types.md
+  - from: pipeline/spec-template.md
+    to: lib/pipeline/spec-template.md
+  - from: pipeline/review-checklist.md
+    to: lib/pipeline/review-checklist.md
+  - from: pipeline/handoff-template.md
+    to: lib/pipeline/handoff-template.md
+removed:
+  - pipeline/agents/orchestrator.md
+  - pipeline/agents/spec-writer.md
+  - pipeline/agents/idealizador.md
+  - pipeline/agents/grill-me.md
+  - pipeline/agents/review.md
+  - pipeline/agents/translator.md
+  - pipeline/agents/docs-updater.md
+  - pipeline/agents/scenthound.md
+  - wizard/scripts/check-gh.sh
+  - wizard/scripts/check-git-repo.sh
+  - wizard/scripts/convert-history.sh
+  - wizard/scripts/create-github-repo.sh
+  - wizard/scripts/detect-ci.sh
+  - wizard/scripts/detect-monorepo.sh
+  - wizard/scripts/detect-os.sh
+  - wizard/scripts/detect-stack.sh
+  - wizard/scripts/init-git-repo.sh
+  - wizard/scripts/install-gh-linux-apt.sh
+  - wizard/scripts/install-gh-linux-dnf.sh
+  - wizard/scripts/install-gh-macos.sh
+  - wizard/scripts/install-gh-windows.sh
+  - wizard/scripts/record-history.sh
+  - wizard/scripts/scaffold-obsidian-vault.sh
+  - wizard/scripts/scan-spec-freshness.sh
+  - wizard/scripts/setup-new-repo.sh
+  - wizard/scripts/validate-md-size.sh
