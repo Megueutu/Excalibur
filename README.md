@@ -46,7 +46,7 @@ The first four are the framework's machinery; the last one is your project's con
 - [`docs/repo/purpose.md`](docs/repo/purpose.md) — why this exists
 - [`docs/repo/structure.md`](docs/repo/structure.md) — how the repository is organized
 - [`docs/repo/git.md`](docs/repo/git.md) — commit conventions for this repository
-- [`IMPLEMENTATION_PLAN.md`](IMPLEMENTATION_PLAN.md) / [`IMPLEMENTATION_NOTES.md`](IMPLEMENTATION_NOTES.md) / [`PENDENCIAS.md`](PENDENCIAS.md) — build status and open questions
+- [`.docs/IMPLEMENTATION_PLAN.md`](.docs/IMPLEMENTATION_PLAN.md) / [`.docs/IMPLEMENTATION_NOTES.md`](.docs/IMPLEMENTATION_NOTES.md) / [`.docs/PENDENCIAS.md`](.docs/PENDENCIAS.md) — build status and open questions
 
 ## License
 
