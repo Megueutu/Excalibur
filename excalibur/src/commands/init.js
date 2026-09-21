@@ -105,7 +105,6 @@ function installFramework(cwd) {
   for (const folder of shippedFolders) {
     copyDir(path.join(packageRoot, folder), path.join(paths.base, folder))
   }
-  copyDir(path.join(packageRoot, '_migrations'), paths.migrations)
   copyDir(path.join(packageRoot, 'harnesses'), path.join(paths.base, 'harnesses'))
   // onboarding/ ships the flow that .../skills/excalibur-init and .../skills/sdd
   // point at (`.excalibur/onboarding/...`) — it lives under create-excalibur/
@@ -136,43 +135,6 @@ function installFramework(cwd) {
     ].join('\n'),
   )
 
-  ensureDir(paths.migrations)
-  writeText(
-    path.join(paths.migrations, 'README.md'),
-    [
-      '# _migrations/',
-      '',
-      '<!-- PENDENTE-REVISÃO: section 22 of the design doc is a 🔧 technical proposal,',
-      '     written without the project owner\'s review, and this mechanism has never run',
-      '     against a real version bump. See PENDENCIAS.md item 12. -->',
-      '',
-      'Migration maps for versions that change the structure of `.excalibur/` in a way',
-      'that breaks existing overrides.',
-      '',
-      'One file per breaking version, named `<from>-to-<to>.yaml`:',
-      '',
-      '```yaml',
-      'version: 1',
-      'from: "1.x"',
-      'to: "2.x"',
-      'renames:',
-      '  - from: rules/global/kiss.md',
-      '    to: rules/principles/kiss.md',
-      'removed:',
-      '  - rules/old-thing.md',
-      '```',
-      '',
-      'On `excalibur update`, a known rename moves the matching file in',
-      `\`${CUSTOM_DIR}/\` to its new path, so the customization survives. A deeper change`,
-      '— the path still exists but its expected content changed — is deliberately not',
-      'guessed at: it is reported as an orphaned customization in the update output and',
-      'in `excalibur status`, for a human to look at.',
-      '',
-      'That avoids both bad outcomes: deleting a customization silently, and blocking a',
-      'whole update over one orphan.',
-      '',
-    ].join('\n'),
-  )
 }
 
 /**

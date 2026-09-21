@@ -43,7 +43,7 @@ ${pc.bold('Commands')}
   customize <path>     Copy one file out of .excalibur/ so it can be edited safely
   check                Verify dependencies (node, git, bash, gh) before init
   status               Destination, customized files, last prune, installed version
-  doctor               Deeper SDD health check: orphans, missing READMEs, stale canvas
+  doctor               Deeper SDD health check: orphaned customizations, stale canvas
   list                 List in-progress tasks under specs/<repo>/*/ (alias: tasks)
   canvas               Regenerate project.canvas from the template, on demand
   diff [path]          Show .excalibur.custom/ vs. .excalibur/ defaults, with content

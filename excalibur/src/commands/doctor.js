@@ -63,10 +63,9 @@ export async function doctor(args, cwd) {
   const lines = []
   let problems = 0
 
-  // 1. Orphaned customizations — a rename or removal upstream (see src/lib/
-  //    migrations.js) left a customized file pointing at nothing in the current
-  //    .excalibur/. Reuses resolve.js — the same check `status` already surfaces —
-  //    rather than re-deriving it here.
+  // 1. Orphaned customizations — a removal or rename upstream left a customized
+  //    file pointing at nothing in the current .excalibur/. Reuses resolve.js —
+  //    the same check `status` already surfaces — rather than re-deriving it here.
   const orphans = orphanedCustomizations(cwd)
   if (orphans.length === 0) {
     lines.push(`${pc.green('✓')} customizations   no orphans in ${CUSTOM_DIR}/`)

@@ -59,7 +59,6 @@ export const CONFIG_FILE = 'Excalibur'
 export const SESSION_FILE = '.excalibur-session.yaml'
 export const ANSWERS_FILE = '.excalibur-answers.yaml'
 export const CUSTOM_MANIFEST = 'manifest.yaml'
-export const MIGRATIONS_DIR = '_migrations'
 export const CONTEXT_DIR = 'context'
 
 /** Where each harness actually reads its files from, inside a target project. */
@@ -80,7 +79,6 @@ export function projectPaths(cwd) {
     session: path.join(cwd, SESSION_FILE),
     answers: path.join(cwd, ANSWERS_FILE),
     customManifest: path.join(cwd, CUSTOM_DIR, CUSTOM_MANIFEST),
-    migrations: path.join(cwd, BASE_DIR, MIGRATIONS_DIR),
     context: path.join(cwd, BASE_DIR, CONTEXT_DIR),
     vscode: path.join(cwd, '.vscode'),
     gitignore: path.join(cwd, '.gitignore'),

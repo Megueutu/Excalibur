@@ -70,11 +70,11 @@ Itens da seção **"TODO — validações técnicas pendentes"** do `excalibur-d
 - **Implementado:** `.vscode/settings.json` com `files.associations` (realce YAML no arquivo `Excalibur` sem extensão) e `.vscode/extensions.json` recomendando `excalibur.icon-theme` pelo mecanismo nativo do VSCode.
 - **O que falta:** publicar de fato a extensão de tema de ícone. Até lá, a recomendação aponta pra uma extensão que ainda não existe.
 
-## 12. 🔧 Migração entre versões com breaking change (seção 22)
+## 12. 🔧 Migração entre versões com breaking change (seção 22) — REMOVIDO
 
-- **Toda a seção 22 é uma proposta técnica marcada 🔧** — pensada sem validação do dono do projeto.
-- **Implementado de forma provisória**, marcado `PENDENTE-REVISÃO` em `cli/src/lib/migrations.js` e `.excalibur/_migrations/README.md`: mapa de migração em YAML por versão, movimentação automática de override quando a renomeação é conhecida, e sinalização de "customização órfã" (no `update` e no `status`) quando a mudança for mais profunda que um simples caminho.
-- **O que falta:** revisão humana do mecanismo inteiro antes de confiar nele num update real.
+- **Toda a seção 22 era uma proposta técnica marcada 🔧** — pensada sem validação do dono do projeto.
+- **Implementado de forma provisória** durante a reorganização do repositório (`cli/src/lib/migrations.js`, `_migrations/0.1.x-to-0.2.x.yaml`), mas removido em seguida por decisão do dono do projeto: ninguém instalou o Excalibur ainda, então não existe "versão anterior real" pra migrar — o mecanismo inteiro era escopo prematuro.
+- **Retomar quando o projeto tiver uma versão publicada de verdade e usuários reais instalados** — aí sim faz sentido reconstruir o mapa de migração contra um breaking change genuíno, em vez de contra o histórico interno de reorganização deste repositório.
 
 ## 13. Formato de arquivo do conversor de histórico
 

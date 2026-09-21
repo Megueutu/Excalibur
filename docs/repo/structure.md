@@ -6,7 +6,7 @@ Excalibur/
   excalibur/                 npm-publishable CLI: the ongoing, per-task distribution mechanism
     bin/excalibur.js
     src/commands/            one file per command in the CLI reference
-    src/lib/                 override resolution, build, paths, minimal YAML, migrations
+    src/lib/                 override resolution, build, paths, minimal YAML
   create-excalibur/          npm-publishable scaffold CLI: one-time onboarding (`npx create-excalibur`)
     bin/create-excalibur.js
     onboarding/               manifest.yaml, init.sh, pre-written files copied based on the answers
@@ -29,7 +29,6 @@ Excalibur/
     superpowers/              plans and design specs produced while building this repo
     IMPLEMENTATION_PLAN*.md, IMPLEMENTATION_NOTES*.md, PENDENCIAS.md
   .superpowers/               local, gitignored-by-default working state for the superpowers skills (briefs, reports, progress notes)
-  _migrations/                versioned migration maps consumed by `excalibur update`
   scratchpad/                 local scratch space for temporary files, not part of the shipped framework
   bootstrap-check.ps1         the one .ps1 wrapper in the repo — checks whether `bash` is on PATH before any .sh script runs
 ```

@@ -2,7 +2,7 @@ import path from 'node:path'
 import { readdirSync } from 'node:fs'
 import * as p from '@clack/prompts'
 import pc from 'picocolors'
-import { packageRoot, shippedFolders, projectPaths, BASE_DIR, CUSTOM_DIR, MIGRATIONS_DIR } from '../lib/paths.js'
+import { packageRoot, shippedFolders, projectPaths, BASE_DIR, CUSTOM_DIR } from '../lib/paths.js'
 import { copyDir, exists, removeDir } from '../lib/fsx.js'
 import {
   readConfig,
@@ -11,7 +11,6 @@ import {
   syncCustomManifest,
   readAnswers,
 } from '../lib/config.js'
-import { applyMigrations } from '../lib/migrations.js'
 import { orphanedCustomizations } from '../lib/resolve.js'
 import { build } from '../lib/build.js'
 import { installFeatureFragments, writeClaudeMd } from './init.js'
@@ -46,12 +45,9 @@ export async function update(args, cwd) {
     copyDir(path.join(packageRoot, folder), path.join(paths.base, folder))
   }
 
-  // _migrations/ and onboarding/ are framework-shipped content too, but they don't
-  // live as plain siblings of shippedFolders at the repo root (see paths.js), so
-  // they're re-synced explicitly here instead of through the loop above.
-  removeDir(paths.migrations)
-  copyDir(path.join(packageRoot, '_migrations'), paths.migrations)
-
+  // onboarding/ is framework-shipped content too, but it doesn't live as a plain
+  // sibling of shippedFolders at the repo root (see paths.js), so it's re-synced
+  // explicitly here instead of through the loop above.
   const onboardingDir = path.join(paths.base, 'onboarding')
   removeDir(onboardingDir)
   copyDir(path.join(packageRoot, 'create-excalibur', 'onboarding'), onboardingDir)
@@ -60,7 +56,7 @@ export async function update(args, cwd) {
   // expected set — leftovers from an older shippedFolders (e.g. a pre-reorg
   // `wizard/` or `pipeline/`) would otherwise sit there forever, and would also
   // defeat orphanedCustomizations() by making a stale path look alive.
-  const expectedTopLevel = new Set([...shippedFolders, 'harnesses', 'onboarding', MIGRATIONS_DIR, 'README.md'])
+  const expectedTopLevel = new Set([...shippedFolders, 'harnesses', 'onboarding', 'README.md'])
   if (exists(paths.base)) {
     for (const entry of readdirSync(paths.base)) {
       if (!expectedTopLevel.has(entry)) removeDir(path.join(paths.base, entry))
@@ -72,22 +68,6 @@ export async function update(args, cwd) {
   writeClaudeMd(cwd)
 
   spinner.stop(`${BASE_DIR}/ updated`)
-
-  // PENDENTE-REVISÃO: see src/lib/migrations.js — section 22 is a 🔧 proposal
-  // and this path has never run against a real breaking change.
-  const migrated = applyMigrations(cwd, { dryRun: Boolean(args['dry-run']) })
-  if (migrated.moved.length) {
-    p.log.success(
-      `Moved ${migrated.moved.length} customization(s) to their new paths:\n` +
-        migrated.moved.map((m) => `  ${pc.dim(m.from)} -> ${m.to}`).join('\n'),
-    )
-  }
-  if (migrated.conflicts.length) {
-    p.log.warn(
-      'A rename target already had a customization — left both in place, nothing overwritten:\n' +
-        migrated.conflicts.map((c) => `  ${c.from} -> ${c.to}`).join('\n'),
-    )
-  }
 
   const orphans = orphanedCustomizations(cwd)
   if (orphans.length) {
