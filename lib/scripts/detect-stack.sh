@@ -40,6 +40,14 @@ elif has "Gemfile"; then
   LANGUAGE="ruby"
 elif has "composer.json"; then
   LANGUAGE="php"
+elif compgen -G "$TARGET/*.sln" >/dev/null || compgen -G "$TARGET/*.csproj" >/dev/null; then
+  LANGUAGE="csharp"
+elif has "Package.swift"; then
+  LANGUAGE="swift"
+elif has "pubspec.yaml"; then
+  LANGUAGE="dart"
+elif has "CMakeLists.txt"; then
+  LANGUAGE="cpp"
 fi
 
 # Framework: only checked for the ecosystems where a dependency name is a
@@ -47,13 +55,23 @@ fi
 if has "package.json"; then
   if grep -q '"next"' "$TARGET/package.json" 2>/dev/null; then
     FRAMEWORK="next"
+  elif grep -q '"@angular/core"' "$TARGET/package.json" 2>/dev/null; then
+    FRAMEWORK="angular"
+  elif grep -q '"nuxt"' "$TARGET/package.json" 2>/dev/null; then
+    FRAMEWORK="nuxt"
+  elif grep -q '"astro"' "$TARGET/package.json" 2>/dev/null; then
+    FRAMEWORK="astro"
+  elif grep -q '"marko"' "$TARGET/package.json" 2>/dev/null; then
+    FRAMEWORK="marko"
   elif grep -q '"react"' "$TARGET/package.json" 2>/dev/null; then
     FRAMEWORK="react"
   elif grep -q '"vue"' "$TARGET/package.json" 2>/dev/null; then
     FRAMEWORK="vue"
   elif grep -q '"svelte"' "$TARGET/package.json" 2>/dev/null; then
     FRAMEWORK="svelte"
-  elif grep -qE '"(express|fastify|nestjs|@nestjs/core)"' "$TARGET/package.json" 2>/dev/null; then
+  elif grep -qE '"(@nestjs/core|nestjs)"' "$TARGET/package.json" 2>/dev/null; then
+    FRAMEWORK="nestjs"
+  elif grep -qE '"(express|fastify)"' "$TARGET/package.json" 2>/dev/null; then
     FRAMEWORK="node"
   fi
 elif [[ "$LANGUAGE" == "python" ]]; then
@@ -62,6 +80,12 @@ elif [[ "$LANGUAGE" == "python" ]]; then
   elif grep -rqE '^(fastapi|FastAPI)' "$TARGET/requirements.txt" "$TARGET/pyproject.toml" 2>/dev/null; then
     FRAMEWORK="fastapi"
   fi
+elif [[ "$LANGUAGE" == "ruby" ]] && grep -qE "gem ['\"]rails['\"]" "$TARGET/Gemfile" 2>/dev/null; then
+  FRAMEWORK="rails"
+elif [[ "$LANGUAGE" == "php" ]] && grep -q '"laravel/framework"' "$TARGET/composer.json" 2>/dev/null; then
+  FRAMEWORK="laravel"
+elif [[ "$LANGUAGE" == "java" ]] && grep -rq 'spring' "$TARGET/pom.xml" "$TARGET/build.gradle" "$TARGET/build.gradle.kts" 2>/dev/null; then
+  FRAMEWORK="spring"
 fi
 
 # IDE: inferred from committed editor config, never from what's installed on

@@ -18,6 +18,65 @@ import {
   writeSddMarker,
 } from '../lib/config.js'
 import { build } from '../lib/build.js'
+import { detectStack } from '../lib/stack-detection.js'
+
+const STACK_COLORS = {
+  typescript: pc.cyan,
+  javascript: pc.yellow,
+  python: pc.blue,
+  go: pc.cyan,
+  rust: pc.red,
+  java: pc.red,
+  csharp: pc.magenta,
+  ruby: pc.red,
+  php: pc.magenta,
+  cpp: pc.blue,
+  swift: pc.red,
+  dart: pc.cyan,
+  next: pc.bold,
+  react: pc.cyan,
+  vue: pc.green,
+  svelte: pc.red,
+  angular: pc.red,
+  nuxt: pc.green,
+  astro: pc.magenta,
+  marko: pc.yellow,
+  node: pc.green,
+  nestjs: pc.red,
+  django: pc.green,
+  fastapi: pc.cyan,
+  rails: pc.red,
+  laravel: pc.red,
+  spring: pc.green,
+  vscode: pc.blue,
+  jetbrains: pc.magenta,
+}
+
+function recommendationFor(question, detection) {
+  if (!detection.available) return question.default
+  if (question.id === 'stack_language' && detection.language !== 'unknown') return detection.language
+  if (question.id === 'stack_framework') return detection.framework
+  if (question.id === 'stack_ide' && detection.ide !== 'unknown') return detection.ide
+  return question.default
+}
+
+function questionOptions(question, detection) {
+  const recommended = recommendationFor(question, detection)
+  const isStackQuestion = question.id.startsWith('stack_')
+  const options = [...(question.options ?? [])]
+
+  options.sort((a, b) => Number(b.value === recommended) - Number(a.value === recommended))
+
+  return options.map((option) => {
+    const color = isStackQuestion ? STACK_COLORS[option.value] : undefined
+    const wasDetected = detection.available && recommended === option.value && recommended !== question.default
+    return {
+      value: option.value,
+      label: color ? color(`◆ ${option.label}`) : option.label,
+      hint: option.value === recommended ? (wasDetected ? 'recommended · detected' : 'recommended') : undefined,
+    }
+  })
+}
 
 /**
  * `excalibur init` (via `create-excalibur` or re-run directly) — collect answers,
@@ -26,17 +85,14 @@ import { build } from '../lib/build.js'
  * (wherever npm installed this package) every time.
  */
 
-async function askQuestion(question) {
-  const options = (question.options ?? []).map((o) => ({
-    value: o.value,
-    label: o.label,
-    hint: o.value === question.default ? 'default' : undefined,
-  }))
+async function askQuestion(question, detection) {
+  const recommended = recommendationFor(question, detection)
+  const options = questionOptions(question, detection)
 
   const answer = await p.select({
     message: question.prompt,
     options,
-    initialValue: question.default,
+    initialValue: recommended,
   })
 
   if (p.isCancel(answer)) return { cancelled: true }
@@ -180,6 +236,21 @@ export async function init(args, cwd) {
   let mode = 'defaults'
   let answers = defaultAnswers(manifest)
   const freeText = {}
+  const detection = detectStack(cwd)
+
+  if (detection.available) {
+    if (detection.language !== 'unknown') answers.stack_language = detection.language
+    answers.stack_framework = detection.framework
+    if (detection.ide !== 'unknown') answers.stack_ide = detection.ide
+
+    const detectedItems = [
+      detection.language !== 'unknown' ? `Language  ${detection.language}` : '',
+      detection.framework !== 'none' ? `Framework ${detection.framework}` : '',
+      detection.ide !== 'unknown' ? `Editor    ${detection.ide}` : '',
+    ].filter(Boolean)
+
+    if (detectedItems.length) p.note(detectedItems.join('\n'), pc.cyan('Detected stack'))
+  }
 
   if (args.yes) {
     p.log.info('Running with --yes: every question resolved to its default.')
@@ -202,7 +273,8 @@ export async function init(args, cwd) {
 
     if (mode === 'customize') {
       for (const question of manifest.questions ?? []) {
-        const result = await askQuestion(question)
+        if (question.id === 'stack_language') p.log.info(pc.bold(pc.cyan('Stack & tooling')))
+        const result = await askQuestion(question, detection)
         if (result.cancelled) {
           p.cancel('Nothing was written.')
           return 1
@@ -213,7 +285,7 @@ export async function init(args, cwd) {
     } else {
       p.log.info(
         'Using the defaults:\n' +
-          (manifest.questions ?? []).map((q) => `  ${q.id}: ${pc.dim(q.default)}`).join('\n'),
+          (manifest.questions ?? []).map((q) => `  ${q.id}: ${pc.dim(answers[q.id])}`).join('\n'),
       )
     }
   }

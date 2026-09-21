@@ -22,7 +22,7 @@ master:
   default: defaults
   options:
     - value: defaults
-      label: "Use the defaults (recommended — every question below has one)"
+      label: "Use recommended settings (including the detected stack)"
     - value: customize
       label: "Customize — ask me each question"
 
@@ -137,20 +137,35 @@ questions:
     prompt: "Main language of the project?"
     default: unknown
     options:
+      - value: unknown
+        label: "Not sure — let Excalibur suggest it"
       - value: typescript
-        label: "TypeScript / JavaScript"
+        label: "TypeScript"
+      - value: javascript
+        label: "JavaScript"
       - value: python
         label: "Python"
       - value: go
         label: "Go"
+      - value: rust
+        label: "Rust"
+      - value: java
+        label: "Java / Kotlin"
+      - value: csharp
+        label: "C# / .NET"
+      - value: ruby
+        label: "Ruby"
+      - value: php
+        label: "PHP"
+      - value: cpp
+        label: "C / C++"
+      - value: swift
+        label: "Swift"
+      - value: dart
+        label: "Dart"
       - value: other
         label: "Another language (say which)"
         free_text: true
-      - value: unknown
-        label: "Detect it from the project"
-        review_hint: >-
-          Run lib/scripts/detect-stack.sh against the target path and confirm the result
-          with the user instead of silently accepting it.
 
   - id: stack_framework
     prompt: "Main framework, if any?"
@@ -160,8 +175,34 @@ questions:
         label: "None / not applicable"
       - value: react
         label: "React"
+      - value: next
+        label: "Next.js"
+      - value: vue
+        label: "Vue"
+      - value: nuxt
+        label: "Nuxt"
+      - value: svelte
+        label: "Svelte / SvelteKit"
+      - value: angular
+        label: "Angular"
+      - value: astro
+        label: "Astro"
+      - value: marko
+        label: "Marko"
       - value: node
-        label: "Node (backend)"
+        label: "Node.js backend"
+      - value: nestjs
+        label: "NestJS"
+      - value: django
+        label: "Django"
+      - value: fastapi
+        label: "FastAPI"
+      - value: rails
+        label: "Ruby on Rails"
+      - value: laravel
+        label: "Laravel"
+      - value: spring
+        label: "Spring"
       - value: other
         label: "Another framework (say which)"
         free_text: true
