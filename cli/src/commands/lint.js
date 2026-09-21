@@ -13,7 +13,7 @@ import { exists, listFiles } from '../lib/fsx.js'
  *
  * Two independent, mechanical checks:
  *   1. .md size limits (rules/md-size-limits.yaml) — shells out to
- *      wizard/scripts/validate-md-size.sh (5.3) rather than re-parsing the YAML
+ *      lib/scripts/validate-md-size.sh (5.3) rather than re-parsing the YAML
  *      allowlist a second time in JS. The script is the single source of truth for
  *      that logic; check.js already establishes that shelling out to bash is this
  *      CLI's accepted way to reuse a .sh script instead of duplicating it.
@@ -27,12 +27,12 @@ const NUMBERED_SUFFIX = /-\d+\.md$/i
 const SLUG = /^[a-z0-9]+(-[a-z0-9]+)*$/
 
 function findValidateScript(cwd) {
-  // Prefer the copy materialized inside the target project (.excalibur/wizard/...),
+  // Prefer the copy materialized inside the target project (.excalibur/lib/...),
   // since that's the version actually shipped to whoever runs `excalibur lint` in
   // their own CI. Fall back to the package's own copy — e.g. linting this repo itself.
-  const inProject = path.join(cwd, BASE_DIR, 'wizard', 'scripts', 'validate-md-size.sh')
+  const inProject = path.join(cwd, BASE_DIR, 'lib', 'scripts', 'validate-md-size.sh')
   if (exists(inProject)) return inProject
-  const inPackage = path.join(packageRoot, 'wizard', 'scripts', 'validate-md-size.sh')
+  const inPackage = path.join(packageRoot, 'lib', 'scripts', 'validate-md-size.sh')
   if (exists(inPackage)) return inPackage
   return null
 }

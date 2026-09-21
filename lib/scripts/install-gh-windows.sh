@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# wizard/scripts/install-gh-windows.sh — installs the latest GitHub CLI via winget.
-# Usage: wizard/scripts/install-gh-windows.sh
+# lib/scripts/install-gh-windows.sh — installs the latest GitHub CLI via winget.
+# Usage: lib/scripts/install-gh-windows.sh
 set -euo pipefail
 
 if ! command -v winget >/dev/null 2>&1; then

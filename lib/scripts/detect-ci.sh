@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# wizard/scripts/detect-ci.sh — detects whether the target project already has CI/CD
+# lib/scripts/detect-ci.sh — detects whether the target project already has CI/CD
 # configured, so the manifest question that asks the same thing doesn't have to be
 # asked when it's mechanically detectable. GitHub Actions is the priority (this repo
 # targets `gh`/GitHub workflows elsewhere); a few other providers are checked
 # because the check is a single cheap file/dir stat, not because this script tries
 # to be a general CI detector.
 #
-# Usage: wizard/scripts/detect-ci.sh <target-path>
+# Usage: lib/scripts/detect-ci.sh <target-path>
 # Output: two "key=value" lines — ci= (true/false) and provider= (the matched
 #   provider, or "none"). Checked in this order: GitHub Actions (.github/workflows/
 #   with at least one file in it), GitLab CI (.gitlab-ci.yml), CircleCI
@@ -17,7 +17,7 @@ set -euo pipefail
 TARGET="${1:-}"
 
 if [[ -z "$TARGET" || ! -d "$TARGET" ]]; then
-  echo "Usage: wizard/scripts/detect-ci.sh <target-path>" >&2
+  echo "Usage: lib/scripts/detect-ci.sh <target-path>" >&2
   exit 1
 fi
 

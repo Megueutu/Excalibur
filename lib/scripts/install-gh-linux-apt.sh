@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# wizard/scripts/install-gh-linux-apt.sh — installs the latest GitHub CLI via apt (Debian/Ubuntu).
-# Usage: wizard/scripts/install-gh-linux-apt.sh
+# lib/scripts/install-gh-linux-apt.sh — installs the latest GitHub CLI via apt (Debian/Ubuntu).
+# Usage: lib/scripts/install-gh-linux-apt.sh
 # Follows the official install steps from https://github.com/cli/cli/blob/trunk/docs/install_linux.md
 set -euo pipefail
 

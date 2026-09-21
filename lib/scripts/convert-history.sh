@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# wizard/scripts/convert-history.sh — converts task history into a compact digest.
+# lib/scripts/convert-history.sh — converts task history into a compact digest.
 #
-# Usage: wizard/scripts/convert-history.sh <sdd-destination> [output-file]
+# Usage: lib/scripts/convert-history.sh <sdd-destination> [output-file]
 #   Default output: <sdd-destination>/history-digest.yaml
 #
 # Why this exists: the working format of the history (what agents append during a
@@ -18,7 +18,7 @@ DEST="${1:-}"
 OUT="${2:-}"
 
 if [[ -z "$DEST" || ! -d "$DEST" ]]; then
-  echo "Usage: wizard/scripts/convert-history.sh <sdd-destination> [output-file]" >&2
+  echo "Usage: lib/scripts/convert-history.sh <sdd-destination> [output-file]" >&2
   exit 1
 fi
 
@@ -34,7 +34,7 @@ fi
 
 {
   echo "# Task history digest — generated, do not edit by hand."
-  echo "# Regenerate with: wizard/scripts/convert-history.sh <sdd-destination>"
+  echo "# Regenerate with: lib/scripts/convert-history.sh <sdd-destination>"
   echo "#"
   echo "# Fixed schema, written for an agent to read: one record per task, no free prose."
   echo "# Source of truth stays in each task's own history.yaml."

@@ -124,7 +124,7 @@ Independent items instead drop `depends_on` and use flat ids (`a`, `b`, `c` or `
 
 ## `history.yaml`
 
-Never written by hand — `wizard/scripts/record-history.sh` owns the format. A changelog per task, not a granular event log, and **not read by any agent** unless a handoff or the user explicitly asks for it.
+Never written by hand — `lib/scripts/record-history.sh` owns the format. A changelog per task, not a granular event log, and **not read by any agent** unless a handoff or the user explicitly asks for it.
 
 ```yaml
 version: 1

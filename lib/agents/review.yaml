@@ -26,7 +26,7 @@ body: |+
   Through the script, never by hand:
 
   ```bash
-  wizard/scripts/record-history.sh <task-dir> --what "…" --why "…" --checklist pass|fail --agent review
+  lib/scripts/record-history.sh <task-dir> --what "…" --why "…" --checklist pass|fail --agent review
   ```
 
   The script owns the format so the record stays consistent and costs nothing to produce. A changelog per task — what changed, why, how the checklist came out — not a granular event log.

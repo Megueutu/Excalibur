@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# wizard/scripts/detect-os.sh — prints one of: windows | macos | linux-apt | linux-dnf | unknown
-# Usage: wizard/scripts/detect-os.sh
+# lib/scripts/detect-os.sh — prints one of: windows | macos | linux-apt | linux-dnf | unknown
+# Usage: lib/scripts/detect-os.sh
 set -euo pipefail
 
 case "$(uname -s)" in

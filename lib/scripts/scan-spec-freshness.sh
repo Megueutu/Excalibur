@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# wizard/scripts/scan-spec-freshness.sh — deterministic sweep for specs that may have drifted
+# lib/scripts/scan-spec-freshness.sh — deterministic sweep for specs that may have drifted
 # from the code they describe. No LLM involved: everything here is a commit/tag/date check.
 # Judging whether a candidate is real drift or noise is `docs-updater`'s job
 # (lib/agents/docs-updater.yaml), not this script's.
 #
 # Usage:
-#   wizard/scripts/scan-spec-freshness.sh <sdd-path> [--repo <git-repo-path>] \
+#   lib/scripts/scan-spec-freshness.sh <sdd-path> [--repo <git-repo-path>] \
 #       [--age-threshold-days N] [--output <file>]
 #
 # <sdd-path>            Folder containing specs/<repo>/<task-slug>/spec.md files
@@ -39,7 +39,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 if [[ -z "$SDD_PATH" || ! -d "$SDD_PATH" ]]; then
-  echo "Usage: wizard/scripts/scan-spec-freshness.sh <sdd-path> [--repo <path>] [--age-threshold-days N] [--output <file>]" >&2
+  echo "Usage: lib/scripts/scan-spec-freshness.sh <sdd-path> [--repo <path>] [--age-threshold-days N] [--output <file>]" >&2
   exit 1
 fi
 

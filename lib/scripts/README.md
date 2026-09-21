@@ -1,4 +1,4 @@
-# wizard/scripts/
+# lib/scripts/
 
 Shell helpers the wizard and the pipeline call. Small, single-purpose, and callable by an agent without interpretation.
 

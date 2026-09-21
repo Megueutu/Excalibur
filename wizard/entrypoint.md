@@ -14,21 +14,21 @@ Before asking anything, confirm the project doesn't already have an SDD destinat
 
 ## 2. Detect and configure git/GitHub
 
-A context-gathering and setup step, not a manifest-driven question — it uses the scripts under [`wizard/scripts/`](scripts/) directly. It stays outside the CLI form on purpose: `gh auth login` is an interactive OAuth flow that can't be driven from a non-interactive collection script.
+A context-gathering and setup step, not a manifest-driven question — it uses the scripts under [`lib/scripts/`](scripts/) directly. It stays outside the CLI form on purpose: `gh auth login` is an interactive OAuth flow that can't be driven from a non-interactive collection script.
 
-a. Run [`wizard/scripts/check-gh.sh`](scripts/check-gh.sh).
+a. Run [`lib/scripts/check-gh.sh`](scripts/check-gh.sh).
    - Installed and authenticated → note it and continue.
    - Not installed → ask the user: "Install GitHub CLI (`gh`) now?"
-     - Yes → run [`wizard/scripts/detect-os.sh`](scripts/detect-os.sh) and run the matching installer (`install-gh-windows.sh`, `install-gh-macos.sh`, `install-gh-linux-apt.sh`, or `install-gh-linux-dnf.sh`) from the same folder, then re-run `check-gh.sh` to confirm.
+     - Yes → run [`lib/scripts/detect-os.sh`](scripts/detect-os.sh) and run the matching installer (`install-gh-windows.sh`, `install-gh-macos.sh`, `install-gh-linux-apt.sh`, or `install-gh-linux-dnf.sh`) from the same folder, then re-run `check-gh.sh` to confirm.
      - No → note "manual git workflow: no `gh`, PRs opened via a browser link, no automated repo creation" and continue.
    - Installed but not authenticated → tell the user to run `gh auth login` themselves; continue treating this the same as "not installed" for the rest of this step until they confirm.
 
-b. Run [`wizard/scripts/check-git-repo.sh`](scripts/check-git-repo.sh) `<target-path>`.
+b. Run [`lib/scripts/check-git-repo.sh`](scripts/check-git-repo.sh) `<target-path>`.
    - Already a git repository → continue.
-   - Not a git repository → ask whether to initialize one; if yes, run [`wizard/scripts/init-git-repo.sh`](scripts/init-git-repo.sh) `<target-path>`.
+   - Not a git repository → ask whether to initialize one; if yes, run [`lib/scripts/init-git-repo.sh`](scripts/init-git-repo.sh) `<target-path>`.
    - If no → note that the SDD destination is still created, but there's nothing versioning the project itself.
 
-c. Repository creation is **not** decided here — it's part of the `destination` question in step 4, whose `new_repo` option unifies "create the repo from scratch" with "choose where the SDD lives". If that option is chosen, come back and run [`wizard/scripts/create-github-repo.sh`](scripts/create-github-repo.sh) `<target-path> <name> <public|private>` during step 6, immediately followed by [`wizard/scripts/setup-new-repo.sh`](scripts/setup-new-repo.sh) `<target-path> <name> <github_preset>` to apply base repo config and the preset-specific setup (ruleset + PR template for `conservative`, none for `direct`/`custom`).
+c. Repository creation is **not** decided here — it's part of the `destination` question in step 4, whose `new_repo` option unifies "create the repo from scratch" with "choose where the SDD lives". If that option is chosen, come back and run [`lib/scripts/create-github-repo.sh`](scripts/create-github-repo.sh) `<target-path> <name> <public|private>` during step 6, immediately followed by [`lib/scripts/setup-new-repo.sh`](scripts/setup-new-repo.sh) `<target-path> <name> <github_preset>` to apply base repo config and the preset-specific setup (ruleset + PR template for `conservative`, none for `direct`/`custom`).
 
 ## 3. Ask: adapt an existing project or start from scratch?
 
@@ -83,7 +83,7 @@ For `destination: external`, the path comes from step 5 — `~/.excalibur/projec
 
 If `github_preset` was answered `custom`, write the user's free text to `git.md` in the destination yourself, after the script runs.
 
-If `obsidian_vault` was answered `vault`, run [`wizard/scripts/scaffold-obsidian-vault.sh`](scripts/scaffold-obsidian-vault.sh) `<sdd-destination-path>` right after `init.sh` finishes, to materialize a minimal `.obsidian/` config folder.
+If `obsidian_vault` was answered `vault`, run [`lib/scripts/scaffold-obsidian-vault.sh`](scripts/scaffold-obsidian-vault.sh) `<sdd-destination-path>` right after `init.sh` finishes, to materialize a minimal `.obsidian/` config folder.
 
 ## 8. Translate, only if `language` was answered `other`
 

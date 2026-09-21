@@ -55,7 +55,7 @@ Skip this entirely only when the session sets `skip-review`.
 
 ## History
 
-- `history.yaml` has an entry for this task, written through `wizard/scripts/record-history.sh`, unless the session sets `no-history`.
+- `history.yaml` has an entry for this task, written through `lib/scripts/record-history.sh`, unless the session sets `no-history`.
 
 ## Canvas
 

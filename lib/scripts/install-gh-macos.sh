@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# wizard/scripts/install-gh-macos.sh — installs the latest GitHub CLI via Homebrew.
-# Usage: wizard/scripts/install-gh-macos.sh
+# lib/scripts/install-gh-macos.sh — installs the latest GitHub CLI via Homebrew.
+# Usage: lib/scripts/install-gh-macos.sh
 set -euo pipefail
 
 if ! command -v brew >/dev/null 2>&1; then

@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# wizard/scripts/validate-md-size.sh — mechanical check of .md files under a target
+# lib/scripts/validate-md-size.sh — mechanical check of .md files under a target
 # directory against the allowlist in rules/md-size-limits.yaml.
 #
 # Model: ALLOWLIST (see that file's own header). Only files matching one of its
 # `match` globs are checked; everything else has no limit, by design — this script
 # never second-guesses that.
 #
-# Usage: wizard/scripts/validate-md-size.sh <target-dir>
+# Usage: lib/scripts/validate-md-size.sh <target-dir>
 # Output: one line per violation, tab-separated — "<path>\t<actual>\t<limit>\t<type>"
 #   — to stdout. Plain text on purpose, easy for a human to skim and trivial for a
 #   caller (excalibur lint, the review agent) to split on tabs.
@@ -15,13 +15,13 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Relative to this script, not to $PWD: this file ships both at the package root
-# (wizard/scripts/) and materialized into a target project (.excalibur/wizard/scripts/)
+# (lib/scripts/) and materialized into a target project (.excalibur/lib/scripts/)
 # — rules/ sits two levels up from either location, so one relative path works for both.
 LIMITS_FILE="$SCRIPT_DIR/../../rules/md-size-limits.yaml"
 TARGET="${1:-}"
 
 if [[ -z "$TARGET" || ! -d "$TARGET" ]]; then
-  echo "Usage: wizard/scripts/validate-md-size.sh <target-dir>" >&2
+  echo "Usage: lib/scripts/validate-md-size.sh <target-dir>" >&2
   exit 2
 fi
 

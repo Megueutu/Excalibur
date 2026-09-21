@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# wizard/scripts/scaffold-obsidian-vault.sh — materializes a minimal .obsidian/
+# lib/scripts/scaffold-obsidian-vault.sh — materializes a minimal .obsidian/
 # config folder inside the SDD destination, when the manifest's `obsidian_vault`
 # answer is `vault` (not `md_only`). Closes a real gap: the option has existed in
 # wizard/manifest.yaml since onboarding was written, but nothing implemented it.
 #
-# Usage: wizard/scripts/scaffold-obsidian-vault.sh <sdd-destination-path>
+# Usage: lib/scripts/scaffold-obsidian-vault.sh <sdd-destination-path>
 # Requires: the destination must already exist (run after wizard/init.sh).
 # Exit codes: 0 = created (or already present), 1 = bad args, 2 = destination
 #   missing.
@@ -17,7 +17,7 @@ set -euo pipefail
 DEST="${1:-}"
 
 if [[ -z "$DEST" ]]; then
-  echo "Usage: wizard/scripts/scaffold-obsidian-vault.sh <sdd-destination-path>" >&2
+  echo "Usage: lib/scripts/scaffold-obsidian-vault.sh <sdd-destination-path>" >&2
   exit 1
 fi
 

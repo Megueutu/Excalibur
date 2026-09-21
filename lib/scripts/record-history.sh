@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# wizard/scripts/record-history.sh — appends one changelog entry to a task's history.yaml.
+# lib/scripts/record-history.sh — appends one changelog entry to a task's history.yaml.
 #
 # Usage:
-#   wizard/scripts/record-history.sh <task-dir> --what <text> --why <text> \
+#   lib/scripts/record-history.sh <task-dir> --what <text> --why <text> \
 #       [--result <text>] [--checklist pass|fail|skipped] [--agent <name>]
 #
 # Why a script and not an agent: the history is a mechanical, deterministic record.
@@ -34,7 +34,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 if [[ -z "$TASK_DIR" || ! -d "$TASK_DIR" ]]; then
-  echo "Usage: wizard/scripts/record-history.sh <task-dir> --what <text> --why <text> [--result <text>] [--checklist pass|fail|skipped] [--agent <name>]" >&2
+  echo "Usage: lib/scripts/record-history.sh <task-dir> --what <text> --why <text> [--result <text>] [--checklist pass|fail|skipped] [--agent <name>]" >&2
   exit 1
 fi
 

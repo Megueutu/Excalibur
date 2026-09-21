@@ -1,5 +1,5 @@
 name: docs-updater
-description: Use after `wizard/scripts/scan-spec-freshness.sh` has produced a candidate list, to judge which candidates are real spec drift and which are noise. Not for finding candidates itself — that's the deterministic script's job — and not for fixing the drift; it reports, and updates only `freshness_check`.
+description: Use after `lib/scripts/scan-spec-freshness.sh` has produced a candidate list, to judge which candidates are real spec drift and which are noise. Not for finding candidates itself — that's the deterministic script's job — and not for fixing the drift; it reports, and updates only `freshness_check`.
 tools: Read, Grep, Bash, Edit
 skills:
   - guardrail
@@ -11,7 +11,7 @@ body: |+
 
   ## Input
 
-  The candidate YAML from `wizard/scripts/scan-spec-freshness.sh` (via `/docs-update`), and nothing else pre-loaded. For each candidate you decide is worth a real look, pull the actual diffs yourself:
+  The candidate YAML from `lib/scripts/scan-spec-freshness.sh` (via `/docs-update`), and nothing else pre-loaded. For each candidate you decide is worth a real look, pull the actual diffs yourself:
 
   ```bash
   git log --oneline <linked_commit>..HEAD -- <referenced paths>
