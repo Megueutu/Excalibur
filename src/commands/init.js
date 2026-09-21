@@ -253,7 +253,11 @@ export async function init(args, cwd) {
   // the optional history-archive entries are ever added, same as before.
   const ignored = []
   if (answers.history_gitignore === 'ignored') ignored.push('history.yaml', 'history/archive/')
-  const added = ignored.length ? ensureGitignore(paths.gitignore, ignored, 'Excalibur') : []
+  // Discreet mode's .gitignore must not name "Excalibur"/"SDD" either — the
+  // comment header is the only bit of this call that could leak the name.
+  const added = ignored.length
+    ? ensureGitignore(paths.gitignore, ignored, configMode === 'discreet' ? 'ignored files' : 'Excalibur')
+    : []
 
   p.note(
     [
