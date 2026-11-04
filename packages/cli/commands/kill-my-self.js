@@ -55,6 +55,11 @@ export async function killMySelf(args, cwd) {
   p.log.info('Your SDD content (specs, architecture, ideas) is NOT touched — it is your project, not the installation.')
   p.log.info('node_modules/@easy-spec/excalibur is NOT removed — run `npm uninstall @easy-spec/excalibur` for that, separately.')
 
+  if (args['dry-run']) {
+    p.outro('Dry run complete. Nothing was removed.')
+    return 0
+  }
+
   if (!args.yes) {
     const confirmed = await p.confirm({
       message: 'Remove Excalibur from this project?',
