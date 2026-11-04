@@ -1,46 +1,49 @@
 # Prompt caching — where the stable prefix ends
 
-This is about Anthropic's actual prompt caching feature (`cache_control`), not a metaphor for organizing context. With an orchestrator plus handoffs plus implementation plus review, the same prefix gets re-sent many times per task, and that's the cost worth attacking.
+This is about the provider feature that lets a repeated prompt prefix be read back cheaply, not about organizing context in the abstract. With an orchestrator, handoffs, implementation and review, the same prefix is sent many times per task, and that repetition is the cost worth attacking.
 
-## The technical facts that shape the design
+## Numbers live elsewhere
 
-- **`cache_control: {type: "ephemeral"}` marks the end of a cacheable prefix.** Everything from the start of the request up to that block becomes a cache candidate. It is positional: the prefix must be byte-for-byte identical between calls to hit.
-- **Minimum ~1024 tokens** for a block to be worth caching. Small prefixes don't pay off.
-- **Maximum 4 breakpoints per request.** This is the constraint that actually forces a design — you can't just mark everything, you have to pick up to four cut points.
-- **Reading from cache costs ~10% of normal input.** The initial write costs a bit more (~1.25x for 5 minutes, ~2x for 1 hour). It pays off from the second reuse of the same prefix within the window.
-- **Lifetime under a Pro/Max subscription is 1 hour by default**, renewed on each use. It drops to 5 minutes only when consuming extra usage credits, or when access is through an API key or a cloud provider directly (where 1 hour is opt-in).
+Prices, minimum sizes, lifetimes and the number of cut points change by provider and over time. This file states only the principles that survive those changes. For the current figures, read the provider's own documentation before relying on any number, and treat anything remembered from earlier as unverified.
 
-Since Excalibur's audience is mostly individual developers and small teams on a Claude Code subscription, the real slack between handoffs is much larger than a raw API reading would suggest.
+## What stays true
+
+- **A cached prefix is positional.** Everything from the start of the request up to a marked cut point is a candidate, and it must be identical, byte for byte, between calls to be reused.
+- **Cut points are scarce.** Providers cap how many a request may mark, so the design must choose where they go instead of marking everything.
+- **Reading is cheaper than writing.** The first call pays a premium to store the prefix; the saving starts at the first reuse inside the window.
+- **Entries expire, and use renews them.** Calls that are too far apart pay the write cost again. Mixing different lifetimes in one request can be rejected, so keep one per request.
+- **Small prefixes do not pay off.** Below a minimum size the provider may not cache at all.
+- **Automatic caching, where offered, uses one of the same scarce cut points.** Count it when planning.
 
 ## The order, stable first
 
 ```
-1. rules/global/        KISS, YAGNI, DRY, SOLID      — identical across all projects
+1. rules/global/        general principles           — identical across all projects
 2. rules/stacks/*       the project's stack files     — changes only if the stack changes
 3. architecture/        living project knowledge      — changes across weeks
 4. the task's spec + handoff                          — changes every call
 ```
 
-Breakpoints go after 1, after 2 and after 3. **Level 4 always stays outside the cache** — it's the part that differs on every call, and including it would invalidate everything before it.
+Cut points go after 1, after 2 and after 3. **Level 4 always stays outside the cache**: it differs on every call, and including it would invalidate everything before it.
 
-That's three breakpoints, leaving one spare. Spend it on a fourth stable layer if a project has one (a large shared `design-system.md`, say) — not on splitting an existing level finer.
+If the provider allows a further cut point, spend it on another stable layer (a large shared design document, say), not on splitting an existing level finer.
 
 ## Don't cache everything, everywhere
 
-The goal isn't maximum coverage. It's making sure the sessions that are **already known to be expensive** have a well-defined stable prefix and calls close enough together in time:
+The goal is not maximum coverage. It is making sure the sessions already known to be expensive have a well-defined stable prefix and calls close enough together in time:
 
 - Many handoffs between orchestrator and agents
 - Large specs
 - Projects with a big `architecture/`
 
-A quick Fix with a single agent doesn't need any of this. Setting up caching for it costs more attention than it saves.
+A quick fix with a single agent needs none of this; setting up caching for it costs more attention than it saves.
 
-`/usage` and the status line's `prompt_cache` fields show local cost and cache behavior without any extra API call — that's how you find which sessions are the expensive ones instead of guessing.
+`excalibur budget` estimates how much context a task starts with, and the harness's own usage view shows real cost and cache behavior. Use them to find the expensive sessions instead of guessing.
 
 ## What breaks a cache hit, in practice
 
 - Anything that varies inside the prefix: a timestamp, a session id, a re-ordered list.
 - Reading architecture files in a different order between calls.
-- Interleaving task-specific content into a stable level — a single spec quote inside the rules block invalidates the whole prefix.
+- Interleaving task-specific content into a stable level: a single spec quote inside the rules block invalidates the whole prefix.
 
 `/magic-book` loads exactly these stable levels, in this order, which is why using it consistently also helps the cache hit.
