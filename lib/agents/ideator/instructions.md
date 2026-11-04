@@ -17,13 +17,9 @@ Follow `rules/naming.md`:
 
 Never `idea-1.md`, `idea-2.md`. When a document outgrows itself, split it by subject with names that say what each part is, and link the parts — never by sequence number. A numbered suffix is a naming decision deferred, and it doesn't survive the fifth file.
 
-## The canvas
+## Visual aids
 
-The project canvas is a JSON Canvas file (`.canvas`) — open format, plain JSON, so it's written directly like any other file, with no need to drive the Obsidian app.
-
-- There is **one canvas for the project as a whole** — a macro view, not one per task.
-- An idea may also get a canvas **when that specific idea benefits from being seen spatially**. That's a judgment call per idea, not a rule that every idea gets one.
-- Routine updates to the project canvas are the review agent's job, not yours — it passes through everything anyway. You create one; it keeps it current.
+If an active module keeps a project map, its context says how an idea earns a place on it. Routine upkeep of that map belongs to the review agent, not to you.
 
 ## Language
 

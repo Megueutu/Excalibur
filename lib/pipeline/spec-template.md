@@ -136,8 +136,8 @@ entries:
     agent: 'review'
 ```
 
-## Obsidian
+## Writing
 
-Frontmatter, wikilinks and callouts follow [`../rules/writing-md-obsidian.md`](../rules/writing-md-obsidian.md). `status` and `class` are the fields worth filtering on later — keep them current, not just correct at creation.
+Frontmatter and links follow [`../rules/writing-md.md`](../rules/writing-md.md), or the active module's rule where one overrides it. `status` and `class` are the fields worth filtering on later: keep them current, not just correct at creation.
 
-`spec.md`'s own frontmatter carries a second set of fields — `spec_id`, `status`, `last_updated`, `linked_commit`, `linked_release`, `depends_on`, `freshness_check` — that exist for anti-spec-drift, not for Obsidian filtering. What each one means and who writes it is documented in [`../rules/writing-md-obsidian.md`](../rules/writing-md-obsidian.md#anti-spec-drift-frontmatter).
+`spec.md`'s own frontmatter carries a second set of fields — `spec_id`, `status`, `last_updated`, `linked_commit`, `linked_release`, `depends_on`, `freshness_check` — that exist for anti-spec-drift, not for filtering. What each one means and who writes it is documented in [`../rules/writing-md.md`](../rules/writing-md.md#anti-spec-drift-frontmatter).

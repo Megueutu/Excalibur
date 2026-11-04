@@ -99,9 +99,6 @@ cp "$EXCALIBUR_ROOT/lib/pipeline/spec-template.md" "$DEST/Templates/spec-templat
 cp "$EXCALIBUR_ROOT/lib/pipeline/handoff-template.md" "$DEST/Templates/handoff-template.md"
 cp "$EXCALIBUR_ROOT/lib/reflection/when-to-pause.md" "$DEST/reflection/when-to-pause.md"
 cp "$EXCALIBUR_ROOT/lib/reflection/reasoning-chain.md" "$DEST/reflection/reasoning-chain.md"
-# JSON Canvas is an open format (plain JSON), so this is just a seed file the review
-# agent keeps current — the Obsidian app is never involved in writing it.
-cp "$EXCALIBUR_ROOT/lib/pipeline/project-canvas-template.canvas" "$DEST/project.canvas"
 touch "$DEST/specs/.gitkeep" "$DEST/ideas/.gitkeep" "$DEST/architecture/.gitkeep"
 # Empty marker so a renamed/moved SDD folder can still be found later by scanning
 # for this file instead of guessing by folder name — see lib/pipeline/sdd-path-recovery.md.

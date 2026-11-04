@@ -1,13 +1,8 @@
-# Obsidian integration
+# Obsidian
 
-This project's SDD destination is meant to be opened as an Obsidian vault.
+This project's SDD destination is meant to be opened as an Obsidian vault. This overrides the link and emphasis style of `rules/writing-md.md`.
 
-- Every `.md` file under the SDD destination follows `rules/writing-md-obsidian.md`
-  — frontmatter, `[[wikilinks]]` between notes, and callouts (`> [!note]`,
-  `> [!warning]`, `> [!danger]`) for decisions and open risks.
-- `project.canvas` at the root of the SDD destination is a JSON Canvas file (open
-  format, plain JSON) — open it in Obsidian for a spatial view of the project.
-  It's kept current by the `review` agent; regenerate it on demand with
-  `excalibur canvas`.
-- Don't rely on any Obsidian plugin being installed — everything here is plain
-  Markdown and plain JSON, readable with or without the app.
+- Follow `lib/modules/obsidian/rules/writing-md.md` of the installed package: `[[wikilinks]]` between notes, callouts for closed decisions and open risks.
+- Keep `project.canvas` at the root of the SDD destination current. After a task, the `review` agent walks `lib/modules/obsidian/rules/canvas-update-checklist.yaml` and updates the matching nodes. Create it with `excalibur canvas`.
+- Never translate wikilink targets or callout types.
+- Do not rely on any plugin being installed: everything is plain Markdown and plain JSON.

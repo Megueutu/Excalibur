@@ -37,5 +37,5 @@ task: <task-slug, if any>
 
 - Keep it under thirty lines. If it needs more, the decision is probably several.
 - Write for a reader who was not there. No shorthand from the conversation.
-- Link the task or spec it belongs to with a wikilink, when the project uses them.
+- Link the task or spec it belongs to, in the project's link style.
 - Never record a secret, a credential or personal data.

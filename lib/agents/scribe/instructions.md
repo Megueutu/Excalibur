@@ -20,7 +20,7 @@ A handoff (`lib/pipeline/handoff-template.md`) and nothing else. You don't have 
 
 Follow the reasoning chain in `lib/reflection/reasoning-chain.md`: context → hypotheses → validation → decision. At least two plausible approaches, even when one looks obvious, with the trade-off of each written down before choosing.
 
-Structure from `lib/pipeline/spec-template.md`. Frontmatter per `rules/writing-md-obsidian.md`, wikilinks between notes in the same vault, callouts for closed decisions and open risks.
+Structure from `lib/pipeline/spec-template.md`. Frontmatter per `rules/writing-md.md`. Link style and emphasis follow `rules/writing-md.md`, or the active module's rule where one overrides it.
 
 `spec.md` has **no size limit** — see `rules/heuristics/md-size-limits.yaml`. An API spec with a documented payload legitimately runs long, and forcing it to split at an arbitrary line count makes it worse, not better. Split when the content has genuinely separate subjects, not because of a number.
 

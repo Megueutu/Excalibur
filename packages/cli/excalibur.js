@@ -52,9 +52,9 @@ ${pc.bold('Commands')}
   mode [list|<name>|off]  Pick how the agent works with you: deep, ant-brain, vibecode
   budget               Estimate how much context an agent reads before a task starts (--json for the raw numbers)
   status               Destination, customized files, last prune, installed version
-  doctor               Deeper SDD health check: orphaned customizations, stale canvas
+  doctor               Deeper SDD health check: orphaned customizations, context size, module checks
   list                 List in-progress tasks under specs/<repo>/*/ (alias: tasks)
-  canvas               Regenerate project.canvas from the template, on demand
+  canvas               (obsidian module) Create or reset the project canvas
   diff [path]          Show your overrides folder vs. the package defaults, with content
   lint [dir]           Run the .md size-limit + naming-convention checks (CI-friendly)
   session [flag]       Set a session directive; with no argument, list them all

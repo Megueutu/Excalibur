@@ -8,7 +8,7 @@ The split is **structural** — decided by where a file sits, not by a list of e
 
 | | Translated? | What it is |
 |---|---|---|
-| **Visible SDD** | yes | `ideas/`, `architecture/`, `proposal.md`, `spec.md`, `design.md`, the project canvas — written for humans to read and collaborate on |
+| **Visible SDD** | yes | `ideas/`, `architecture/`, `proposal.md`, `spec.md`, `design.md`, any project map the project keeps — written for humans to read and collaborate on |
 | **Operational Excalibur** | **never** | the installed package (`node_modules/@easy-spec/excalibur/`) entirely (rules, agent prompts, session directives), `pipeline/`, `rules/`, `tasks.yaml`, `history.yaml` — machinery an agent consumes |
 
 The reason is token economy: nothing should spend tokens translating a file no human will ever read. It also removes the need for a list of exceptions — the answer comes from the file's position in the tree.
@@ -24,7 +24,7 @@ A folder path and a target language name, both given explicitly by the caller. *
 1. List every `.md` under the given folder, recursively.
 2. For each file:
    - Keep YAML frontmatter **keys** unchanged (`status`, `project`, `task`, `class`, `created`). Translate only free-text frontmatter *values*.
-   - Keep `[[wikilink]]` targets unchanged — a wikilink points at a note by its untranslated filename, and translating it breaks the link and the graph.
+   - Keep link targets unchanged: a link points at a note by its untranslated file name, and translating it breaks the link.
    - Keep heading levels, callout types (`[!note]`, `[!warning]`, `[!danger]`), and list/checkbox structure unchanged. Translate their text, not their syntax.
    - Keep code blocks, paths, commands and identifiers unchanged.
    - Translate the remaining prose and overwrite the file in place.

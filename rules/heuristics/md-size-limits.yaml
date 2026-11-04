@@ -9,7 +9,7 @@
 # worse. The limit exists where growth is a symptom, not where it is normal.
 #
 # THIS FILE IS THE SOURCE OF TRUTH. A file's own frontmatter may mirror its limit
-# (useful for Obsidian), but that copy is decorative — whether agents read
+# (useful for note tools), but that copy is decorative — whether agents read
 # frontmatter reliably is still an open question, so nothing depends on it.
 #
 # Checked by lib/pipeline/review-checklist.md: a task cannot be called done with an

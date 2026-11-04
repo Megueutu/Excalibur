@@ -26,15 +26,15 @@ architecture/
   roadmap-billing.md
 ```
 
-Each name says what's in the file. The index links them, which also makes the split visible in Obsidian's graph instead of leaving three orphan notes.
+Each name says what's in the file. The index links them, which keeps the split visible instead of leaving three orphan notes.
 
 Whether the index stays in the original file or becomes a new one is **not** a global rule — it depends on that directory's convention. See `md-size-limits.yaml`.
 
 ## Slugs
 
-Lowercase, hyphen-separated, no accents: `auth-rewrite`, not `Auth_Rewrite` or `autenticação`. Filenames end up in URLs, in wikilinks and on filesystems with different case behavior; a slug that survives all three is worth the small loss of expressiveness.
+Lowercase, hyphen-separated, no accents: `auth-rewrite`, not `Auth_Rewrite` or `autenticação`. Filenames end up in URLs, in links and on filesystems with different case behavior; a slug that survives all three is worth the small loss of expressiveness.
 
-A task's slug is the folder name under `specs/<repo>/` and is what its wikilinks point at. Renaming it later breaks every link to it, so pick it when the task is understood, not on first mention.
+A task's slug is the folder name under `specs/<repo>/` and is what its links point at. Renaming it later breaks every link to it, so pick it when the task is understood, not on first mention.
 
 ## Folders
 
@@ -43,7 +43,7 @@ A task's slug is the folder name under `specs/<repo>/` and is what its wikilinks
 | `specs/<repo>/<task-slug>/` | The five files of one task |
 | `ideas/` | Thinking not yet formalized |
 | `architecture/` | Living knowledge about how the project is built |
-| `Templates/` | Copies used by Obsidian's template tools |
+| `Templates/` | Copies of the task templates |
 | `reflection/` | How to reason while producing a spec |
 
 `architecture/` is split by subject, never by size: `stack.md`, `auth-flow.md`, `deploy.md` — not `architecture-1.md`.

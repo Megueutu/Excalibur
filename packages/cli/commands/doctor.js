@@ -4,6 +4,7 @@ import * as p from '@clack/prompts'
 import pc from 'picocolors'
 import { projectPaths } from '../core/paths.js'
 import { existingSddPath } from '../core/config.js'
+import { activeModules } from '../core/modules.js'
 import { measureContext } from '../core/budget.js'
 import { exists } from '../core/fsx.js'
 import { orphanedCustomizations } from '../core/resolve.js'
@@ -73,7 +74,7 @@ export async function doctor(args, cwd) {
     for (const o of orphans) lines.push(`    ${paths.customDir}/${o}`)
   }
 
-  // 2. Canvas out of sync with tasks.yaml. Best effort, not exact: a real diff would
+  // 2. (obsidian module) Canvas out of sync with tasks.yaml. Best effort, not exact: a real diff would
   //    need to know which tasks.yaml the canvas is *supposed* to reflect, and nothing
   //    records that (updating it is a judgment call the `review` agent makes, per
   //    rules/heuristics/canvas-update-checklist.yaml). The heuristic here is mtime-based — any
@@ -81,20 +82,22 @@ export async function doctor(args, cwd) {
   //    False positives are possible (a tasks.yaml touched without anything
   //    canvas-worthy changing), and false negatives too (the canvas kept up by hand
   //    right after). Good enough to prompt a human look; not authoritative.
-  const { canvas, taskFiles } = findCanvasAndTasks(cwd)
-  if (!canvas) {
-    lines.push(`${pc.yellow('!')} canvas           project.canvas not found — run \`excalibur canvas\` once the SDD exists`)
-  } else if (taskFiles.length === 0) {
-    lines.push(`${pc.green('✓')} canvas           found, no tasks.yaml to compare against`)
-  } else {
-    const canvasMtime = fs.statSync(canvas).mtimeMs
-    const staleTasks = taskFiles.filter((f) => fs.statSync(f).mtimeMs > canvasMtime)
-    if (staleTasks.length === 0) {
-      lines.push(`${pc.green('✓')} canvas           up to date with every tasks.yaml (heuristic: mtime)`)
+  if (activeModules(cwd).includes('obsidian')) {
+    const { canvas, taskFiles } = findCanvasAndTasks(cwd)
+    if (!canvas) {
+      lines.push(`${pc.yellow('!')} canvas           project.canvas not found — run \`excalibur canvas\` once the SDD exists`)
+    } else if (taskFiles.length === 0) {
+      lines.push(`${pc.green('✓')} canvas           found, no tasks.yaml to compare against`)
     } else {
-      problems++
-      lines.push(`${pc.yellow('!')} canvas           ${staleTasks.length} tasks.yaml newer than project.canvas (heuristic: mtime)`)
-      for (const f of staleTasks) lines.push(`    ${path.relative(cwd, f).split(path.sep).join('/')}`)
+      const canvasMtime = fs.statSync(canvas).mtimeMs
+      const staleTasks = taskFiles.filter((f) => fs.statSync(f).mtimeMs > canvasMtime)
+      if (staleTasks.length === 0) {
+        lines.push(`${pc.green('✓')} canvas           up to date with every tasks.yaml (heuristic: mtime)`)
+      } else {
+        problems++
+        lines.push(`${pc.yellow('!')} canvas           ${staleTasks.length} tasks.yaml newer than project.canvas (heuristic: mtime)`)
+        for (const f of staleTasks) lines.push(`    ${path.relative(cwd, f).split(path.sep).join('/')}`)
+      }
     }
   }
 

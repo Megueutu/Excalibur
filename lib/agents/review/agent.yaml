@@ -1,5 +1,5 @@
 name: review
-description: Use after an implementation is complete and before calling a task done — runs the review checklist against the real diff, marks tasks.yaml items, records history.yaml and updates the project canvas. Not for writing or fixing code itself; it reports what must change and the implementer changes it.
+description: Use after an implementation is complete and before calling a task done — runs the review checklist against the real diff, marks tasks.yaml items, records history.yaml and updates the project map when a module keeps one. Not for writing or fixing code itself; it reports what must change and the implementer changes it.
 tools: Read, Grep, Glob, Bash
 personas:
   - guardrail

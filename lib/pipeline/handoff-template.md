@@ -8,10 +8,10 @@ Copy this structure into `specs/<repo>/<task>/handoffs/YYYY-MM-DD-<agent>.md`.
 ---
 agent: scribe
 task: <task-slug>
-spec: "[[<task-slug>-spec]]"
+spec: "specs/<repo>/<task-slug>/spec.md"
 architecture:
-  - "[[stack]]"
-  - "[[auth-flow]]"
+  - "architecture/stack.md"
+  - "architecture/auth-flow.md"
 read_history: false
 ---
 
@@ -46,7 +46,7 @@ The handoff is a size limit that matters, and it's in the allowlist in `rules/he
 |---|---|
 | `agent` | Which agent this is for |
 | `task` | The task slug, matching the folder name |
-| `spec` | Wikilink to the task's spec |
+| `spec` | Link to the task's spec |
 | `architecture` | Only the `architecture/` notes that are genuinely relevant — not all of them |
 | `read_history` | `false` by default. `true` only when the task genuinely turns on what was tried before, or the session sets `read-history: always` |
 

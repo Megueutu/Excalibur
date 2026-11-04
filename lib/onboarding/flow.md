@@ -83,13 +83,13 @@ For `destination: external`, the path comes from step 5 — `~/.excalibur/projec
 
 If `github_preset` was answered `custom`, write the user's free text to `git.md` in the destination yourself, after the script runs.
 
-If `obsidian_vault` was answered `vault`, run [`lib/scripts/scaffold-obsidian-vault.sh`](../scripts/scaffold-obsidian-vault.sh) `<sdd-destination-path>` right after `init.sh` finishes, to materialize a minimal `.obsidian/` config folder.
+If `obsidian_vault` was answered `vault`, the `obsidian` module is on: run [`lib/modules/obsidian/scripts/scaffold-vault.sh`](../modules/obsidian/scripts/scaffold-vault.sh) `<sdd-destination-path>` right after `init.sh` finishes, to materialize a minimal `.obsidian/` config folder, and create the project canvas with `excalibur canvas`.
 
 ## 8. Translate, only if `language` was answered `other`
 
 Invoke the `translator` subagent (see [`lib/agents/translator/agent.yaml`](../agents/translator/agent.yaml)) against the destination's `Templates/` and `reflection/` folders, with the resolved language.
 
-What gets translated is decided structurally, by where a file sits — not by a list of exceptions. See `rules/translation.md`: the **visible SDD** (`ideas/`, `architecture/`, `proposal.md`, `spec.md`, `design.md`, canvas) is translated; the **operational Excalibur** (the installed package under `node_modules/@easy-spec/excalibur/`, `lib/pipeline/`, `rules/`, `tasks.yaml`, `history.yaml`) never is. The point is token economy: no agent should spend tokens translating a file no human will read.
+What gets translated is decided structurally, by where a file sits — not by a list of exceptions. See `rules/translation.md`: the **visible SDD** (`ideas/`, `architecture/`, `proposal.md`, `spec.md`, `design.md`, any project map) is translated; the **operational Excalibur** (the installed package under `node_modules/@easy-spec/excalibur/`, `lib/pipeline/`, `rules/`, `tasks.yaml`, `history.yaml`) never is. The point is token economy: no agent should spend tokens translating a file no human will read.
 
 Unlike the original one-shot behavior, this applies continuously — documents written later follow the same language.
 

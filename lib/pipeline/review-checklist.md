@@ -57,6 +57,6 @@ Skip this entirely only when the session sets `skip-review`.
 
 - `history.yaml` has an entry for this task, written through `lib/scripts/record-history.sh`, unless the session sets `no-history`.
 
-## Canvas
+## Project map
 
-- Walk `rules/heuristics/canvas-update-checklist.yaml`. For every item that changed, the corresponding node in the project `.canvas` was updated.
+- If an active module keeps a project map, its update checklist was walked, and every item that changed has its matching entry updated. Skip when no module keeps one.

@@ -26,11 +26,11 @@ The script owns the format so the record stays consistent and costs nothing to p
 
 Skip this entirely when the session has `no-history` set.
 
-## 4. Update the project canvas
+## 4. Update the project map, if a module keeps one
 
-Walk `rules/heuristics/canvas-update-checklist.yaml` — a short list of "did X change?" questions. For each one that changed, update the corresponding node in the project `.canvas`. It's plain JSON; edit it directly.
+Only when an active module's context says the project keeps a map (a diagram, an overview, an index), walk that module's update checklist and update the matching entries. Otherwise skip this step.
 
-Checking a fixed list is cheap. Re-deriving what the canvas should look like from the whole project, every time, is not — which is why the checklist exists as a file.
+Checking a fixed list is cheap. Re-deriving what the map should look like from the whole project, every time, is not, which is why such checklists exist as files.
 
 ## 5. Report
 

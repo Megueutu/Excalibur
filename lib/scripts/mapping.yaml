@@ -66,10 +66,6 @@ scripts:
     purpose: Appends one changelog entry to a task's history.yaml. Mechanical and deterministic — no agent formats this by hand.
     usage: 'lib/scripts/record-history.sh <task-dir> --what <text> --why <text> [--result <text>] [--checklist pass|fail|skipped] [--agent <name>]'
 
-  - name: scaffold-obsidian-vault.sh
-    purpose: Materializes a minimal .obsidian/ config folder inside the SDD destination, when the manifest's obsidian_vault answer is `vault`.
-    usage: lib/scripts/scaffold-obsidian-vault.sh <sdd-destination-path>
-
   - name: scan-spec-freshness.sh
     purpose: Deterministic sweep for specs that may have drifted from the code they describe (commit/tag/date checks, no LLM). clerk judges the candidates it finds.
     usage: 'lib/scripts/scan-spec-freshness.sh <sdd-path> [--repo <git-repo-path>] ...'

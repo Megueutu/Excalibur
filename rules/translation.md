@@ -8,7 +8,7 @@ Not a list of exceptions to maintain — the answer comes from **where a file si
 
 | | Translated | What it is |
 |---|---|---|
-| **Visible SDD** | yes | `ideas/`, `architecture/`, `proposal.md`, `spec.md`, `design.md`, the project canvas |
+| **Visible SDD** | yes | `ideas/`, `architecture/`, `proposal.md`, `spec.md`, `design.md`, any project map the project keeps |
 | **Operational Excalibur** | **never** | the installed package (`node_modules/@easy-spec/excalibur/`) entirely (rules, agent prompts, session directives), `lib/pipeline/`, `rules/`, `tasks.yaml`, `history.yaml` |
 
 Visible SDD is written for humans to read and collaborate on. Operational content is machinery an agent consumes.
@@ -42,7 +42,6 @@ The translation applies to **every visible-SDD document written from then on**, 
 Never translated, even inside a translated file:
 
 - Frontmatter **keys** (values that are free text are translated)
-- `[[wikilink]]` targets — a wikilink points at a file by its untranslated name
-- Callout types (`[!note]`, `[!warning]`, `[!danger]`)
+- Link targets: a link points at a file by its untranslated name
 - Code blocks, paths, commands, identifiers
 - Heading levels and list/checkbox structure — text changes, structure doesn't

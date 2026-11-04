@@ -5,17 +5,18 @@ import pc from 'picocolors'
 import { packageRoot } from '../core/paths.js'
 import { exists, copyFile } from '../core/fsx.js'
 import { existingSddPath } from '../core/config.js'
+import { activeModules } from '../core/modules.js'
 
-const TEMPLATE = path.join(packageRoot, 'lib', 'pipeline', 'project-canvas-template.canvas')
+const TEMPLATE = path.join(packageRoot, 'lib', 'modules', 'obsidian', 'templates', 'project-canvas.canvas')
 
 /**
  * `excalibur canvas` — regenerate the project-level Obsidian Canvas on demand.
  *
  * The `review` agent normally keeps `project.canvas` current automatically, walking
- * `rules/heuristics/canvas-update-checklist.yaml` after every Feature/Big feature task (see
+ * `lib/modules/obsidian/rules/canvas-update-checklist.yaml` after every Feature/Big feature task (see
  * lib/agents/review/agent.yaml). That is a judgment call ("did this change deserve a
  * node?") this command cannot make — there is no LLM here. What it does mechanically:
- * materialize `project.canvas` from `lib/pipeline/project-canvas-template.canvas` — the
+ * materialize `project.canvas` from `lib/modules/obsidian/templates/project-canvas.canvas` — the
  * exact file `lib/onboarding/manifest.yaml`-driven init would otherwise never place — when it
  * is missing, or reset it back to the blank template on request. Filling it in with
  * real project content afterward is still the review agent's (or a human's) job.
@@ -52,6 +53,11 @@ export async function canvas(args, cwd) {
   const quiet = Boolean(args.quiet)
   if (!quiet) p.intro(pc.bgCyan(pc.black(' excalibur canvas ')))
 
+  if (!activeModules(cwd).includes('obsidian')) {
+    if (!quiet) p.cancel('The project canvas belongs to the obsidian module. Turn it on with `excalibur module add obsidian`.')
+    return 1
+  }
+
   if (!exists(TEMPLATE)) {
     if (!quiet) p.cancel(`Template not found: ${TEMPLATE}`)
     return 1
@@ -87,7 +93,7 @@ export async function canvas(args, cwd) {
       '',
       'This is the blank template — nodes for the stack, modules, flow and phases still',
       'need real content. That normally happens automatically: the `review` agent walks',
-      'rules/heuristics/canvas-update-checklist.yaml after every Feature/Big feature task.',
+      'lib/modules/obsidian/rules/canvas-update-checklist.yaml after every Feature/Big feature task.',
     ].join('\n'),
     'Canvas',
   )

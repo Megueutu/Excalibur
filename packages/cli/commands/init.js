@@ -183,7 +183,7 @@ export function writeClaudeMd(cwd, mode) {
         `1. Read every file in \`${paths.customDir}/${CONTEXT_DIR}/\` in full, if that`,
         '   folder has any files — those are standing project context that applies',
         '   to every session (installed by \`create-excalibur\` for the features',
-        '   this project opted into, e.g. Obsidian integration).',
+        '   this project opted into).',
         `2. Follow \`node_modules/@easy-spec/excalibur/lib/pipeline/entrypoint.md\` for how to`,
         '   handle any implementation request — it defines the four pipeline layers',
         '   (orchestrator → spec → implement → review) and which ones a given task',

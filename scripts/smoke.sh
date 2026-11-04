@@ -25,6 +25,9 @@ run budget
 run lint
 run module list
 run module add obsidian
+mkdir -p .sdd
+run canvas
+test -f .sdd/project.canvas
 test -f .overrides/context/obsidian.md
 run module remove obsidian
 run module add graphify
