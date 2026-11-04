@@ -1,0 +1,3 @@
+name: graphify
+description: Index large source material as a graph to find where facts live, with a protocol to measure whether it pays off
+default: false

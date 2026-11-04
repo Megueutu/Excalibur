@@ -27,6 +27,10 @@ run module list
 run module add obsidian
 test -f .overrides/context/obsidian.md
 run module remove obsidian
+run module add graphify
+test -f .claude/skills/graph-index/ab-protocol.md
+run budget --json
+run module remove graphify
 run mode vibecode
 test -f .claude/skills/decision-log/SKILL.md
 test -f .overrides/context/mode.md

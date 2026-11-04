@@ -18,7 +18,7 @@ function renderLayer(title, layers) {
 }
 
 export async function budget(args, cwd) {
-  const quiet = Boolean(args.quiet)
+  const quiet = Boolean(args.quiet) || Boolean(args.json)
   if (!quiet) p.intro(pc.bgCyan(pc.black(' excalibur budget ')))
 
   if (!projectPaths(cwd).configured) {
@@ -27,6 +27,10 @@ export async function budget(args, cwd) {
   }
 
   const result = measureContext(cwd)
+  if (args.json) {
+    console.log(JSON.stringify(result, null, 2))
+    return 0
+  }
   const { totals } = result
 
   const body = [

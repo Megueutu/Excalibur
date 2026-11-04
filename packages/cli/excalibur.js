@@ -50,7 +50,7 @@ ${pc.bold('Commands')}
   check                Verify dependencies (node, git, bash, gh) before init
   module [list|add|remove] [name...]  Turn optional modules on or off
   mode [list|<name>|off]  Pick how the agent works with you: deep, ant-brain, vibecode
-  budget               Estimate how much context an agent reads before a task starts
+  budget               Estimate how much context an agent reads before a task starts (--json for the raw numbers)
   status               Destination, customized files, last prune, installed version
   doctor               Deeper SDD health check: orphaned customizations, stale canvas
   list                 List in-progress tasks under specs/<repo>/*/ (alias: tasks)
@@ -75,7 +75,7 @@ ${pc.dim('Docs: https://github.com/Megueutu/Excalibur')}
 
 async function main() {
   const argv = mri(process.argv.slice(2), {
-    boolean: ['help', 'version', 'yes', 'dry-run', 'quiet', 'off', 'if-stale', 'no-rebuild', 'discreet', 'custom'],
+    boolean: ['help', 'version', 'yes', 'dry-run', 'quiet', 'off', 'if-stale', 'no-rebuild', 'discreet', 'custom', 'json'],
     alias: { h: 'help', v: 'version', y: 'yes' },
   })
 
