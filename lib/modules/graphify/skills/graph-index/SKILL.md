@@ -18,6 +18,10 @@ A graph index is a map of a large body of material: what it contains and how the
 - Instructions the project already tells you where to find.
 - Anything where you would be tempted to quote the index instead of the original.
 
+## First, the tool
+
+If the indexing tool is not available, install it by the method in `rules/installing-tools.md` of the installed package: check the environment, read the tool's current official instructions, pick the narrowest scope, and ask before changing anything global. Do not rely on remembered commands.
+
 ## How
 
 1. Build the index in a scratch folder that is not versioned. Never commit it.
