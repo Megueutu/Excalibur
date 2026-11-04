@@ -19,6 +19,7 @@ const COMMANDS = {
   import: () => import('./commands/import.js').then((m) => m.importContent),
   check: () => import('./commands/check.js').then((m) => m.check),
   module: () => import('./commands/module.js').then((m) => m.moduleCommand),
+  new: () => import('./commands/new.js').then((m) => m.newTask),
   mode: () => import('./commands/mode.js').then((m) => m.mode),
   budget: () => import('./commands/budget.js').then((m) => m.budget),
   status: () => import('./commands/status.js').then((m) => m.status),
@@ -49,6 +50,7 @@ ${pc.bold('Commands')}
   import [type] [name]  Import a bundled agent or persona and rebuild Markdown output
   check                Verify dependencies (node, git, bash, gh) before init
   module [list|add|remove] [name...]  Turn optional modules on or off
+  new <repo> <task-slug>  Create a task folder in the SDD from the template, frontmatter filled in
   mode [list|<name>|off]  Pick how the agent works with you: deep, ant-brain, vibecode
   budget               Estimate how much context an agent reads before a task starts (--json for the raw numbers)
   status               Destination, customized files, last prune, installed version

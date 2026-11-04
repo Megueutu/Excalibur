@@ -43,6 +43,10 @@ run mode off
 test ! -f .overrides/context/mode.md
 test ! -f .overrides/context/obsidian.md
 run update
+mkdir -p .sdd
+run new api demo-task --class fix
+test -f .sdd/specs/api/demo-task/spec.md
+run lint
 run kill-my-self --dry-run --yes
 test -f excalibur.yaml
 

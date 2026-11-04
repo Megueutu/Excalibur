@@ -6,6 +6,8 @@ import pc from 'picocolors'
 import { packageRoot } from '../core/paths.js'
 import { exists, listFiles } from '../core/fsx.js'
 import { parse } from '../core/yaml.js'
+import { existingSddPath } from '../core/config.js'
+import { checkTask, taskDirs } from '../core/skeleton.js'
 
 /**
  * `excalibur lint` — the .md size-limit + naming-convention checks, outside the
@@ -96,6 +98,12 @@ function namingViolations(target) {
   return violations
 }
 
+/** Structure of the task folders: required frontmatter, values, and names matching the folder. */
+function structureViolations(target) {
+  const roots = [...new Set([target, existingSddPath(target)].filter(Boolean))]
+  return roots.flatMap((root) => taskDirs(root).flatMap(({ dir, label }) => checkTask(dir, label)))
+}
+
 const TECH_NAMES_FILE = 'rules/heuristics/tech-names.yaml'
 
 /**
@@ -142,6 +150,7 @@ export async function lint(args, cwd) {
   const size = runSizeCheck(target)
   const naming = namingViolations(target)
   const tech = techNameViolations(target)
+  const structure = structureViolations(target)
 
   const lines = []
   let failed = false
@@ -165,6 +174,14 @@ export async function lint(args, cwd) {
     failed = true
     lines.push(`${pc.red('✗')} naming           ${naming.length} violation(s)`)
     for (const v of naming) lines.push(`    ${v}`)
+  }
+
+  if (structure.length === 0) {
+    lines.push(`${pc.green('✓')} structure        clean`)
+  } else {
+    failed = true
+    lines.push(`${pc.red('✗')} structure        ${structure.length} violation(s)`)
+    for (const v of structure) lines.push(`    ${v}`)
   }
 
   if (tech !== null) {

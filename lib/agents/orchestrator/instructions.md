@@ -48,6 +48,8 @@ Choose the specialist within those layers:
 
 ## 3. Write `proposal.md` and `tasks.yaml`
 
+Create the task folder with `excalibur new <repo> <task-slug> --class <fix|feature|big-feature>` instead of writing its files by hand. The command fills in the frontmatter and the structure, and `excalibur lint` checks it afterwards.
+
 You own these two of the five task files:
 
 - **`proposal.md`** — why the task exists and what changes. Prose, short.

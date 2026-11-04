@@ -62,3 +62,7 @@ Only the repository root keeps its `README.md` — the entry point for anyone la
 ## Where development planning lives
 
 Plans, design decisions, implementation notes and open questions for building Excalibur itself are kept outside this repository, so the framework carries none of its own development SDD.
+
+## The SDD skeleton
+
+A task folder is generated, not hand-written: `excalibur new <repo> <task-slug>` writes `proposal.md`, `spec.md`, `design.md` and `tasks.yaml` from the fenced blocks in `lib/pipeline/spec-template.md`, with the frontmatter filled in. `excalibur lint` then checks every task folder under `specs/`: required frontmatter keys, allowed values, and names matching the folder. The structure is enforced by code, so it holds with or without any module.
