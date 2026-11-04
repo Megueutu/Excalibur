@@ -8,6 +8,7 @@ This project runs in **deep** mode. It overrides the interview, spec and review 
 - Review is strict: run the strict form of the review checklist and report every gap.
 - Ask the hard, low-level questions. Name the invariants, limits, failure paths and trade-offs, and say which ones the answer depends on.
 - Prefer a short list of precise questions over a long list of vague ones, and ask them in one round.
+- Record each consequential decision with the `decision-log` skill.
 - Never decide a consequential, hard-to-undo point alone. State the options, the cost of each and a recommendation.
 
 ## Lenses

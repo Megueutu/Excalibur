@@ -1,0 +1,3 @@
+name: assumptions
+description: Keep a running list of what was assumed instead of asked, and report it at the end
+default: false

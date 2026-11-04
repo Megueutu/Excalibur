@@ -1,2 +1,4 @@
 name: deep
 description: For engineers who want hard questions, low-level detail and strict review on every task
+modules:
+  - decisions

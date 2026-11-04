@@ -1,2 +1,4 @@
 name: ant-brain
 description: For people who do not write code or prompts - never asks, thinks hard, takes the safe path and explains plainly
+modules:
+  - assumptions

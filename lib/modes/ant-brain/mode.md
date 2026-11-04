@@ -19,4 +19,4 @@ Apply these to yourself, silently, before acting. Read them from `lib/reflection
 - `user-impact`
 - `simplicity`
 
-Record each assumption you made in the closing summary instead of asking about it.
+Keep the list with the `assumption-log` skill and report it in the closing summary instead of asking about it.

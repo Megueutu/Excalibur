@@ -1,0 +1,3 @@
+name: decisions
+description: Record each consequential choice with its reason, so anyone can review or reverse it later
+default: false

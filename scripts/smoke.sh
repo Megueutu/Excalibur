@@ -28,6 +28,7 @@ run module add obsidian
 test -f .overrides/context/obsidian.md
 run module remove obsidian
 run mode vibecode
+test -f .claude/skills/decision-log/SKILL.md
 test -f .overrides/context/mode.md
 run update
 test -f .overrides/context/mode.md

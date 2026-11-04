@@ -1,2 +1,4 @@
 name: vibecode
 description: For product people - asks only about the product, decides the technical side and records why
+modules:
+  - decisions

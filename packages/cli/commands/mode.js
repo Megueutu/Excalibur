@@ -3,6 +3,8 @@ import pc from 'picocolors'
 import { projectPaths } from '../core/paths.js'
 import { updateConfig } from '../core/config.js'
 import { availableModes, activeMode, syncModeContext } from '../core/modes.js'
+import { availableModules, activeModules, withRequirements, syncModuleContext } from '../core/modules.js'
+import { build } from '../core/build.js'
 
 /**
  * `excalibur mode [list|<name>|off]` — pick how the agent works with you.
@@ -46,8 +48,24 @@ export async function mode(args, cwd) {
     return 1
   }
 
-  updateConfig(cwd, { work_mode: target })
+  // A mode may ask for modules (its skills are what the mode text refers to). They are
+  // added, never removed again by `off`: the project may have come to rely on them.
+  const before = activeModules(cwd)
+  let nextModules
+  try {
+    nextModules = withRequirements([...before, ...modes.get(target).modules], availableModules(cwd))
+  } catch (error) {
+    p.cancel(error.message)
+    return 1
+  }
+  const added = nextModules.filter((name) => !before.includes(name))
+
+  updateConfig(cwd, { work_mode: target, modules: nextModules })
   syncModeContext(cwd)
+  syncModuleContext(cwd)
+  if (added.length) build(cwd)
+
+  if (added.length) p.log.info(`Also turned on: ${added.join(', ')}.`)
   p.outro(`Mode "${target}" is active. Start a new session for it to take effect.`)
   return 0
 }

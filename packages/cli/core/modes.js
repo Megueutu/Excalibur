@@ -38,7 +38,8 @@ export function availableModes(cwd) {
     const body = resolveFile(cwd, `${MODES_DIR}/${name}/${MODE_CONTEXT_FILE}`)
     if (!manifest || !body) continue
     const doc = parse(fs.readFileSync(manifest, 'utf8')) ?? {}
-    found.set(name, { name, description: doc.description ?? '', body })
+    const modules = doc.modules == null ? [] : (Array.isArray(doc.modules) ? doc.modules : [doc.modules]).map(String)
+    found.set(name, { name, description: doc.description ?? '', body, modules })
   }
   return found
 }
