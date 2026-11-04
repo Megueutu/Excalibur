@@ -1,0 +1,30 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+      - run: npm install --no-audit --no-fund
+      - name: Syntax check
+        shell: bash
+        run: |
+          for f in $(git ls-files '*.js'); do node --check "$f"; done
+          for f in $(git ls-files '*.sh'); do bash -n "$f"; done
+      - name: Markdown lint
+        run: node packages/cli/excalibur.js lint .
+      - name: Smoke test
+        shell: bash
+        run: bash scripts/smoke.sh
