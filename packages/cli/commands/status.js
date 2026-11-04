@@ -7,6 +7,7 @@ import { exists, listFiles } from '../core/fsx.js'
 import { readConfig, frameworkVersion } from '../core/config.js'
 import { orphanedCustomizations } from '../core/resolve.js'
 import { activeModules } from '../core/modules.js'
+import { activeMode } from '../core/modes.js'
 
 /** `excalibur status` — a quick overall picture, without opening any file by hand. */
 export async function status(args, cwd) {
@@ -32,6 +33,7 @@ export async function status(args, cwd) {
     `destination  ${answers.destination ?? pc.dim('unknown')}`,
     `language     ${answers.language ?? pc.dim('unknown')}`,
     `autonomy     ${answers.autonomy ?? pc.dim('unknown')}`,
+    `work mode    ${activeMode(cwd) ?? pc.dim('none')}`,
     `modules      ${activeModules(cwd).join(', ') || pc.dim('none')}`,
     `customized   ${customized.length} file(s) in ${paths.customDir}/`,
   ]

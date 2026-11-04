@@ -42,6 +42,8 @@ Excalibur/
 | `lib/onboarding/` | Data for one-time onboarding only: the questions manifest and the pre-written files it can copy. If it runs on every task instead of once, it belongs in `lib/pipeline/`. |
 | `lib/pipeline/` | What agents do on every task. Must be 100% generic — if it names a project, org or repo, it doesn't belong here. |
 | `lib/modules/` | Optional modules. Each is a folder with a `module.yaml` (name, description, default, requires) plus `context/`, `agents/` and `skills/` it contributes. The active list is `modules:` in the project config; manage it with `excalibur module add\|remove\|list`, or `init --with/--without`. A project defines its own at `<custom_dir>/lib/modules/<name>/`. |
+| `lib/modes/` | Work modes (`deep`, `ant-brain`, `vibecode`). Each has a `mode.yaml` and a `mode.md` that is installed as standing context while the mode is active (`excalibur mode <name>`; `off` removes it). |
+| `lib/reflection/lenses/` | One short file per concern (reversibility, failure modes, data lifecycle, boundaries, trust, user impact, simplicity, observability). Modes point at the lenses to read; they load on demand, never all at once. |
 | `rules/` | Content that gets copied into a user's project. If it's about maintaining *this* repository, it goes to `docs/repo/` instead. |
 | `rules/heuristics/` | Mechanical, machine-checked tables — read by a script or agent that needs a fixed answer without reasoning it out. Still shipped, like the rest of `rules/`. |
 | `lib/reflection/` | How to reason while writing a spec, as opposed to what to do in what order. |

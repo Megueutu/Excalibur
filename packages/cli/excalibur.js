@@ -19,6 +19,7 @@ const COMMANDS = {
   import: () => import('./commands/import.js').then((m) => m.importContent),
   check: () => import('./commands/check.js').then((m) => m.check),
   module: () => import('./commands/module.js').then((m) => m.moduleCommand),
+  mode: () => import('./commands/mode.js').then((m) => m.mode),
   budget: () => import('./commands/budget.js').then((m) => m.budget),
   status: () => import('./commands/status.js').then((m) => m.status),
   doctor: () => import('./commands/doctor.js').then((m) => m.doctor),
@@ -48,6 +49,7 @@ ${pc.bold('Commands')}
   import [type] [name]  Import a bundled agent or persona and rebuild Markdown output
   check                Verify dependencies (node, git, bash, gh) before init
   module [list|add|remove] [name...]  Turn optional modules on or off
+  mode [list|<name>|off]  Pick how the agent works with you: deep, ant-brain, vibecode
   budget               Estimate how much context an agent reads before a task starts
   status               Destination, customized files, last prune, installed version
   doctor               Deeper SDD health check: orphaned customizations, stale canvas

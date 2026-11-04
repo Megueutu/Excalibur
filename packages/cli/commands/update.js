@@ -6,6 +6,7 @@ import { orphanedCustomizations } from '../core/resolve.js'
 import { build } from '../core/build.js'
 import { writeClaudeMd } from './init.js'
 import { deriveModules, syncModuleContext } from '../core/modules.js'
+import { syncModeContext } from '../core/modes.js'
 
 /**
  * `excalibur update` — rebuild `.claude/agents/`+`.claude/skills/` from the current
@@ -37,6 +38,7 @@ export async function update(args, cwd) {
   // Configs from before modules existed get their list derived from the old answers once.
   if (!Array.isArray(config?.modules)) updateConfig(cwd, { modules: deriveModules(cwd, savedAnswers) })
   syncModuleContext(cwd)
+  syncModeContext(cwd)
   writeClaudeMd(cwd, paths.mode)
 
   spinner.stop('CLAUDE.md and feature context refreshed')

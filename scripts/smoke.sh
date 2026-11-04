@@ -27,6 +27,12 @@ run module list
 run module add obsidian
 test -f .overrides/context/obsidian.md
 run module remove obsidian
+run mode vibecode
+test -f .overrides/context/mode.md
+run update
+test -f .overrides/context/mode.md
+run mode off
+test ! -f .overrides/context/mode.md
 test ! -f .overrides/context/obsidian.md
 run update
 run kill-my-self --dry-run --yes
