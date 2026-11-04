@@ -3,6 +3,7 @@ import fs from 'node:fs'
 import * as p from '@clack/prompts'
 import pc from 'picocolors'
 import { projectPaths } from '../core/paths.js'
+import { existingSddPath } from '../core/config.js'
 import { exists } from '../core/fsx.js'
 import { orphanedCustomizations } from '../core/resolve.js'
 
@@ -15,14 +16,9 @@ import { orphanedCustomizations } from '../core/resolve.js'
  */
 
 /**
- * Best-effort locator for project.canvas and every tasks.yaml under the project.
- *
- * There is no literal `sdd_path` yet (see IMPLEMENTATION_PLAN_2.md section 9 — not
- * done). This walks the tree the same way clean-history.js already walks for
- * history.yaml, rather than guessing a single fixed location. It only reaches an SDD
- * that lives somewhere under `cwd` — a `separate` sibling folder or a fully `external`
- * destination (see lib/onboarding/manifest.yaml's `destination` question) is out of its reach,
- * and that limitation is reported rather than silently producing a false "missing".
+ * Locates project.canvas and every tasks.yaml. It walks the configured `sdd_path`
+ * when that folder exists (so `separate` destinations work too) and falls back to
+ * walking the project for configs that predate `sdd_path`.
  */
 function findCanvasAndTasks(cwd) {
   let canvas = null
@@ -42,7 +38,7 @@ function findCanvasAndTasks(cwd) {
       }
     }
   }
-  walk(cwd, 0)
+  walk(existingSddPath(cwd) ?? cwd, 0)
   return { canvas, taskFiles }
 }
 

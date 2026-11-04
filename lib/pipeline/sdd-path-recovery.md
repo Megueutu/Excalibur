@@ -9,8 +9,9 @@ or when the path it names no longer exists.
 
 ## Why this exists
 
-`sdd_path` in the root `Excalibur` config is the literal resolved path to the SDD
-destination — the thing to read first, instead of re-deriving it from the `destination`
+`sdd_path` in the root `Excalibur` config is the path to the SDD destination, stored
+relative to the project root (`.sdd`, `../app-sdd`) so it survives a clone or a move
+(older configs may hold an absolute path; resolve it the same way) — the thing to read first, instead of re-deriving it from the `destination`
 mode (`embedded`/`separate`/`external`/`new_repo`) and guessing a folder name. Guessing
 breaks the moment someone renames `.sdd/` to `docs/` or `sdd-notes/`. This procedure is
 the fallback for exactly that.

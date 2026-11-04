@@ -3,6 +3,7 @@ import fs from 'node:fs'
 import * as p from '@clack/prompts'
 import pc from 'picocolors'
 import { parse } from '../core/yaml.js'
+import { existingSddPath } from '../core/config.js'
 
 /**
  * `excalibur list` (alias `tasks`) — in-progress tasks under specs/<repo>/<task>/.
@@ -13,14 +14,14 @@ import { parse } from '../core/yaml.js'
  */
 
 /**
- * Best-effort locator for every `specs/` folder reachable under `cwd`.
- *
- * Same reasoning as doctor.js: there is no literal `sdd_path` yet (section 9 of
- * IMPLEMENTATION_PLAN_2.md, not done), so this walks the tree instead of assuming one
- * fixed location. It covers the default `embedded` destination; a `separate` sibling
- * folder or a fully `external` one needs the optional path argument below.
+ * Locates every `specs/` folder: the configured `sdd_path` when that folder has
+ * one, else every `specs/` reachable under `cwd` (configs that predate `sdd_path`).
+ * An `external` destination still needs the optional path argument below.
  */
 function findSpecsDirs(cwd) {
+  const configured = existingSddPath(cwd)
+  if (configured && fs.existsSync(path.join(configured, 'specs'))) return [path.join(configured, 'specs')]
+
   const found = []
   const walk = (dir, depth) => {
     if (depth > 6 || !fs.existsSync(dir)) return

@@ -22,7 +22,7 @@ const GITIGNORE_ENTRIES = [...GENERATED_GITIGNORE_ENTRIES, 'history.yaml', 'hist
 
 function safeSddPath(cwd, configuredPath) {
   if (!configuredPath) return null
-  const resolved = path.resolve(configuredPath)
+  const resolved = path.resolve(cwd, configuredPath)
   if (resolved === path.resolve(cwd) || resolved === path.parse(resolved).root) return null
   return resolved
 }

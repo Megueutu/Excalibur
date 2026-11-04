@@ -163,6 +163,29 @@ export function resolveSddPath(cwd, answers) {
 }
 
 /**
+ * `sdd_path` is stored relative to the project root (`.sdd`, `../app-sdd`), so a
+ * committed config keeps working on another machine or after a move. Absolute
+ * paths written by older versions still resolve, because `path.resolve` leaves
+ * them alone.
+ */
+export function storedSddPath(cwd, sddPath) {
+  if (!sddPath) return null
+  return path.relative(cwd, sddPath).split(path.sep).join('/') || '.'
+}
+
+/** The configured SDD destination resolved against the project root, or `null`. */
+export function configuredSddPath(cwd) {
+  const stored = readConfig(cwd)?.sdd_path
+  return stored ? path.resolve(cwd, String(stored)) : null
+}
+
+/** Same as `configuredSddPath`, but only when the folder actually exists. */
+export function existingSddPath(cwd) {
+  const resolved = configuredSddPath(cwd)
+  return resolved && fs.existsSync(resolved) ? resolved : null
+}
+
+/**
  * Writes the empty marker file inside the SDD destination, if that destination
  * already exists.
  */

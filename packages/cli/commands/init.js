@@ -23,6 +23,7 @@ import {
   frameworkVersion,
   resolveSddPath,
   writeSddMarker,
+  storedSddPath,
 } from '../core/config.js'
 import { build } from '../core/build.js'
 import { detectStack } from '../core/stack-detection.js'
@@ -314,7 +315,7 @@ export async function init(args, cwd) {
     framework_version: frameworkVersion(),
     setup_mode: mode,
     answers: payload,
-    sdd_path: sddPath,
+    sdd_path: storedSddPath(cwd, sddPath),
     session: { flags: {} },
   })
 

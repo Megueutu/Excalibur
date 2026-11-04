@@ -4,6 +4,7 @@ import * as p from '@clack/prompts'
 import pc from 'picocolors'
 import { packageRoot } from '../core/paths.js'
 import { exists, copyFile } from '../core/fsx.js'
+import { existingSddPath } from '../core/config.js'
 
 const TEMPLATE = path.join(packageRoot, 'lib', 'pipeline', 'project-canvas-template.canvas')
 
@@ -21,14 +22,15 @@ const TEMPLATE = path.join(packageRoot, 'lib', 'pipeline', 'project-canvas-templ
  */
 
 /**
- * Best-effort locator for the SDD root: the parent of a `specs/` folder.
- *
- * Same reasoning as doctor.js/list.js — no literal `sdd_path` yet (section 9 of
- * IMPLEMENTATION_PLAN_2.md, not done). Falls back to `cwd` so the command still does
- * something useful when nothing is found yet (e.g. right after `init`, before any
- * spec exists).
+ * Locates the SDD root: the configured `sdd_path` when that folder exists, else
+ * (configs that predate `sdd_path`) the parent of the first `specs/` folder found.
+ * Returns `null` when neither exists, so the canvas is never dropped into the
+ * project root by accident.
  */
 function locateSddRoot(cwd) {
+  const configured = existingSddPath(cwd)
+  if (configured) return configured
+
   const candidates = []
   const walk = (dir, depth) => {
     if (depth > 6 || !fs.existsSync(dir) || candidates.length > 0) return
@@ -43,7 +45,7 @@ function locateSddRoot(cwd) {
     }
   }
   walk(cwd, 0)
-  return candidates[0] ?? cwd
+  return candidates[0] ?? null
 }
 
 export async function canvas(args, cwd) {
@@ -56,6 +58,12 @@ export async function canvas(args, cwd) {
   }
 
   const root = args._?.[0] ? path.resolve(cwd, String(args._[0])) : locateSddRoot(cwd)
+  if (!root) {
+    if (!quiet) {
+      p.cancel('No SDD folder found. Finish onboarding with /excalibur-init first, or pass the SDD path: `excalibur canvas <path>`.')
+    }
+    return 1
+  }
   const dest = path.join(root, 'project.canvas')
 
   if (exists(dest) && !args.yes) {
