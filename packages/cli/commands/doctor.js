@@ -4,6 +4,7 @@ import * as p from '@clack/prompts'
 import pc from 'picocolors'
 import { projectPaths } from '../core/paths.js'
 import { existingSddPath } from '../core/config.js'
+import { measureContext } from '../core/budget.js'
 import { exists } from '../core/fsx.js'
 import { orphanedCustomizations } from '../core/resolve.js'
 
@@ -95,6 +96,16 @@ export async function doctor(args, cwd) {
       lines.push(`${pc.yellow('!')} canvas           ${staleTasks.length} tasks.yaml newer than project.canvas (heuristic: mtime)`)
       for (const f of staleTasks) lines.push(`    ${path.relative(cwd, f).split(path.sep).join('/')}`)
     }
+  }
+
+  // 3. Context budget: informational, and a problem only past the configured limit.
+  const budget = measureContext(cwd)
+  const startTokens = budget.totals.startOfTask
+  if (budget.warn && startTokens > budget.warn) {
+    problems++
+    lines.push(`${pc.yellow('!')} context          ~${startTokens} tokens at the start of a task, over the ${budget.warn} limit (estimate)`)
+  } else {
+    lines.push(`${pc.green('✓')} context          ~${startTokens} tokens at the start of a task (estimate)`)
   }
 
   if (quiet) {

@@ -21,6 +21,7 @@ run() { echo "-- excalibur $*"; npx --no-install excalibur "$@" </dev/null; }
 run init --yes
 run status
 run doctor
+run budget
 run lint
 run module list
 run module add obsidian
