@@ -1,3 +1,4 @@
-# count yaml in github language stats
+# count yaml and markdown in github language stats
 *.yaml linguist-detectable=true
 *.yml linguist-detectable=true
+*.md linguist-detectable=true
