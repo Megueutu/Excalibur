@@ -4,7 +4,8 @@ import { projectPaths } from '../core/paths.js'
 import { readConfig, updateConfig, frameworkVersion, syncCustomManifest } from '../core/config.js'
 import { orphanedCustomizations } from '../core/resolve.js'
 import { build } from '../core/build.js'
-import { installFeatureFragments, writeClaudeMd } from './init.js'
+import { writeClaudeMd } from './init.js'
+import { deriveModules, syncModuleContext } from '../core/modules.js'
 
 /**
  * `excalibur update` — rebuild `.claude/agents/`+`.claude/skills/` from the current
@@ -33,7 +34,9 @@ export async function update(args, cwd) {
   spinner.start(`Updating ${from} -> ${to}`)
 
   const savedAnswers = config?.answers ?? {}
-  installFeatureFragments(cwd, savedAnswers)
+  // Configs from before modules existed get their list derived from the old answers once.
+  if (!Array.isArray(config?.modules)) updateConfig(cwd, { modules: deriveModules(cwd, savedAnswers) })
+  syncModuleContext(cwd)
   writeClaudeMd(cwd, paths.mode)
 
   spinner.stop('CLAUDE.md and feature context refreshed')

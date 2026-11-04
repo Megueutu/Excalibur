@@ -13,7 +13,7 @@ Excalibur/
     agents/                  the internal agent catalog, one .yaml each
     personas/                short behaviors composed into agent output
     pipeline/                the implementation process
-    features/                optional feature fragments a project can opt into
+    modules/                 optional modules a project turns on or off (excalibur module)
     onboarding/              manifest, wizard flow and presets
     reflection/              how to reason while producing a spec
     scripts/                 executable helpers and the npm postinstall hook
@@ -41,7 +41,7 @@ Excalibur/
 | `packages/cli/` | Executable Node code for both CLI entry points, their commands and shared core. Never framework content. |
 | `lib/onboarding/` | Data for one-time onboarding only: the questions manifest and the pre-written files it can copy. If it runs on every task instead of once, it belongs in `lib/pipeline/`. |
 | `lib/pipeline/` | What agents do on every task. Must be 100% generic — if it names a project, org or repo, it doesn't belong here. |
-| `lib/features/` | Optional fragments a project can opt into during onboarding, not part of the default pipeline. |
+| `lib/modules/` | Optional modules. Each is a folder with a `module.yaml` (name, description, default, requires) plus `context/`, `agents/` and `skills/` it contributes. The active list is `modules:` in the project config; manage it with `excalibur module add\|remove\|list`, or `init --with/--without`. A project defines its own at `<custom_dir>/lib/modules/<name>/`. |
 | `rules/` | Content that gets copied into a user's project. If it's about maintaining *this* repository, it goes to `docs/repo/` instead. |
 | `rules/heuristics/` | Mechanical, machine-checked tables — read by a script or agent that needs a fixed answer without reasoning it out. Still shipped, like the rest of `rules/`. |
 | `lib/reflection/` | How to reason while writing a spec, as opposed to what to do in what order. |

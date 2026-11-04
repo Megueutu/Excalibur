@@ -44,8 +44,13 @@ export function effectiveFiles(cwd) {
     path: rel,
     source: custom.includes(rel) ? 'custom' : 'base',
     /** In custom but no longer in base — a rename or removal upstream left it behind. */
-    orphan: custom.includes(rel) && !base.includes(rel),
+    orphan: custom.includes(rel) && !base.includes(rel) && !isProjectOwned(rel),
   }))
+}
+
+/** Custom modules and the module context copies live outside the package tree on purpose. */
+function isProjectOwned(rel) {
+  return rel.startsWith('lib/modules/') || rel.startsWith('context/')
 }
 
 /** Customized paths that no longer have a counterpart in base. */

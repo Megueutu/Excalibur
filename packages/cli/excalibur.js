@@ -18,6 +18,7 @@ const COMMANDS = {
   customize: () => import('./commands/customize.js').then((m) => m.customize),
   import: () => import('./commands/import.js').then((m) => m.importContent),
   check: () => import('./commands/check.js').then((m) => m.check),
+  module: () => import('./commands/module.js').then((m) => m.moduleCommand),
   status: () => import('./commands/status.js').then((m) => m.status),
   doctor: () => import('./commands/doctor.js').then((m) => m.doctor),
   list: () => import('./commands/list.js').then((m) => m.list),
@@ -40,11 +41,12 @@ ${pc.bold('Usage')}
   npx @easy-spec/excalibur <command> [options]
 
 ${pc.bold('Commands')}
-  init                 Collect answers and write the config (excalibur.yaml or package.json)
+  init                 Collect answers and write the config (excalibur.yaml or package.json); --with/--without <module>
   update               Rebuild the harness files from the installed package — never touches your overrides folder
   customize <path>     Copy one file out of the installed package into your overrides folder, safe to edit
   import [type] [name]  Import a bundled agent or persona and rebuild Markdown output
   check                Verify dependencies (node, git, bash, gh) before init
+  module [list|add|remove] [name...]  Turn optional modules on or off
   status               Destination, customized files, last prune, installed version
   doctor               Deeper SDD health check: orphaned customizations, stale canvas
   list                 List in-progress tasks under specs/<repo>/*/ (alias: tasks)

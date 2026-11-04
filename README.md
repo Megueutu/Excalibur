@@ -22,7 +22,7 @@ Then, inside your harness, run `/excalibur-init` to finish onboarding conversati
 |---|---|
 | [`packages/cli/`](packages/cli/) | The executable package: both entry points, commands and shared CLI core |
 | [`lib/onboarding/`](lib/onboarding/) | Data for one-time onboarding: the question manifest, `init.sh`, presets copied based on the answers |
-| [`lib/`](lib/) | Framework content: `agents/`, `personas/`, `pipeline/` and opt-in `features/` |
+| [`lib/`](lib/) | Framework content: `agents/`, `personas/`, `pipeline/` and opt-in `modules/` |
 | [`rules/`](rules/) | Distributable rules: `global/` principles, per-`stacks/` recommendations, and `heuristics/` (mechanical yaml checks) |
 | [`lib/reflection/`](lib/reflection/) | How to *think* while producing a spec — reasoning chain and when to pause |
 | [`harnesses/`](harnesses/) | Thin per-harness adapters (skills). Today: `claude/` only |

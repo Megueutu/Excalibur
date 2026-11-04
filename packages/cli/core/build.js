@@ -4,6 +4,7 @@ import { projectPaths, harnessTargets } from './paths.js'
 import { resolveFile } from './resolve.js'
 import { copyFile, ensureDir, listFiles } from './fsx.js'
 import { parse } from './yaml.js'
+import { activeModules, MODULES_DIR } from './modules.js'
 
 /**
  * Resolves the project's overrides folder (`custom_dir`) over the installed
@@ -110,10 +111,17 @@ export function build(cwd, { harness = 'claude' } = {}) {
   ensureDir(path.join(cwd, targets.skills))
 
   const agents = buildAgents(cwd, 'lib/agents', targets.agents)
+  const modules = activeModules(cwd)
+  for (const name of modules) {
+    agents.push(...buildAgents(cwd, `${MODULES_DIR}/${name}/agents`, targets.agents))
+  }
 
   // Skills keep their folder shape: a skill is <name>/SKILL.md plus whatever it
   // carries alongside, so the whole subtree is copied, not just the entry file.
   const skills = buildGroup(cwd, `harnesses/${harness}/skills`, targets.skills, (f) => f !== 'README.md')
+  for (const name of modules) {
+    skills.push(...buildGroup(cwd, `${MODULES_DIR}/${name}/skills`, targets.skills))
+  }
 
   return { agents, skills }
 }

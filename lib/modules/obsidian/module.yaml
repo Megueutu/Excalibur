@@ -1,0 +1,3 @@
+name: obsidian
+description: Open the SDD destination as an Obsidian vault, with wikilinks, callouts and a project canvas
+default: false
