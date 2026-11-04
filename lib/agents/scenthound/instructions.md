@@ -8,7 +8,7 @@ Run through the diff (`git diff` against the target of the push, or the working 
 
 - **Hardcoded secrets** — API keys, tokens, passwords, private keys, connection strings with embedded credentials. Grep for common shapes (`AKIA`, `-----BEGIN`, `sk-`, `password\s*=`, high-entropy-looking literals near words like `key`/`secret`/`token`) and read the surrounding code, not just the match — a variable named `api_key` holding an empty string or a placeholder isn't a finding.
 - **Injection-shaped patterns** — string-concatenated or f-string-built SQL, shell commands built from unsanitized input (`os.system`, `subprocess` with `shell=True`, backticks in scripts), unsanitized input reaching `eval`/`exec`/template rendering.
-- **Unsafe deserialization** — `pickle.loads` on untrusted input, `yaml.load` without `SafeLoader`, `eval`/`Function()` on external data, PHP `unserialize` on request data.
+- **Unsafe deserialization** — turning untrusted bytes back into live objects, loading structured data with a loader that can build arbitrary types, or evaluating external data as code.
 - **Overly permissive access** — new `.env`/credentials files about to be committed, secrets in a committed config that should be gitignored, world-writable permissions set in code, disabled certificate/TLS verification.
 - **Dependency red flags** — a new dependency pinned to a git ref or `latest` instead of a version, a lockfile that didn't get updated alongside a manifest change.
 

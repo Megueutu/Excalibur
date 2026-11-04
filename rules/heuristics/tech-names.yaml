@@ -1,0 +1,62 @@
+# The framework's own content must not age: it describes concerns, never products.
+#
+# Checked by `excalibur lint` when run at the root of the framework repository.
+# A match is a whole word, case-insensitive. Stack knowledge is data and lives under
+# the allowed paths; everything else under `scan` has to stay generic.
+
+version: 1
+
+scan:
+  - lib
+  - rules
+
+allow:
+  - rules/stacks/
+  - rules/heuristics/tech-names.yaml
+  - lib/onboarding/
+  - lib/scripts/
+
+terms:
+  - typescript
+  - javascript
+  - python
+  - golang
+  - rust
+  - kotlin
+  - java
+  - php
+  - ruby
+  - csharp
+  - react
+  - vue
+  - angular
+  - svelte
+  - django
+  - rails
+  - laravel
+  - spring
+  - flutter
+  - nodejs
+  - node.js
+  - npm
+  - npx
+  - yarn
+  - pnpm
+  - pip
+  - maven
+  - gradle
+  - docker
+  - kubernetes
+  - postgres
+  - postgresql
+  - mysql
+  - mongodb
+  - redis
+  - jest
+  - pytest
+  - eslint
+  - prettier
+  - vscode
+  - jetbrains
+  - github
+  - gitlab

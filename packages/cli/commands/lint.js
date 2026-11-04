@@ -5,6 +5,7 @@ import * as p from '@clack/prompts'
 import pc from 'picocolors'
 import { packageRoot } from '../core/paths.js'
 import { exists, listFiles } from '../core/fsx.js'
+import { parse } from '../core/yaml.js'
 
 /**
  * `excalibur lint` — the .md size-limit + naming-convention checks, outside the
@@ -95,6 +96,38 @@ function namingViolations(target) {
   return violations
 }
 
+const TECH_NAMES_FILE = 'rules/heuristics/tech-names.yaml'
+
+/**
+ * The framework's own content must stay free of product names (see the heuristic file).
+ * Only runs at the root of a tree that carries that file, i.e. the framework repository.
+ */
+function techNameViolations(target) {
+  const file = path.join(target, TECH_NAMES_FILE)
+  if (!exists(file)) return null
+
+  const config = parse(fs.readFileSync(file, 'utf8')) ?? {}
+  const terms = (config.terms ?? []).map(String)
+  if (terms.length === 0) return []
+  const allow = (config.allow ?? []).map(String)
+  const escaped = terms.map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+  const pattern = new RegExp(`(?<![\\w.])(${escaped.join('|')})(?![\\w])`, 'i')
+
+  const violations = []
+  for (const root of config.scan ?? []) {
+    for (const rel of listFiles(path.join(target, root))) {
+      const full = `${root}/${rel}`
+      if (!/\.(md|yaml|canvas)$/.test(full) || allow.some((a) => full.startsWith(a))) continue
+      const lines = fs.readFileSync(path.join(target, full), 'utf8').split(/\r?\n/)
+      lines.forEach((line, index) => {
+        const match = line.match(pattern)
+        if (match) violations.push(`${full}:${index + 1} — names "${match[1]}" (core content stays generic)`)
+      })
+    }
+  }
+  return violations
+}
+
 export async function lint(args, cwd) {
   const quiet = Boolean(args.quiet)
   if (!quiet) p.intro(pc.bgCyan(pc.black(' excalibur lint ')))
@@ -108,6 +141,7 @@ export async function lint(args, cwd) {
 
   const size = runSizeCheck(target)
   const naming = namingViolations(target)
+  const tech = techNameViolations(target)
 
   const lines = []
   let failed = false
@@ -131,6 +165,16 @@ export async function lint(args, cwd) {
     failed = true
     lines.push(`${pc.red('✗')} naming           ${naming.length} violation(s)`)
     for (const v of naming) lines.push(`    ${v}`)
+  }
+
+  if (tech !== null) {
+    if (tech.length === 0) {
+      lines.push(`${pc.green('✓')} timeless         clean`)
+    } else {
+      failed = true
+      lines.push(`${pc.red('✗')} timeless         ${tech.length} violation(s)`)
+      for (const v of tech) lines.push(`    ${v}`)
+    }
   }
 
   if (quiet) {
