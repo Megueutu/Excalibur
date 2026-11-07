@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom'
 import { Button } from '@/shared/ui/button'
-import { Badge } from '@/shared/ui/badge'
-import { Fact, PageHeader, Section } from '@/shared/ui/page'
+import { Badge, StatusDot } from '@/shared/ui/badge'
+import { Fact, Group, PageHeader, Section } from '@/shared/ui/page'
 import { useProjects } from './hooks'
 
 export function RepoPage() {
@@ -26,18 +26,21 @@ export function RepoPage() {
           </Button>
         }
       />
-      <div className="overflow-auto px-7 py-5">
+      <div className="min-h-0 flex-1 overflow-auto px-8 pb-8">
         {stale ? (
-          <div className="mb-5 rounded-md border-l-2 border-warn bg-panel px-3 py-2 text-sm">
+          <div className="mb-8 flex items-center gap-3 rounded-lg bg-panel px-4 py-3 text-sm">
+            <StatusDot />
             Perfil do usuário desatualizado: o repositório do perfil mudou desde o último sync.
           </div>
         ) : null}
         <Section title="Estado">
+          <Group>
           <dl>
             <Fact label="Versão">{repo.frameworkVersion}</Fact>
             <Fact label="Snapshot do perfil">{stale ? 'velho' : repo.snapshot === 'fresh' ? 'em dia' : 'sem perfil'}</Fact>
             <Fact label="Papel">{repo.isHub ? <Badge>hub de contexto</Badge> : 'repositório do projeto'}</Fact>
           </dl>
+          </Group>
         </Section>
       </div>
     </>

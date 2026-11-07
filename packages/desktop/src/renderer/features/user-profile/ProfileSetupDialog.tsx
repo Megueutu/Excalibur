@@ -12,11 +12,11 @@ export function ProfileSetupDialog() {
 
   return (
     <Modal open={open} onOpenChange={(o) => !o && close()} title="Perfil do usuário" description="Instruções suas para IAs, valendo em todos os projetos.">
-      <div className="space-y-2">
+      <div className="space-y-3">
         {choices.map((c) => (
-          <button key={c.title} type="button" className="w-full rounded-lg border border-border p-3 text-left hover:border-text">
+          <button key={c.title} type="button" className="w-full rounded-lg bg-panel px-5 py-4 text-left hover:bg-panel-2">
             <p className="text-sm font-medium">{c.title}</p>
-            <p className="text-xs text-muted">{c.text}</p>
+            <p className="mt-1 text-xs text-muted">{c.text}</p>
           </button>
         ))}
       </div>

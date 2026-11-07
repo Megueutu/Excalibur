@@ -1,7 +1,7 @@
 import { Link, useParams } from 'react-router-dom'
 import { Button } from '@/shared/ui/button'
 import { Badge, StatusDot } from '@/shared/ui/badge'
-import { Fact, PageHeader, Section } from '@/shared/ui/page'
+import { Fact, Group, PageHeader, Section } from '@/shared/ui/page'
 import { useProject } from './hooks'
 
 export function ProjectPage() {
@@ -25,24 +25,27 @@ export function ProjectPage() {
           </Button>
         }
       />
-      <div className="overflow-auto px-7 py-5">
+      <div className="min-h-0 flex-1 overflow-auto px-8 pb-8">
         <Section title="Configuração compartilhada">
+          <Group>
           <dl>
             <Fact label="Modo">{project.mode === 'public' ? 'público' : 'discreto'}</Fact>
             <Fact label="Modo de trabalho">{project.workMode ?? 'nenhum'}</Fact>
             <Fact label="Módulos">
-              <span className="flex gap-1.5">{project.modules.map((m) => <Badge key={m}>{m}</Badge>)}</span>
+              <span className="flex flex-wrap gap-1.5">{project.modules.map((m) => <Badge key={m}>{m}</Badge>)}</span>
             </Fact>
             <Fact label="Perfis">
-              <span className="flex gap-1.5">{project.profiles.map((m) => <Badge key={m}>{m}</Badge>)}</span>
+              <span className="flex flex-wrap gap-1.5">{project.profiles.map((m) => <Badge key={m}>{m}</Badge>)}</span>
             </Fact>
           </dl>
+          </Group>
         </Section>
         <Section title={`Repositórios${stale ? ` · ${stale} com perfil velho` : ''}`}>
-          <ul className="divide-y divide-border/60">
+          <Group className="px-2">
+          <ul>
             {project.repos.map((r) => (
               <li key={r.id}>
-                <Link to={`/projects/${project.id}/repos/${r.id}`} className="flex items-center gap-3 py-2.5 text-sm hover:text-text">
+                <Link to={`/projects/${project.id}/repos/${r.id}`} className="flex items-center gap-3 rounded-md px-2 py-2.5 text-sm hover:bg-panel-2">
                   <span className="flex-1">
                     {r.name} {r.isHub ? <Badge className="ml-2">hub</Badge> : null}
                   </span>
@@ -52,6 +55,7 @@ export function ProjectPage() {
               </li>
             ))}
           </ul>
+          </Group>
         </Section>
       </div>
     </>

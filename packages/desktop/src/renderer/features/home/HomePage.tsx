@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { api } from '@/shared/api'
 import { Button } from '@/shared/ui/button'
 import { StatusDot } from '@/shared/ui/badge'
-import { PageHeader } from '@/shared/ui/page'
+import { Group, PageHeader } from '@/shared/ui/page'
 
 const PROTOTYPE_NOTE = 'Protótipo: nada é gravado'
 
@@ -20,18 +20,20 @@ export function HomePage() {
           </Button>
         }
       />
-      <div className="overflow-auto px-7 py-5">
-        <ul className="divide-y divide-border/60">
+      <div className="min-h-0 flex-1 overflow-auto px-8 pb-8">
+        <Group>
+        <ul>
           {data.map((item) => (
             <li key={item.id} className="flex items-center gap-3 py-3">
               <StatusDot />
               <span className="flex-1 text-sm">{item.text}</span>
-              <Button size="sm" disabled title={PROTOTYPE_NOTE}>
+              <Button size="sm" className="bg-bg hover:bg-panel-2" disabled title={PROTOTYPE_NOTE}>
                 {item.action}
               </Button>
             </li>
           ))}
         </ul>
+        </Group>
       </div>
     </>
   )

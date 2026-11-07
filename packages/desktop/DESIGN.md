@@ -1,61 +1,59 @@
 ---
 version: alpha
 name: Excalibur Desktop
-description: Quiet, rounded, human interface for configuring Excalibur. One accent, flat surfaces, hairlines instead of shadows.
+description: Calm, borderless, minimal desktop interface. Built on the Apple design system as extracted on getdesign.md (one blue, flat tones, pill actions, tight tracking), adapted for a dense desktop app.
 colors:
-  primary: "#6d4aff"
-  primary-pressed: "#5a3ae0"
+  primary: "#0066cc"
+  primary-pressed: "#0071e3"
   on-primary: "#ffffff"
-  canvas: "#f7f6f4"
-  panel: "#ffffff"
-  panel-2: "#efeeeb"
-  hairline: "#e3e1dc"
-  ink: "#1c1c1e"
+  canvas: "#ffffff"
+  panel: "#f5f5f7"
+  panel-2: "#e8e8ed"
+  ink: "#1d1d1f"
   muted: "#6e6e73"
-  ok: "#2f8f5b"
-  warn: "#b7791f"
-  primary-dark: "#8b7bff"
-  primary-pressed-dark: "#a095ff"
-  on-primary-dark: "#14121f"
-  canvas-dark: "#121214"
-  panel-dark: "#1a1a1d"
-  panel-2-dark: "#232327"
-  hairline-dark: "#2e2e33"
-  ink-dark: "#f2f2f3"
-  muted-dark: "#9a9aa2"
-  ok-dark: "#5cc08a"
-  warn-dark: "#e0b04a"
+  ok: "#248a3d"
+  warn: "#b25000"
+  primary-dark: "#0071e3"
+  primary-pressed-dark: "#0a84ff"
+  on-primary-dark: "#ffffff"
+  canvas-dark: "#161617"
+  panel-dark: "#272729"
+  panel-2-dark: "#333336"
+  ink-dark: "#f5f5f7"
+  muted-dark: "#a1a1a6"
+  ok-dark: "#30d158"
+  warn-dark: "#ff9f0a"
 typography:
   display:
     fontFamily: system-ui
     fontSize: 28px
     fontWeight: 600
-    lineHeight: 1.15
+    lineHeight: 1.14
     letterSpacing: -0.02em
   title:
     fontFamily: system-ui
-    fontSize: 20px
+    fontSize: 17px
     fontWeight: 600
-    lineHeight: 1.25
-    letterSpacing: -0.015em
+    lineHeight: 1.24
+    letterSpacing: -0.022em
   body:
     fontFamily: system-ui
     fontSize: 14px
     fontWeight: 400
-    lineHeight: 1.5
-    letterSpacing: -0.006em
+    lineHeight: 1.47
+    letterSpacing: -0.016em
   body-strong:
     fontFamily: system-ui
     fontSize: 14px
     fontWeight: 600
-    lineHeight: 1.5
-    letterSpacing: -0.006em
+    lineHeight: 1.47
+    letterSpacing: -0.016em
   caption:
     fontFamily: system-ui
     fontSize: 12px
     fontWeight: 400
-    lineHeight: 1.4
-    letterSpacing: 0em
+    lineHeight: 1.43
+    letterSpacing: -0.01em
   code:
     fontFamily: ui-monospace
     fontSize: 13px
@@ -63,8 +61,8 @@ typography:
     lineHeight: 1.5
 rounded:
   sm: 8px
-  md: 12px
-  lg: 16px
+  md: 11px
+  lg: 18px
   full: 9999px
 spacing:
   xs: 4px
@@ -73,6 +71,7 @@ spacing:
   lg: 16px
   xl: 24px
   xxl: 32px
+  page: 32px
 components:
   button-primary:
     backgroundColor: "{colors.primary}"
@@ -80,7 +79,7 @@ components:
     typography: "{typography.body-strong}"
     rounded: "{rounded.full}"
     height: 36px
-    padding: 16px
+    padding: 20px
   button-primary-pressed:
     backgroundColor: "{colors.primary-pressed}"
     textColor: "{colors.on-primary}"
@@ -90,87 +89,87 @@ components:
     typography: "{typography.body-strong}"
     rounded: "{rounded.full}"
     height: 36px
-    padding: 16px
+    padding: 20px
   card:
     backgroundColor: "{colors.panel}"
     textColor: "{colors.ink}"
     rounded: "{rounded.lg}"
-    padding: 24px
-  input:
+    padding: 20px
+  sidebar-item:
     backgroundColor: "{colors.panel}"
     textColor: "{colors.ink}"
     typography: "{typography.body}"
-    rounded: "{rounded.full}"
+    rounded: "{rounded.md}"
     height: 36px
     padding: 12px
-  sidebar-item:
-    backgroundColor: "{colors.canvas}"
-    textColor: "{colors.ink}"
-    typography: "{typography.body}"
-    rounded: "{rounded.md}"
-    height: 32px
-    padding: 8px
   sidebar-item-active:
     backgroundColor: "{colors.panel-2}"
     textColor: "{colors.ink}"
+  badge:
+    backgroundColor: "{colors.panel-2}"
+    textColor: "{colors.muted}"
+    typography: "{typography.caption}"
+    rounded: "{rounded.full}"
+    padding: 10px
 ---
 
 # Excalibur Desktop
 
 ## Overview
 
-The app is opened rarely and used to configure, not to work in. It should feel calm and unhurried, never like a dashboard. The interface recedes; content and state are what you read.
+The app is opened rarely and used to configure, not to work in. It should feel calm and unhurried, never like a dashboard: borderless, flat, with content and state doing the talking.
 
-This system is **our own**. Its discipline comes from studying brand systems extracted on getdesign.md, mainly Apple (one interactive color, flat tiles, hairlines, pill actions, tight tracking, a press state) and, for warmth, Claude (non-pure-white canvas, color used sparingly). It reuses no brand's values, fonts or assets.
+The system takes the Apple design system as extracted on getdesign.md (`design-md/apple`, MIT) as its base: its palette, radii, tracking, pill actions, press state and rule of one interactive color. What changes for a desktop app: a 14px body instead of 17px, no photography tiles, no full-bleed bands, and the system font stack instead of a bundled SF Pro. Because these are a real brand's values, the app's final identity (name, mark, color) is still to be decided before any public release.
 
 Both a light and a dark theme exist. Dark tokens carry the `-dark` suffix and follow the system setting.
 
 ## Colors
 
-- **primary** is the only interactive color: primary buttons, links, focus ring, selected state. Never a second accent.
-- **canvas** is the window background and never pure white or pure black. **panel** is a raised surface (cards, dialogs, inputs). **panel-2** is the quiet fill for hover and the active sidebar item.
-- **hairline** separates surfaces. It replaces shadows.
-- **ink** is primary text and **muted** is secondary text. Do not invent a third tone.
-- **ok** and **warn** are status colors only: a dot, a badge, a small icon. They never fill a large area.
-- Contrast: `ink` on `canvas` and `on-primary` on `primary` meet WCAG AA in both themes.
+- **primary** is the only interactive color: primary buttons, focus ring, links. Never a second accent.
+- **canvas** is the content area. **panel** is the frame (title bar and sidebar) and every raised group inside the content (cards, grouped lists, code blocks). **panel-2** is hover, the active sidebar item and badges.
+- Separation is by tone only: canvas vs panel vs panel-2. There are **no borders and no dividers**.
+- **ink** is primary text and **muted** is secondary text; there is no third tone.
+- **ok** and **warn** are status colors only: a dot or a small label, never a filled area.
 
 ## Typography
 
-System UI fonts (San Francisco on macOS, Segoe UI on Windows): no font is bundled, so the app feels native and nothing needs licensing. Weights are 400 and 600 only; 500 is not used. Headlines carry slight negative tracking. Body is 14px because this is a desktop app, not a page. Code and paths use the system monospace at 13px.
+System UI fonts (San Francisco on macOS, Segoe UI Variable on Windows). Weights are 400 and 600 only. Headings carry negative tracking. Page titles use `display`, group and dialog titles use `title`, everything else `body` or `caption`. Section labels are `caption` in muted, sentence case, never uppercase.
 
 ## Layout
 
-An 8px base with the scale in `spacing`. One column of content on the right of a fixed sidebar; the sidebar lists the project hub and the user profile, and everything else opens as a dialog. Page padding is 32px, card padding 24px, and gaps between related items 8 to 12px.
+An 8px base. Page padding is `page` (32px) on every side; the gap between sections is 32px and between a section label and its content 8px. Groups (`card`) have 20px padding, rows inside a group 12px vertical and 16px horizontal. The frame (title bar plus sidebar) sits on `panel` and the content area is a `canvas` sheet with an `lg` radius at its top-left corner. Sidebar width is 250px, its padding 12px, items 36px tall with 2px between them, and section labels 24px above the first item.
+
+Nothing touches an edge: text always has at least 12px to the nearest edge of its container, and controls at least 8px from each other.
 
 ## Elevation & Depth
 
-Flat. Surfaces are told apart by color and a 1px hairline, not by shadow. The only exception is a dialog over its backdrop, which may use a soft, wide shadow at low opacity so it reads as detached.
+Flat. Depth comes only from the tone steps above. The one exception is a dialog over its backdrop, which uses a wide, soft shadow at low opacity so it reads as detached.
 
 ## Shapes
 
-Round and friendly, matching the Solar icons. Actions and inputs are pills (`full`). Cards and dialogs use `lg` (16px). Small controls such as sidebar items use `md` (12px). Do not mix radii outside this scale.
+Actions, badges and inputs are pills (`full`). Cards, grouped lists and dialogs use `lg` (18px). Sidebar items use `md` (11px), small inner controls `sm` (8px). Do not mix radii outside this scale.
 
 ## Components
 
-- **Buttons** are pills, 36px tall. Primary is filled with `primary`; secondary is a `panel` pill with a hairline. On press, scale to 0.97 and use `primary-pressed`. Focus shows a 2px `primary` ring offset by 2px.
-- **Cards** are `panel` with a hairline and 24px padding. No shadow.
-- **Inputs** are pills with a hairline; focus replaces the hairline with the accent ring.
-- **Sidebar items** are 32px tall with `md` radius. The active item uses `panel-2`.
-- **Icons** are Solar Linear, 16px in the sidebar and controls and 20px in empty states, in `currentColor`. They come only from `src/renderer/shared/ui/icons.tsx`. Solar is CC BY 4.0, so the app needs a credits entry for it.
-- **Status** is a small dot or badge, never a banner, unless an action would change files (then a short plain-language warning).
+- **Buttons** are pills, 36px tall, 20px horizontal padding. Primary is filled with `primary`, secondary is `panel` with no outline. On press scale to 0.95; hover shifts to `primary-pressed` or `panel-2`. Focus shows a 2px `primary` ring offset by 2px.
+- **Cards and grouped lists** are `panel` with `lg` radius. Rows inside are separated by space, not lines.
+- **Sidebar items** are 36px tall with `md` radius; active uses `panel-2`.
+- **Badges** are small pills on `panel-2`, text in `muted`.
+- **Icons** are Solar Linear, 16px in the sidebar and controls, 20px in empty states, in `currentColor`. They come only from `src/renderer/shared/ui/icons.tsx`. Solar is CC BY 4.0, so the app needs a credits entry for it.
+- **Status** is a small dot, never a banner, unless an action would change files (then a short plain-language note in a card).
 
 ## Do's and Don'ts
 
 **Do**
 - Use `primary` for every interactive element and nothing else.
-- Keep surfaces flat and separate them with hairlines.
-- Use pills for actions and inputs.
+- Separate with tone and space; keep surfaces flat.
+- Use pills for actions and `lg` for groups.
 - Write UI text in Portuguese, short and plain.
-- Keep the press state (scale 0.97) on every button.
+- Keep the press state on every button.
 
 **Don't**
-- Add a second accent color or decorative gradients.
-- Put shadows on cards, buttons or text.
-- Use weight 500, pure white or pure black backgrounds.
+- Add borders, dividers, outlines or a second accent color.
+- Put shadows on cards, buttons or text (dialog excepted).
+- Use weight 500, uppercase labels or decorative gradients.
 - Fill large areas with `ok` or `warn`.
-- Copy values, fonts or assets from another brand's design system.
+- Let text or controls touch an edge or each other.
