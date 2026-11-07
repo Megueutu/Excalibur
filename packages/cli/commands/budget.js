@@ -1,7 +1,7 @@
 import * as p from '@clack/prompts'
 import pc from 'picocolors'
-import { projectPaths } from '../core/paths.js'
-import { measureContext } from '../core/budget.js'
+import { projectPaths } from '../../core/paths.js'
+import { measureContext } from '../../core/budget.js'
 
 /**
  * `excalibur budget` — how much context an agent reads before a task starts.

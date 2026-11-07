@@ -3,11 +3,11 @@ import fs from 'node:fs'
 import { execFileSync } from 'node:child_process'
 import * as p from '@clack/prompts'
 import pc from 'picocolors'
-import { packageRoot } from '../core/paths.js'
-import { exists, listFiles } from '../core/fsx.js'
-import { parse } from '../core/yaml.js'
-import { existingSddPath } from '../core/config.js'
-import { checkTask, taskDirs } from '../core/skeleton.js'
+import { packageRoot } from '../../core/paths.js'
+import { exists, listFiles } from '../../core/fsx.js'
+import { parse } from '../../core/yaml.js'
+import { existingSddPath } from '../../core/config.js'
+import { checkTask, taskDirs } from '../../core/skeleton.js'
 
 /**
  * `excalibur lint` — the .md size-limit + naming-convention checks, outside the

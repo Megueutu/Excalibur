@@ -8,14 +8,14 @@ import {
   CONTEXT_DIR,
   locateConfig,
   GENERATED_GITIGNORE_ENTRIES,
-} from '../core/paths.js'
+} from '../../core/paths.js'
 import {
   copyFile,
   ensureDir,
   exists,
   writeText,
   ensureGitignore,
-} from '../core/fsx.js'
+} from '../../core/fsx.js'
 import {
   loadManifest,
   defaultAnswers,
@@ -24,10 +24,10 @@ import {
   resolveSddPath,
   writeSddMarker,
   storedSddPath,
-} from '../core/config.js'
-import { build } from '../core/build.js'
-import { deriveModules, syncModuleContext } from '../core/modules.js'
-import { detectStack } from '../core/stack-detection.js'
+} from '../../core/config.js'
+import { build } from '../../core/build.js'
+import { deriveModules, syncModuleContext } from '../../core/modules.js'
+import { detectStack } from '../../core/stack-detection.js'
 
 /** `--with a --with b` arrives as an array, a single flag as a string. */
 function asNames(value) {

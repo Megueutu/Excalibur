@@ -2,11 +2,11 @@ import fs from 'node:fs'
 import path from 'node:path'
 import * as p from '@clack/prompts'
 import pc from 'picocolors'
-import { packageRoot, projectPaths } from '../core/paths.js'
-import { copyFile, ensureDir, exists } from '../core/fsx.js'
-import { parse } from '../core/yaml.js'
-import { syncCustomManifest } from '../core/config.js'
-import { build } from '../core/build.js'
+import { packageRoot, projectPaths } from '../../core/paths.js'
+import { copyFile, ensureDir, exists } from '../../core/fsx.js'
+import { parse } from '../../core/yaml.js'
+import { syncCustomManifest } from '../../core/config.js'
+import { build } from '../../core/build.js'
 
 function catalogs() {
   const agentsRoot = path.join(packageRoot, 'lib', 'agents')

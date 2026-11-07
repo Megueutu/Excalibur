@@ -1,6 +1,6 @@
 import * as p from '@clack/prompts'
 import pc from 'picocolors'
-import { readConfig, updateConfig, SESSION_FLAGS } from '../core/config.js'
+import { readConfig, updateConfig, SESSION_FLAGS } from '../../core/config.js'
 
 /**
  * `excalibur session <flag>` — set or clear a session directive.

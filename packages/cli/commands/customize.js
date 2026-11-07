@@ -1,10 +1,10 @@
 import path from 'node:path'
 import * as p from '@clack/prompts'
 import pc from 'picocolors'
-import { projectPaths } from '../core/paths.js'
-import { copyFile, exists } from '../core/fsx.js'
-import { syncCustomManifest } from '../core/config.js'
-import { build } from '../core/build.js'
+import { projectPaths } from '../../core/paths.js'
+import { copyFile, exists } from '../../core/fsx.js'
+import { syncCustomManifest } from '../../core/config.js'
+import { build } from '../../core/build.js'
 
 /**
  * `excalibur customize <path>` — copy one file from the installed package

@@ -2,8 +2,8 @@ import path from 'node:path'
 import fs from 'node:fs'
 import * as p from '@clack/prompts'
 import pc from 'picocolors'
-import { parse } from '../core/yaml.js'
-import { existingSddPath } from '../core/config.js'
+import { parse } from '../../core/yaml.js'
+import { existingSddPath } from '../../core/config.js'
 
 /**
  * `excalibur list` (alias `tasks`) — in-progress tasks under specs/<repo>/<task>/.

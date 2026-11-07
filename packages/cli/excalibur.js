@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import mri from 'mri'
 import pc from 'picocolors'
-import { frameworkVersion } from './core/config.js'
+import { frameworkVersion } from '../core/config.js'
 
 /**
  * Excalibur CLI entrypoint.

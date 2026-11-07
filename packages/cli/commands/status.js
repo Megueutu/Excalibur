@@ -2,12 +2,12 @@ import path from 'node:path'
 import fs from 'node:fs'
 import * as p from '@clack/prompts'
 import pc from 'picocolors'
-import { projectPaths } from '../core/paths.js'
-import { exists, listFiles } from '../core/fsx.js'
-import { readConfig, frameworkVersion } from '../core/config.js'
-import { orphanedCustomizations } from '../core/resolve.js'
-import { activeModules } from '../core/modules.js'
-import { activeMode } from '../core/modes.js'
+import { projectPaths } from '../../core/paths.js'
+import { exists, listFiles } from '../../core/fsx.js'
+import { readConfig, frameworkVersion } from '../../core/config.js'
+import { orphanedCustomizations } from '../../core/resolve.js'
+import { activeModules } from '../../core/modules.js'
+import { activeMode } from '../../core/modes.js'
 
 /** `excalibur status` — a quick overall picture, without opening any file by hand. */
 export async function status(args, cwd) {

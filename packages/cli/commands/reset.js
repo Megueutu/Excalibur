@@ -1,7 +1,7 @@
 import * as p from '@clack/prompts'
 import pc from 'picocolors'
-import { projectPaths } from '../core/paths.js'
-import { readConfig, updateConfig } from '../core/config.js'
+import { projectPaths } from '../../core/paths.js'
+import { readConfig, updateConfig } from '../../core/config.js'
 
 /**
  * `excalibur reset` — clear the active session directives.

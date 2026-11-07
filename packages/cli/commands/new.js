@@ -1,9 +1,9 @@
 import path from 'node:path'
 import * as p from '@clack/prompts'
 import pc from 'picocolors'
-import { projectPaths } from '../core/paths.js'
-import { existingSddPath } from '../core/config.js'
-import { createTask } from '../core/skeleton.js'
+import { projectPaths } from '../../core/paths.js'
+import { existingSddPath } from '../../core/config.js'
+import { createTask } from '../../core/skeleton.js'
 
 /**
  * `excalibur new <repo> <task-slug> [--class fix|feature|big-feature]` — create a task

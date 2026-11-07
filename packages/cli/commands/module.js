@@ -1,9 +1,9 @@
 import * as p from '@clack/prompts'
 import pc from 'picocolors'
-import { projectPaths } from '../core/paths.js'
-import { updateConfig } from '../core/config.js'
-import { availableModules, activeModules, withRequirements, syncModuleContext } from '../core/modules.js'
-import { build } from '../core/build.js'
+import { projectPaths } from '../../core/paths.js'
+import { updateConfig } from '../../core/config.js'
+import { availableModules, activeModules, withRequirements, syncModuleContext } from '../../core/modules.js'
+import { build } from '../../core/build.js'
 
 /**
  * `excalibur module [list|add|remove] [name...]` — turn optional content on or off.

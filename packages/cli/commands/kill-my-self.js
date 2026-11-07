@@ -2,8 +2,8 @@ import path from 'node:path'
 import fs from 'node:fs'
 import * as p from '@clack/prompts'
 import pc from 'picocolors'
-import { projectPaths, harnessTargets, locateConfig } from '../core/paths.js'
-import { exists, removeDir, removeFile, listFiles, writeText } from '../core/fsx.js'
+import { projectPaths, harnessTargets, locateConfig } from '../../core/paths.js'
+import { exists, removeDir, removeFile, listFiles, writeText } from '../../core/fsx.js'
 
 /**
  * `excalibur kill-my-self` — uninstall Excalibur from this project.

@@ -2,10 +2,10 @@ import path from 'node:path'
 import fs from 'node:fs'
 import * as p from '@clack/prompts'
 import pc from 'picocolors'
-import { packageRoot } from '../core/paths.js'
-import { exists, copyFile } from '../core/fsx.js'
-import { existingSddPath } from '../core/config.js'
-import { activeModules } from '../core/modules.js'
+import { packageRoot } from '../../core/paths.js'
+import { exists, copyFile } from '../../core/fsx.js'
+import { existingSddPath } from '../../core/config.js'
+import { activeModules } from '../../core/modules.js'
 
 const TEMPLATE = path.join(packageRoot, 'lib', 'modules', 'obsidian', 'templates', 'project-canvas.canvas')
 

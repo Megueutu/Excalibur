@@ -1,12 +1,12 @@
 import * as p from '@clack/prompts'
 import pc from 'picocolors'
-import { projectPaths } from '../core/paths.js'
-import { readConfig, updateConfig, frameworkVersion, syncCustomManifest } from '../core/config.js'
-import { orphanedCustomizations } from '../core/resolve.js'
-import { build } from '../core/build.js'
+import { projectPaths } from '../../core/paths.js'
+import { readConfig, updateConfig, frameworkVersion, syncCustomManifest } from '../../core/config.js'
+import { orphanedCustomizations } from '../../core/resolve.js'
+import { build } from '../../core/build.js'
 import { writeClaudeMd } from './init.js'
-import { deriveModules, syncModuleContext } from '../core/modules.js'
-import { syncModeContext } from '../core/modes.js'
+import { deriveModules, syncModuleContext } from '../../core/modules.js'
+import { syncModeContext } from '../../core/modes.js'
 
 /**
  * `excalibur update` — rebuild `.claude/agents/`+`.claude/skills/` from the current

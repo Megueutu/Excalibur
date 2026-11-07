@@ -2,9 +2,9 @@ import path from 'node:path'
 import fs from 'node:fs'
 import * as p from '@clack/prompts'
 import pc from 'picocolors'
-import { projectPaths } from '../core/paths.js'
-import { exists } from '../core/fsx.js'
-import { effectiveFiles } from '../core/resolve.js'
+import { projectPaths } from '../../core/paths.js'
+import { exists } from '../../core/fsx.js'
+import { effectiveFiles } from '../../core/resolve.js'
 
 /**
  * `excalibur diff` — shows what's in the overrides folder (`custom_dir`) vs. the

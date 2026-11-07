@@ -1,10 +1,10 @@
 import * as p from '@clack/prompts'
 import pc from 'picocolors'
-import { projectPaths } from '../core/paths.js'
-import { updateConfig } from '../core/config.js'
-import { availableModes, activeMode, syncModeContext } from '../core/modes.js'
-import { availableModules, activeModules, withRequirements, syncModuleContext } from '../core/modules.js'
-import { build } from '../core/build.js'
+import { projectPaths } from '../../core/paths.js'
+import { updateConfig } from '../../core/config.js'
+import { availableModes, activeMode, syncModeContext } from '../../core/modes.js'
+import { availableModules, activeModules, withRequirements, syncModuleContext } from '../../core/modules.js'
+import { build } from '../../core/build.js'
 
 /**
  * `excalibur mode [list|<name>|off]` — pick how the agent works with you.

@@ -2,9 +2,9 @@ import path from 'node:path'
 import fs from 'node:fs'
 import * as p from '@clack/prompts'
 import pc from 'picocolors'
-import { parse, stringify } from '../core/yaml.js'
-import { readConfig } from '../core/config.js'
-import { ensureDir, writeText } from '../core/fsx.js'
+import { parse, stringify } from '../../core/yaml.js'
+import { readConfig } from '../../core/config.js'
+import { ensureDir, writeText } from '../../core/fsx.js'
 
 /**
  * `excalibur clean-history` — prune old per-task history.

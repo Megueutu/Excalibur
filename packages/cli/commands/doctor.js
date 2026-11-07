@@ -2,12 +2,12 @@ import path from 'node:path'
 import fs from 'node:fs'
 import * as p from '@clack/prompts'
 import pc from 'picocolors'
-import { projectPaths } from '../core/paths.js'
-import { existingSddPath } from '../core/config.js'
-import { activeModules } from '../core/modules.js'
-import { measureContext } from '../core/budget.js'
-import { exists } from '../core/fsx.js'
-import { orphanedCustomizations } from '../core/resolve.js'
+import { projectPaths } from '../../core/paths.js'
+import { existingSddPath } from '../../core/config.js'
+import { activeModules } from '../../core/modules.js'
+import { measureContext } from '../../core/budget.js'
+import { exists } from '../../core/fsx.js'
+import { orphanedCustomizations } from '../../core/resolve.js'
 
 /**
  * `excalibur doctor` — deeper diagnostic than `check`.

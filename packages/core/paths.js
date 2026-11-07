@@ -19,7 +19,7 @@ const here = path.dirname(fileURLToPath(import.meta.url))
  * written under `packageRoot` by any command — it's read-only package content,
  * exactly like the rest of `node_modules`.
  */
-export const packageRoot = path.resolve(here, '..', '..', '..')
+export const packageRoot = path.resolve(here, '..', '..')
 
 export const CONTEXT_DIR = 'context'
 export const DEFAULT_CUSTOM_DIR = '.overrides'

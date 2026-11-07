@@ -7,15 +7,15 @@ import {
   harnessTargets,
   locateConfig,
   GENERATED_GITIGNORE_ENTRIES,
-} from '../core/paths.js'
-import { readConfig } from '../core/config.js'
+} from '../../core/paths.js'
+import { readConfig } from '../../core/config.js'
 import {
   exists,
   removeDir,
   removeFile,
   removeGitignoreEntries,
   writeText,
-} from '../core/fsx.js'
+} from '../../core/fsx.js'
 
 const PACKAGE_NAME = '@easy-spec/excalibur'
 const GITIGNORE_ENTRIES = [...GENERATED_GITIGNORE_ENTRIES, 'history.yaml', 'history/archive/', '.excalibur/']

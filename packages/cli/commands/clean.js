@@ -2,9 +2,9 @@ import path from 'node:path'
 import fs from 'node:fs'
 import * as p from '@clack/prompts'
 import pc from 'picocolors'
-import { projectPaths, harnessTargets } from '../core/paths.js'
-import { exists, removeDir } from '../core/fsx.js'
-import { build, canBuild } from '../core/build.js'
+import { projectPaths, harnessTargets } from '../../core/paths.js'
+import { exists, removeDir } from '../../core/fsx.js'
+import { build, canBuild } from '../../core/build.js'
 
 /**
  * `excalibur clean` — clear generated/temporary artifacts.
