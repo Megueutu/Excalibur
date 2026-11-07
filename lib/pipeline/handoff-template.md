@@ -27,6 +27,11 @@ the point is to link, not to copy.
 ## Definition of done
 
 What has to be true for this handoff to be satisfied.
+
+## User profile
+
+Only when `<custom_dir>/context/user-profile.md` exists: copy its index table here unchanged. Do not filter it.
+The receiving agent decides which listed files to open.
 ```
 
 ## Why it's this small

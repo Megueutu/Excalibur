@@ -28,6 +28,8 @@ import {
 import { build } from '../../core/build.js'
 import { deriveModules, syncModuleContext } from '../../core/modules.js'
 import { detectStack } from '../../core/stack-detection.js'
+import { syncUserProfile } from '../../core/profile.js'
+import { touchProject } from '../../core/user.js'
 
 /** `--with a --with b` arrives as an array, a single flag as a string. */
 function asNames(value) {
@@ -310,6 +312,13 @@ export async function init(args, cwd) {
 
   const installedFeatures = syncModuleContext(cwd).installed
   writeClaudeMd(cwd, configMode)
+  // A linked user profile is copied in right away; without one this does nothing.
+  try {
+    syncUserProfile(cwd)
+  } catch {
+    // The profile is optional: never let it block onboarding.
+  }
+  touchProject(cwd)
 
   const paths = projectPaths(cwd)
   // Public mode keeps generated harness output out of git; it can always be rebuilt

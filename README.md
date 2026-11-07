@@ -42,6 +42,21 @@ Then, inside your harness, run `/excalibur-init` to finish onboarding conversati
 
 The first three are the framework's machinery; the last one is your project's content, and you pick its name and location during onboarding.
 
+## Your own instructions, in every project
+
+A user profile is a repository of your own standing instructions for AI agents: how you want commits written, how to talk to you, how you write. Keep it once and use it everywhere.
+
+```bash
+excalibur profile init        # create a new profile repository from a small template, or:
+excalibur profile link <dir>  # link one you already have
+excalibur sync                # in a project: copy it in
+```
+
+- `global/` applies to every project; `profiles/<name>/` applies to projects that opt in with `excalibur profile use <name>`.
+- A file's `when` frontmatter decides how it is read: `always` is included in full, anything else is a trigger the agent checks before opening the file.
+- A project's own rules win over the profile. The snapshot stays out of git unless you run `excalibur profile snapshot committed`.
+- The pointer and a registry of your projects live in `~/.excalibur/` (set `EXCALIBUR_HOME` to move it).
+
 ## Documentation
 
 - [`CONTRIBUTING.md`](CONTRIBUTING.md) — how to set up the repository and contribute

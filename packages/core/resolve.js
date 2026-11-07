@@ -50,7 +50,7 @@ export function effectiveFiles(cwd) {
 
 /** Custom modules and the module context copies live outside the package tree on purpose. */
 function isProjectOwned(rel) {
-  return rel.startsWith('lib/modules/') || rel.startsWith('lib/modes/') || rel.startsWith('context/')
+  return rel.startsWith('lib/modules/') || rel.startsWith('lib/modes/') || rel.startsWith('context/') || rel.startsWith('user-profile/')
 }
 
 /** Customized paths that no longer have a counterpart in base. */

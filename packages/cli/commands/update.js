@@ -7,6 +7,8 @@ import { build } from '../../core/build.js'
 import { writeClaudeMd } from './init.js'
 import { deriveModules, syncModuleContext } from '../../core/modules.js'
 import { syncModeContext } from '../../core/modes.js'
+import { syncUserProfile } from '../../core/profile.js'
+import { touchProject } from '../../core/user.js'
 
 /**
  * `excalibur update` — rebuild `.claude/agents/`+`.claude/skills/` from the current
@@ -41,7 +43,18 @@ export async function update(args, cwd) {
   syncModeContext(cwd)
   writeClaudeMd(cwd, paths.mode)
 
+  let profileNote = ''
+  try {
+    const profile = syncUserProfile(cwd)
+    if (profile.status === 'synced') profileNote = `User profile synced (${profile.files.length} file(s)).`
+    else if (profile.status === 'repo-missing') profileNote = `User profile repository not found: ${profile.repo}`
+  } catch {
+    // The profile is optional: never let it block an update.
+  }
+  touchProject(cwd)
+
   spinner.stop('CLAUDE.md and feature context refreshed')
+  if (profileNote) p.log.info(profileNote)
 
   const orphans = orphanedCustomizations(cwd)
   if (orphans.length) {

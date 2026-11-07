@@ -22,6 +22,8 @@ const COMMANDS = {
   new: () => import('./commands/new.js').then((m) => m.newTask),
   mode: () => import('./commands/mode.js').then((m) => m.mode),
   budget: () => import('./commands/budget.js').then((m) => m.budget),
+  profile: () => import('./commands/profile.js').then((m) => m.profile),
+  sync: () => import('./commands/sync.js').then((m) => m.sync),
   status: () => import('./commands/status.js').then((m) => m.status),
   doctor: () => import('./commands/doctor.js').then((m) => m.doctor),
   list: () => import('./commands/list.js').then((m) => m.list),
@@ -53,6 +55,8 @@ ${pc.bold('Commands')}
   new <repo> <task-slug>  Create a task folder in the SDD from the template, frontmatter filled in
   mode [list|<name>|off]  Pick how the agent works with you: deep, ant-brain, vibecode
   budget               Estimate how much context an agent reads before a task starts (--json for the raw numbers)
+  profile [status|init|link|use|snapshot]  Your own standing instructions for every project (--json on status)
+  sync                 Copy your user profile into this project (--dry-run to preview)
   status               Destination, customized files, last prune, installed version
   doctor               Deeper SDD health check: orphaned customizations, context size, module checks
   list                 List in-progress tasks under specs/<repo>/*/ (alias: tasks)

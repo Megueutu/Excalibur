@@ -6,6 +6,8 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 WORK="$(mktemp -d)"
 trap 'rm -rf "$WORK"' EXIT
+# Keep per-user state (profile pointer, project registry) out of the real home directory.
+export EXCALIBUR_HOME="$WORK/excalibur-home"
 
 cd "$WORK"
 mkdir pack project
@@ -47,6 +49,41 @@ mkdir -p .sdd
 run new api demo-task --class fix
 test -f .sdd/specs/api/demo-task/spec.md
 run lint
+
+# User profile: create, link, sync, drift and git handling.
+run profile status
+run sync
+test ! -f .overrides/context/user-profile.md
+run profile init "$WORK/my-profile"
+test -f "$WORK/my-profile/global/conversation.md"
+test -d "$WORK/my-profile/.git"
+run sync
+test -f .overrides/context/user-profile.md
+test -f .overrides/user-profile/global/commits.md
+grep -q "source-hash" .overrides/context/user-profile.md
+git check-ignore -q .overrides/context/user-profile.md
+run budget
+run doctor
+test -f "$EXCALIBUR_HOME/projects.yaml"
+echo "- extra line" >> "$WORK/my-profile/global/writing.md"
+npx --no-install excalibur profile status --json | grep -q '"snapshot": "stale"'
+run sync
+npx --no-install excalibur profile status --json | grep -q '"snapshot": "fresh"'
+mkdir -p "$WORK/my-profile/profiles/work"
+printf -- '---\ndescription: work rules\nwhen: when reviewing\n---\n\n- be strict\n' > "$WORK/my-profile/profiles/work/review.md"
+if npx --no-install excalibur profile use nope </dev/null; then echo "profile use accepted an unknown profile"; exit 1; fi
+run profile use work
+run sync
+test -f .overrides/user-profile/profiles/work/review.md
+run profile snapshot committed
+run sync
+if git check-ignore -q .overrides/context/user-profile.md; then echo "snapshot should not be ignored when committed"; exit 1; fi
+run profile snapshot ignored
+run sync
+git check-ignore -q .overrides/context/user-profile.md
+run update
+run lint
+
 run kill-my-self --dry-run --yes
 test -f excalibur.yaml
 

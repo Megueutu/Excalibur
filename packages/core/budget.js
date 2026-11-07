@@ -70,10 +70,12 @@ export function measureContext(cwd) {
 
   const contextDir = paths.context
   const contextFiles = fs.existsSync(contextDir) ? listFiles(contextDir).map((f) => path.join(contextDir, f)) : []
+  const isProfile = (f) => path.basename(f) === 'user-profile.md'
 
   const standing = [
     entry('CLAUDE.md', [path.join(cwd, 'CLAUDE.md')], language),
-    entry('module context', contextFiles, language),
+    entry('module context', contextFiles.filter((f) => !isProfile(f)), language),
+    entry('user profile', contextFiles.filter(isProfile), language),
   ]
   const task = [
     entry('pipeline entrypoint', [resolveFile(cwd, 'lib/pipeline/entrypoint.md')], language),

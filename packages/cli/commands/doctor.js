@@ -8,6 +8,8 @@ import { activeModules } from '../../core/modules.js'
 import { measureContext } from '../../core/budget.js'
 import { exists } from '../../core/fsx.js'
 import { orphanedCustomizations } from '../../core/resolve.js'
+import { profileState } from '../../core/profile.js'
+import { touchProject } from '../../core/user.js'
 
 /**
  * `excalibur doctor` — deeper diagnostic than `check`.
@@ -110,6 +112,20 @@ export async function doctor(args, cwd) {
   } else {
     lines.push(`${pc.green('✓')} context          ~${startTokens} tokens at the start of a task (estimate)`)
   }
+
+  // 4. User profile layer: only reported when a profile is linked or a snapshot exists.
+  const profile = profileState(cwd)
+  if (profile.repo || profile.snapshot !== 'none') {
+    const issues = [...profile.warnings, ...profile.problems.map((x) => `${x.file}: ${x.issue}`)]
+    if (issues.length === 0) {
+      lines.push(`${pc.green('✓')} user profile     snapshot ${profile.snapshot}, ${profile.settings.snapshot} by git`)
+    } else {
+      problems++
+      lines.push(`${pc.yellow('!')} user profile     ${issues.length} thing(s) to look at`)
+      for (const issue of issues) lines.push(`    ${issue}`)
+    }
+  }
+  touchProject(cwd)
 
   if (quiet) {
     console.log(lines.join('\n'))
