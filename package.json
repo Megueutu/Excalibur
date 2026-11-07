@@ -12,7 +12,8 @@
     "node": ">=18"
   },
   "files": [
-    "packages/",
+    "packages/cli/",
+    "packages/core/",
     "lib/",
     "rules/",
     "harnesses/",

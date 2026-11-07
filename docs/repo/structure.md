@@ -8,7 +8,8 @@ Excalibur/
       excalibur.js           the ongoing, per-task CLI entry point
       create-excalibur.js    one-time onboarding entry point (`npx create-excalibur`)
       commands/              one file per command in the CLI reference
-    core/                    override resolution, build, paths, minimal YAML (shared by the CLI and the desktop app)
+    core/                    override resolution, build, paths, minimal YAML, user profile (shared by the CLI and the desktop app)
+    desktop/                 desktop app prototype (Electron, React, TypeScript); own package.json, not published
   lib/
     agents/                  the internal agent catalog, one .yaml each
     personas/                short behaviors composed into agent output

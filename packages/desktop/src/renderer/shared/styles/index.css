@@ -1,0 +1,48 @@
+@import 'tailwindcss';
+
+/* Design tokens. Placeholder grays: the visual identity is still being decided. */
+:root {
+  --bg: #0f0f10;
+  --panel: #161617;
+  --panel-2: #1e1e20;
+  --border: #2a2a2c;
+  --text: #e8e8e8;
+  --muted: #8a8a8e;
+  --warn: #d6a13a;
+  --ok: #5aa469;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-panel: var(--panel);
+  --color-panel-2: var(--panel-2);
+  --color-border: var(--border);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-warn: var(--warn);
+  --color-ok: var(--ok);
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  overflow: hidden;
+}
+
+.drag {
+  -webkit-app-region: drag;
+}
+.no-drag {
+  -webkit-app-region: no-drag;
+}
