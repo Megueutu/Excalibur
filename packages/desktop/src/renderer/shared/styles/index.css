@@ -1,15 +1,37 @@
 @import 'tailwindcss';
 
-/* Design tokens. Placeholder grays: the visual identity is still being decided. */
+/*
+ * Design tokens. Source of truth: packages/desktop/DESIGN.md (light values here,
+ * dark values in the media query below). Keep the two in sync.
+ */
 :root {
-  --bg: #0f0f10;
-  --panel: #161617;
-  --panel-2: #1e1e20;
-  --border: #2a2a2c;
-  --text: #e8e8e8;
-  --muted: #8a8a8e;
-  --warn: #d6a13a;
-  --ok: #5aa469;
+  --bg: #f7f6f4;
+  --panel: #ffffff;
+  --panel-2: #efeeeb;
+  --border: #e3e1dc;
+  --text: #1c1c1e;
+  --muted: #6e6e73;
+  --primary: #6d4aff;
+  --primary-pressed: #5a3ae0;
+  --on-primary: #ffffff;
+  --warn: #b7791f;
+  --ok: #2f8f5b;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121214;
+    --panel: #1a1a1d;
+    --panel-2: #232327;
+    --border: #2e2e33;
+    --text: #f2f2f3;
+    --muted: #9a9aa2;
+    --primary: #8b7bff;
+    --primary-pressed: #a095ff;
+    --on-primary: #14121f;
+    --warn: #e0b04a;
+    --ok: #5cc08a;
+  }
 }
 
 @theme inline {
@@ -19,10 +41,20 @@
   --color-border: var(--border);
   --color-text: var(--text);
   --color-muted: var(--muted);
+  --color-primary: var(--primary);
+  --color-primary-pressed: var(--primary-pressed);
+  --color-on-primary: var(--on-primary);
   --color-warn: var(--warn);
   --color-ok: var(--ok);
-  --font-sans: 'Inter', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-sans: system-ui, sans-serif;
+  --font-mono: ui-monospace, monospace;
+  /* Radii follow DESIGN.md: sm 8, md 12, lg 16. Pills use rounded-full. */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 16px;
+  /* DESIGN.md uses weights 400 and 600 only. */
+  --font-weight-medium: 600;
 }
 
 html,
@@ -37,7 +69,18 @@ body {
   color: var(--text);
   font-family: var(--font-sans);
   font-size: 14px;
+  line-height: 1.5;
+  letter-spacing: -0.006em;
   overflow: hidden;
+}
+
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+button:not(:disabled):active {
+  transform: scale(0.97);
 }
 
 .drag {

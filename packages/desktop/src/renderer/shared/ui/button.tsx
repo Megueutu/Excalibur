@@ -7,8 +7,8 @@ type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
 }
 
 const variants = {
-  primary: 'bg-text text-bg hover:bg-text/90',
-  outline: 'border border-border bg-transparent hover:bg-panel-2',
+  primary: 'bg-primary text-on-primary hover:bg-primary-pressed',
+  outline: 'border border-border bg-panel hover:bg-panel-2',
   ghost: 'bg-transparent hover:bg-panel-2',
 }
 
@@ -17,7 +17,7 @@ export function Button({ variant = 'outline', size = 'md', className, type = 'bu
     <button
       type={type}
       className={cn(
-        'no-drag inline-flex items-center gap-2 rounded-md font-medium transition-colors disabled:opacity-50',
+        'no-drag inline-flex items-center gap-2 rounded-full font-medium transition-[colors,transform] disabled:opacity-50',
         size === 'sm' ? 'px-2.5 py-1 text-xs' : 'px-3.5 py-1.5 text-sm',
         variants[variant],
         className,
