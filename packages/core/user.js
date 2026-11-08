@@ -85,6 +85,18 @@ function defaultSnapshot(doc) {
   return SNAPSHOT_CHOICES.includes(value) ? value : 'ignored'
 }
 
+/** The snapshot treatment new projects start with: `ignored` (kept out of git) or `committed`. */
+export function getDefaultSnapshot(env = process.env) {
+  return defaultSnapshot(readUserConfig(env).doc)
+}
+
+export function setDefaultSnapshot(value, env = process.env) {
+  if (!SNAPSHOT_CHOICES.includes(value)) throw new Error(`Snapshot must be one of: ${SNAPSHOT_CHOICES.join(', ')}.`)
+  updateUserConfig(env, (doc) => {
+    doc.defaults = { ...(doc.defaults ?? {}), snapshot: value }
+  })
+}
+
 function projectList(doc) {
   return Array.isArray(doc.projects) ? doc.projects.filter((p) => p && typeof p.path === 'string') : []
 }
@@ -138,6 +150,18 @@ export function registerProject(projectPath, env = process.env) {
   doc.projects = list
   save(file, doc, supported)
   return entry
+}
+
+/** Takes a project out of the registry. Only the registry entry goes: the folder is never touched. Returns whether it was there. */
+export function unregisterProject(projectPath, env = process.env) {
+  const file = userPaths(env).registry
+  const { doc, supported } = load(file)
+  const list = projectList(doc)
+  const kept = list.filter((p) => !samePath(p.path, projectPath))
+  if (kept.length === list.length) return false
+  doc.projects = kept
+  save(file, doc, supported)
+  return true
 }
 
 /**
