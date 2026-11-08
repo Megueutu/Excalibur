@@ -36,8 +36,10 @@ function createWindow(): void {
 if (process.env['EXCALIBUR_DEBUG_PORT']) app.commandLine.appendSwitch('remote-debugging-port', process.env['EXCALIBUR_DEBUG_PORT'])
 
 void app.whenReady().then(async () => {
-  // In development the app sits next to the core (packages/desktop and packages/core).
-  await loadCore(process.env['EXCALIBUR_CORE_DIR'] ?? join(app.getAppPath(), '..', 'core'))
+  // Packaged, the Excalibur package sits in resources/excalibur (see electron-builder.yml). In
+  // development the app is next to the core (packages/desktop and packages/core).
+  const bundled = join(process.resourcesPath, 'excalibur', 'packages', 'core')
+  await loadCore(process.env['EXCALIBUR_CORE_DIR'] ?? (app.isPackaged ? bundled : join(app.getAppPath(), '..', 'core')))
   registerIpc()
   createWindow()
   app.on('activate', () => {

@@ -1,0 +1,26 @@
+# Packaging for the desktop app. The Excalibur package itself (core, CLI and the framework content the
+# core reads relative to its own file) travels beside the app in resources/excalibur, outside the asar:
+# the CLI is run as a separate Node process, and the core finds `lib/`, `rules/` and `harnesses/` by path.
+appId: dev.excalibur.desktop
+productName: Excalibur
+directories:
+  output: release
+files:
+  - out/**
+  - package.json
+extraResources:
+  - { from: ../core, to: excalibur/packages/core }
+  - { from: ../cli, to: excalibur/packages/cli }
+  - { from: ../../lib, to: excalibur/lib }
+  - { from: ../../rules, to: excalibur/rules }
+  - { from: ../../harnesses, to: excalibur/harnesses }
+  - { from: ../../node_modules, to: excalibur/node_modules }
+  # The root package.json says `type: module`, which is what makes the core and the CLI load as ESM.
+  - { from: ../../package.json, to: excalibur/package.json }
+win:
+  target: nsis
+  # No code signing yet: this also keeps the build from needing the signing tools (and symlink rights).
+  signAndEditExecutable: false
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
