@@ -25,31 +25,37 @@ colors:
   warn-dark: "#ff9f0a"
 typography:
   display:
-    fontFamily: system-ui
+    fontFamily: Plus Jakarta Sans
     fontSize: 28px
     fontWeight: 600
     lineHeight: 1.14
     letterSpacing: -0.02em
   title:
-    fontFamily: system-ui
+    fontFamily: Plus Jakarta Sans
     fontSize: 17px
     fontWeight: 600
     lineHeight: 1.24
     letterSpacing: -0.022em
+  heading:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 15px
+    fontWeight: 600
+    lineHeight: 1.3
+    letterSpacing: -0.014em
   body:
-    fontFamily: system-ui
+    fontFamily: Plus Jakarta Sans
     fontSize: 14px
     fontWeight: 400
     lineHeight: 1.47
     letterSpacing: -0.016em
   body-strong:
-    fontFamily: system-ui
+    fontFamily: Plus Jakarta Sans
     fontSize: 14px
     fontWeight: 600
     lineHeight: 1.47
     letterSpacing: -0.016em
   caption:
-    fontFamily: system-ui
+    fontFamily: Plus Jakarta Sans
     fontSize: 12px
     fontWeight: 400
     lineHeight: 1.43
@@ -133,13 +139,29 @@ Both a light and a dark theme exist. Dark tokens carry the `-dark` suffix and fo
 
 ## Typography
 
-System UI fonts (San Francisco on macOS, Segoe UI Variable on Windows). Weights are 400 and 600 only. Headings carry negative tracking. Page titles use `display`, group and dialog titles use `title`, everything else `body` or `caption`. Section labels are `caption` in muted, sentence case, never uppercase.
+Class merging (`cn`) is taught the five type levels, otherwise tailwind-merge reads `text-caption` as a color and drops it next to `text-muted`.
+
+The typeface is **Plus Jakarta Sans** (variable, OFL), chosen by the user on 2026-11-07 from specimens. It is consumed from the `@fontsource-variable/plus-jakarta-sans` package and bundled by Vite, so the app works offline and no font file is committed. It is declared in exactly two places: imported in `shared/styles/fonts.css` and named in `--font-sans` in `theme.css`. Weights are 400 and 600 only.
+
+Hierarchy is five levels, declared once in `theme.css` as Tailwind text sizes (size, line height, tracking and weight together), so a component writes one class and never a size:
+
+- `text-display` 28px: the page title, once per page.
+- `text-title` 17px: section titles and popup titles.
+- `text-heading` 15px: the name inside a card or row.
+- `text-body` 14px: running text and values, in `ink` or `muted`.
+- `text-caption` 12px: small labels and metadata, in `muted`.
+
+Section labels are `text-title` in `ink`, not small muted caps. Muted is for secondary information only.
 
 ## Layout
 
 An 8px base. Page padding is `page` (32px) on every side; the gap between sections is 32px and between a section label and its content 8px. Groups (`card`) have 20px padding, rows inside a group 12px vertical and 16px horizontal. The frame (title bar plus sidebar) sits on `panel` and the content area is a `canvas` sheet with an `lg` radius at its top-left corner. Sidebar width is 250px, its padding 12px, items 36px tall with 2px between them, and section labels 24px above the first item.
 
 Nothing touches an edge: text always has at least 12px to the nearest edge of its container, and controls at least 8px from each other.
+
+### Collapsible sidebars
+
+Both sidebars fold to a 64px icon rail so the content can have the whole window: the fixed sidebar (Início, Perfil, Configurações, projects) and, inside a project, the repository list. The rail keeps every destination reachable (icons with tooltips, a dot where something needs attention). `Ctrl or Cmd + B` folds the fixed sidebar, `+ Shift + B` the repository list, `+ Shift + E` the files, `+ \` folds them all or restores the repository list. The choice is remembered. The columns animate over 200ms.
 
 ## Elevation & Depth
 
@@ -152,15 +174,35 @@ Actions, badges and inputs are pills (`full`). Cards, grouped lists and dialogs 
 ## Components
 
 - **Buttons** are pills, 36px tall, 20px horizontal padding. Primary is filled with `primary`, secondary is `panel` with no outline. On press scale to 0.95; hover shifts to `primary-pressed` or `panel-2`. Focus shows a 2px `primary` ring offset by 2px.
+- **Popups** have no close button: they close with Escape or a click outside. The page behind blurs and darkens, the backdrop fades in over 200ms and the sheet rises in over 240ms with a soft ease; leaving takes 150ms. Reduced-motion turns the animation off.
 - **Cards and grouped lists** are `panel` with `lg` radius. Rows inside are separated by space, not lines.
 - **Sidebar items** are 36px tall with `md` radius; active uses `panel-2`.
-- **Badges** are small pills on `panel-2`, text in `muted`.
-- **Icons** come from two single-color sets, both in `currentColor`: Solar Linear for the interface, drawn at stroke width 2 for a sturdier line (CC BY 4.0, so the app needs a credits entry), and Simple Icons for git, GitHub and the stack (CC0, solid, with a light round outline so they sit closer to the line icons). Interface icons are 16px in the sidebar and controls, 20px in cards; brand icons match. They are generated by `npm run icons` and used only through `shared/ui/icons.tsx` and `shared/ui/repo-icons.tsx`.
+- **Chips** (Badge, PathLink, Pill) are one height, `h-chip` (24px), and one tone: `bg-field`, the same tone buttons and fields take on their surface. `bg-selected` is for a selected item only, never for a tag. A repository header is the name on its own line (truncated, never wrapped by a tag), the path under it as a path, and then one row of equal chips: hub, branch, stack.
+- **Icons** are consumed from the icon libraries at build time through `unplugin-icons` (`~icons/<set>/<name>`); no SVG is copied into the source. Two single-color sets: Solar Linear for the interface (CC BY 4.0, so the app needs a credits entry) and Simple Icons for git, GitHub and the stack (CC0). Their weight is tuned in one place, `electron.vite.config.ts` (Solar stroke 2, a light round outline on the solid brand icons). They are sized with Tailwind (`size-4`, `size-5`), never with numbers in code. Interface icons are exported from `shared/ui/icons/index.ts`; kind and stack icons live in `features/projects/lib`.
 - **Repository kind** has one symbol each: GitHub (git with a GitHub remote), Git (local, no remote) and a plain folder. A repository row always shows its kind first, then its main stack icon, then its name.
 - **Stack icons** come from detectors, not from hand-picked lists: `linguist-js` for the language and `@specfy/stack-analyser` for frameworks and tools, each mapped to a Simple Icons slug. A technology without an icon is skipped, never replaced by a colored logo.
 - **Fixed tabs** sit together at the top of the sidebar: Início, Perfil do usuário, Configurações. Projects and standalone repositories follow below.
 - **Visual first:** pages show state as cards with an icon and one short line, not as tables. Projects and repositories are cards; configuration is a row of badges.
+- **Project page** has two sidebars side by side, then the panel. The first lists the repositories ("Visão geral" is the project as a whole). The second lists the files of the repository being read; it only exists on the Arquivos tab. Only one of the two is open at a time: opening one folds the other to a rail, and leaving the Arquivos tab removes the files sidebar and gives the room back. Both have the same header, the title on the left and the fold button on the right, folded or not. The files are grouped by kind (context, profile, specs, decisions, reports) and specs by task, and every group folds on its own, with an arrow that turns; there is no filter, because the whole list is one continuous scroll. Files show their real names. Opening a project also folds the fixed sidebar, since the project lists its repositories itself; this only closes it, the person can open it again, and leaving the project restores their own choice. The panel shows only what the person cannot already know, or something they can act on, in tabs: Tarefas, Saúde, Arquivos, Configuração.
+- **Open in editor** is a split button: the main part opens the path in the last editor used, shown by that editor's icon, a thin bar divides it from an arrow, and the arrow lists the other editors and "Mostrar na pasta". It appears on a file and on a repository.
+- **Prototype actions** that would change files are enabled and answer with a short toast ("Protótipo: nada é gravado") instead of being disabled. A button that is really unavailable keeps its fill and turns its text muted; it never just fades into the surface.
+- **File reader** is titled with the file's own name, extension included (`spec.md`), with the full path under it as a path. Beside the text (below it when narrow) a "Sobre o arquivo" card holds what the file is (kind, whether it is always read, its cost) and, for a spec, what its frontmatter says (status, date, linked commit, freshness), then the files it depends on and links to as chips.
+- **Paths** are code, not chips. They keep their own shape (4px corners, `rounded-xs`) and the mono font, they never sit in a row of chips (a repository header puts the path on its own line, above the chips), and they are always clickable: inside the app when they name a file of the repository, otherwise they open in the editor or file manager. Inline code in Markdown that looks like a path becomes a path link, and so does a commit hash.
+- **File graph** is not hand-built: it uses `react-force-graph-2d` (canvas, d3-force), which owns layout, zoom, pan and drag. The component only decides how a node looks. Kinds are told apart by shape and icon, not color; the selected node is `primary`, the hovered node and its neighbors are `ink`, the rest fade. Colors are read from the CSS tokens, so the canvas follows the theme.
+- **Markdown** in the reader is rendered by `react-markdown`, with relative links between files made clickable.
 - **Status** is a small dot, never a banner, unless an action would change files (then a short plain-language note in a card).
+
+## Tokens and where they live
+
+Nothing visual is hardcoded in components. Styles are split by concern in `shared/styles/`: `fonts.css`, `tokens.css` (raw values, light and dark, layout sizes, motion), `theme.css` (the Tailwind mapping), `base.css` (element defaults: cursor, focus ring, scrollbar) and `animations.css`. Backgrounds are semantic and depend on the parent: `bg-frame` (title bar and sidebar) and three surfaces, `surface-page`, `surface-card` and `surface-control`. Each surface sets `--field`, the tone for the controls that sit on it, and buttons, chips, segmented controls and fields use `bg-field`, so a control is never the same color as what it sits on and nobody picks a gray by hand. `bg-hover` and `bg-selected` are the two states. Text is `text-ink` or `text-muted`. Layout sizes (`--sidebar-width`, `--titlebar-height`, `--modal-width`, `--page-gutter`) are tokens, used through `var()` or the `gutter` spacing.
+
+## Control sizes
+
+Every control that sits in a row has the same height, from tokens: `h-control` (36px) for buttons, fields and the tab bar, `h-control-sm` (32px) for small buttons, chips, segmented controls and the toggle buttons, and `min-h-row` (48px) for rows that hold a control, such as a module with its switch. A chip, a segmented control and a small button next to each other line up. A switcher (segmented control, tab bar) frames its selected pill with 4px of padding, never 2px, so the frame is a whole number of device pixels at common display scales and its four sides look equal.
+
+## Pointer and interaction
+
+Anything clickable shows the hand cursor; anything disabled shows the not-allowed cursor and drops to 40% opacity; text fields show the text cursor. Every clickable surface changes tone on hover (`bg-hover`) with a 150ms transition and shrinks to 95% while pressed. Keyboard focus shows a 2px `primary` ring. The window chrome is not selectable; page content (`PageBody`) and fields are. Scrollbars are not drawn anywhere; the page still scrolls with the wheel, the trackpad and the keyboard, and there is one scroll per page: sidebars grow with their content instead of scrolling on their own.
 
 ## Do's and Don'ts
 

@@ -1,0 +1,23 @@
+/*
+ * Surfaces. A control (button, chip, field) must look different from what it sits on, and what
+ * "different" means depends on the parent. Each surface therefore sets --field, the background
+ * for the controls on it, and controls use `bg-field` instead of picking a gray themselves.
+ *
+ *   page      the content sheet            controls on it: card tone
+ *   card      a raised group on the page   controls on it: control tone
+ *   control   a row inside a card          controls on it: card tone
+ *
+ * Use a surface class on any container that holds controls, and bg-field on the controls.
+ */
+@utility surface-page {
+  background-color: var(--page);
+  --field: var(--card);
+}
+@utility surface-card {
+  background-color: var(--card);
+  --field: var(--control);
+}
+@utility surface-control {
+  background-color: var(--control);
+  --field: var(--card);
+}

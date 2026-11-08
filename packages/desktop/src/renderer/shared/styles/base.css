@@ -1,0 +1,68 @@
+/* Element defaults. Utilities in components can still override anything in the base layer. */
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+    margin: 0;
+  }
+
+  body {
+    background: var(--frame);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    letter-spacing: var(--text-body--letter-spacing);
+    overflow: hidden;
+    /* An app, not a page: chrome is not selectable. Content opts back in with `select-text`. */
+    user-select: none;
+  }
+
+  /* Keyboard focus only. */
+  :focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+
+  /* Anything clickable shows it; disabled things say no. */
+  button:not(:disabled),
+  a[href],
+  [role='button'],
+  [role='checkbox'],
+  [role='tab'],
+  select,
+  summary {
+    cursor: pointer;
+  }
+  button:disabled,
+  [aria-disabled='true'] {
+    cursor: not-allowed;
+  }
+  input,
+  textarea {
+    cursor: text;
+    user-select: text;
+  }
+
+  /* Every button gives the same press feedback. */
+  button:not(:disabled):active {
+    transform: scale(0.95);
+  }
+
+  /* Scrollbars are not drawn. The page still scrolls with the wheel, the trackpad and the keyboard. */
+  * {
+    scrollbar-width: none;
+  }
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Window dragging for the custom title bar. */
+.drag {
+  -webkit-app-region: drag;
+}
+.no-drag {
+  -webkit-app-region: no-drag;
+}

@@ -1,0 +1,52 @@
+/* Popups: the page behind blurs and darkens, the sheet rises in. Durations come from tokens.css. */
+@keyframes overlay-in {
+  from { opacity: 0; backdrop-filter: blur(0); }
+  to { opacity: 1; backdrop-filter: blur(var(--scrim-blur)); }
+}
+@keyframes overlay-out {
+  from { opacity: 1; backdrop-filter: blur(var(--scrim-blur)); }
+  to { opacity: 0; backdrop-filter: blur(0); }
+}
+@keyframes sheet-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes sheet-out {
+  from { opacity: 1; transform: translateY(0) scale(1); }
+  to { opacity: 0; transform: translateY(8px) scale(0.98); }
+}
+
+.modal-overlay {
+  background: var(--scrim);
+  backdrop-filter: blur(var(--scrim-blur));
+}
+.modal-overlay[data-state='open'] { animation: overlay-in var(--duration-base) ease-out; }
+.modal-overlay[data-state='closed'] { animation: overlay-out var(--duration-fast) ease-in forwards; }
+.modal-sheet[data-state='open'] { animation: sheet-in var(--duration-sheet) var(--ease-out); }
+.modal-sheet[data-state='closed'] { animation: sheet-out var(--duration-fast) ease-in forwards; }
+
+/* Menus and toasts: small and quick, from the control they belong to. */
+@keyframes menu-in {
+  from { opacity: 0; transform: translateY(-4px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes menu-out {
+  from { opacity: 1; transform: translateY(0) scale(1); }
+  to { opacity: 0; transform: translateY(-4px) scale(0.98); }
+}
+@keyframes toast-in {
+  from { opacity: 0; transform: translate(-50%, 8px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+.menu-sheet[data-state='open'] { animation: menu-in var(--duration-fast) var(--ease-out); }
+.menu-sheet[data-state='closed'] { animation: menu-out 100ms ease-in forwards; }
+.toast { animation: toast-in var(--duration-sheet) var(--ease-out) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-sheet[data-state],
+  .toast { animation-duration: 1ms; }
+  .modal-overlay[data-state],
+  .modal-sheet[data-state] {
+    animation-duration: 1ms;
+  }
+}

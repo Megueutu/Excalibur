@@ -1,0 +1,67 @@
+/*
+ * Tailwind theme: every utility the UI uses is declared here, from tokens.css.
+ * Colors        bg-frame bg-page bg-card bg-control bg-hover bg-selected, text-ink text-muted, bg-primary ...
+ * Type scale    text-display text-title text-heading text-body text-caption (size, line height, tracking, weight)
+ * Radii         rounded-xs (code), rounded-sm, rounded-md, rounded-lg, and rounded-full for pills
+ * Spacing       p-gutter, plus Tailwind's own scale
+ * Control size  h-control (36px), h-control-sm (32px), min-h-row (48px): the same height for buttons, chips and fields
+ *               h-chip (24px): the height of every metadata chip
+ * Surfaces      surface-page, surface-card, surface-control (surfaces.css) and bg-field for what sits on them
+ */
+@theme inline {
+  --color-frame: var(--frame);
+  --color-page: var(--page);
+  --color-card: var(--card);
+  --color-control: var(--control);
+  --color-field: var(--field);
+  --color-hover: var(--hover);
+  --color-selected: var(--selected);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-primary: var(--primary);
+  --color-primary-pressed: var(--primary-pressed);
+  --color-on-primary: var(--on-primary);
+  --color-warn: var(--warn);
+  --color-ok: var(--ok);
+
+  --font-sans: 'Plus Jakarta Sans Variable', system-ui, sans-serif;
+  --font-mono: ui-monospace, 'Cascadia Mono', 'SF Mono', Menlo, Consolas, monospace;
+
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 11px;
+  --radius-lg: 18px;
+
+  --spacing-gutter: var(--page-gutter);
+  /* One height for every control that sits in a row: buttons, chips, segmented controls, fields. */
+  --spacing-control: 2.25rem;
+  --spacing-control-sm: 2rem;
+  --spacing-row: 3rem;
+  /* The height of a metadata chip (Badge, PathLink, Pill): all of them line up in a row. */
+  --spacing-chip: 1.5rem;
+
+  --text-display: 1.75rem;
+  --text-display--line-height: 1.14;
+  --text-display--letter-spacing: -0.015em;
+  --text-display--font-weight: 600;
+
+  --text-title: 1.0625rem;
+  --text-title--line-height: 1.24;
+  --text-title--letter-spacing: -0.01em;
+  --text-title--font-weight: 600;
+
+  --text-heading: 0.9375rem;
+  --text-heading--line-height: 1.3;
+  --text-heading--letter-spacing: -0.006em;
+  --text-heading--font-weight: 600;
+
+  --text-body: 0.875rem;
+  --text-body--line-height: 1.47;
+  --text-body--letter-spacing: -0.003em;
+  --text-body--font-weight: 400;
+
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1.43;
+  --text-caption--letter-spacing: 0em;
+  --text-caption--font-weight: 400;
+}

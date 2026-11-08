@@ -1,84 +1,142 @@
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import { NavLink } from 'react-router-dom'
 import type { Repo } from '@shared/contract'
 import { cn } from '@/shared/lib/cn'
-import { useUi } from '@/shared/state/ui-store'
-import { StatusDot } from '@/shared/ui/badge'
+import { selectSidebarCollapsed, useUi } from '@/shared/state/ui-store'
 import { ChevronDown, ChevronRight, Folder, House, Plus, Settings, User } from '@/shared/ui/icons'
-import { KindIcon, StackIcon } from '@/shared/ui/repo-icons'
+import { StatusDot } from '@/shared/ui/primitives/StatusDot'
+import { KindIcon } from '@/features/projects/components/KindIcon'
+import { StackIcon } from '@/features/projects/components/StackIcons'
 import { useProjects } from '@/features/projects/hooks'
+import { needsSync } from '@/features/projects/lib/snapshot'
 
-const item = 'no-drag flex h-9 items-center gap-2.5 rounded-md px-3 text-sm hover:bg-panel-2'
-const active = 'bg-panel-2 font-semibold'
+const row = 'no-drag relative flex h-9 items-center rounded-md text-body transition-colors duration-150 hover:bg-hover'
+const active = 'bg-selected font-semibold'
+const groupLabel = 'mb-1 mt-6 pl-3 text-caption font-semibold text-muted'
 
-function Item({ to, children }: { to: string; children: React.ReactNode }) {
+type RowProps = {
+  label: string
+  icon: ReactNode
+  collapsed: boolean
+  /** A state dot, shown after the label, or on the icon corner when collapsed. */
+  dot?: boolean
+  /** Extra content after the label (expanded only). */
+  trailing?: ReactNode
+  className?: string
+}
+
+function RowBody({ label, icon, collapsed, dot, trailing }: RowProps) {
+  if (collapsed) {
+    return (
+      <>
+        {icon}
+        {dot ? <StatusDot className="absolute right-2 top-1.5" /> : null}
+      </>
+    )
+  }
   return (
-    <NavLink to={to} end className={({ isActive }) => cn(item, isActive && active)}>
-      {children}
+    <>
+      {icon}
+      <span className="min-w-0 truncate">{label}</span>
+      {trailing}
+      {dot ? <StatusDot className="ml-auto" /> : null}
+    </>
+  )
+}
+
+const layout = (collapsed: boolean) => (collapsed ? 'justify-center' : 'gap-2.5 px-3')
+
+function LinkRow({ to, end = true, ...p }: RowProps & { to: string; end?: boolean }) {
+  return (
+    <NavLink to={to} end={end} title={p.collapsed ? p.label : undefined} aria-label={p.label} className={({ isActive }) => cn(row, layout(p.collapsed), p.className, isActive && active)}>
+      <RowBody {...p} />
     </NavLink>
   )
 }
 
-/** A repository row: what it is, its main stack, then its name. */
-function RepoItem({ to, repo, className }: { to: string; repo: Repo; className?: string }) {
+function ButtonRow({ onClick, ...p }: RowProps & { onClick: () => void }) {
   return (
-    <NavLink to={to} className={({ isActive }) => cn(item, className, isActive && active)}>
-      <span className="flex shrink-0 items-center gap-1.5 text-muted">
-        <KindIcon kind={repo.kind} size={16} />
-        {repo.stack[0] ? <StackIcon tech={repo.stack[0]} size={14} /> : null}
-      </span>
-      <span className="truncate">{repo.name}</span>
-      {repo.isHub ? <span className="ml-auto text-[11px] font-normal text-muted">hub</span> : null}
-      {repo.snapshot === 'stale' ? <StatusDot className="ml-auto" /> : null}
-    </NavLink>
+    <button type="button" onClick={onClick} title={p.collapsed ? p.label : undefined} aria-label={p.label} className={cn(row, layout(p.collapsed), 'w-full text-left', p.className)}>
+      <RowBody {...p} />
+    </button>
+  )
+}
+
+/** A repository row: what it is, its main stack, then its name. Only the kind shows when collapsed. */
+function RepoRow({ to, repo, collapsed, indent }: { to: string; repo: Repo; collapsed: boolean; indent?: boolean }) {
+  const icon = (
+    <span className="flex shrink-0 items-center gap-1.5 text-muted">
+      <KindIcon kind={repo.kind} />
+      {!collapsed && repo.stack[0] ? <StackIcon tech={repo.stack[0]} className="size-3.5" /> : null}
+    </span>
+  )
+  return (
+    <LinkRow
+      to={to}
+      end={false}
+      label={repo.name}
+      icon={icon}
+      collapsed={collapsed}
+      dot={needsSync(repo.snapshot)}
+      trailing={repo.isHub ? <span className="ml-auto text-caption font-normal text-muted">hub</span> : null}
+      className={cn(!collapsed && indent && 'ml-8')}
+    />
   )
 }
 
 export function Sidebar() {
   const { data } = useProjects()
+  const collapsed = useUi(selectSidebarCollapsed)
   const openDialog = useUi((s) => s.openDialog)
   const [open, setOpen] = useState<Record<string, boolean>>({ inter: true })
 
   return (
-    <nav className="flex h-full min-h-0 flex-col gap-0.5 overflow-auto px-3 pb-3 pt-2">
-      <Item to="/">
-        <House size={16} /> Início
-      </Item>
-      <Item to="/profile">
-        <User size={16} /> Perfil do usuário <StatusDot className="ml-auto" />
-      </Item>
-      <button type="button" onClick={() => openDialog('settings')} className={cn(item, 'w-full text-left')}>
-        <Settings size={16} /> Configurações
-      </button>
+    <nav className="flex h-full min-h-0 flex-col gap-0.5 overflow-y-auto overflow-x-hidden px-3 pb-3 pt-2">
+      <LinkRow to="/" label="Início" icon={<House className="size-4 shrink-0" />} collapsed={collapsed} />
+      <LinkRow to="/profile" label="Perfil do usuário" icon={<User className="size-4 shrink-0" />} collapsed={collapsed} dot />
+      <ButtonRow onClick={() => openDialog('settings')} label="Configurações" icon={<Settings className="size-4 shrink-0" />} collapsed={collapsed} />
 
-      <div className="mb-1 mt-6 flex items-center justify-between pl-3 pr-1 text-xs font-semibold text-muted">
-        Projetos
-        <button type="button" aria-label="Criar projeto" onClick={() => openDialog('create-project')} className="no-drag rounded-full p-1.5 hover:bg-panel-2 hover:text-text">
-          <Plus size={14} />
-        </button>
-      </div>
+      {collapsed ? (
+        <div className="mt-4 flex flex-col gap-0.5">
+          <ButtonRow onClick={() => openDialog('create-project')} label="Criar projeto" icon={<Plus className="size-4 shrink-0" />} collapsed />
+        </div>
+      ) : (
+        <div className={cn(groupLabel, 'flex items-center justify-between pr-1')}>
+          Projetos
+          <button
+            type="button"
+            aria-label="Criar projeto"
+            onClick={() => openDialog('create-project')}
+            className="no-drag rounded-full p-1.5 transition-colors duration-150 hover:bg-hover hover:text-ink"
+          >
+            <Plus className="size-3.5" />
+          </button>
+        </div>
+      )}
 
       {data?.projects.map((project) => (
         <div key={project.id}>
           <div className="flex items-center">
-            <button
-              type="button"
-              aria-label={open[project.id] ? 'Recolher' : 'Expandir'}
-              onClick={() => setOpen((o) => ({ ...o, [project.id]: !o[project.id] }))}
-              className="no-drag rounded-full p-1.5 text-muted hover:bg-panel-2 hover:text-text"
-            >
-              {open[project.id] ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
-            </button>
-            <NavLink to={`/projects/${project.id}`} end className={({ isActive }) => cn(item, 'flex-1', isActive && active)}>
-              <Folder size={16} /> {project.name}
-            </NavLink>
+            {collapsed ? null : (
+              <button
+                type="button"
+                aria-label={open[project.id] ? 'Recolher' : 'Expandir'}
+                onClick={() => setOpen((o) => ({ ...o, [project.id]: !o[project.id] }))}
+                className="no-drag rounded-full p-1.5 text-muted transition-colors duration-150 hover:bg-hover hover:text-ink"
+              >
+                {open[project.id] ? <ChevronDown className="size-3.5" /> : <ChevronRight className="size-3.5" />}
+              </button>
+            )}
+            <div className="min-w-0 flex-1">
+              <LinkRow to={`/projects/${project.id}`} label={project.name} icon={<Folder className="size-4 shrink-0" />} collapsed={collapsed} />
+            </div>
           </div>
-          {open[project.id] ? project.repos.map((repo) => <RepoItem key={repo.id} to={`/projects/${project.id}/repos/${repo.id}`} repo={repo} className="ml-8" />) : null}
+          {!collapsed && open[project.id] ? project.repos.map((repo) => <RepoRow key={repo.id} to={`/projects/${project.id}/repos/${repo.id}`} repo={repo} collapsed={false} indent />) : null}
         </div>
       ))}
 
-      <div className="mb-1 mt-6 pl-3 text-xs font-semibold text-muted">Avulsos</div>
-      {data?.standalone.map((repo) => <RepoItem key={repo.id} to={`/projects/standalone/repos/${repo.id}`} repo={repo} />)}
+      {collapsed ? <div className="mt-4" /> : <div className={groupLabel}>Avulsos</div>}
+      {data?.standalone.map((repo) => <RepoRow key={repo.id} to={`/projects/standalone/repos/${repo.id}`} repo={repo} collapsed={collapsed} />)}
     </nav>
   )
 }
