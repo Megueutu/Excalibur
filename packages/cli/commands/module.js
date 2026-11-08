@@ -17,7 +17,7 @@ function describe(mod, isActive) {
   if (mod.agents.length) parts.push(`${mod.agents.length} agent(s)`)
   if (mod.skills.length) parts.push(`${mod.skills.length} skill(s)`)
   const marker = isActive ? pc.green('✓') : pc.dim('·')
-  const extras = [parts.join(', '), mod.requires.length ? `requires ${mod.requires.join(', ')}` : '', mod.default ? 'on by default' : '']
+  const extras = [parts.join(', '), `~${mod.tokens} tokens always loaded`, mod.requires.length ? `requires ${mod.requires.join(', ')}` : '', mod.default ? 'on by default' : '']
     .filter(Boolean)
     .join(' · ')
   return `${marker} ${mod.name.padEnd(18)} ${mod.description}${extras ? `\n    ${pc.dim(extras)}` : ''}`
@@ -25,7 +25,7 @@ function describe(mod, isActive) {
 
 export async function moduleCommand(args, cwd) {
   const quiet = Boolean(args.quiet)
-  if (!quiet) p.intro(pc.bgCyan(pc.black(' excalibur module ')))
+  if (!quiet) p.intro(pc.bgCyan(pc.black(' excalibur snapin ')))
 
   const paths = projectPaths(cwd)
   if (!paths.configured) {
@@ -39,7 +39,7 @@ export async function moduleCommand(args, cwd) {
 
   if (action === 'list') {
     const lines = [...available.values()].map((mod) => describe(mod, active.includes(mod.name)))
-    p.note(lines.length ? lines.join('\n') : 'No modules available.', 'Modules')
+    p.note(lines.length ? lines.join('\n') : 'No snap-ins available.', 'Snap-ins')
     if (!quiet) p.outro(`${active.length} active.`)
     return 0
   }
@@ -49,7 +49,7 @@ export async function moduleCommand(args, cwd) {
     return 1
   }
   if (names.length === 0) {
-    p.cancel(`Name at least one module: excalibur module ${action} <name>.`)
+    p.cancel(`Name at least one snap-in: excalibur snapin ${action} <name>.`)
     return 1
   }
 
@@ -95,7 +95,7 @@ export async function moduleCommand(args, cwd) {
     context.kept.length ? pc.yellow(`kept (edited by hand): ${context.kept.join(', ')}`) : '',
     `rebuilt ${built.agents.length} agents and ${built.skills.length} skill files`,
   ].filter(Boolean)
-  p.note(lines.join('\n'), 'Modules updated')
+  p.note(lines.join('\n'), 'Snap-ins updated')
   p.outro('Done.')
   return 0
 }

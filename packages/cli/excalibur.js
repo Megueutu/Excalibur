@@ -19,6 +19,7 @@ const COMMANDS = {
   import: () => import('./commands/import.js').then((m) => m.importContent),
   check: () => import('./commands/check.js').then((m) => m.check),
   module: () => import('./commands/module.js').then((m) => m.moduleCommand),
+  snapin: () => import('./commands/module.js').then((m) => m.moduleCommand),
   new: () => import('./commands/new.js').then((m) => m.newTask),
   mode: () => import('./commands/mode.js').then((m) => m.mode),
   budget: () => import('./commands/budget.js').then((m) => m.budget),
@@ -51,7 +52,7 @@ ${pc.bold('Commands')}
   customize <path>     Copy one file out of the installed package into your overrides folder, safe to edit
   import [type] [name]  Import a bundled agent or persona and rebuild Markdown output
   check                Verify dependencies (node, git, bash, gh) before init
-  module [list|add|remove] [name...]  Turn optional modules on or off
+  snapin [list|add|remove] [name...]  Turn optional snap-ins on or off, with what each costs in tokens (alias: module)
   new <repo> <task-slug>  Create a task folder in the SDD from the template, frontmatter filled in
   mode [list|<name>|off]  Pick how the agent works with you: deep, ant-brain, vibecode
   budget               Estimate how much context an agent reads before a task starts (--json for the raw numbers)

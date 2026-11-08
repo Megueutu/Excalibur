@@ -5,6 +5,7 @@ import { resolveFile } from './resolve.js'
 import { listFiles, copyFile, ensureDir } from './fsx.js'
 import { parse } from './yaml.js'
 import { readConfig } from './config.js'
+import { estimateTokens } from './budget.js'
 
 /**
  * Modules: optional bundles of framework content a project turns on or off.
@@ -51,6 +52,25 @@ function asList(value) {
   return Array.isArray(value) ? value.map(String) : [String(value)]
 }
 
+/**
+ * What turning a snap-in on adds to every session, in tokens (an estimate, like the whole budget):
+ * the standing context files it copies in, plus the frontmatter of each agent and skill, because
+ * their name and description are listed in every session whether or not they are ever used. The
+ * bodies load only when invoked and are not counted.
+ */
+function alwaysLoadedTokens(cwd, mod) {
+  const read = (rel) => {
+    const file = resolveFile(cwd, `${MODULES_DIR}/${mod.name}/${rel}`)
+    return file ? fs.readFileSync(file, 'utf8') : ''
+  }
+  const head = (text) => text.match(/^---\r?\n[\s\S]*?\r?\n---/)?.[0] ?? ''
+  let chars = 0
+  for (const f of mod.context) chars += read(`context/${f}`).length
+  for (const a of mod.agents) chars += read(`agents/${a}/agent.yaml`).length
+  for (const k of mod.skills) chars += head(read(`skills/${k}/SKILL.md`)).length
+  return estimateTokens('x'.repeat(chars))
+}
+
 /** Every module the project can see: `Map<name, descriptor>`. */
 export function availableModules(cwd) {
   const found = new Map()
@@ -66,8 +86,10 @@ export function availableModules(cwd) {
       context: moduleFiles(cwd, name, 'context'),
       agents: [...new Set(moduleFiles(cwd, name, 'agents').filter((f) => f.endsWith('/agent.yaml')).map((f) => f.split('/')[0]))],
       skills: [...new Set(moduleFiles(cwd, name, 'skills').filter((f) => f.endsWith('/SKILL.md')).map((f) => f.split('/')[0]))],
+      tokens: 0,
     })
   }
+  for (const mod of found.values()) mod.tokens = alwaysLoadedTokens(cwd, mod)
   return found
 }
 
