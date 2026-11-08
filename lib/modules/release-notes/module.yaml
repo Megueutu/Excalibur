@@ -1,0 +1,3 @@
+name: release-notes
+description: Draft release notes and a version bump suggestion from the commits since the last tag
+default: false

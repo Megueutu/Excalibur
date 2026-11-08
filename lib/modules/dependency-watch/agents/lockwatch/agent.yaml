@@ -1,0 +1,6 @@
+name: lockwatch
+description: Use to check a project's dependencies for known vulnerabilities and risky pins, after running the audit tool the stack already has. Not for upgrading anything and not for a full security audit; it reports a verdict.
+tools: Read, Grep, Bash
+personas:
+  - guardrail
+model: haiku

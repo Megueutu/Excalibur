@@ -1,0 +1,6 @@
+name: herald
+description: Use when a branch is ready for review and needs a pull request description a reviewer can act on. Not for opening the pull request, pushing, or judging the code; it drafts text.
+tools: Read, Grep, Bash
+personas:
+  - user-advocate
+model: sonnet

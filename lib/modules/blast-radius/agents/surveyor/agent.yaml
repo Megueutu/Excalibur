@@ -1,0 +1,6 @@
+name: surveyor
+description: Use before renaming, moving, changing or deleting a symbol, file, route, config key, environment variable or table, to map everything that depends on it. Not for making the change; it reports.
+tools: Read, Grep, Glob, Bash
+personas:
+  - systems-thinker
+model: haiku

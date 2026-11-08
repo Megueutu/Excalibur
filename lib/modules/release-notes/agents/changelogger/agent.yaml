@@ -1,0 +1,6 @@
+name: changelogger
+description: Use when a release is being prepared, to draft the changelog entry and suggest a semantic version bump from the commits since the last tag. Not for tagging, publishing or editing the changelog file; it drafts text.
+tools: Read, Grep, Bash
+personas:
+  - user-advocate
+model: haiku

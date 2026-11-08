@@ -1,0 +1,3 @@
+name: privacy-scan
+description: Sniff a diff or a folder for personal data (CPF, e-mail, phone, cards) before it goes further
+default: false

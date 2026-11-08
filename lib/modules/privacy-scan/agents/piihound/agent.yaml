@@ -1,0 +1,6 @@
+name: piihound
+description: Use before a push, or whenever code, fixtures, logs or sample data should be sniffed for personal data: CPF, CNPJ, e-mail, phone numbers, card numbers, real names. Not for secrets and credentials (that is scenthound) and not for fixing; it reports a verdict.
+tools: Read, Grep
+personas:
+  - guardrail
+model: haiku
