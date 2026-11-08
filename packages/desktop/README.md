@@ -10,6 +10,8 @@ npm install
 npm run dev        # open the app with hot reload
 npm run typecheck
 npm run build
+npm run pack        # unpacked app in release/win-unpacked (no installer), to try the packaged build
+npm run dist        # installer in release/ (unsigned for now)
 npm run icons        # regenerate the Solar icon paths after editing scripts/generate-icons.mjs
 npm run lint:design  # validate DESIGN.md
 ```
@@ -53,4 +55,4 @@ EXCALIBUR_CORE_DIR=/path/to/core          # override where packages/core is load
 EXCALIBUR_DEBUG_PORT=9333                 # expose the window to the Chrome DevTools Protocol, for driving it in tests
 ```
 
-Projects are derived from the registry: repositories that share a parent folder form a project, and the repository the others use as their `sdd_path` is the hub. Not done yet: packaging (where the core lives in a built app).
+Projects are derived from the registry: repositories that share a parent folder form a project, and the repository the others use as their `sdd_path` is the hub. Packaged, the Excalibur package (core, CLI, `lib/`, `rules/`, `harnesses/` and its dependencies) travels in `resources/excalibur` (see `electron-builder.yml`), outside the asar because the CLI runs as its own Node process. Not done yet: code signing, an icon, auto-update, and macOS/Linux builds (only Windows was built and run).
