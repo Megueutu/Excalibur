@@ -14,7 +14,7 @@ Excalibur/
     agents/                  the internal agent catalog, one .yaml each
     personas/                short behaviors composed into agent output
     pipeline/                the implementation process
-    modules/                 optional modules a project turns on or off (excalibur module)
+    modules/                 optional snap-ins a project turns on or off (excalibur snapin)
     onboarding/              manifest, wizard flow and presets
     reflection/              how to reason while producing a spec
     scripts/                 executable helpers and the npm postinstall hook
@@ -39,7 +39,7 @@ Excalibur/
 | `packages/cli/` | Executable Node code for both CLI entry points, their commands and shared core. Never framework content. |
 | `lib/onboarding/` | Data for one-time onboarding only: the questions manifest and the pre-written files it can copy. If it runs on every task instead of once, it belongs in `lib/pipeline/`. |
 | `lib/pipeline/` | What agents do on every task. Must be 100% generic — if it names a project, org or repo, it doesn't belong here. |
-| `lib/modules/` | Optional modules. Each is a folder with a `module.yaml` (name, description, default, requires) plus `context/`, `agents/` and `skills/` it contributes. The active list is `modules:` in the project config; manage it with `excalibur module add\|remove\|list`, or `init --with/--without`. A project defines its own at `<custom_dir>/lib/modules/<name>/`. |
+| `lib/modules/` | Optional **snap-ins** (the folder and the `modules:` key keep the older name, so no project breaks). Each is a folder with a `module.yaml` (name, description, default, requires) plus `context/`, `agents/` and `skills/` it contributes. The active list is `modules:` in the project config; manage it with `excalibur snapin add\|remove\|list` (`module` is the same command), which also shows what each costs in tokens, or `init --with/--without`. A project defines its own at `<custom_dir>/lib/modules/<name>/`. |
 | `lib/modes/` | Work modes (`deep`, `ant-brain`, `vibecode`). Each has a `mode.yaml` and a `mode.md` that is installed as standing context while the mode is active (`excalibur mode <name>`; `off` removes it). |
 | `lib/reflection/lenses/` | One short file per concern (reversibility, failure modes, data lifecycle, boundaries, trust, user impact, simplicity, observability). Modes point at the lenses to read; they load on demand, never all at once. |
 | `rules/` | Content that gets copied into a user's project. If it's about maintaining *this* repository, it goes to `docs/repo/` instead. |
@@ -67,3 +67,11 @@ Plans, design decisions, implementation notes and open questions for building Ex
 ## The SDD skeleton
 
 A task folder is generated, not hand-written: `excalibur new <repo> <task-slug>` writes `proposal.md`, `spec.md`, `design.md` and `tasks.yaml` from the fenced blocks in `lib/pipeline/spec-template.md`, with the frontmatter filled in. `excalibur lint` then checks every task folder under `specs/`: required frontmatter keys, allowed values, and names matching the folder. The structure is enforced by code, so it holds with or without any module.
+
+## Snap-ins
+
+A snap-in is a folder under `lib/modules/` that adds agents, skills or standing context to a project when it is switched on, and nothing when it is off. Switching one off removes its generated agents and skills from the harness folders, so it stops being listed (and paid for) in every session.
+
+The cost of keeping one on, without ever using it, is the standing context it copies in plus the name and description of each agent and skill it lists. `excalibur snapin list` prints that estimate beside each one. The bodies of agents and skills load only when invoked and are not part of it.
+
+Included: `assumptions`, `decisions`, `graphify`, `obsidian`, and the token-minded set `token-diet` (find what is read every session and propose cuts), `checkpoint` (`/checkpoint` and `/resume`), `commit-craft`, `pr-herald`, `blast-radius`, `dependency-watch`, `release-notes` and `privacy-scan`. A new one has to pass three questions: is there a mechanical part a command does without a model, is the output short and structured, and does leaving it on cost only a few hundred tokens. The reasoning is in VersioSpec, `projects/excalibur/snap-ins-e-agentes.md`.
