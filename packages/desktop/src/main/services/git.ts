@@ -24,17 +24,37 @@ export function remoteSlug(url: string): string {
 
 export type GitInfo = { kind: RepoKind; remote: string | null; branch: string | null; uncommitted: number }
 
-/** What git says about a folder: is it a repository, where does it push, which branch, how dirty. */
-export async function gitInfo(cwd: string): Promise<GitInfo> {
+/** What git says changes within seconds, and one screen asks for it several times (list, detail, attention). */
+const INFO_TTL_MS = 4000
+const infoCache = new Map<string, { at: number; info: Promise<GitInfo> }>()
+
+/** Forget what git said, after something that changes it (a commit, a new remote, a sync). */
+export function forgetGitInfo(): void {
+  infoCache.clear()
+}
+
+async function readGitInfo(cwd: string): Promise<GitInfo> {
   if (!existsSync(join(cwd, '.git'))) return { kind: 'folder', remote: null, branch: null, uncommitted: 0 }
-  const [url, branch, status] = await Promise.all([git(cwd, ['remote', 'get-url', 'origin']), git(cwd, ['rev-parse', '--abbrev-ref', 'HEAD']), git(cwd, ['status', '--porcelain'])])
+  // Two processes, not three: `status --branch` carries the branch name along with the changed files.
+  const [url, status] = await Promise.all([git(cwd, ['remote', 'get-url', 'origin']), git(cwd, ['status', '--porcelain=v2', '--branch'])])
+  const lines = status ? status.split(/\r?\n/).filter(Boolean) : []
+  const head = lines.find((l) => l.startsWith('# branch.head '))?.slice('# branch.head '.length)
   const isGitHub = !!url && /github\.com/i.test(url)
   return {
     kind: isGitHub ? 'github' : 'git',
     remote: url ? remoteSlug(url) : null,
-    branch: branch && branch !== 'HEAD' ? branch : null,
-    uncommitted: status ? status.split(/\r?\n/).filter(Boolean).length : 0,
+    branch: head && head !== '(detached)' ? head : null,
+    uncommitted: lines.filter((l) => !l.startsWith('#')).length,
   }
+}
+
+/** What git says about a folder: is it a repository, where does it push, which branch, how dirty. */
+export function gitInfo(cwd: string): Promise<GitInfo> {
+  const hit = infoCache.get(cwd)
+  if (hit && Date.now() - hit.at < INFO_TTL_MS) return hit.info
+  const info = readGitInfo(cwd)
+  infoCache.set(cwd, { at: Date.now(), info })
+  return info
 }
 
 /** How many commits the repository has made since `commit`. Null when it cannot tell. */

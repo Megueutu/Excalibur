@@ -2,6 +2,7 @@ import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs'
 import { basename, dirname, join, relative, resolve, sep } from 'node:path'
 import type { FileClass, HealthItem, RepoDetail, RepoFile, SpecMeta, Task } from '../../shared/contract'
 import { core } from '../core'
+import { profileStateOf } from './registry'
 import { commitsSince, gitInfo } from './git'
 import { isInside, tilde } from './paths'
 
@@ -244,7 +245,7 @@ export async function buildHealth(root: string): Promise<HealthItem[]> {
     health.push({ id: 'update', label: `Atualizar o Excalibur de ${current} para ${installed}`, detail: 'Regenera os arquivos do harness. Seus overrides não são tocados.', action: 'Atualizar', previewable: true })
   }
   try {
-    const profile = c.profileState(root)
+    const profile = profileStateOf(root)
     if (profile.snapshot === 'stale') health.push({ id: 'profile', label: 'Perfil do usuário desatualizado', detail: 'O repositório do perfil mudou desde o último sync.', action: 'Sincronizar', previewable: true })
     else if (profile.snapshot === 'none' && profile.repoExists) health.push({ id: 'snapshot', label: 'Perfil do usuário ainda não sincronizado', detail: 'O projeto ainda não tem o snapshot do perfil.', action: 'Sincronizar', previewable: true })
   } catch {

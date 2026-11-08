@@ -3,8 +3,12 @@ import { basename, dirname } from 'node:path'
 import type { Project, Repo, ProjectsOverview } from '../../shared/contract'
 import { core, type RegistryEntry } from '../core'
 import { gitInfo } from './git'
+import { memo } from './memo'
 import { slug, tilde } from './paths'
 import { detectStack } from './stack'
+
+/** How long a list of projects or a profile state is shared before it is read again. */
+const MEMO_TTL_MS = 3000
 
 /** Run `work` over `items`, a few at a time, so a long list of repositories does not start dozens of git processes at once. */
 async function mapLimit<T, R>(items: T[], limit: number, work: (item: T) => Promise<R>): Promise<R[]> {
@@ -45,13 +49,18 @@ function numberOf(value: unknown): string {
   return String(value ?? '?')
 }
 
+/** The profile state of a repository, shared for a few seconds: it is a synchronous scan of the profile repository. */
+export function profileStateOf(root: string) {
+  return memo(`profile-state:${root}`, MEMO_TTL_MS, () => core().profileState(root))
+}
+
 async function toRepo(id: string, entry: RegistryEntry, isHub: boolean): Promise<Repo> {
   const c = core()
   const config = c.readConfig(entry.path) ?? {}
   const [git, stack] = await Promise.all([gitInfo(entry.path), detectStack(entry.path)])
   let snapshot: Repo['snapshot'] = 'none'
   try {
-    const state = c.profileState(entry.path)
+    const state = profileStateOf(entry.path)
     snapshot = state.snapshot === 'none' && state.repoExists ? 'unsynced' : state.snapshot
   } catch {
     snapshot = 'none'

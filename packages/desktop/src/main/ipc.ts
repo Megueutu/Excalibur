@@ -9,6 +9,8 @@ import { createTask, resumeTask, runFix } from './services/actions'
 import { openInEditor } from './services/editors'
 import { createProject } from './services/projects'
 import { getSettings, setSnapshotDefault } from './services/settings'
+import { forgetGitInfo } from './services/git'
+import { forgetMemo } from './services/memo'
 import { addRepos, isAllowed, removeMissingRepo, scanFolder } from './services/folders'
 import { expandHome } from './services/paths'
 import { commitProfile, getProfile, linkProfile, listAttention, saveProfileFile } from './services/profile'
@@ -22,6 +24,12 @@ import { findRepo, listProjects } from './services/registry'
 
 const DETAIL_TTL_MS = 5000
 const detailCache = new Map<string, { at: number; root: string; sdd: string | null; result: DetailResult }>()
+
+/** Something on disk changed: drop what was read before, including what git said. */
+function invalidate(): void {
+  detailCache.clear()
+  forgetGitInfo()
+}
 
 async function detailFor(repoId: string) {
   const entry = findRepo(repoId)
@@ -68,7 +76,7 @@ export function registerIpc(): void {
   handle('scanFolder', async (folder: string) => z.array(FoundRepoSchema).parse(await scanFolder(z.string().parse(folder))))
   handle('addRepos', (paths: string[]) => {
     addRepos(z.array(z.string()).parse(paths))
-    detailCache.clear()
+    invalidate()
   })
 
   // What these change is on disk, so the cached details are dropped whether or not they succeed.
@@ -76,24 +84,24 @@ export function registerIpc(): void {
     try {
       return FixResultSchema.parse(await runFix(z.string().parse(repoId), z.string().parse(fixId), z.boolean().parse(preview)))
     } finally {
-      detailCache.clear()
+      invalidate()
     }
   })
   handle('saveProfileFile', (rel: string, body: string) => saveProfileFile(z.string().parse(rel), z.string().parse(body)))
   handle('commitProfile', async (message: string) => FixResultSchema.parse(await commitProfile(z.string().parse(message))))
   handle('linkProfile', async (folder: string, mode: string) => {
     await linkProfile(expandHome(z.string().parse(folder)), ProfileLink.parse(mode))
-    detailCache.clear()
+    invalidate()
   })
   handle('removeMissingRepo', (path: string) => {
     removeMissingRepo(z.string().parse(path))
-    detailCache.clear()
+    invalidate()
   })
   handle('resumeTask', (repoId: string, slug: string) => {
     try {
       resumeTask(z.string().parse(repoId), z.string().parse(slug))
     } finally {
-      detailCache.clear()
+      invalidate()
     }
   })
   handle('getSettings', async () => SettingsSchema.parse(await getSettings()))
@@ -102,14 +110,14 @@ export function registerIpc(): void {
     try {
       return await createProject(CreateProjectInputSchema.parse(input))
     } finally {
-      detailCache.clear()
+      invalidate()
     }
   })
   handle('createTask', (repoId: string, slug: string, klass: string) => {
     try {
       return createTask(z.string().parse(repoId), z.string().parse(slug), TaskClass.parse(klass))
     } finally {
-      detailCache.clear()
+      invalidate()
     }
   })
 }
