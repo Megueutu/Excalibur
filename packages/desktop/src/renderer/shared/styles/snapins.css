@@ -1,0 +1,39 @@
+/*
+ * The snap-in board: jigsaw pieces drawn as SVG (see features/projects/lib/jigsaw.ts). A piece takes
+ * its family color from --piece-color, set on the piece, and mixes it into the surface it sits on,
+ * so it reads on both the light and the dark theme. The mix strengths are tokens (tokens.css).
+ */
+.piece-shape {
+  fill: color-mix(in srgb, var(--piece-color) var(--piece-fill-mix), var(--control));
+  stroke: color-mix(in srgb, var(--piece-color) var(--piece-stroke-mix), var(--control));
+  stroke-width: var(--piece-stroke-width);
+  stroke-linejoin: round;
+  transition:
+    stroke-width var(--duration-fast),
+    filter var(--duration-base);
+}
+.piece[data-selected='true'] .piece-shape {
+  stroke-width: var(--piece-stroke-selected);
+  filter: drop-shadow(0 0 7px var(--piece-color));
+}
+
+/* A place on the shelf whose piece is in use: only its outline stays. */
+.piece-gone .piece-shape {
+  fill: transparent;
+  stroke: var(--muted);
+  stroke-width: 1.4px;
+  stroke-dasharray: 5 5;
+  opacity: 0.5;
+}
+.piece-gone:hover .piece-shape { opacity: 1; }
+
+@keyframes piece-land {
+  0% { transform: translateY(-6px) scale(1.03); }
+  55% { transform: translateY(2px); }
+  100% { transform: none; }
+}
+.piece-land { animation: piece-land var(--duration-sheet) var(--ease-out); }
+
+@media (prefers-reduced-motion: reduce) {
+  .piece-land { animation: none; }
+}

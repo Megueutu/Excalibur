@@ -44,6 +44,19 @@
   --aside-width: 16rem;
   --fact-label-width: 10rem;
 
+  /* The colors of the snap-in families; a snap-in the app does not know takes the muted tone. */
+  --family-registro: #1f9d6b;
+  --family-git: #2b7de0;
+  --family-seguranca: #e0603f;
+  --family-analise: #7c5cdb;
+  --family-other: var(--muted);
+  /* How strongly a puzzle piece takes its family color. */
+  --piece-fill-mix: 28%;
+  --piece-stroke-mix: 70%;
+  --piece-stroke-width: 2px;
+  --piece-stroke-selected: 3.4px;
+  --modal-width-wide: 760px;
+
   --duration-fast: 150ms;
   --duration-base: 200ms;
   --duration-sheet: 240ms;
@@ -66,5 +79,10 @@
     --primary-pressed: #0a84ff;
     --warn: #ff9f0a;
     --ok: #30d158;
+
+    --family-registro: #34c38f;
+    --family-git: #4c9aff;
+    --family-seguranca: #ff7a59;
+    --family-analise: #a78bfa;
   }
 }

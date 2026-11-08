@@ -6,6 +6,7 @@
  *   surfaces   page, card and control: each one tells what sits on it which background to take
  *   base       element defaults: cursor, focus ring, scrollbar, drag regions
  *   animations keyframes and the popup classes
+ *   snapins    the jigsaw pieces of the snap-in board
  */
 @import 'tailwindcss';
 @import './fonts.css';
@@ -14,3 +15,4 @@
 @import './surfaces.css';
 @import './base.css';
 @import './animations.css';
+@import './snapins.css';

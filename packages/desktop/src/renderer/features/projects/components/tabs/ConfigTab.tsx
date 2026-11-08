@@ -6,9 +6,10 @@ import { useUi } from '@/shared/state/ui-store'
 import { Badge } from '@/shared/ui/primitives/Badge'
 import { Button } from '@/shared/ui/primitives/Button'
 import { Segmented } from '@/shared/ui/primitives/Segmented'
-import { Switch } from '@/shared/ui/primitives/Switch'
-import { contextLayers, formatTokens } from '../../lib/context'
+import { contextLayers } from '../../lib/context'
 import { errorText, useCatalog } from '../../hooks'
+import { ContextMeter } from '../snapins/ContextMeter'
+import { SnapInBoard } from '../snapins/SnapInBoard'
 
 const OFF = 'off'
 
@@ -19,13 +20,12 @@ export function ConfigTab({ project, repo, detail }: { project: Project; repo: R
   const toast = useUi((s) => s.showToast)
   const saved = { mode: detail.settings.workMode ?? OFF, modules: detail.settings.modules }
   const [mode, setMode] = useState(saved.mode)
-  const [modules, setModules] = useState(new Set(saved.modules))
-  const toggle = (id: string) => setModules((m) => (m.has(id) ? new Set([...m].filter((x) => x !== id)) : new Set([...m, id])))
-  const layers = contextLayers(detail, [...modules], catalog)
+  const [modules, setModules] = useState(saved.modules)
+  const layers = contextLayers(detail, modules, catalog)
 
-  const dirty = mode !== saved.mode || modules.size !== saved.modules.length || saved.modules.some((m) => !modules.has(m))
+  const dirty = mode !== saved.mode || modules.length !== saved.modules.length || saved.modules.some((m) => !modules.includes(m))
   const apply = useMutation({
-    mutationFn: () => api.applyRepoSettings(repo.id, { workMode: mode === OFF ? null : mode, modules: [...modules] }),
+    mutationFn: () => api.applyRepoSettings(repo.id, { workMode: mode === OFF ? null : mode, modules }),
     onSuccess: (result) => toast(result.summary),
     onError: (error) => toast(errorText(error)),
     onSettled: () => void client.invalidateQueries(),
@@ -40,18 +40,11 @@ export function ConfigTab({ project, repo, detail }: { project: Project; repo: R
 
       <section>
         <h3 className="mb-2 px-1 text-caption font-semibold text-muted">Snap-ins</h3>
-        <ul className="flex flex-col gap-1.5">
-          {catalog?.modules.map((m) => (
-            <li key={m.id}>
-              <label className="surface-control flex min-h-row cursor-pointer items-center gap-4 rounded-md px-4 transition-colors duration-150 hover:bg-hover">
-                <Switch checked={modules.has(m.id)} onChange={() => toggle(m.id)} label={m.id} />
-                <span className="text-heading">{m.id}</span>
-                <span className="ml-auto text-caption text-muted">+{formatTokens(m.tokens)} de contexto</span>
-              </label>
-            </li>
-          ))}
-        </ul>
-        <p className="mt-3 px-1 text-caption text-muted">Com estas escolhas o agente lê {formatTokens(layers.total)} antes da primeira tarefa.</p>
+        <p className="mb-3 px-1 text-body text-muted">Peças que dão ao agente mais ferramentas. O que está encaixado vale para este repositório; o resto fica na prateleira.</p>
+        {catalog ? <SnapInBoard catalog={catalog} value={modules} onChange={setModules} /> : null}
+        <div className="mt-4">
+          <ContextMeter base={layers.total - layers.modules} added={layers.modules} limit={catalog?.contextLimit ?? 1} />
+        </div>
         <div className="mt-4 flex gap-3">
           <Button variant="primary" disabled={!dirty || apply.isPending} onClick={() => apply.mutate()}>
             {apply.isPending ? 'Aplicando…' : 'Aplicar'}
@@ -60,7 +53,7 @@ export function ConfigTab({ project, repo, detail }: { project: Project; repo: R
             disabled={!dirty || apply.isPending}
             onClick={() => {
               setMode(saved.mode)
-              setModules(new Set(saved.modules))
+              setModules(saved.modules)
             }}
           >
             Descartar
