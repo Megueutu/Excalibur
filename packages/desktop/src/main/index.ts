@@ -1,9 +1,11 @@
 import { app, BrowserWindow } from 'electron'
 import { join } from 'node:path'
+import { loadCore } from './core'
+import { registerIpc } from './ipc'
 
 /**
- * Main process of the prototype. It only opens the window: the screens run on sample
- * data, so nothing here reads or writes the user's files.
+ * Main process. It opens the window, loads the Excalibur core and answers the screen's questions
+ * over IPC (see ipc.ts). Set EXCALIBUR_HOME to read another registry than the one in your home folder.
  */
 
 function createWindow(): void {
@@ -30,7 +32,13 @@ function createWindow(): void {
   else void win.loadFile(join(__dirname, '../renderer/index.html'))
 }
 
-void app.whenReady().then(() => {
+// For development and checking: expose the window to a debugger, for example to take a screenshot.
+if (process.env['EXCALIBUR_DEBUG_PORT']) app.commandLine.appendSwitch('remote-debugging-port', process.env['EXCALIBUR_DEBUG_PORT'])
+
+void app.whenReady().then(async () => {
+  // In development the app sits next to the core (packages/desktop and packages/core).
+  await loadCore(process.env['EXCALIBUR_CORE_DIR'] ?? join(app.getAppPath(), '..', 'core'))
+  registerIpc()
   createWindow()
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
