@@ -1,62 +1,69 @@
 import { Link, useParams } from 'react-router-dom'
-import { Button } from '@/shared/ui/button'
+import type { Repo } from '@shared/contract'
+import { useUi } from '@/shared/state/ui-store'
 import { Badge, StatusDot } from '@/shared/ui/badge'
-import { Fact, Group, PageHeader, Section } from '@/shared/ui/page'
+import { Button } from '@/shared/ui/button'
+import { PageHeader } from '@/shared/ui/page'
+import { KindIcon, StackIcons } from '@/shared/ui/repo-icons'
 import { useProject } from './hooks'
+
+export const SNAPSHOT_TEXT = { fresh: 'Em dia', stale: 'Perfil desatualizado', none: 'Sem perfil' } as const
+
+function RepoCard({ to, repo }: { to: string; repo: Repo }) {
+  return (
+    <Link to={to} className="no-drag flex flex-col gap-4 rounded-lg bg-panel p-5 hover:bg-panel-2">
+      <div className="flex items-center gap-3">
+        <KindIcon kind={repo.kind} size={20} className="text-muted" />
+        <span className="truncate text-[15px] font-semibold">{repo.name}</span>
+        {repo.isHub ? <Badge className="bg-bg">hub</Badge> : null}
+      </div>
+      <StackIcons stack={repo.stack} max={5} size={18} className="min-h-[18px]" />
+      <p className="flex items-center gap-2 text-sm text-muted">
+        <StatusDot tone={repo.snapshot === 'stale' ? 'warn' : 'ok'} />
+        {SNAPSHOT_TEXT[repo.snapshot]}
+        <span className="ml-auto text-xs">v{repo.frameworkVersion}</span>
+      </p>
+    </Link>
+  )
+}
 
 export function ProjectPage() {
   const { projectId } = useParams()
   const { data: project, isLoading } = useProject(projectId)
+  const openDialog = useUi((s) => s.openDialog)
 
   if (isLoading) return null
   if (!project) return <PageHeader title="Projeto não encontrado" />
-
-  const hub = project.repos.find((r) => r.isHub)
-  const stale = project.repos.filter((r) => r.snapshot === 'stale').length
 
   return (
     <>
       <PageHeader
         title={project.name}
-        subtitle={`${project.path} · hub de contexto: ${hub?.name ?? 'nenhum'} · ${project.repos.length} repositórios`}
+        subtitle={project.path}
         actions={
-          <Button disabled title="Protótipo: nada é gravado">
-            Sincronizar projeto
-          </Button>
+          <>
+            <Button disabled title="Protótipo: nada é gravado">
+              Sincronizar
+            </Button>
+            <Button variant="primary" onClick={() => openDialog('create-project')}>
+              Adicionar repositório
+            </Button>
+          </>
         }
       />
       <div className="min-h-0 flex-1 overflow-auto px-8 pb-8">
-        <Section title="Configuração compartilhada">
-          <Group>
-          <dl>
-            <Fact label="Modo">{project.mode === 'public' ? 'público' : 'discreto'}</Fact>
-            <Fact label="Modo de trabalho">{project.workMode ?? 'nenhum'}</Fact>
-            <Fact label="Módulos">
-              <span className="flex flex-wrap gap-1.5">{project.modules.map((m) => <Badge key={m}>{m}</Badge>)}</span>
-            </Fact>
-            <Fact label="Perfis">
-              <span className="flex flex-wrap gap-1.5">{project.profiles.map((m) => <Badge key={m}>{m}</Badge>)}</span>
-            </Fact>
-          </dl>
-          </Group>
-        </Section>
-        <Section title={`Repositórios${stale ? ` · ${stale} com perfil velho` : ''}`}>
-          <Group className="px-2">
-          <ul>
-            {project.repos.map((r) => (
-              <li key={r.id}>
-                <Link to={`/projects/${project.id}/repos/${r.id}`} className="flex items-center gap-3 rounded-md px-2 py-2.5 text-sm hover:bg-panel-2">
-                  <span className="flex-1">
-                    {r.name} {r.isHub ? <Badge className="ml-2">hub</Badge> : null}
-                  </span>
-                  <span className="text-xs text-muted">v{r.frameworkVersion}</span>
-                  {r.snapshot === 'stale' ? <StatusDot /> : <StatusDot tone="ok" />}
-                </Link>
-              </li>
-            ))}
-          </ul>
-          </Group>
-        </Section>
+        <div className="mb-8 flex flex-wrap gap-2">
+          <Badge>{project.mode === 'public' ? 'público' : 'discreto'}</Badge>
+          {project.workMode ? <Badge>modo {project.workMode}</Badge> : null}
+          {project.modules.map((m) => (
+            <Badge key={m}>{m}</Badge>
+          ))}
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          {project.repos.map((r) => (
+            <RepoCard key={r.id} to={`/projects/${project.id}/repos/${r.id}`} repo={r} />
+          ))}
+        </div>
       </div>
     </>
   )

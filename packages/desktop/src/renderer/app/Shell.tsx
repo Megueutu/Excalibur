@@ -1,6 +1,7 @@
 import { Outlet, useNavigate } from 'react-router-dom'
 import { ArrowLeft, ArrowRight } from '@/shared/ui/icons'
-import { AddProjectDialog } from '@/features/add-project/AddProjectDialog'
+import { CreateProjectDialog } from '@/features/projects/CreateProjectDialog'
+import { IncorporateProjectDialog } from '@/features/projects/IncorporateProjectDialog'
 import { SettingsDialog } from '@/features/settings/SettingsDialog'
 import { ProfileSetupDialog } from '@/features/user-profile/ProfileSetupDialog'
 import { Sidebar } from './Sidebar'
@@ -27,7 +28,8 @@ export function Shell() {
         <Outlet />
       </main>
       <SettingsDialog />
-      <AddProjectDialog />
+      <CreateProjectDialog />
+      <IncorporateProjectDialog />
       <ProfileSetupDialog />
     </div>
   )

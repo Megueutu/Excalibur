@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-export type DialogName = 'settings' | 'add-project' | 'profile-setup'
+export type DialogName = 'settings' | 'create-project' | 'incorporate-project' | 'profile-setup'
 
 type UiState = {
   dialog: DialogName | null

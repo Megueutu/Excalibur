@@ -2,13 +2,18 @@ import type { ExcaliburApi, Project, Repo, UserProfile } from '@shared/contract'
 
 /** Sample data for the prototype. Nothing here is read from disk. */
 
-const repo = (name: string, path: string, snapshot: Repo['snapshot'], isHub = false, frameworkVersion = '0.9.0'): Repo => ({
+type Extra = Pick<Repo, 'kind' | 'stack'> & Partial<Pick<Repo, 'isHub' | 'frameworkVersion' | 'remote' | 'branch'>>
+
+const repo = (name: string, path: string, snapshot: Repo['snapshot'], extra: Extra): Repo => ({
   id: name,
   name,
   path,
   snapshot,
-  isHub,
-  frameworkVersion,
+  isHub: false,
+  frameworkVersion: '0.9.0',
+  remote: extra.kind === 'github' ? `Megueutu/${name}` : null,
+  branch: extra.kind === 'folder' ? null : 'main',
+  ...extra,
 })
 
 const inter: Project = {
@@ -20,10 +25,10 @@ const inter: Project = {
   modules: ['decisions', 'assumptions'],
   profiles: ['global', 'work'],
   repos: [
-    repo('VersioSpec', '~/Inter/VersioSpec', 'fresh', true),
-    repo('api-core', '~/Inter/api-core', 'stale', false, '0.8.0'),
-    repo('web-app', '~/Inter/web-app', 'fresh'),
-    repo('mobile-app', '~/Inter/mobile-app', 'stale', false, '0.8.0'),
+    repo('VersioSpec', '~/Inter/VersioSpec', 'fresh', { kind: 'github', stack: ['markdown'], isHub: true }),
+    repo('api-core', '~/Inter/api-core', 'stale', { kind: 'github', stack: ['typescript', 'nestjs', 'docker'], frameworkVersion: '0.8.0' }),
+    repo('web-app', '~/Inter/web-app', 'fresh', { kind: 'github', stack: ['typescript', 'react', 'vite', 'tailwindcss'] }),
+    repo('mobile-app', '~/Inter/mobile-app', 'stale', { kind: 'git', stack: ['kotlin'], frameworkVersion: '0.8.0' }),
   ],
 }
 
@@ -69,7 +74,10 @@ function wait<T>(value: T): Promise<T> {
 }
 
 export const mockApi: ExcaliburApi = {
-  listProjects: () => wait({ projects: [inter], standalone: [repo('excalibur', '~/Excalibur', 'fresh')] }),
+  listProjects: () => wait({ projects: [inter], standalone: [
+      repo('excalibur', '~/Excalibur', 'fresh', { kind: 'github', stack: ['javascript', 'nodedotjs'] }),
+      repo('anotacoes', '~/anotacoes', 'fresh', { kind: 'folder', stack: ['markdown'] }),
+    ] }),
   getProfile: () => wait(profile),
   listAttention: () =>
     wait([

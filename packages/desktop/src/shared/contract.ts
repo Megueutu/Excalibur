@@ -7,6 +7,8 @@ import { z } from 'zod'
 
 export const SnapshotState = z.enum(['fresh', 'stale', 'none'])
 
+export const RepoKind = z.enum(['github', 'git', 'folder'])
+
 export const RepoSchema = z.object({
   id: z.string(),
   name: z.string(),
@@ -14,6 +16,12 @@ export const RepoSchema = z.object({
   frameworkVersion: z.string(),
   snapshot: SnapshotState,
   isHub: z.boolean(),
+  /** What the repository is: git with a GitHub remote, local git, or a plain folder. */
+  kind: RepoKind,
+  remote: z.string().nullable(),
+  branch: z.string().nullable(),
+  /** Simple Icons slugs from the stack detectors; the first is the main language. */
+  stack: z.array(z.string()),
 })
 
 export const ProjectSchema = z.object({
@@ -49,6 +57,7 @@ export const AttentionSchema = z.object({
   action: z.string(),
 })
 
+export type RepoKind = z.infer<typeof RepoKind>
 export type Repo = z.infer<typeof RepoSchema>
 export type Project = z.infer<typeof ProjectSchema>
 export type ProfileFile = z.infer<typeof ProfileFileSchema>

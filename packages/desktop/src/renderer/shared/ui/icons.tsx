@@ -23,6 +23,10 @@ function make(body: string) {
   }
 }
 
+export const AddFolder = make(SOLAR_BODIES.AddFolder)
+export const Import = make(SOLAR_BODIES.Import)
+export const Tune = make(SOLAR_BODIES.Tune)
+export const Info = make(SOLAR_BODIES.Info)
 export const ArrowLeft = make(SOLAR_BODIES.ArrowLeft)
 export const ArrowRight = make(SOLAR_BODIES.ArrowRight)
 export const Check = make(SOLAR_BODIES.Check)
