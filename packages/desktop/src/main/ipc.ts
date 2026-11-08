@@ -1,7 +1,7 @@
 import { BrowserWindow, dialog, ipcMain, shell } from 'electron'
 import { statSync } from 'node:fs'
 import { z } from 'zod'
-import { AttentionSchema, CatalogSchema, CreateProjectInputSchema, RepoSettingsSchema, SettingsSchema, SnapshotDefault, FixResultSchema, FoundRepoSchema, ProfileLink, TaskClass, ProjectsOverviewSchema, RepoDetailSchema, UserProfileSchema } from '../shared/contract'
+import { AttentionSchema, CatalogSchema, CreateProjectInputSchema, NewInstructionSchema, ProfileFileEditSchema, RepoSettingsSchema, SettingsSchema, SnapshotDefault, FixResultSchema, FoundRepoSchema, ProfileLink, TaskClass, ProjectsOverviewSchema, RepoDetailSchema, UserProfileSchema } from '../shared/contract'
 import { core } from './core'
 import { getCatalog } from './services/catalog'
 import { buildDetail, readLocated, type DetailResult } from './services/detail'
@@ -13,7 +13,7 @@ import { forgetGitInfo } from './services/git'
 import { forgetMemo } from './services/memo'
 import { addRepos, isAllowed, removeMissingRepo, scanFolder } from './services/folders'
 import { expandHome } from './services/paths'
-import { commitProfile, getProfile, linkProfile, listAttention, saveProfileFile } from './services/profile'
+import { commitProfile, createProfileFile, getProfile, linkProfile, listAttention, saveProfileFile } from './services/profile'
 import { findRepo, listProjects } from './services/registry'
 
 /**
@@ -87,8 +87,28 @@ export function registerIpc(): void {
       invalidate()
     }
   })
-  handle('saveProfileFile', (rel: string, body: string) => saveProfileFile(z.string().parse(rel), z.string().parse(body)))
-  handle('commitProfile', async (message: string) => FixResultSchema.parse(await commitProfile(z.string().parse(message))))
+  // What these write is what the projects compare against, so what was read before is dropped.
+  handle('saveProfileFile', (rel: string, edit: unknown) => {
+    try {
+      saveProfileFile(z.string().parse(rel), ProfileFileEditSchema.parse(edit))
+    } finally {
+      invalidate()
+    }
+  })
+  handle('createProfileFile', (input: unknown) => {
+    try {
+      return createProfileFile(NewInstructionSchema.parse(input))
+    } finally {
+      invalidate()
+    }
+  })
+  handle('commitProfile', async (message: string) => {
+    try {
+      return FixResultSchema.parse(await commitProfile(z.string().parse(message)))
+    } finally {
+      invalidate()
+    }
+  })
   handle('linkProfile', async (folder: string, mode: string) => {
     await linkProfile(expandHome(z.string().parse(folder)), ProfileLink.parse(mode))
     invalidate()

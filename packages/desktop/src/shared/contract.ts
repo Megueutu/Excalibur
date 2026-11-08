@@ -122,6 +122,8 @@ export const UserProfileSchema = z.object({
   uncommitted: z.number(),
   /** The remote as "owner/name", or null when the profile repository has none. */
   remote: z.string().nullable(),
+  /** When the last version (commit) was kept, as an ISO date, or null when there is none yet. */
+  lastVersionAt: z.string().nullable(),
   files: z.array(ProfileFileSchema),
 })
 
@@ -227,6 +229,13 @@ export type CreateProjectInput = z.infer<typeof CreateProjectInputSchema>
 export const RepoSettingsSchema = z.object({ workMode: z.string().nullable(), modules: z.array(z.string()) })
 export type RepoSettings = z.infer<typeof RepoSettingsSchema>
 
+/** What the person edits in one profile instruction: its title, when the agent reads it (empty means always) and its text. */
+export const ProfileFileEditSchema = z.object({ description: z.string(), when: z.string(), body: z.string() })
+export type ProfileFileEdit = z.infer<typeof ProfileFileEditSchema>
+
+export const NewInstructionSchema = z.object({ scope: z.string().min(1), title: z.string().min(1).max(120), when: z.string() })
+export type NewInstruction = z.infer<typeof NewInstructionSchema>
+
 export const ProfileLink = z.enum(['existing', 'create'])
 export type ProfileLink = z.infer<typeof ProfileLink>
 
@@ -259,8 +268,10 @@ export interface ExcaliburApi {
   runFix(repoId: string, fixId: string, preview: boolean): Promise<FixResult>
   /** Create a task folder in the SDD from the template. Returns the new folder, as shown. */
   createTask(repoId: string, slug: string, klass: TaskClass): Promise<{ path: string }>
-  /** Replace the text of one profile file (by its path inside the profile repository), keeping its frontmatter. */
-  saveProfileFile(rel: string, body: string): Promise<void>
+  /** Write one profile file (by its path inside the profile repository): its text, title and when it applies. Other frontmatter stays. */
+  saveProfileFile(rel: string, edit: ProfileFileEdit): Promise<void>
+  /** Start a new instruction in the profile. Returns its path inside the profile repository. */
+  createProfileFile(input: NewInstruction): Promise<{ rel: string }>
   /** Commit every change in the profile repository with this message. Never pushes. */
   commitProfile(message: string): Promise<FixResult>
   /** Link the profile repository: a folder that is already a git repository, or an empty one to start from the template. */

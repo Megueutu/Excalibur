@@ -57,6 +57,12 @@ export function gitInfo(cwd: string): Promise<GitInfo> {
   return info
 }
 
+/** When the last commit was made (ISO), or null when there is none or the folder is not a repository. */
+export async function lastCommitDate(cwd: string): Promise<string | null> {
+  if (!existsSync(join(cwd, '.git'))) return null
+  return (await git(cwd, ['log', '-1', '--format=%cI'])) || null
+}
+
 /** How many commits the repository has made since `commit`. Null when it cannot tell. */
 export async function commitsSince(cwd: string, commit: string): Promise<number | null> {
   if (!/^[0-9a-f]{4,40}$/i.test(commit)) return null

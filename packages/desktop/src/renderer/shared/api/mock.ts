@@ -39,6 +39,7 @@ const profile: UserProfile = {
   branch: 'main',
   uncommitted: 2,
   remote: 'Megueutu/my-profile',
+  lastVersionAt: '2026-11-06T10:00:00-03:00',
   files: [
     {
       rel: 'global/commits.md',
@@ -98,6 +99,7 @@ export const mockApi: ExcaliburApi = {
   resumeTask: async (repoId, slug) => console.info('[prototype] resume', repoId, slug),
   removeMissingRepo: async (path) => console.info('[prototype] remove', path),
   saveProfileFile: async (rel) => console.info('[prototype] save', rel),
+  createProfileFile: async (input) => ({ rel: `${input.scope}/${input.title.toLowerCase().replace(/\s+/g, '-')}.md` }),
   commitProfile: () => wait({ summary: 'Exemplo: commit feito. Nada foi gravado.' }),
   linkProfile: async (folder, mode) => console.info('[prototype] link profile', mode, folder),
   createTask: (_repoId, slug) => wait({ path: `~/Inter/specs/${slug}` }),
