@@ -2,9 +2,9 @@ import path from 'node:path'
 import fs from 'node:fs'
 import { projectPaths, harnessTargets } from './paths.js'
 import { resolveFile } from './resolve.js'
-import { copyFile, ensureDir, listFiles } from './fsx.js'
+import { copyFile, ensureDir, listFiles, removeDir, removeFile } from './fsx.js'
 import { parse } from './yaml.js'
-import { activeModules, MODULES_DIR } from './modules.js'
+import { activeModules, availableModules, MODULES_DIR } from './modules.js'
 
 /**
  * Resolves the project's overrides folder (`custom_dir`) over the installed
@@ -123,7 +123,24 @@ export function build(cwd, { harness = 'claude' } = {}) {
     skills.push(...buildGroup(cwd, `${MODULES_DIR}/${name}/skills`, targets.skills))
   }
 
+  pruneInactive(cwd, targets, agents, skills)
+
   return { agents, skills }
+}
+
+/**
+ * A snap-in switched off must stop being available. Without this its generated agents and skills stay
+ * in the harness folders: still listed in every session (so still paid for) and still invocable.
+ * Only names this package knows are removed, so a file someone put in those folders by hand is
+ * never touched.
+ */
+function pruneInactive(cwd, targets, agents, skills) {
+  const keptAgents = new Set(agents.map((f) => path.basename(f, '.md')))
+  const keptSkills = new Set(skills.map((f) => path.relative(targets.skills, f).split(/[\\/]/)[0]))
+  for (const mod of availableModules(cwd).values()) {
+    for (const name of mod.agents) if (!keptAgents.has(name)) removeFile(path.join(cwd, targets.agents, `${name}.md`))
+    for (const name of mod.skills) if (!keptSkills.has(name)) removeDir(path.join(cwd, targets.skills, name))
+  }
 }
 
 /** True when the installed tree has anything to build from. */
