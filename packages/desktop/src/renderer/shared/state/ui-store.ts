@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import type { HealthItem } from '@shared/contract'
 
-export type DialogName = 'settings' | 'create-project' | 'incorporate-project' | 'profile-setup' | 'profile-commit'
+export type DialogName = 'settings' | 'create-project' | 'incorporate-project' | 'profile-setup' | 'profile-commit' | 'profile-sync'
 
 /** Fixes waiting for the person's yes: they reach outside the machine, so they are never applied on the first click. */
 export type PendingFix = { targets: { repoId: string; repoName: string; item: HealthItem }[] }
