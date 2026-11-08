@@ -21,7 +21,7 @@ export type ProfileState = {
   warnings: string[]
 }
 
-export type ModuleDescriptor = { name: string; description: string; context: string[] }
+export type ModuleDescriptor = { name: string; description: string; context: string[]; tokens: number }
 
 export type ContextMeasure = {
   layers: {

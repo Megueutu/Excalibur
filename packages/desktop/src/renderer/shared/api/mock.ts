@@ -83,7 +83,7 @@ const SCAN: FoundRepo[] = [
 ]
 
 export const mockApi: ExcaliburApi = {
-  getRepoDetail: (repoId) => wait(DETAILS[repoId] ?? { tasks: [], health: [], files: [], links: [], frameworkTokens: 0 }),
+  getRepoDetail: (repoId) => wait(DETAILS[repoId] ?? { tasks: [], health: [], files: [], links: [], frameworkTokens: 0, settings: { workMode: null, modules: [] } }),
   readFile: (repoId, fileId) => wait(sampleBody(repoId, fileId)),
   openPath: async (path) => console.info('[prototype] open', path),
   openInEditor: async (editorId, path) => console.info('[prototype] open in', editorId, path),
@@ -93,6 +93,7 @@ export const mockApi: ExcaliburApi = {
   runFix: (_repoId, fixId, preview) => wait({ summary: `${preview ? 'Exemplo: mudaria' : 'Exemplo: aplicou'} "${fixId}". Nada foi gravado.` }),
   getSettings: () => wait({ configPath: '~/.excalibur/config.yaml', registryPath: '~/.excalibur/projects.yaml', frameworkVersion: '0.9.0', gh: 'ready', snapshotDefault: 'ignored' }),
   setSnapshotDefault: async (value) => console.info('[prototype] snapshot default', value),
+  applyRepoSettings: (_repoId, s) => wait({ summary: `Exemplo: aplicaria ${s.workMode ?? 'sem modo'} e ${s.modules.length} snap-ins. Nada foi gravado.` }),
   createProject: async (input) => ({ path: `${input.folder}/${input.name}` }),
   resumeTask: async (repoId, slug) => console.info('[prototype] resume', repoId, slug),
   removeMissingRepo: async (path) => console.info('[prototype] remove', path),

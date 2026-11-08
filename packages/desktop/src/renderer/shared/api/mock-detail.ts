@@ -67,7 +67,7 @@ function build({ tasks, health, decisions = [], reports = [], frameworkTokens = 
     if (tasks[0]) links.push([r.id, `specs/${tasks[0].slug}/spec.md`])
     if (dec[i]) links.push([r.id, dec[i]!.id])
   })
-  return { tasks, health, files, links, frameworkTokens }
+  return { tasks, health, files, links, frameworkTokens, settings: { workMode: 'deep', modules: ['decisions'] } }
 }
 
 const task = (slug: string, status: Task['status'], stepsDone: number, stepsTotal: number, spec: Task['spec'], drift: string | null = null): Task => ({ slug, status, stepsDone, stepsTotal, spec, drift })

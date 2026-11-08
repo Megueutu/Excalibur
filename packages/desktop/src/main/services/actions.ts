@@ -2,7 +2,7 @@ import { execFile } from 'node:child_process'
 import { existsSync, readFileSync, writeFileSync } from 'node:fs'
 import { basename, join } from 'node:path'
 import { promisify } from 'node:util'
-import type { FixResult, TaskClass } from '../../shared/contract'
+import type { FixResult, RepoSettings, TaskClass } from '../../shared/contract'
 import { core } from '../core'
 import { tilde } from './paths'
 import { findRepo } from './registry'
@@ -38,6 +38,18 @@ function syncProfile(root: string, preview: boolean): FixResult {
   }
 }
 
+/** The last lines a CLI command printed, without its colors and the box-drawing it puts in front of them. */
+function cliMessage(text: string): string {
+  return text
+    .replace(/\x1b\[[0-9;?]*[a-zA-Z]/g, '')
+    .replace(/[│└┌├◇●]/g, '')
+    .split(/\r?\n/)
+    .map((l) => l.trim())
+    .filter(Boolean)
+    .slice(-3)
+    .join(' ')
+}
+
 /** The CLI's own commands, run with the app's runtime as Node, so the app and the CLI never drift apart. */
 export async function runCli(cwd: string, args: string[]): Promise<void> {
   const cli = join(core().packageRoot, 'packages', 'cli', 'excalibur.js')
@@ -46,7 +58,7 @@ export async function runCli(cwd: string, args: string[]): Promise<void> {
     await run(process.execPath, [cli, ...args], { cwd, timeout: UPDATE_TIMEOUT_MS, env: { ...process.env, ELECTRON_RUN_AS_NODE: '1' } })
   } catch (error) {
     const out = error as { stderr?: string; stdout?: string; message: string }
-    throw new Error((out.stderr || out.stdout || out.message).trim().split('\n').slice(-3).join(' '))
+    throw new Error(cliMessage(out.stderr || out.stdout || out.message))
   }
 }
 
@@ -114,4 +126,28 @@ export function resumeTask(repoId: string, slug: string): void {
   if (!head || !line) throw new Error(`A tarefa ${slug} não está pausada.`)
   const next = head.replace(/^status:[ \t]*paused\b/m, 'status: in-progress')
   writeFileSync(file, next + text.slice(head.length), 'utf8')
+}
+
+/**
+ * Set a repository's work mode and snap-ins with the CLI's own commands, so the context files and the
+ * harness are rebuilt exactly as `excalibur mode` and `excalibur snapin` would. The mode goes first
+ * because a mode can switch snap-ins on; the snap-in difference is then taken from what is active.
+ */
+export async function applyRepoSettings(repoId: string, wanted: RepoSettings): Promise<FixResult> {
+  const c = core()
+  const root = repoRoot(repoId)
+  const parts: string[] = []
+
+  if ((c.activeMode(root) ?? null) !== wanted.workMode) {
+    await runCli(root, ['mode', wanted.workMode ?? 'off', '--quiet'])
+    parts.push(wanted.workMode ? `modo ${wanted.workMode}` : 'modo desligado')
+  }
+  const active = c.activeModules(root)
+  const add = wanted.modules.filter((m) => !active.includes(m))
+  const remove = active.filter((m) => !wanted.modules.includes(m))
+  if (add.length) await runCli(root, ['snapin', 'add', ...add, '--quiet'])
+  if (remove.length) await runCli(root, ['snapin', 'remove', ...remove, '--quiet'])
+  if (add.length) parts.push(`+${add.join(', +')}`)
+  if (remove.length) parts.push(`-${remove.join(', -')}`)
+  return { summary: parts.length ? `Aplicado: ${parts.join(' · ')}.` : 'Nada a mudar.' }
 }

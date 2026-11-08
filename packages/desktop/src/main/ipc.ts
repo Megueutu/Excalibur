@@ -1,11 +1,11 @@
 import { BrowserWindow, dialog, ipcMain, shell } from 'electron'
 import { statSync } from 'node:fs'
 import { z } from 'zod'
-import { AttentionSchema, CatalogSchema, CreateProjectInputSchema, SettingsSchema, SnapshotDefault, FixResultSchema, FoundRepoSchema, ProfileLink, TaskClass, ProjectsOverviewSchema, RepoDetailSchema, UserProfileSchema } from '../shared/contract'
+import { AttentionSchema, CatalogSchema, CreateProjectInputSchema, RepoSettingsSchema, SettingsSchema, SnapshotDefault, FixResultSchema, FoundRepoSchema, ProfileLink, TaskClass, ProjectsOverviewSchema, RepoDetailSchema, UserProfileSchema } from '../shared/contract'
 import { core } from './core'
 import { getCatalog } from './services/catalog'
 import { buildDetail, readLocated, type DetailResult } from './services/detail'
-import { createTask, resumeTask, runFix } from './services/actions'
+import { applyRepoSettings, createTask, resumeTask, runFix } from './services/actions'
 import { openInEditor } from './services/editors'
 import { createProject } from './services/projects'
 import { getSettings, setSnapshotDefault } from './services/settings'
@@ -109,6 +109,13 @@ export function registerIpc(): void {
   handle('createProject', async (input: unknown) => {
     try {
       return await createProject(CreateProjectInputSchema.parse(input))
+    } finally {
+      invalidate()
+    }
+  })
+  handle('applyRepoSettings', async (repoId: string, settings: unknown) => {
+    try {
+      return FixResultSchema.parse(await applyRepoSettings(z.string().parse(repoId), RepoSettingsSchema.parse(settings)))
     } finally {
       invalidate()
     }

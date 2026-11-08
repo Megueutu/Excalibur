@@ -5,7 +5,7 @@ const LAYERS = [
   { key: 'framework', label: 'Framework', bar: 'bg-ink' },
   { key: 'context', label: 'Contexto', bar: 'bg-primary' },
   { key: 'profile', label: 'Perfil', bar: 'bg-ok' },
-  { key: 'modules', label: 'Módulos', bar: 'bg-warn' },
+  { key: 'modules', label: 'Snap-ins', bar: 'bg-warn' },
 ] as const
 
 /** How much an agent reads before the first task, split by where it comes from. */

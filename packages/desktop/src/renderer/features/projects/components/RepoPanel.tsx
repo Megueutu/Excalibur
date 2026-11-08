@@ -85,7 +85,7 @@ export function RepoPanel({ project, repo, detail, tab, onTab, file, onFile }: P
       {tab === 'tarefas' ? <TasksTab repo={repo} project={project} detail={detail} /> : null}
       {tab === 'saude' ? <HealthTab repo={repo} detail={detail} /> : null}
       {tab === 'arquivos' ? <FilesTab key={repo.id} repoId={repo.id} project={project} detail={detail} file={file} onFile={onFile} /> : null}
-      {tab === 'config' ? <ConfigTab key={repo.id} project={project} detail={detail} /> : null}
+      {tab === 'config' ? <ConfigTab key={repo.id} project={project} repo={repo} detail={detail} /> : null}
     </div>
   )
 }

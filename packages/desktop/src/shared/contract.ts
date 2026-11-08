@@ -104,6 +104,8 @@ export const RepoDetailSchema = z.object({
   links: z.array(z.tuple([z.string(), z.string()])),
   /** Thousands of tokens the framework itself adds. */
   frameworkTokens: z.number(),
+  /** What this repository has switched on: its work mode and its snap-ins. */
+  settings: z.object({ workMode: z.string().nullable(), modules: z.array(z.string()) }),
 })
 
 export const ProfileFileSchema = z.object({
@@ -204,6 +206,9 @@ export const CreateProjectInputSchema = z.object({
 })
 export type CreateProjectInput = z.infer<typeof CreateProjectInputSchema>
 
+export const RepoSettingsSchema = z.object({ workMode: z.string().nullable(), modules: z.array(z.string()) })
+export type RepoSettings = z.infer<typeof RepoSettingsSchema>
+
 export const ProfileLink = z.enum(['existing', 'create'])
 export type ProfileLink = z.infer<typeof ProfileLink>
 
@@ -251,4 +256,6 @@ export interface ExcaliburApi {
   setSnapshotDefault(value: SnapshotDefault): Promise<void>
   /** Create the folders, run git init and the CLI's init for each repository, and register them. Never creates a GitHub remote. */
   createProject(input: CreateProjectInput): Promise<{ path: string }>
+  /** Set a repository's work mode and snap-ins, through the CLI's own `mode` and `snapin` commands. */
+  applyRepoSettings(repoId: string, settings: RepoSettings): Promise<FixResult>
 }

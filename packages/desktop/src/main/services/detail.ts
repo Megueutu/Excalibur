@@ -209,7 +209,8 @@ export async function buildDetail(root: string): Promise<DetailResult> {
   const m = c.measureContext(root)
   const frameworkTokens = Math.round(((m.layers.standing[3]?.tokens ?? 0) + (m.layers.task[0]?.tokens ?? 0) + (m.layers.task[1]?.tokens ?? 0) + (m.layers.task[2]?.tokens ?? 0)) / 100) / 10
 
-  return { detail: { tasks, health, files: [...located.values()].map((l) => l.file), links, frameworkTokens }, located }
+  const settings = { workMode: c.activeMode(root), modules: c.activeModules(root) }
+  return { detail: { tasks, health, files: [...located.values()].map((l) => l.file), links, frameworkTokens, settings }, located }
 }
 
 /** Links between files: relative Markdown links that land on another file in the list. */
