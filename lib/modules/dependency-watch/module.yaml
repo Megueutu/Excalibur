@@ -1,3 +1,4 @@
 name: dependency-watch
 description: Audit a project's dependencies with its own ecosystem tool and judge what is urgent
 default: false
+family: seguranca

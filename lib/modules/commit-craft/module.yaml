@@ -1,3 +1,4 @@
 name: commit-craft
 description: Turn a working tree into atomic commits with messages in the project's own convention
 default: false
+family: git

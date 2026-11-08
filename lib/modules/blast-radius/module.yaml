@@ -1,3 +1,4 @@
 name: blast-radius
 description: Map who depends on something before it changes, and say what the map cannot see
 default: false
+family: analise

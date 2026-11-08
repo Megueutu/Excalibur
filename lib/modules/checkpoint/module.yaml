@@ -1,3 +1,4 @@
 name: checkpoint
 description: Save a task as compact state (done, decided, left) so a long task resumes from a page instead of from its whole history
 default: false
+family: registro

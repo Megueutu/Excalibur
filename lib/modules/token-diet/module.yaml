@@ -1,3 +1,4 @@
 name: token-diet
 description: Find what the agent reads every session that does not earn its place, and propose cuts ranked by tokens saved against risk
 default: false
+family: analise

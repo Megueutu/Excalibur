@@ -1,3 +1,4 @@
 name: pr-herald
 description: Draft a pull request description from the diff, the spec and the history
 default: false
+family: git

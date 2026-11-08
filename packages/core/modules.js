@@ -82,6 +82,7 @@ export function availableModules(cwd) {
       name,
       description: doc.description ?? '',
       default: doc.default === true,
+      family: typeof doc.family === 'string' ? doc.family : null,
       requires: asList(doc.requires),
       context: moduleFiles(cwd, name, 'context'),
       agents: [...new Set(moduleFiles(cwd, name, 'agents').filter((f) => f.endsWith('/agent.yaml')).map((f) => f.split('/')[0]))],
