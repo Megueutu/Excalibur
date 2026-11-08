@@ -32,6 +32,8 @@ export async function createProject(input: CreateProjectInput): Promise<{ path: 
     await runCli(r.dir, ['init', '--yes'])
   }
 
+  if (input.modules.length) for (const r of dirs) await runCli(r.dir, ['snapin', 'add', ...input.modules, '--quiet'])
+
   const hub = dirs.find((r) => r.hub)
   if (hub) {
     for (const r of dirs) c.updateConfig(r.dir, { sdd_path: c.storedSddPath(r.dir, hub.dir) })

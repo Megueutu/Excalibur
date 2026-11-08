@@ -155,10 +155,26 @@ export const CatalogSchema = z.object({
   /** Editors found on this machine that the app can open a file or folder in. */
   editors: z.array(z.object({ id: z.string(), label: z.string() })),
   modes: z.array(z.string()),
-  /** Optional modules and what each adds to the context, in thousands of tokens. */
-  modules: z.array(z.object({ id: z.string(), tokens: z.number() })),
+  /** Snap-ins (the code calls them modules) and what each adds to the context. */
+  modules: z.array(
+    z.object({
+      id: z.string(),
+      /** Thousands of tokens, for sums. */
+      tokens: z.number(),
+      /** The same cost as a whole number of tokens, for showing next to one snap-in. */
+      estimate: z.number(),
+      description: z.string(),
+      /** What kind of thing it is (registro, git, seguranca, analise), or null for one the app does not know. */
+      family: z.string().nullable(),
+      agents: z.array(z.string()),
+      skills: z.array(z.string()),
+      contextFiles: z.number(),
+    }),
+  ),
   /** Recommended ceiling for the context an agent reads before a task, in thousands of tokens. */
   contextLimit: z.number(),
+  /** What the framework itself makes an agent read before a task, in thousands of tokens. */
+  baseTokens: z.number(),
 })
 
 /** A folder that may be a repository, found when scanning a folder to bring into the app. */
@@ -203,6 +219,8 @@ export const CreateProjectInputSchema = z.object({
   /** The folder that will hold the project's own folder. */
   folder: z.string().min(1),
   repos: z.array(z.object({ name: FolderName, kind: RepoKind, hub: z.boolean() })).min(1).max(12),
+  /** Snap-ins to switch on in every repository of the project. */
+  modules: z.array(z.string()).default([]),
 })
 export type CreateProjectInput = z.infer<typeof CreateProjectInputSchema>
 

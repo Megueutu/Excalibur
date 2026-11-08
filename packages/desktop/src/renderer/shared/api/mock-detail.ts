@@ -107,12 +107,21 @@ export const CATALOG: Catalog = {
   ],
   modes: ['deep', 'ant-brain', 'vibecode'],
   modules: [
-    { id: 'decisions', tokens: 1.1 },
-    { id: 'assumptions', tokens: 0.9 },
-    { id: 'graphify', tokens: 1.8 },
-    { id: 'obsidian', tokens: 0.7 },
+    { id: 'checkpoint', tokens: 0.2, estimate: 103, description: 'Save a task as compact state', family: 'registro', agents: [], skills: ['checkpoint', 'resume'], contextFiles: 0 },
+    { id: 'decisions', tokens: 0.1, estimate: 59, description: 'Record each consequential choice', family: 'registro', agents: [], skills: ['decision-log'], contextFiles: 0 },
+    { id: 'assumptions', tokens: 0.1, estimate: 48, description: 'List what was assumed', family: 'registro', agents: [], skills: ['assumption-log'], contextFiles: 0 },
+    { id: 'commit-craft', tokens: 0.1, estimate: 53, description: 'Atomic commits in the project convention', family: 'git', agents: [], skills: ['commit-craft'], contextFiles: 0 },
+    { id: 'pr-herald', tokens: 0.2, estimate: 117, description: 'Draft a pull request description', family: 'git', agents: ['herald'], skills: ['pr-draft'], contextFiles: 0 },
+    { id: 'release-notes', tokens: 0.2, estimate: 129, description: 'Draft release notes', family: 'git', agents: ['changelogger'], skills: ['release-notes'], contextFiles: 0 },
+    { id: 'privacy-scan', tokens: 0.2, estimate: 138, description: 'Sniff for personal data', family: 'seguranca', agents: ['piihound'], skills: ['privacy-scan'], contextFiles: 0 },
+    { id: 'dependency-watch', tokens: 0.2, estimate: 130, description: 'Audit dependencies', family: 'seguranca', agents: ['lockwatch'], skills: ['dependency-watch'], contextFiles: 0 },
+    { id: 'blast-radius', tokens: 0.2, estimate: 120, description: 'Map who depends on a change', family: 'analise', agents: ['surveyor'], skills: ['blast-radius'], contextFiles: 0 },
+    { id: 'token-diet', tokens: 0.2, estimate: 129, description: 'Propose context cuts', family: 'analise', agents: ['trimmer'], skills: ['token-diet'], contextFiles: 0 },
+    { id: 'graphify', tokens: 0.1, estimate: 61, description: 'Index material as a graph', family: 'analise', agents: [], skills: ['graph-index'], contextFiles: 0 },
+    { id: 'obsidian', tokens: 0.2, estimate: 172, description: 'Open the SDD as an Obsidian vault', family: 'analise', agents: [], skills: [], contextFiles: 1 },
   ],
   contextLimit: 20,
+  baseTokens: 6.9,
 }
 
 const BODIES: Record<string, string> = {
